@@ -5,71 +5,70 @@
     "database_provider": "postgresql",
     "custom_view_imports": "",
     "custom_restriction_imports": "",
-    "models": [
-        {
+    "models": [{
             "name": "Homepage",
-            "allow_maximisation" : true                
+            "allow_maximisation": true
         },
         {
             "name": "Cuisine",
-            "abstract" : true,
+            "abstract": true,
             "attributes": [
-                { "type" : "string", "name" : "Origin" }
+                { "type": "string", "name": "Origin" }
             ]
         },
         {
             "name": "Asian",
-            "inherits" : "Cuisine",
+            "inherits": "Cuisine",
             "attributes": [
-                { "type" : "string", "name" :  }
+                { "type": "string", "name": }
             ]
         },
         {
-            "name": "Meditaranian",
-            "inherits" : "Cuisine",
+            "name": "Mediterranean",
+            "inherits": "Cuisine",
             "attributes": [
-                { "type" : "string", "name" : }
+                { "type": "string", "name": }
             ]
         },
         {
             "name": "Grill",
-            "inherits" : "Cuisine",
+            "inherits": "Cuisine",
             "attributes": [
-                { "type" : "string", "name" : }
+                { "type": "string", "name": }
             ]
         },
         {
-            "name" : "Meal",
-            "abstract" : true,
+            "name": "Meal",
+            "abstract": true,
             "attributes": []
         },
         {
-            "name" : "PreparationTime",
-            "abstract" : true,
-            "attributes" : []
+            "name": "PreparationTime",
+            "abstract": true,
+            "attributes": []
         },
         {
-            "name" : "Recipes",
-            "attributes" : [ 
-                { "type" : "string", "name": "Name" },
-                { "type" : "string", "name": "Description" },
-                { "type" : "float", "name": "RatingType" },
-                { "type" : "string", "name": "Ingredients" },
-                { "type" : "string", "name": "CuisineType" },
-                { "type" : "string", "name": "MealType" },
-                { "type" : "string", "name": "PreparationType" }
-            ] 
-        },        
-        { 
+            "name": "Recipes",
+            "attributes": [
+                { "type": "string", "name": "Name" },
+                { "type": "string", "name": "Description" },
+                { "type": "float", "name": "RatingType" },
+                { "type": "string", "name": "Ingredients" },
+                { "type": "string", "name": "CuisineType" },
+                { "type": "string", "name": "MealType" },
+                { "type": "string", "name": "PreparationType" }
+            ]
+        },
+        {
             "name": "User",
             "can_login": true,
             "attributes": [
                 { "type": "string", "name": "Username" },
                 { "type": "string", "name": "Language" },
-                { "type": "email", "name": "Email", "hidden_when_minimised" : true }
+                { "type": "email", "name": "Email", "hidden_when_minimised": true }
             ],
             "seeds": [
-              { "Id": 1, "Username": "\"user\"", "Language":"\"en\"", "Email": "\"user@us.er\"", "Password":"\"test1234\"" }
+                { "Id": 1, "Username": "\"user\"", "Language": "\"en\"", "Email": "\"user@us.er\"", "Password": "\"test1234\"" }
             ]
         },
         {
@@ -77,19 +76,13 @@
             "attributes": []
         },
         {
-            "name" : "Rating",
+            "name": "Rating",
             "attributes": []
         },
         {
-            "name" : "RecommendationPage",
+            "name": "RecommendationPage",
             "attributes": []
         }
     ]
 
 }
-
-        
-
-
-
-

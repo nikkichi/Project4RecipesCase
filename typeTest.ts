@@ -1,6 +1,6 @@
 function greeter (person){
-    return "hello %s %*s this is %s and %s, 12, foo, bar " + person;
+    return "hello %s" + person;
 
 }
-var user = "  %s Nikki";
+var user = "Nikki";
 console.log( greeter ( user) );
