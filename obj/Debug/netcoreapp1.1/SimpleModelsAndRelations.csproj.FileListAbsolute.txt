@@ -1,0 +1,9 @@
+C:\Users\mabba\Documents\GitHub\Project4RecipesCase\bin\Debug\netcoreapp1.1\SimpleModelsAndRelations.deps.json
+C:\Users\mabba\Documents\GitHub\Project4RecipesCase\bin\Debug\netcoreapp1.1\SimpleModelsAndRelations.runtimeconfig.json
+C:\Users\mabba\Documents\GitHub\Project4RecipesCase\bin\Debug\netcoreapp1.1\SimpleModelsAndRelations.runtimeconfig.dev.json
+C:\Users\mabba\Documents\GitHub\Project4RecipesCase\bin\Debug\netcoreapp1.1\SimpleModelsAndRelations.dll
+C:\Users\mabba\Documents\GitHub\Project4RecipesCase\bin\Debug\netcoreapp1.1\SimpleModelsAndRelations.pdb
+C:\Users\mabba\Documents\GitHub\Project4RecipesCase\obj\Debug\netcoreapp1.1\UserSecretsAssemblyInfo.cs
+C:\Users\mabba\Documents\GitHub\Project4RecipesCase\obj\Debug\netcoreapp1.1\SimpleModelsAndRelations.AssemblyInfo.cs
+C:\Users\mabba\Documents\GitHub\Project4RecipesCase\obj\Debug\netcoreapp1.1\SimpleModelsAndRelations.dll
+C:\Users\mabba\Documents\GitHub\Project4RecipesCase\obj\Debug\netcoreapp1.1\SimpleModelsAndRelations.pdb

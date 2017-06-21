@@ -1,0 +1,16 @@
+{
+  "en": {
+    "translation": {
+      "Change language": "Change language",
+      "HomePage": "Home",
+      "WelcomeMessage": "Welcome message"
+    }
+  },
+  "nl": {
+    "translation": {
+      "Change language": "Kies taal",
+      "HomePage": "Home",
+      "WelcomeMessage": "Welkom bericht"
+    }
+  }
+}

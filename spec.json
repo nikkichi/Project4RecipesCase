@@ -1,0 +1,120 @@
+{
+    "namespace": "SimpleModelsAndRelations",
+    "context_name": "SimpleModelsAndRelationsContext",
+    "api_version": "v1",
+    "database_provider": "sqlite",
+    "custom_view_imports": "",
+    "custom_restriction_imports": "",
+    "models": [
+        {
+            "name": "Homepage",
+            "allow_maximisation" : true,
+            "type": "homepage",
+            "attributes": [],
+            "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
+        },
+        {
+            "name": "Cuisine",
+            "abstract" : true,
+            "attributes": [],            
+            "permissions": { "view": ["*"], "edit": ["*"], "delete": ["*"], "create": ["*"] }
+        },
+        {
+            "name": "Asian",
+            "inherits" : "Cuisine",
+            "attributes":[],
+            "allow_maximisation": true,
+            "allow_fullscreen": true,
+            "seeds": [{ "Id": 1}],
+            "permissions": { "view": ["*"], "edit": ["*"], "delete": ["*"], "create": ["*"] }
+        },
+        {
+            "name": "Mediterranean",
+            "inherits" : "Cuisine",
+            "attributes":[],
+            "allow_maximisation": true,
+            "allow_fullscreen": true,
+            "seeds": [{ "Id": 2}],
+            "permissions": { "view": ["*"], "edit": ["*"], "delete": ["*"], "create": ["*"] }
+        },
+        {
+            "name": "Grill",
+            "inherits" : "Cuisine",
+            "attributes":[],
+            "allow_maximisation": true,
+            "allow_fullscreen": true,
+            "seeds": [{ "Id": 3}],
+            "permissions": { "view": ["*"], "edit": ["*"], "delete": ["*"], "create": ["*"] }
+        },
+        {
+            "name" : "Meal",
+            "abstract" : true,
+            "attributes": [],
+            "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
+        },
+        {
+            "name" : "Breakfast",
+            "inherits" : "Meal",
+            "attributes" : [],
+            "allow_maximisation": true,
+            "allow_fullscreen": true,
+            "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
+        },
+        {
+            "name" : "Brunch",
+            "inherits" : "Meal",
+            "attributes" : [],
+            "allow_maximisation": true,
+            "allow_fullscreen": true,
+            "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
+        },
+        {
+            "name" : "Lunch",
+            "inherits" : "Meal",
+            "attributes" : [],
+            "allow_maximisation": true,
+            "allow_fullscreen": true,
+            "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
+        },
+        {
+            "name" : "Dinner",
+            "inherits" : "Meal",
+            "attributes" : [],
+            "allow_maximisation": true,
+            "allow_fullscreen": true,
+            "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
+        },
+        {
+            "name" : "PreparationTime",
+            "attributes" : [],
+            "allow_maximisation": true,
+            "allow_fullscreen": true, 
+            "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
+        },
+        {
+            "name" : "Recipe",
+            "allow_maximisation": true,
+            "allow_fullscreen": true,
+            "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] },
+            "attributes" : [ 
+                { "type" : "string", "name": "Name" },
+                { "type" : "string", "name": "Description" },
+                { "type" : "int", "name": "RatingType" },
+                { "type" : "string", "name": "Ingredients" },
+                { "type" : "string", "name": "CuisineType" },
+                { "type" : "string", "name": "MealType" },
+                { "type" : "string", "name": "PreparationType" }
+            ] 
+        }
+    ],
+
+    "relations" : [           
+    ]
+
+}
+
+        
+
+
+
+
