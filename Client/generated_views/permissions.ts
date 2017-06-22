@@ -13,6 +13,9 @@ export let can_edit_nintee = (current_User:Models.User) => true
 
 export let can_delete_nintee = (current_User:Models.User) => false
   
+export let can_view_nintee_Description = (current_User:Models.User) => true
+
+export let can_edit_nintee_Description = (current_User:Models.User) => true
 
 
 
@@ -24,6 +27,9 @@ export let can_edit_thirty = (current_User:Models.User) => true
 
 export let can_delete_thirty = (current_User:Models.User) => false
   
+export let can_view_thirty_Description = (current_User:Models.User) => true
+
+export let can_edit_thirty_Description = (current_User:Models.User) => true
 
 
 
@@ -79,6 +85,9 @@ export let can_edit_sixty = (current_User:Models.User) => true
 
 export let can_delete_sixty = (current_User:Models.User) => false
   
+export let can_view_sixty_Description = (current_User:Models.User) => true
+
+export let can_edit_sixty_Description = (current_User:Models.User) => true
 
 
 
@@ -230,6 +239,9 @@ export let can_edit_fifteen = (current_User:Models.User) => true
 
 export let can_delete_fifteen = (current_User:Models.User) => false
   
+export let can_view_fifteen_Description = (current_User:Models.User) => true
+
+export let can_edit_fifteen_Description = (current_User:Models.User) => true
 
 
 

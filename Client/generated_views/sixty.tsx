@@ -64,20 +64,50 @@ export function set_size_sixty(self:sixtyContext, new_size:Utils.EntitySize) {
   })
 }
 
+export function render_sixty_Description_editable_minimised(self:sixtyContext) : JSX.Element {
+  if (!Permissions.can_edit_sixty(self.props.current_User)) return render_sixty_Description_minimised(self)
+  else
+    return !Permissions.can_view_sixty_Description(self.props.current_User) ? <div /> :
+          <div className="model__attribute description">
+  <label className="attribute-label attribute-label-description">{i18next.t(`sixty:Description`, {context: self.props.inline ? "inline" : ""})}</label>
+  <div className="model__attribute-content">
+    { Components.String(
+        self.props.is_editable && Permissions.can_edit_sixty(self.props.current_User) && Permissions.can_edit_sixty_Description(self.props.current_User),
+        self.props.mode,
+        () => self.props.entity.Description,
+        v => self.props.set_entity({...self.props.entity, Description:v})) } 
+  </div>
+</div>
+}
 
 
+export function render_sixty_Description_editable_maximised(self:sixtyContext) : JSX.Element {
+  if (!Permissions.can_edit_sixty(self.props.current_User)) return render_sixty_Description_maximised(self)
+  else
+    return !Permissions.can_view_sixty_Description(self.props.current_User) ? <div /> :
+          <div className="model__attribute description">
+  <label className="attribute-label attribute-label-description">{i18next.t(`sixty:Description`, {context: self.props.inline ? "inline" : ""})}</label>
+  <div className="model__attribute-content">
+    { Components.String(
+        self.props.is_editable && Permissions.can_edit_sixty(self.props.current_User) && Permissions.can_edit_sixty_Description(self.props.current_User),
+        self.props.mode,
+        () => self.props.entity.Description,
+        v => self.props.set_entity({...self.props.entity, Description:v})) } 
+  </div>
+</div>
+}
 
 
 export function render_editable_attributes_minimised_sixty(self:sixtyContext) {
   let attributes = (<div>
-      
+      {render_sixty_Description_editable_minimised(self)}
     </div>)
   return attributes
 }
 
 export function render_editable_attributes_maximised_sixty(self:sixtyContext) {
     let attributes = (<div>
-        
+        {render_sixty_Description_editable_maximised(self)}
       </div>)
     return attributes
   }
@@ -203,15 +233,38 @@ export function render_content_sixty(self:sixtyContext) {
   </div>
 }
 
+export function render_sixty_Description_minimised(self:sixtyContext) : JSX.Element {
+      return !Permissions.can_view_sixty_Description(self.props.current_User) ? null : <div className="model__attribute description">
+  <label className="attribute-label attribute-label-description">{i18next.t(`sixty:Description`, {context: self.props.inline ? "inline" : ""})}</label>
+  <div className="model__attribute-content">
+    { Components.String(
+        self.props.is_editable && Permissions.can_edit_sixty(self.props.current_User) && Permissions.can_edit_sixty_Description(self.props.current_User),
+        self.props.mode,
+        () => self.props.entity.Description,
+        v => self.props.set_entity({...self.props.entity, Description:v})) } 
+  </div>
+</div>
+      
+}
 
-
-
+export function render_sixty_Description_maximised(self:sixtyContext) : JSX.Element {
+        return !Permissions.can_view_sixty_Description(self.props.current_User) ? null : <div className="model__attribute description">
+  <label className="attribute-label attribute-label-description">{i18next.t(`sixty:Description`, {context: self.props.inline ? "inline" : ""})}</label>
+  <div className="model__attribute-content">
+    { Components.String(
+        self.props.is_editable && Permissions.can_edit_sixty(self.props.current_User) && Permissions.can_edit_sixty_Description(self.props.current_User),
+        self.props.mode,
+        () => self.props.entity.Description,
+        v => self.props.set_entity({...self.props.entity, Description:v})) } 
+  </div>
+</div>
+}
 
 export function render_preview_sixty(self:sixtyContext) {
   let attributes:JSX.Element = null
   if (self.props.mode == "view" || !Permissions.can_edit_sixty(self.props.current_User))
     attributes = (<div className="model__attributes">
-      
+      { render_sixty_Description_minimised(self) }
     </div>)
   else
     attributes = render_editable_attributes_minimised_sixty(self)
@@ -224,7 +277,7 @@ export function render_large_sixty(self:sixtyContext) {
   let attributes:JSX.Element = null
   if (self.props.mode == "view" || !Permissions.can_edit_sixty(self.props.current_User))
     attributes = (<div className="model__attributes">
-      
+      { render_sixty_Description_maximised(self) }
     </div>)
   else
     attributes = render_editable_attributes_maximised_sixty(self)

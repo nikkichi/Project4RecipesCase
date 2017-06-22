@@ -13,7 +13,7 @@ namespace SimpleModelsAndRelations.Models
     }
     
     
-        
+        public string Description {get;set;}
     
     static new public Expression<Func<nintee,nintee>> FilterViewableAttributes(User current_User) {
       return self => self;
@@ -35,7 +35,7 @@ namespace SimpleModelsAndRelations.Models
     }
     
     
-        
+        public string Description {get;set;}
     
     static new public Expression<Func<thirty,thirty>> FilterViewableAttributes(User current_User) {
       return self => self;
@@ -151,7 +151,7 @@ namespace SimpleModelsAndRelations.Models
     }
     
     
-        
+        public string Description {get;set;}
     
     static new public Expression<Func<sixty,sixty>> FilterViewableAttributes(User current_User) {
       return self => self;
@@ -454,7 +454,7 @@ namespace SimpleModelsAndRelations.Models
     }
     
     
-        
+        public string Description {get;set;}
     
     static new public Expression<Func<fifteen,fifteen>> FilterViewableAttributes(User current_User) {
       return self => self;

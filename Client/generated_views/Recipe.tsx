@@ -3200,7 +3200,7 @@ export function render_new_Recipe_PreparationTime_Recipe(self:RecipeContext) {
                           Api.create_linked_Recipe_PreparationTime_Recipes_nintee(self.props.entity).then(e => {
                               e.length > 0 &&
                               Api.update_nintee(
-                                ({ ...e[0], Kind:"nintee",  } as Models.nintee)).then(() =>
+                                ({ ...e[0], Kind:"nintee", Description:"" } as Models.nintee)).then(() =>
                                 load_relation_Recipe_PreparationTime_Recipe(self, self.props.current_User, () =>
                                     self.setState({...self.state(), add_step_PreparationTime:"closed"})
                                   )
@@ -3217,7 +3217,7 @@ export function render_new_Recipe_PreparationTime_Recipe(self:RecipeContext) {
                           Api.create_linked_Recipe_PreparationTime_Recipes_thirty(self.props.entity).then(e => {
                               e.length > 0 &&
                               Api.update_thirty(
-                                ({ ...e[0], Kind:"thirty",  } as Models.thirty)).then(() =>
+                                ({ ...e[0], Kind:"thirty", Description:"" } as Models.thirty)).then(() =>
                                 load_relation_Recipe_PreparationTime_Recipe(self, self.props.current_User, () =>
                                     self.setState({...self.state(), add_step_PreparationTime:"closed"})
                                   )
@@ -3234,7 +3234,7 @@ export function render_new_Recipe_PreparationTime_Recipe(self:RecipeContext) {
                           Api.create_linked_Recipe_PreparationTime_Recipes_sixty(self.props.entity).then(e => {
                               e.length > 0 &&
                               Api.update_sixty(
-                                ({ ...e[0], Kind:"sixty",  } as Models.sixty)).then(() =>
+                                ({ ...e[0], Kind:"sixty", Description:"" } as Models.sixty)).then(() =>
                                 load_relation_Recipe_PreparationTime_Recipe(self, self.props.current_User, () =>
                                     self.setState({...self.state(), add_step_PreparationTime:"closed"})
                                   )
@@ -3251,7 +3251,7 @@ export function render_new_Recipe_PreparationTime_Recipe(self:RecipeContext) {
                           Api.create_linked_Recipe_PreparationTime_Recipes_fifteen(self.props.entity).then(e => {
                               e.length > 0 &&
                               Api.update_fifteen(
-                                ({ ...e[0], Kind:"fifteen",  } as Models.fifteen)).then(() =>
+                                ({ ...e[0], Kind:"fifteen", Description:"" } as Models.fifteen)).then(() =>
                                 load_relation_Recipe_PreparationTime_Recipe(self, self.props.current_User, () =>
                                     self.setState({...self.state(), add_step_PreparationTime:"closed"})
                                   )

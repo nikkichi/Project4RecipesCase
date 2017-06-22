@@ -4,14 +4,14 @@ import * as Moment from 'moment'
 export type nintee = {
     Id : number
     CreatedDate:Moment.Moment
-    
+    Description : string
     Kind:"nintee"
   }
   
 export type thirty = {
     Id : number
     CreatedDate:Moment.Moment
-    
+    Description : string
     Kind:"thirty"
   }
   
@@ -46,7 +46,7 @@ export type PreparationTime = {
 export type sixty = {
     Id : number
     CreatedDate:Moment.Moment
-    
+    Description : string
     Kind:"sixty"
   }
   
@@ -130,7 +130,7 @@ export type Favorite = {
 export type fifteen = {
     Id : number
     CreatedDate:Moment.Moment
-    
+    Description : string
     Kind:"fifteen"
   }
   

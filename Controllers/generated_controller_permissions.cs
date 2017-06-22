@@ -25,7 +25,10 @@ namespace SimpleModelsAndRelations.Models
 
     static public bool can_delete_nintee(User current_User) { return false; }
       
-  
+    static public bool can_view_nintee_Description(User current_User) { return true; }
+
+    static public bool can_edit_nintee_Description(User current_User) { return true; }
+    
 
     
 static public bool can_view_thirty(User current_User) { return true; }
@@ -36,7 +39,10 @@ static public bool can_view_thirty(User current_User) { return true; }
 
     static public bool can_delete_thirty(User current_User) { return false; }
       
-  
+    static public bool can_view_thirty_Description(User current_User) { return true; }
+
+    static public bool can_edit_thirty_Description(User current_User) { return true; }
+    
 
     
 static public bool can_view_Meal(User current_User) { return true; }
@@ -91,7 +97,10 @@ static public bool can_view_sixty(User current_User) { return true; }
 
     static public bool can_delete_sixty(User current_User) { return false; }
       
-  
+    static public bool can_view_sixty_Description(User current_User) { return true; }
+
+    static public bool can_edit_sixty_Description(User current_User) { return true; }
+    
 
     
 static public bool can_view_RecommendationPage(User current_User) { return true; }
@@ -242,7 +251,10 @@ static public bool can_view_fifteen(User current_User) { return true; }
 
     static public bool can_delete_fifteen(User current_User) { return false; }
       
-  
+    static public bool can_view_fifteen_Description(User current_User) { return true; }
+
+    static public bool can_edit_fifteen_Description(User current_User) { return true; }
+    
 
     
 static public bool can_view_Rating(User current_User) { return true; }

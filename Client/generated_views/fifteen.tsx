@@ -64,20 +64,50 @@ export function set_size_fifteen(self:fifteenContext, new_size:Utils.EntitySize)
   })
 }
 
+export function render_fifteen_Description_editable_minimised(self:fifteenContext) : JSX.Element {
+  if (!Permissions.can_edit_fifteen(self.props.current_User)) return render_fifteen_Description_minimised(self)
+  else
+    return !Permissions.can_view_fifteen_Description(self.props.current_User) ? <div /> :
+          <div className="model__attribute description">
+  <label className="attribute-label attribute-label-description">{i18next.t(`fifteen:Description`, {context: self.props.inline ? "inline" : ""})}</label>
+  <div className="model__attribute-content">
+    { Components.String(
+        self.props.is_editable && Permissions.can_edit_fifteen(self.props.current_User) && Permissions.can_edit_fifteen_Description(self.props.current_User),
+        self.props.mode,
+        () => self.props.entity.Description,
+        v => self.props.set_entity({...self.props.entity, Description:v})) } 
+  </div>
+</div>
+}
 
 
+export function render_fifteen_Description_editable_maximised(self:fifteenContext) : JSX.Element {
+  if (!Permissions.can_edit_fifteen(self.props.current_User)) return render_fifteen_Description_maximised(self)
+  else
+    return !Permissions.can_view_fifteen_Description(self.props.current_User) ? <div /> :
+          <div className="model__attribute description">
+  <label className="attribute-label attribute-label-description">{i18next.t(`fifteen:Description`, {context: self.props.inline ? "inline" : ""})}</label>
+  <div className="model__attribute-content">
+    { Components.String(
+        self.props.is_editable && Permissions.can_edit_fifteen(self.props.current_User) && Permissions.can_edit_fifteen_Description(self.props.current_User),
+        self.props.mode,
+        () => self.props.entity.Description,
+        v => self.props.set_entity({...self.props.entity, Description:v})) } 
+  </div>
+</div>
+}
 
 
 export function render_editable_attributes_minimised_fifteen(self:fifteenContext) {
   let attributes = (<div>
-      
+      {render_fifteen_Description_editable_minimised(self)}
     </div>)
   return attributes
 }
 
 export function render_editable_attributes_maximised_fifteen(self:fifteenContext) {
     let attributes = (<div>
-        
+        {render_fifteen_Description_editable_maximised(self)}
       </div>)
     return attributes
   }
@@ -203,15 +233,38 @@ export function render_content_fifteen(self:fifteenContext) {
   </div>
 }
 
+export function render_fifteen_Description_minimised(self:fifteenContext) : JSX.Element {
+      return !Permissions.can_view_fifteen_Description(self.props.current_User) ? null : <div className="model__attribute description">
+  <label className="attribute-label attribute-label-description">{i18next.t(`fifteen:Description`, {context: self.props.inline ? "inline" : ""})}</label>
+  <div className="model__attribute-content">
+    { Components.String(
+        self.props.is_editable && Permissions.can_edit_fifteen(self.props.current_User) && Permissions.can_edit_fifteen_Description(self.props.current_User),
+        self.props.mode,
+        () => self.props.entity.Description,
+        v => self.props.set_entity({...self.props.entity, Description:v})) } 
+  </div>
+</div>
+      
+}
 
-
-
+export function render_fifteen_Description_maximised(self:fifteenContext) : JSX.Element {
+        return !Permissions.can_view_fifteen_Description(self.props.current_User) ? null : <div className="model__attribute description">
+  <label className="attribute-label attribute-label-description">{i18next.t(`fifteen:Description`, {context: self.props.inline ? "inline" : ""})}</label>
+  <div className="model__attribute-content">
+    { Components.String(
+        self.props.is_editable && Permissions.can_edit_fifteen(self.props.current_User) && Permissions.can_edit_fifteen_Description(self.props.current_User),
+        self.props.mode,
+        () => self.props.entity.Description,
+        v => self.props.set_entity({...self.props.entity, Description:v})) } 
+  </div>
+</div>
+}
 
 export function render_preview_fifteen(self:fifteenContext) {
   let attributes:JSX.Element = null
   if (self.props.mode == "view" || !Permissions.can_edit_fifteen(self.props.current_User))
     attributes = (<div className="model__attributes">
-      
+      { render_fifteen_Description_minimised(self) }
     </div>)
   else
     attributes = render_editable_attributes_minimised_fifteen(self)
@@ -224,7 +277,7 @@ export function render_large_fifteen(self:fifteenContext) {
   let attributes:JSX.Element = null
   if (self.props.mode == "view" || !Permissions.can_edit_fifteen(self.props.current_User))
     attributes = (<div className="model__attributes">
-      
+      { render_fifteen_Description_maximised(self) }
     </div>)
   else
     attributes = render_editable_attributes_maximised_fifteen(self)

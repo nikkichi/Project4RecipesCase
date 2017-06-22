@@ -64,20 +64,50 @@ export function set_size_thirty(self:thirtyContext, new_size:Utils.EntitySize) {
   })
 }
 
+export function render_thirty_Description_editable_minimised(self:thirtyContext) : JSX.Element {
+  if (!Permissions.can_edit_thirty(self.props.current_User)) return render_thirty_Description_minimised(self)
+  else
+    return !Permissions.can_view_thirty_Description(self.props.current_User) ? <div /> :
+          <div className="model__attribute description">
+  <label className="attribute-label attribute-label-description">{i18next.t(`thirty:Description`, {context: self.props.inline ? "inline" : ""})}</label>
+  <div className="model__attribute-content">
+    { Components.String(
+        self.props.is_editable && Permissions.can_edit_thirty(self.props.current_User) && Permissions.can_edit_thirty_Description(self.props.current_User),
+        self.props.mode,
+        () => self.props.entity.Description,
+        v => self.props.set_entity({...self.props.entity, Description:v})) } 
+  </div>
+</div>
+}
 
 
+export function render_thirty_Description_editable_maximised(self:thirtyContext) : JSX.Element {
+  if (!Permissions.can_edit_thirty(self.props.current_User)) return render_thirty_Description_maximised(self)
+  else
+    return !Permissions.can_view_thirty_Description(self.props.current_User) ? <div /> :
+          <div className="model__attribute description">
+  <label className="attribute-label attribute-label-description">{i18next.t(`thirty:Description`, {context: self.props.inline ? "inline" : ""})}</label>
+  <div className="model__attribute-content">
+    { Components.String(
+        self.props.is_editable && Permissions.can_edit_thirty(self.props.current_User) && Permissions.can_edit_thirty_Description(self.props.current_User),
+        self.props.mode,
+        () => self.props.entity.Description,
+        v => self.props.set_entity({...self.props.entity, Description:v})) } 
+  </div>
+</div>
+}
 
 
 export function render_editable_attributes_minimised_thirty(self:thirtyContext) {
   let attributes = (<div>
-      
+      {render_thirty_Description_editable_minimised(self)}
     </div>)
   return attributes
 }
 
 export function render_editable_attributes_maximised_thirty(self:thirtyContext) {
     let attributes = (<div>
-        
+        {render_thirty_Description_editable_maximised(self)}
       </div>)
     return attributes
   }
@@ -203,15 +233,38 @@ export function render_content_thirty(self:thirtyContext) {
   </div>
 }
 
+export function render_thirty_Description_minimised(self:thirtyContext) : JSX.Element {
+      return !Permissions.can_view_thirty_Description(self.props.current_User) ? null : <div className="model__attribute description">
+  <label className="attribute-label attribute-label-description">{i18next.t(`thirty:Description`, {context: self.props.inline ? "inline" : ""})}</label>
+  <div className="model__attribute-content">
+    { Components.String(
+        self.props.is_editable && Permissions.can_edit_thirty(self.props.current_User) && Permissions.can_edit_thirty_Description(self.props.current_User),
+        self.props.mode,
+        () => self.props.entity.Description,
+        v => self.props.set_entity({...self.props.entity, Description:v})) } 
+  </div>
+</div>
+      
+}
 
-
-
+export function render_thirty_Description_maximised(self:thirtyContext) : JSX.Element {
+        return !Permissions.can_view_thirty_Description(self.props.current_User) ? null : <div className="model__attribute description">
+  <label className="attribute-label attribute-label-description">{i18next.t(`thirty:Description`, {context: self.props.inline ? "inline" : ""})}</label>
+  <div className="model__attribute-content">
+    { Components.String(
+        self.props.is_editable && Permissions.can_edit_thirty(self.props.current_User) && Permissions.can_edit_thirty_Description(self.props.current_User),
+        self.props.mode,
+        () => self.props.entity.Description,
+        v => self.props.set_entity({...self.props.entity, Description:v})) } 
+  </div>
+</div>
+}
 
 export function render_preview_thirty(self:thirtyContext) {
   let attributes:JSX.Element = null
   if (self.props.mode == "view" || !Permissions.can_edit_thirty(self.props.current_User))
     attributes = (<div className="model__attributes">
-      
+      { render_thirty_Description_minimised(self) }
     </div>)
   else
     attributes = render_editable_attributes_minimised_thirty(self)
@@ -224,7 +277,7 @@ export function render_large_thirty(self:thirtyContext) {
   let attributes:JSX.Element = null
   if (self.props.mode == "view" || !Permissions.can_edit_thirty(self.props.current_User))
     attributes = (<div className="model__attributes">
-      
+      { render_thirty_Description_maximised(self) }
     </div>)
   else
     attributes = render_editable_attributes_maximised_thirty(self)

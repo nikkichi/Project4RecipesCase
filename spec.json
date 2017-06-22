@@ -93,7 +93,7 @@
         },
         {
             "name" : "fifteen",
-            "attributes" : [],
+            "attributes" : [{ "type" : "string", "name": "Description" }],
             "inherits":"PreparationTime",
             "allow_maximisation": true,
             "allow_fullscreen": true,
@@ -101,7 +101,7 @@
         },
         {
             "name" : "thirty",
-            "attributes" : [],
+            "attributes" : [{ "type" : "string", "name": "Description" }],
             "allow_maximisation": true,
             "inherits":"PreparationTime",
             "allow_fullscreen": true,
@@ -109,7 +109,7 @@
         },
         {
             "name" : "sixty",
-            "attributes" : [],
+            "attributes" : [{ "type" : "string", "name": "Description" }],
             "inherits":"PreparationTime",
             "allow_maximisation": true,
             "allow_fullscreen": true,
@@ -117,7 +117,7 @@
         },
         {
             "name" : "nintee",
-            "attributes" : [],
+            "attributes" : [{ "type" : "string", "name": "Description" }],
             "inherits":"PreparationTime",
             "allow_maximisation": true,
             "allow_fullscreen": true,
