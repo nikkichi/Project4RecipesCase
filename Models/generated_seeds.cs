@@ -88,25 +88,31 @@ namespace SimpleModelsAndRelations.Data
           
           
             
-            _nintee.Add(new nintee { CreatedDate = DateTime.Now, Description = "d449-1875",   });
+            _nintee.Add(new nintee { CreatedDate = DateTime.Now, Description = "b50e-12f7",   });
 
             
-            _nintee.Add(new nintee { CreatedDate = DateTime.Now, Description = "e3d5-71e9",   });
+            _nintee.Add(new nintee { CreatedDate = DateTime.Now, Description = "74bd-adcc",   });
 
             
-            _nintee.Add(new nintee { CreatedDate = DateTime.Now, Description = "349d-0e51",   });
+            _nintee.Add(new nintee { CreatedDate = DateTime.Now, Description = "95df-2ed4",   });
 
             
-            _nintee.Add(new nintee { CreatedDate = DateTime.Now, Description = "896f-a3f6",   });
+            _nintee.Add(new nintee { CreatedDate = DateTime.Now, Description = "ddde-db1b",   });
 
             
-            _nintee.Add(new nintee { CreatedDate = DateTime.Now, Description = "eeb0-546d",   });
+            _nintee.Add(new nintee { CreatedDate = DateTime.Now, Description = "b238-8e1d",   });
 
             
-            _nintee.Add(new nintee { CreatedDate = DateTime.Now, Description = "a3c9-d49d",   });
+            _nintee.Add(new nintee { CreatedDate = DateTime.Now, Description = "d1c2-995b",   });
 
             
-            _nintee.Add(new nintee { CreatedDate = DateTime.Now, Description = "02c0-4251",   });
+            _nintee.Add(new nintee { CreatedDate = DateTime.Now, Description = "ddce-eb92",   });
+
+            
+            _nintee.Add(new nintee { CreatedDate = DateTime.Now, Description = "2408-4fe3",   });
+
+            
+            _nintee.Add(new nintee { CreatedDate = DateTime.Now, Description = "b8c5-b553",   });
 
           foreach (var x in _nintee)
           {
@@ -124,28 +130,31 @@ namespace SimpleModelsAndRelations.Data
           
           
             
-            _thirty.Add(new thirty { CreatedDate = DateTime.Now, Description = "0a97-9bab",   });
+            _thirty.Add(new thirty { CreatedDate = DateTime.Now, Description = "60a8-808a",   });
 
             
-            _thirty.Add(new thirty { CreatedDate = DateTime.Now, Description = "33cd-3d70",   });
+            _thirty.Add(new thirty { CreatedDate = DateTime.Now, Description = "d9ac-f334",   });
 
             
-            _thirty.Add(new thirty { CreatedDate = DateTime.Now, Description = "e89d-2154",   });
+            _thirty.Add(new thirty { CreatedDate = DateTime.Now, Description = "6bbe-f92c",   });
 
             
-            _thirty.Add(new thirty { CreatedDate = DateTime.Now, Description = "05ce-f7f4",   });
+            _thirty.Add(new thirty { CreatedDate = DateTime.Now, Description = "3ba1-0f4b",   });
 
             
-            _thirty.Add(new thirty { CreatedDate = DateTime.Now, Description = "c7f8-e91c",   });
+            _thirty.Add(new thirty { CreatedDate = DateTime.Now, Description = "e9ed-861e",   });
 
             
-            _thirty.Add(new thirty { CreatedDate = DateTime.Now, Description = "267e-c6f0",   });
+            _thirty.Add(new thirty { CreatedDate = DateTime.Now, Description = "ddd7-1143",   });
 
             
-            _thirty.Add(new thirty { CreatedDate = DateTime.Now, Description = "adbb-7c81",   });
+            _thirty.Add(new thirty { CreatedDate = DateTime.Now, Description = "ae66-527d",   });
 
             
-            _thirty.Add(new thirty { CreatedDate = DateTime.Now, Description = "0822-6d7d",   });
+            _thirty.Add(new thirty { CreatedDate = DateTime.Now, Description = "4f8d-cd60",   });
+
+            
+            _thirty.Add(new thirty { CreatedDate = DateTime.Now, Description = "374b-6520",   });
 
           foreach (var x in _thirty)
           {
@@ -226,25 +235,34 @@ namespace SimpleModelsAndRelations.Data
           
           
             
-            _sixty.Add(new sixty { CreatedDate = DateTime.Now, Description = "79d8-3595",   });
+            _sixty.Add(new sixty { CreatedDate = DateTime.Now, Description = "0a1d-1c4e",   });
 
             
-            _sixty.Add(new sixty { CreatedDate = DateTime.Now, Description = "3f7b-036b",   });
+            _sixty.Add(new sixty { CreatedDate = DateTime.Now, Description = "cffe-5501",   });
 
             
-            _sixty.Add(new sixty { CreatedDate = DateTime.Now, Description = "fb06-2f39",   });
+            _sixty.Add(new sixty { CreatedDate = DateTime.Now, Description = "19b3-bda1",   });
 
             
-            _sixty.Add(new sixty { CreatedDate = DateTime.Now, Description = "4d1a-e70f",   });
+            _sixty.Add(new sixty { CreatedDate = DateTime.Now, Description = "f967-8be2",   });
 
             
-            _sixty.Add(new sixty { CreatedDate = DateTime.Now, Description = "dd9c-0eed",   });
+            _sixty.Add(new sixty { CreatedDate = DateTime.Now, Description = "1e27-22a5",   });
 
             
-            _sixty.Add(new sixty { CreatedDate = DateTime.Now, Description = "6d1a-1fbe",   });
+            _sixty.Add(new sixty { CreatedDate = DateTime.Now, Description = "d359-b2b6",   });
 
             
-            _sixty.Add(new sixty { CreatedDate = DateTime.Now, Description = "639d-8e58",   });
+            _sixty.Add(new sixty { CreatedDate = DateTime.Now, Description = "1de5-7f3d",   });
+
+            
+            _sixty.Add(new sixty { CreatedDate = DateTime.Now, Description = "9e06-88c9",   });
+
+            
+            _sixty.Add(new sixty { CreatedDate = DateTime.Now, Description = "de32-381c",   });
+
+            
+            _sixty.Add(new sixty { CreatedDate = DateTime.Now, Description = "883f-afa4",   });
 
           foreach (var x in _sixty)
           {
@@ -294,6 +312,9 @@ namespace SimpleModelsAndRelations.Data
           var _Lunch = new System.Collections.Generic.List<Lunch>();
           
           
+            
+            _Lunch.Add(new Lunch { CreatedDate = DateTime.Now,   });
+
             
             _Lunch.Add(new Lunch { CreatedDate = DateTime.Now,   });
 
@@ -390,18 +411,6 @@ namespace SimpleModelsAndRelations.Data
             
             _Brunch.Add(new Brunch { CreatedDate = DateTime.Now,   });
 
-            
-            _Brunch.Add(new Brunch { CreatedDate = DateTime.Now,   });
-
-            
-            _Brunch.Add(new Brunch { CreatedDate = DateTime.Now,   });
-
-            
-            _Brunch.Add(new Brunch { CreatedDate = DateTime.Now,   });
-
-            
-            _Brunch.Add(new Brunch { CreatedDate = DateTime.Now,   });
-
           foreach (var x in _Brunch)
           {
             context.Brunch.Add(x);
@@ -444,9 +453,6 @@ namespace SimpleModelsAndRelations.Data
           var _Dinner = new System.Collections.Generic.List<Dinner>();
           
           
-            
-            _Dinner.Add(new Dinner { CreatedDate = DateTime.Now,   });
-
             
             _Dinner.Add(new Dinner { CreatedDate = DateTime.Now,   });
 
@@ -525,6 +531,9 @@ namespace SimpleModelsAndRelations.Data
             
             _Breakfast.Add(new Breakfast { CreatedDate = DateTime.Now,   });
 
+            
+            _Breakfast.Add(new Breakfast { CreatedDate = DateTime.Now,   });
+
           foreach (var x in _Breakfast)
           {
             context.Breakfast.Add(x);
@@ -540,6 +549,15 @@ namespace SimpleModelsAndRelations.Data
           var _Favorite = new System.Collections.Generic.List<Favorite>();
           
           
+            
+            _Favorite.Add(new Favorite { CreatedDate = DateTime.Now,   });
+
+            
+            _Favorite.Add(new Favorite { CreatedDate = DateTime.Now,   });
+
+            
+            _Favorite.Add(new Favorite { CreatedDate = DateTime.Now,   });
+
             
             _Favorite.Add(new Favorite { CreatedDate = DateTime.Now,   });
 
@@ -574,25 +592,28 @@ namespace SimpleModelsAndRelations.Data
           
           
             
-            _fifteen.Add(new fifteen { CreatedDate = DateTime.Now, Description = "c3ac-22ee",   });
+            _fifteen.Add(new fifteen { CreatedDate = DateTime.Now, Description = "0777-6a3a",   });
 
             
-            _fifteen.Add(new fifteen { CreatedDate = DateTime.Now, Description = "4c27-559f",   });
+            _fifteen.Add(new fifteen { CreatedDate = DateTime.Now, Description = "1ee1-2485",   });
 
             
-            _fifteen.Add(new fifteen { CreatedDate = DateTime.Now, Description = "591d-5a76",   });
+            _fifteen.Add(new fifteen { CreatedDate = DateTime.Now, Description = "a9dc-e60c",   });
 
             
-            _fifteen.Add(new fifteen { CreatedDate = DateTime.Now, Description = "b4b6-10f6",   });
+            _fifteen.Add(new fifteen { CreatedDate = DateTime.Now, Description = "9aa7-7d92",   });
 
             
-            _fifteen.Add(new fifteen { CreatedDate = DateTime.Now, Description = "7cf8-7463",   });
+            _fifteen.Add(new fifteen { CreatedDate = DateTime.Now, Description = "063c-eaa3",   });
 
             
-            _fifteen.Add(new fifteen { CreatedDate = DateTime.Now, Description = "6a04-bd75",   });
+            _fifteen.Add(new fifteen { CreatedDate = DateTime.Now, Description = "f8b4-f133",   });
 
             
-            _fifteen.Add(new fifteen { CreatedDate = DateTime.Now, Description = "745d-8fa1",   });
+            _fifteen.Add(new fifteen { CreatedDate = DateTime.Now, Description = "b213-917d",   });
+
+            
+            _fifteen.Add(new fifteen { CreatedDate = DateTime.Now, Description = "d27b-729e",   });
 
           foreach (var x in _fifteen)
           {
@@ -609,9 +630,6 @@ namespace SimpleModelsAndRelations.Data
           var _Rating = new System.Collections.Generic.List<Rating>();
           
           
-            
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now,   });
-
             
             _Rating.Add(new Rating { CreatedDate = DateTime.Now,   });
 
@@ -709,12 +727,6 @@ namespace SimpleModelsAndRelations.Data
 
             new Asian_Recipe { AsianId = Asians[r.Next(Asians.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
 
-            new Asian_Recipe { AsianId = Asians[r.Next(Asians.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
-
-            new Asian_Recipe { AsianId = Asians[r.Next(Asians.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
-
-            new Asian_Recipe { AsianId = Asians[r.Next(Asians.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
-
         };
         foreach (var x in _Asian_Recipe)
         {
@@ -754,14 +766,6 @@ namespace SimpleModelsAndRelations.Data
 
             new Mediterranean_Recipe { MediterraneanId = Mediterraneans[r.Next(Mediterraneans.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
 
-            new Mediterranean_Recipe { MediterraneanId = Mediterraneans[r.Next(Mediterraneans.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
-
-            new Mediterranean_Recipe { MediterraneanId = Mediterraneans[r.Next(Mediterraneans.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
-
-            new Mediterranean_Recipe { MediterraneanId = Mediterraneans[r.Next(Mediterraneans.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
-
-            new Mediterranean_Recipe { MediterraneanId = Mediterraneans[r.Next(Mediterraneans.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
-
         };
         foreach (var x in _Mediterranean_Recipe)
         {
@@ -775,10 +779,6 @@ namespace SimpleModelsAndRelations.Data
         var _Grill_Recipe = new Grill_Recipe[]
         {
             
-            new Grill_Recipe { GrillId = Grills[r.Next(Grills.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
-
-            new Grill_Recipe { GrillId = Grills[r.Next(Grills.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
-
             new Grill_Recipe { GrillId = Grills[r.Next(Grills.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
 
             new Grill_Recipe { GrillId = Grills[r.Next(Grills.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
@@ -920,8 +920,6 @@ namespace SimpleModelsAndRelations.Data
 
             new Lunch_Recipe { LunchId = Lunches[r.Next(Lunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
 
-            new Lunch_Recipe { LunchId = Lunches[r.Next(Lunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
-
         };
         foreach (var x in _Lunch_Recipe)
         {
@@ -935,6 +933,14 @@ namespace SimpleModelsAndRelations.Data
         var _Dinner_Recipe = new Dinner_Recipe[]
         {
             
+            new Dinner_Recipe { DinnerId = Dinners[r.Next(Dinners.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Dinner_Recipe { DinnerId = Dinners[r.Next(Dinners.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Dinner_Recipe { DinnerId = Dinners[r.Next(Dinners.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Dinner_Recipe { DinnerId = Dinners[r.Next(Dinners.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
             new Dinner_Recipe { DinnerId = Dinners[r.Next(Dinners.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
 
             new Dinner_Recipe { DinnerId = Dinners[r.Next(Dinners.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
@@ -996,6 +1002,10 @@ namespace SimpleModelsAndRelations.Data
 
             new PreparationTime_Recipe { PreparationTimeId = PreparationTimes[r.Next(PreparationTimes.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
 
+            new PreparationTime_Recipe { PreparationTimeId = PreparationTimes[r.Next(PreparationTimes.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new PreparationTime_Recipe { PreparationTimeId = PreparationTimes[r.Next(PreparationTimes.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
         };
         foreach (var x in _PreparationTime_Recipe)
         {
@@ -1009,6 +1019,12 @@ namespace SimpleModelsAndRelations.Data
         var _User_Favorite = new User_Favorite[]
         {
             
+            new User_Favorite { UserId = Users[r.Next(Users.Length)].Id, FavoriteId = Favorites[r.Next(Favorites.Length)].Id, },
+
+            new User_Favorite { UserId = Users[r.Next(Users.Length)].Id, FavoriteId = Favorites[r.Next(Favorites.Length)].Id, },
+
+            new User_Favorite { UserId = Users[r.Next(Users.Length)].Id, FavoriteId = Favorites[r.Next(Favorites.Length)].Id, },
+
             new User_Favorite { UserId = Users[r.Next(Users.Length)].Id, FavoriteId = Favorites[r.Next(Favorites.Length)].Id, },
 
             new User_Favorite { UserId = Users[r.Next(Users.Length)].Id, FavoriteId = Favorites[r.Next(Favorites.Length)].Id, },
@@ -1070,6 +1086,16 @@ namespace SimpleModelsAndRelations.Data
 
             new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
 
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
         };
         foreach (var x in _User_Rating)
         {
@@ -1083,16 +1109,6 @@ namespace SimpleModelsAndRelations.Data
         var _User_RecommendationPage = new User_RecommendationPage[]
         {
             
-            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
-
-            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
-
-            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
-
-            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
-
-            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
-
             new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
 
             new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
@@ -1189,14 +1205,6 @@ namespace SimpleModelsAndRelations.Data
 
             new Rating_Recipe { RatingId = Ratings[r.Next(Ratings.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
 
-            new Rating_Recipe { RatingId = Ratings[r.Next(Ratings.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
-
-            new Rating_Recipe { RatingId = Ratings[r.Next(Ratings.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
-
-            new Rating_Recipe { RatingId = Ratings[r.Next(Ratings.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
-
-            new Rating_Recipe { RatingId = Ratings[r.Next(Ratings.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
-
         };
         foreach (var x in _Rating_Recipe)
         {
@@ -1210,8 +1218,6 @@ namespace SimpleModelsAndRelations.Data
         var _RecommendationPage_Recipe = new RecommendationPage_Recipe[]
         {
             
-            new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
-
             new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
 
             new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
