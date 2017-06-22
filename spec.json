@@ -41,10 +41,10 @@
         {
             "name": "Asian",
             "inherits" : "Cuisine",
-            "attributes":[],
+            "attributes":[{"type": "string", "name": "Description"}],
             "allow_maximisation": true,
             "allow_fullscreen": true,
-            "seeds": [{ "Id": 1}],
+            "seeds": [{ "Id": 1, "Description": "Asian"}],
             "permissions": { "view": ["*"], "edit": ["*"], "delete": ["*"], "create": ["*"] }
 
         },
@@ -52,19 +52,19 @@
         {
             "name": "Mediterranean",
             "inherits" : "Cuisine",
-            "attributes":[],
+            "attributes":[{"type": "string", "name": "Description"}],
             "allow_maximisation": true,
             "allow_fullscreen": true,
-            "seeds": [{ "Id": 2}],
+            "seeds": [{ "Id": 2, "Description": "Mediterranean"}],
             "permissions": { "view": ["*"], "edit": ["*"], "delete": ["*"], "create": ["*"] }
         },
         {
             "name": "Grill",
             "inherits" : "Cuisine",
-            "attributes":[],
+            "attributes":[{"type": "string", "name": "Description"}],
             "allow_maximisation": true,
             "allow_fullscreen": true,
-            "seeds": [{ "Id": 3}],
+            "seeds": [{ "Id": 3, "Description": "Grill"}],
             "permissions": { "view": ["*"], "edit": ["*"], "delete": ["*"], "create": ["*"] }
         },
         {
@@ -78,49 +78,73 @@
         {
             "name" : "Breakfast",
             "inherits" : "Meal",
-            "attributes" : [],
+            "attributes" : [{"type": "string", "name": "Description"}],
             "allow_maximisation": true,
             "allow_fullscreen": true,
+            "seeds": [{"Id": 1, "Description": "Breakfast"}],
             "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
         },
         {
             "name" : "Brunch",
             "inherits" : "Meal",
-            "attributes" : [],
+            "attributes" : [{"type": "string", "name": "Description"}],
             "allow_maximisation": true,
             "allow_fullscreen": true,
+            "seeds": [{"Id": 2, "Description": "Brunch"}],
+            "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
+        },
+                {
+            "name" : "Lunch",
+            "inherits" : "Meal",
+            "attributes" : [{"type": "string", "name": "Description"}],
+            "allow_maximisation": true,
+            "allow_fullscreen": true,
+            "seeds": [{"Id": 3, "Description": "Lunch"}],
             "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
         },
         {
-            "name" : "fifteen",
+            "name" : "Dinner",
+            "inherits" : "Meal",
+            "attributes" : [{"type": "string", "name": "Description"}],
+            "allow_maximisation": true,
+            "allow_fullscreen": true,
+            "seeds": [{"Id": 4, "Description": "Dinner"}],
+            "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
+        },
+        {
+            "name" : "Fifteen",
             "attributes" : [{ "type" : "string", "name": "Description" }],
             "inherits":"PreparationTime",
             "allow_maximisation": true,
             "allow_fullscreen": true,
+            "seeds": [{"Id": 1, "Description": "Fifteen"}],
             "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
         },
         {
-            "name" : "thirty",
+            "name" : "Thirty",
             "attributes" : [{ "type" : "string", "name": "Description" }],
             "allow_maximisation": true,
             "inherits":"PreparationTime",
             "allow_fullscreen": true,
+            "seeds": [{"Id": 2, "Description": "Thirty"}],
             "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
         },
         {
-            "name" : "sixty",
+            "name" : "Sixty",
             "attributes" : [{ "type" : "string", "name": "Description" }],
             "inherits":"PreparationTime",
             "allow_maximisation": true,
             "allow_fullscreen": true,
+            "seeds": [{"Id": 3, "Description": "Sixty"}],
             "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
         },
         {
-            "name" : "nintee",
+            "name" : "Ninety",
             "attributes" : [{ "type" : "string", "name": "Description" }],
             "inherits":"PreparationTime",
             "allow_maximisation": true,
             "allow_fullscreen": true,
+            "seeds": [{"Id": 4, "Descriptioni": "Ninety"}],
             "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
         },
         {
@@ -139,22 +163,6 @@
         },
         {
             "name" : "RecommendationPage",
-            "attributes" : [],
-            "allow_maximisation": true,
-            "allow_fullscreen": true,
-            "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
-        },
-        {
-            "name" : "Lunch",
-            "inherits" : "Meal",
-            "attributes" : [],
-            "allow_maximisation": true,
-            "allow_fullscreen": true,
-            "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
-        },
-        {
-            "name" : "Dinner",
-            "inherits" : "Meal",
             "attributes" : [],
             "allow_maximisation": true,
             "allow_fullscreen": true,
@@ -186,9 +194,7 @@
                 "Name":"\"Flat Iron Steak Simplicity!/",
                 "Ingredients":"\"2 (8 ounce) flat iron steaks, 1/2 teaspoon lemon pepper seasoning, or to taste ,1/2 teaspoon onion powder, or to taste, 1/2 teaspoon garlic powder, or to taste/",
                 "Description":"\"Season the steaks with lemon pepper, onion powder and garlic powder on both sides. Wrap in plastic wrap and marinate for at least 2 hours in the refrigerator. Preheat the grill for medium-high heat and allow the steaks to come to room temperature. Unwrap steaks and place on the preheated grill. Cook to your desired degree of doneness, about 3 minutes per side for medium rare. Allow steaks to rest for a few minutes before serving./",
-
                 "Rating": 4,
-
                 "Picture" : "\"\""
             },
             {
@@ -224,48 +230,100 @@
         }],
             
     "relations" : [ 
-
+                {
+        "source": "Cuisine",
+        "target": "Meal",
+        "sort": "1-N",
+        "seeds": [
+        {"CuisineId": 1, "MealId": 1},
+        {"CuisineId": 1, "MealId": 2},
+        {"CuisineId": 1, "MealId": 3},
+        {"CuisineId": 1, "MealId": 4},
+        {"CuisineId": 2, "MealId": 1},
+        {"CuisineId": 2, "MealId": 2},
+        {"CuisineId": 2, "MealId": 3},
+        {"CuisineId": 2, "MealId": 4},
+        {"CuisineId": 3, "MealId": 1},
+        {"CuisineId": 3, "MealId": 2},
+        {"CuisineId": 3, "MealId": 3},
+        {"CuisineId": 3, "MealId": 4},
+        {"CuisineId": 4, "MealId": 1},
+        {"CuisineId": 4, "MealId": 2},
+        {"CuisineId": 4, "MealId": 3}, 
+        {"CuisineId": 4, "MealId": 4}     
+        ]
+        },
         {
         "source": "Asian",
         "target": "Recipe",
-        "sort": "1-N"
+        "sort": "1-N",
+        "seeds": [
+            {"CuisineID": 1, "RecipeId": 4}
+        ]
         },
         {
         "source": "Mediterranean",
         "target": "Recipe",
-        "sort": "1-N"
+        "sort": "1-N",
+        "seeds": [
+            {"CuisineID": 2, "RecipeId": 3}
+        ]
 
         },
         {
         "source": "Grill",
         "target": "Recipe",
-        "sort": "1-N"
+        "sort": "1-N",
+        "seeds": [
+            {"CuisineId": 3, "RecipeId": 1},
+            {"CuisineId": 3, "RecipeId": 2}
+        ]
         },
         {
         "source": "Breakfast",
         "target": "Recipe",
-        "sort": "1-N"
+        "sort": "1-N",
+        "seeds": [
+            {"BreakfastId": 1, "RecipeId": 5}
+        ]
         },
         {
         "source": "Brunch",
         "target": "Recipe",
-        "sort": "1-N"
+        "sort": "1-N",
+        "seeds": [
+            {"BrunchId": 2, "RecipeId": 6}
+        ]
         },
         {
         "source": "Lunch",
         "target": "Recipe",
-        "sort": "1-N"
+        "sort": "1-N",
+        "seeds": [
+            {"LunchId": 3, "RecipeId": 4},
+            {"LunchId": 3, "RecipeId": 3}
+        ]
         },
         {
         "source": "Dinner",
         "target": "Recipe",
-        "sort": "1-N"
+        "sort": "1-N",
+        "seeds": [
+            {"DinnerId": 4, "RecipeId": 1},
+            {"DinnerId": 4, "RecipeId": 2}
+        ]
         },
         {
         "source": "PreparationTime",
         "target": "Recipe",
         "hide_inverted":false,
-        "sort": "1-N"
+        "sort": "1-N",
+        "seeds": [
+            {"PreparationTimeId": 1, "RecipeId": 3},
+            {"PreparationTimeId": 2, "RecipeId": 2},
+            {"PreparationTimeId": 2, "RecipeId": 1},
+            {"PreparationTimeId": 1, "RecipeId": 4}
+        ]
         },
         
         {
@@ -302,6 +360,26 @@
         "source": "Homepage",
         "target": "Recipe",
         "sort": "1-N"
+        },
+        {
+        "source": "Homepage",
+        "target": "Cuisine",
+        "sort": "1-N"
+        },
+                {
+        "source": "Recipe",
+        "target": "Homepage",
+        "sort": "1-1"
+        },
+                {
+        "source": "Recipe",
+        "target": "Rating",
+        "sort": "N-1"
+        },
+                {
+        "source": "Recipe",
+        "target": "RecommendationPage",
+        "sort": "N-1"
         }
         ]
     }
