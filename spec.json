@@ -7,16 +7,48 @@
     "custom_restriction_imports": "",
     "models": [
         {
+            "en": {
+                "translation": {
+                    "Change language": "Change language",
+                    "HomePage": "Home",
+                    "WelcomeMessage": "Welcome message"}
+      },
+            "nl": {
+                "translation": {
+                    "Change language": "Kies taal",
+                    "HomePage": "Home",
+                    "WelcomeMessage": "Welkom bericht"}
+  }
+        },
+        {
             "name": "Homepage",
             "allow_maximisation" : true,
             "type": "homepage",
             "attributes": [],
             "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
         },
+            {
+        "name": "User",
+        "can_login": true,
+        "attributes": [
+            { "type": "string", "name": "Username" },
+            { "type": "string", "name": "Language" },
+            { "type": "email", "name": "Email", "hidden_when_minimised":true }
+        ],
+            "permissions": {"view": ["*"], "edit": ["*"],"delete": ["*"],"create": ["*"]
+        },
+            "seeds": [
+        { "Id": 1, "Username": "\"user1\"", "Language":"\"en\"", "Email": "\"user1@us.er\"", "Password":"\"Test1234\"" },
+        { "Id": 1, "Username": "\"user2\"", "Language":"\"en\"", "Email": "\"user2@us.er\"", "Password":"\"Test1234\"" },
+        { "Id": 1, "Username": "\"user3\"", "Language":"\"en\"", "Email": "\"user3@us.er\"", "Password":"\"Test1234\"" }
+        ]
+    },
         {
             "name": "Cuisine",
             "abstract" : true,
-            "attributes": [],            
+            "attributes": [],        
+            "allow_maximisation": true,
+            "allow_fullscreen": true,    
             "permissions": { "view": ["*"], "edit": ["*"], "delete": ["*"], "create": ["*"] }
         },
         {
@@ -27,7 +59,9 @@
             "allow_fullscreen": true,
             "seeds": [{ "Id": 1}],
             "permissions": { "view": ["*"], "edit": ["*"], "delete": ["*"], "create": ["*"] }
+
         },
+            
         {
             "name": "Mediterranean",
             "inherits" : "Cuisine",
@@ -50,6 +84,8 @@
             "name" : "Meal",
             "abstract" : true,
             "attributes": [],
+            "allow_maximisation": true,
+            "allow_fullscreen": true,
             "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
         },
         {
@@ -93,26 +129,192 @@
         },
         {
             "name" : "Recipe",
+            "attributes" : [ 
+                { "type" : "string", "name": "Name" },
+                { "type" : "string", "name": "Ingredients" },
+                { "type" : "string", "name": "Description" },
+                { "type" : "string", "name": "CuisineType" },
+                { "type" : "string", "name": "MealType" },
+                { "type" : "string", "name": "PreparationType" },
+                { "type" : "int", "name": "RatingType" },
+                { "type" : "int", "name": "Picture" }],
             "allow_maximisation": true,
             "allow_fullscreen": true,
             "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] },
-            "attributes" : [ 
-                { "type" : "string", "name": "Name" },
-                { "type" : "string", "name": "Description" },
-                { "type" : "int", "name": "RatingType" },
-                { "type" : "string", "name": "Ingredients" },
-                { "type" : "string", "name": "CuisineType" },
-                { "type" : "string", "name": "MealType" },
-                { "type" : "string", "name": "PreparationType" }
-            ] 
+            
+            "seeds": [
+            {
+                "Id":1,
+                "Name":"\"Flat Iron Steak Simplicity!/",
+                "Ingredients":"\"2 (8 ounce) flat iron steaks, 1/2 teaspoon lemon pepper seasoning, or to taste ,1/2 teaspoon onion powder, or to taste, 1/2 teaspoon garlic powder, or to taste/",
+                "Description":"\"Season the steaks with lemon pepper, onion powder and garlic powder on both sides. Wrap in plastic wrap and marinate for at least 2 hours in the refrigerator. Preheat the grill for medium-high heat and allow the steaks to come to room temperature. Unwrap steaks and place on the preheated grill. Cook to your desired degree of doneness, about 3 minutes per side for medium rare. Allow steaks to rest for a few minutes before serving./",
+                "CuisineType": "\"Grill/",
+                "MealType": "\"Dinner/", 
+                "PreparationType": 15,
+                "Rating": 4,
+                "Picture" : "\"\""
+            },
+            {
+                "Id":2,
+                "Name":"\"Quick Chicken Nuggets!/",
+                "Ingredients": "\" 1 cup bread crumbs, 1/2 teaspoon garlic powder, 1/2 teaspoon dried thyme, 1/4 cup Dijon mustard, 1/3 cup light mayonnaise, 1 1/2 pounds chicken tenders, cut into 1-inch pieces, 3/4 pound green beans, washed, trimmed and steamed./",
+                "Description":"\"Heat oven to broil. Coat baking rack with nonstick cooking spray. Place rack over baking sheet; set aside. Stir together bread crumbs, garlic powder and thyme in a pie plate; set aside. Stir together mustard and mayonnaise. Reserve about 1/2 cup of mustard mixture for dipping sauce. Brush chicken pieces with remaining mustard mix; place chicken in pie plate with bread crumb mixture, spooning crumbs on top of pieces and pressing to adhere. Transfer to prepared baking rack. Broil for 10 minutes or until cooked through. Serve with reserved dipping sauce and green beans on the side./",
+                "CuisineType": "\"Grill/",
+                "MealType": "\"Dinner/", 
+                "PreparationType": 30,
+                "Rating": 4,
+                "Picture" : "\"\""
+            },
+            {
+                "Id":3,
+                "Name":"\"Griddled chicken with quinoa Greek salad/",
+                "Ingredients":"\"225g quinoa, 25g butter, 1 red chilli, deseeded and finely chopped, 1 garlic clove-- crushed, 400g chicken, mini fillets, 1½ tbsp extra-virgin olive oil, 300g vine tomato roughly chopped, handful pitted black kalamata olives, 1 red onion finely sliced, 100g feta cheese crumbled, small bunch mint leaves chopped, juice and zest ½ lemon./",
+                "Description":"\"Cook the quinoa following the pack instructions, then rinse in cold water and drain thoroughly. Meanwhile, mix the butter, chilli and garlic into a paste. Toss the chicken fillets in 2 tsp of the olive oil with some seasoning. Lay in a hot griddle pan and cook for 3-4 mins each side or until cooked through. Transfer to a plate, dot with the spicy butter and set aside to melt. Next, tip the tomatoes, olives, onion, feta and mint into a bowl. Toss in the cooked quinoa. Stir through the remaining olive oil, lemon juice and zest, and season well. Serve with the chicken fillets on top, drizzled with any buttery chicken juices./",
+                "CuisineType": "\"Mediterranean/",
+                "MealType": "\"Dinner/", 
+                "PreparationType": 15,
+                "Rating": 5,
+                "Picture" : "\"\""
+            },
+            {
+                "Id":4,
+                "Name":"\"Vietnamese Sandwich/",
+                "Ingredients":"\"4 boneless pork loin chops, cut 1/4 inch thick, 4 (7 inch) French bread baguettes split lengthwise, 4 teaspoons mayonnaise, or to taste, 1 ounce chile sauce with garlic, 1/4 cup fresh lime juice, 1 small red onion sliced into rings, 1 medium cucumber peeled and sliced lengthwise, 2 tablespoons chopped fresh cilantro, salt and pepper to taste. /",
+                "Description":"\"Heat oven to broil. Coat baking rack with nonstick cooking spray. Place rack over baking sheet; set aside. Stir together bread crumbs, garlic powder and thyme in a pie plate; set aside. Stir together mustard and mayonnaise. Reserve about 1/2 cup of mustard mixture for dipping sauce. Brush chicken pieces with remaining mustard mix; place chicken in pie plate with bread crumb mixture, spooning crumbs on top of pieces and pressing to adhere. Transfer to prepared baking rack. Broil for 10 minutes or until cooked through. Serve with reserved dipping sauce and green beans on the side./",
+                "CuisineType": "\"Grill/",
+                "MealType": "\"Dinner/", 
+                "PreparationType": 15,
+                "Rating": 5,
+                "Picture" : "\"\""
+            }
+                ]
+        }],
+            
+    "relations" : [ 
+        
+        {
+        "source": "Cuisine",
+        "target": "Asian",
+        "sort": "1-N"
+        },
+        {
+        "source": "Cuisine",
+        "target": "Mediterranean",
+        "sort": "1-N"
+        },
+        {
+        "source": "Cuisine",
+        "target": "Grill",
+        "sort": "1-N"
+        },
+        {
+        "source": "PreparationTime",
+        "target": "15",
+        "sort": "1-1"
+        },
+        {
+        "source": "PreparationTime",
+        "target": "30",
+        "sort": "1-1"
+        },
+        {
+        "source": "PreparationTime",
+        "target": "60",
+        "sort": "1-1"
+        },
+        {
+        "source": "PreparationTime",
+        "target": "90",
+        "sort": "1-1"
+        },
+        {
+        "source": "Asian",
+        "target": "Recipe",
+        "sort": "1-N"
+        },
+        {
+        "source": "Mediterranean",
+        "target": "Recipe",
+        "sort": "1-N"
+
+        },
+        {
+        "source": "Grill",
+        "target": "Recipe",
+        "sort": "1-N"
+        },
+        {
+        "source": "Breakfast",
+        "target": "Recipe",
+        "sort": "1-N"
+        },
+        {
+        "source": "Brunch",
+        "target": "Recipe",
+        "sort": "1-N"
+        },
+        {
+        "source": "Lunch",
+        "target": "Recipe",
+        "sort": "1-N"
+        },
+        {
+        "source": "Dinner",
+        "target": "Recipe",
+        "sort": "1-N"
+        },
+        {
+        "source": "15",
+        "target": "Recipe",
+        "sort": "1-N"
+        },
+        {
+        "source": "30",
+        "target": "Recipe",
+        "sort": "1-N"
+        },
+        {
+        "source": "60",
+        "target": "Recipe",
+        "sort": "1-N"
+        },
+        {
+        "source": "90",
+        "target": "Recipe",
+        "sort": "1-N"
+        },
+        {
+        "source": "User",
+        "target": "Favorite",
+        "sort": "1-1"
+        },   
+        {
+        "source": "User",
+        "target": "Rating",
+        "sort": "1-N"
+        },
+        {
+        "source": "User",
+        "target": "RecommendationPage",
+        "sort": "1-1"
+        },
+        {
+        "source": "Favorite",
+        "target": "Recipe",
+        "sort": "N-N"
+        },
+        {
+        "source": "Rating",
+        "target": "Recipe",
+        "sort": "N-N"
+        },
+        {
+        "source": "RecommendationPage",
+        "target": "Recipe",
+        "sort": "N-N"
         }
-    ],
-
-    "relations" : [           
-    ]
-
-}
-
+        ]
+    }
         
 
 
