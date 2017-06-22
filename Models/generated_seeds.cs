@@ -8,7 +8,11 @@ namespace SimpleModelsAndRelations.Data
 {
   public static class SimpleModelsAndRelationsContextSeeds
   {
-        static Action seed_Meals = null;
+        static Action seed_nintees = null;
+    static nintee[] nintees = null;
+     static Action seed_thirties = null;
+    static thirty[] thirties = null;
+     static Action seed_Meals = null;
     static Meal[] Meals = null;
      static Action seed_Asians = null;
     static Asian[] Asians = null;
@@ -16,8 +20,14 @@ namespace SimpleModelsAndRelations.Data
     static Cuisine[] Cuisines = null;
      static Action seed_PreparationTimes = null;
     static PreparationTime[] PreparationTimes = null;
+     static Action seed_sixties = null;
+    static sixty[] sixties = null;
+     static Action seed_RecommendationPages = null;
+    static RecommendationPage[] RecommendationPages = null;
      static Action seed_Lunches = null;
     static Lunch[] Lunches = null;
+     static Action seed_Users = null;
+    static User[] Users = null;
      static Action seed_Homepages = null;
     static Homepage[] Homepages = null;
      static Action seed_Brunches = null;
@@ -30,6 +40,12 @@ namespace SimpleModelsAndRelations.Data
     static Mediterranean[] Mediterraneans = null;
      static Action seed_Breakfasts = null;
     static Breakfast[] Breakfasts = null;
+     static Action seed_Favorites = null;
+    static Favorite[] Favorites = null;
+     static Action seed_fifteens = null;
+    static fifteen[] fifteens = null;
+     static Action seed_Ratings = null;
+    static Rating[] Ratings = null;
      static Action seed_Grills = null;
     static Grill[] Grills = null;
 
@@ -64,6 +80,81 @@ namespace SimpleModelsAndRelations.Data
       context.Database.EnsureCreated();
 
       
+      seed_nintees = () => {
+        
+        if (!context.nintee.Any())
+        {
+          var _nintee = new System.Collections.Generic.List<nintee>();
+          
+          
+            
+            _nintee.Add(new nintee { CreatedDate = DateTime.Now,   });
+
+            
+            _nintee.Add(new nintee { CreatedDate = DateTime.Now,   });
+
+            
+            _nintee.Add(new nintee { CreatedDate = DateTime.Now,   });
+
+            
+            _nintee.Add(new nintee { CreatedDate = DateTime.Now,   });
+
+            
+            _nintee.Add(new nintee { CreatedDate = DateTime.Now,   });
+
+            
+            _nintee.Add(new nintee { CreatedDate = DateTime.Now,   });
+
+            
+            _nintee.Add(new nintee { CreatedDate = DateTime.Now,   });
+
+          foreach (var x in _nintee)
+          {
+            context.nintee.Add(x);
+          }
+          context.SaveChanges();
+        }
+        nintees = context.nintee.ToArray();
+      };
+      seed_thirties = () => {
+        
+        if (!context.thirty.Any())
+        {
+          var _thirty = new System.Collections.Generic.List<thirty>();
+          
+          
+            
+            _thirty.Add(new thirty { CreatedDate = DateTime.Now,   });
+
+            
+            _thirty.Add(new thirty { CreatedDate = DateTime.Now,   });
+
+            
+            _thirty.Add(new thirty { CreatedDate = DateTime.Now,   });
+
+            
+            _thirty.Add(new thirty { CreatedDate = DateTime.Now,   });
+
+            
+            _thirty.Add(new thirty { CreatedDate = DateTime.Now,   });
+
+            
+            _thirty.Add(new thirty { CreatedDate = DateTime.Now,   });
+
+            
+            _thirty.Add(new thirty { CreatedDate = DateTime.Now,   });
+
+            
+            _thirty.Add(new thirty { CreatedDate = DateTime.Now,   });
+
+          foreach (var x in _thirty)
+          {
+            context.thirty.Add(x);
+          }
+          context.SaveChanges();
+        }
+        thirties = context.thirty.ToArray();
+      };
       seed_Meals = () => {
         
         if (!context.Meal.Any())
@@ -117,35 +208,8 @@ namespace SimpleModelsAndRelations.Data
         if (!context.PreparationTime.Any())
         {
           var _PreparationTime = new System.Collections.Generic.List<PreparationTime>();
+          // nothing here: class is abstract
           
-          
-            
-            _PreparationTime.Add(new PreparationTime { CreatedDate = DateTime.Now,   });
-
-            
-            _PreparationTime.Add(new PreparationTime { CreatedDate = DateTime.Now,   });
-
-            
-            _PreparationTime.Add(new PreparationTime { CreatedDate = DateTime.Now,   });
-
-            
-            _PreparationTime.Add(new PreparationTime { CreatedDate = DateTime.Now,   });
-
-            
-            _PreparationTime.Add(new PreparationTime { CreatedDate = DateTime.Now,   });
-
-            
-            _PreparationTime.Add(new PreparationTime { CreatedDate = DateTime.Now,   });
-
-            
-            _PreparationTime.Add(new PreparationTime { CreatedDate = DateTime.Now,   });
-
-            
-            _PreparationTime.Add(new PreparationTime { CreatedDate = DateTime.Now,   });
-
-            
-            _PreparationTime.Add(new PreparationTime { CreatedDate = DateTime.Now,   });
-
           foreach (var x in _PreparationTime)
           {
             context.PreparationTime.Add(x);
@@ -153,6 +217,75 @@ namespace SimpleModelsAndRelations.Data
           context.SaveChanges();
         }
         PreparationTimes = context.PreparationTime.ToArray();
+      };
+      seed_sixties = () => {
+        
+        if (!context.sixty.Any())
+        {
+          var _sixty = new System.Collections.Generic.List<sixty>();
+          
+          
+            
+            _sixty.Add(new sixty { CreatedDate = DateTime.Now,   });
+
+            
+            _sixty.Add(new sixty { CreatedDate = DateTime.Now,   });
+
+            
+            _sixty.Add(new sixty { CreatedDate = DateTime.Now,   });
+
+            
+            _sixty.Add(new sixty { CreatedDate = DateTime.Now,   });
+
+            
+            _sixty.Add(new sixty { CreatedDate = DateTime.Now,   });
+
+            
+            _sixty.Add(new sixty { CreatedDate = DateTime.Now,   });
+
+            
+            _sixty.Add(new sixty { CreatedDate = DateTime.Now,   });
+
+          foreach (var x in _sixty)
+          {
+            context.sixty.Add(x);
+          }
+          context.SaveChanges();
+        }
+        sixties = context.sixty.ToArray();
+      };
+      seed_RecommendationPages = () => {
+        
+        if (!context.RecommendationPage.Any())
+        {
+          var _RecommendationPage = new System.Collections.Generic.List<RecommendationPage>();
+          
+          
+            
+            _RecommendationPage.Add(new RecommendationPage { CreatedDate = DateTime.Now,   });
+
+            
+            _RecommendationPage.Add(new RecommendationPage { CreatedDate = DateTime.Now,   });
+
+            
+            _RecommendationPage.Add(new RecommendationPage { CreatedDate = DateTime.Now,   });
+
+            
+            _RecommendationPage.Add(new RecommendationPage { CreatedDate = DateTime.Now,   });
+
+            
+            _RecommendationPage.Add(new RecommendationPage { CreatedDate = DateTime.Now,   });
+
+            
+            _RecommendationPage.Add(new RecommendationPage { CreatedDate = DateTime.Now,   });
+
+          foreach (var x in _RecommendationPage)
+          {
+            context.RecommendationPage.Add(x);
+          }
+          context.SaveChanges();
+        }
+        RecommendationPages = context.RecommendationPage.ToArray();
       };
       seed_Lunches = () => {
         
@@ -185,6 +318,9 @@ namespace SimpleModelsAndRelations.Data
             
             _Lunch.Add(new Lunch { CreatedDate = DateTime.Now,   });
 
+            
+            _Lunch.Add(new Lunch { CreatedDate = DateTime.Now,   });
+
           foreach (var x in _Lunch)
           {
             context.Lunch.Add(x);
@@ -192,6 +328,30 @@ namespace SimpleModelsAndRelations.Data
           context.SaveChanges();
         }
         Lunches = context.Lunch.ToArray();
+      };
+      seed_Users = () => {
+        
+        if (!context.User.Any())
+        {
+          var _User = new System.Collections.Generic.List<User>();
+          
+          
+            password = PasswordHasher.Hash("Test1234");
+            _User.Add(new User { Id = 1, CreatedDate = DateTime.Now, Username = "user1", Language = "en", Email = "user1@us.er",  PasswordHash = password.PasswordHash, PasswordSalt = password.PasswordSalt });
+
+            password = PasswordHasher.Hash("Test1234");
+            _User.Add(new User { Id = 2, CreatedDate = DateTime.Now, Username = "user2", Language = "en", Email = "user2@us.er",  PasswordHash = password.PasswordHash, PasswordSalt = password.PasswordSalt });
+
+            password = PasswordHasher.Hash("Test1234");
+            _User.Add(new User { Id = 3, CreatedDate = DateTime.Now, Username = "user3", Language = "en", Email = "user3@us.er",  PasswordHash = password.PasswordHash, PasswordSalt = password.PasswordSalt });
+
+          foreach (var x in _User)
+          {
+            context.User.Add(x);
+          }
+          context.SaveChanges();
+        }
+        Users = context.User.ToArray();
       };
       seed_Homepages = () => {
         
@@ -236,6 +396,9 @@ namespace SimpleModelsAndRelations.Data
             
             _Brunch.Add(new Brunch { CreatedDate = DateTime.Now,   });
 
+            
+            _Brunch.Add(new Brunch { CreatedDate = DateTime.Now,   });
+
           foreach (var x in _Brunch)
           {
             context.Brunch.Add(x);
@@ -252,25 +415,16 @@ namespace SimpleModelsAndRelations.Data
           
           
             
-            _Recipe.Add(new Recipe { CreatedDate = DateTime.Now, Name = "ab3b-9a95", Description = "d70f-2e41", RatingType = 64, Ingredients = "e1b3-7a0b", CuisineType = "eeb5-5e6a", MealType = "03de-60aa", PreparationType = "83fd-085e",   });
+            _Recipe.Add(new Recipe { Id = 1, CreatedDate = DateTime.Now, Name = "Flat Iron Steak Simplicity!/", Ingredients = "2 (8 ounce) flat iron steaks, 1/2 teaspoon lemon pepper seasoning, or to taste ,1/2 teaspoon onion powder, or to taste, 1/2 teaspoon garlic powder, or to taste/", Description = "Season the steaks with lemon pepper, onion powder and garlic powder on both sides. Wrap in plastic wrap and marinate for at least 2 hours in the refrigerator. Preheat the grill for medium-high heat and allow the steaks to come to room temperature. Unwrap steaks and place on the preheated grill. Cook to your desired degree of doneness, about 3 minutes per side for medium rare. Allow steaks to rest for a few minutes before serving./", RatingType = 4, Picture = "",   });
 
             
-            _Recipe.Add(new Recipe { CreatedDate = DateTime.Now, Name = "8ba3-1cc9", Description = "1850-ef71", RatingType = -1, Ingredients = "94dd-06f2", CuisineType = "7e6e-443b", MealType = "b272-da08", PreparationType = "2678-8b89",   });
+            _Recipe.Add(new Recipe { Id = 2, CreatedDate = DateTime.Now, Name = "Quick Chicken Nuggets!/", Ingredients = " 1 cup bread crumbs, 1/2 teaspoon garlic powder, 1/2 teaspoon dried thyme, 1/4 cup Dijon mustard, 1/3 cup light mayonnaise, 1 1/2 pounds chicken tenders, cut into 1-inch pieces, 3/4 pound green beans, washed, trimmed and steamed./", Description = "Heat oven to broil. Coat baking rack with nonstick cooking spray. Place rack over baking sheet; set aside. Stir together bread crumbs, garlic powder and thyme in a pie plate; set aside. Stir together mustard and mayonnaise. Reserve about 1/2 cup of mustard mixture for dipping sauce. Brush chicken pieces with remaining mustard mix; place chicken in pie plate with bread crumb mixture, spooning crumbs on top of pieces and pressing to adhere. Transfer to prepared baking rack. Broil for 10 minutes or until cooked through. Serve with reserved dipping sauce and green beans on the side./", RatingType = 4, Picture = "",   });
 
             
-            _Recipe.Add(new Recipe { CreatedDate = DateTime.Now, Name = "ab3e-a92e", Description = "2cec-394f", RatingType = -2, Ingredients = "2dfb-48c7", CuisineType = "a662-b963", MealType = "d7a0-6539", PreparationType = "d3b6-60ec",   });
+            _Recipe.Add(new Recipe { Id = 3, CreatedDate = DateTime.Now, Name = "Griddled chicken with quinoa Greek salad/", Ingredients = "225g quinoa, 25g butter, 1 red chilli, deseeded and finely chopped, 1 garlic clove-- crushed, 400g chicken, mini fillets, 1½ tbsp extra-virgin olive oil, 300g vine tomato roughly chopped, handful pitted black kalamata olives, 1 red onion finely sliced, 100g feta cheese crumbled, small bunch mint leaves chopped, juice and zest ½ lemon./", Description = "Cook the quinoa following the pack instructions, then rinse in cold water and drain thoroughly. Meanwhile, mix the butter, chilli and garlic into a paste. Toss the chicken fillets in 2 tsp of the olive oil with some seasoning. Lay in a hot griddle pan and cook for 3-4 mins each side or until cooked through. Transfer to a plate, dot with the spicy butter and set aside to melt. Next, tip the tomatoes, olives, onion, feta and mint into a bowl. Toss in the cooked quinoa. Stir through the remaining olive oil, lemon juice and zest, and season well. Serve with the chicken fillets on top, drizzled with any buttery chicken juices./", RatingType = 5, Picture = "",   });
 
             
-            _Recipe.Add(new Recipe { CreatedDate = DateTime.Now, Name = "ea21-82d0", Description = "c366-36aa", RatingType = -31, Ingredients = "1732-e429", CuisineType = "279c-bd16", MealType = "d886-5e5e", PreparationType = "98df-5f4e",   });
-
-            
-            _Recipe.Add(new Recipe { CreatedDate = DateTime.Now, Name = "ec7c-729f", Description = "8663-08e7", RatingType = 25, Ingredients = "0fa6-5d2c", CuisineType = "4092-3a98", MealType = "c35d-07b2", PreparationType = "59b8-f11a",   });
-
-            
-            _Recipe.Add(new Recipe { CreatedDate = DateTime.Now, Name = "4294-f270", Description = "66df-7e63", RatingType = -43, Ingredients = "618c-5676", CuisineType = "bea3-fbd4", MealType = "74b9-0899", PreparationType = "2a8e-0a95",   });
-
-            
-            _Recipe.Add(new Recipe { CreatedDate = DateTime.Now, Name = "86d0-1f5f", Description = "05c9-d180", RatingType = -27, Ingredients = "c975-971c", CuisineType = "ca93-3e80", MealType = "065a-6528", PreparationType = "16a2-f89d",   });
+            _Recipe.Add(new Recipe { Id = 4, CreatedDate = DateTime.Now, Name = "Vietnamese Sandwich/", Ingredients = "4 boneless pork loin chops, cut 1/4 inch thick, 4 (7 inch) French bread baguettes split lengthwise, 4 teaspoons mayonnaise, or to taste, 1 ounce chile sauce with garlic, 1/4 cup fresh lime juice, 1 small red onion sliced into rings, 1 medium cucumber peeled and sliced lengthwise, 2 tablespoons chopped fresh cilantro, salt and pepper to taste. /", Description = "Heat oven to broil. Coat baking rack with nonstick cooking spray. Place rack over baking sheet; set aside. Stir together bread crumbs, garlic powder and thyme in a pie plate; set aside. Stir together mustard and mayonnaise. Reserve about 1/2 cup of mustard mixture for dipping sauce. Brush chicken pieces with remaining mustard mix; place chicken in pie plate with bread crumb mixture, spooning crumbs on top of pieces and pressing to adhere. Transfer to prepared baking rack. Broil for 10 minutes or until cooked through. Serve with reserved dipping sauce and green beans on the side./", RatingType = 5, Picture = "",   });
 
           foreach (var x in _Recipe)
           {
@@ -367,6 +521,123 @@ namespace SimpleModelsAndRelations.Data
         }
         Breakfasts = context.Breakfast.ToArray();
       };
+      seed_Favorites = () => {
+        
+        if (!context.Favorite.Any())
+        {
+          var _Favorite = new System.Collections.Generic.List<Favorite>();
+          
+          
+            
+            _Favorite.Add(new Favorite { CreatedDate = DateTime.Now,   });
+
+            
+            _Favorite.Add(new Favorite { CreatedDate = DateTime.Now,   });
+
+            
+            _Favorite.Add(new Favorite { CreatedDate = DateTime.Now,   });
+
+            
+            _Favorite.Add(new Favorite { CreatedDate = DateTime.Now,   });
+
+            
+            _Favorite.Add(new Favorite { CreatedDate = DateTime.Now,   });
+
+            
+            _Favorite.Add(new Favorite { CreatedDate = DateTime.Now,   });
+
+            
+            _Favorite.Add(new Favorite { CreatedDate = DateTime.Now,   });
+
+            
+            _Favorite.Add(new Favorite { CreatedDate = DateTime.Now,   });
+
+          foreach (var x in _Favorite)
+          {
+            context.Favorite.Add(x);
+          }
+          context.SaveChanges();
+        }
+        Favorites = context.Favorite.ToArray();
+      };
+      seed_fifteens = () => {
+        
+        if (!context.fifteen.Any())
+        {
+          var _fifteen = new System.Collections.Generic.List<fifteen>();
+          
+          
+            
+            _fifteen.Add(new fifteen { CreatedDate = DateTime.Now,   });
+
+            
+            _fifteen.Add(new fifteen { CreatedDate = DateTime.Now,   });
+
+            
+            _fifteen.Add(new fifteen { CreatedDate = DateTime.Now,   });
+
+            
+            _fifteen.Add(new fifteen { CreatedDate = DateTime.Now,   });
+
+            
+            _fifteen.Add(new fifteen { CreatedDate = DateTime.Now,   });
+
+            
+            _fifteen.Add(new fifteen { CreatedDate = DateTime.Now,   });
+
+          foreach (var x in _fifteen)
+          {
+            context.fifteen.Add(x);
+          }
+          context.SaveChanges();
+        }
+        fifteens = context.fifteen.ToArray();
+      };
+      seed_Ratings = () => {
+        
+        if (!context.Rating.Any())
+        {
+          var _Rating = new System.Collections.Generic.List<Rating>();
+          
+          
+            
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now,   });
+
+            
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now,   });
+
+            
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now,   });
+
+            
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now,   });
+
+            
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now,   });
+
+            
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now,   });
+
+            
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now,   });
+
+            
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now,   });
+
+            
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now,   });
+
+            
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now,   });
+
+          foreach (var x in _Rating)
+          {
+            context.Rating.Add(x);
+          }
+          context.SaveChanges();
+        }
+        Ratings = context.Rating.ToArray();
+      };
       seed_Grills = () => {
         
         if (!context.Grill.Any())
@@ -385,19 +656,587 @@ namespace SimpleModelsAndRelations.Data
         }
         Grills = context.Grill.ToArray();
       };
+      seed_nintees();
+      seed_thirties();
       seed_Meals();
       seed_Asians();
       seed_Cuisines();
       seed_PreparationTimes();
+      seed_sixties();
+      seed_RecommendationPages();
       seed_Lunches();
+      seed_Users();
       seed_Homepages();
       seed_Brunches();
       seed_Recipes();
       seed_Dinners();
       seed_Mediterraneans();
       seed_Breakfasts();
+      seed_Favorites();
+      seed_fifteens();
+      seed_Ratings();
       seed_Grills();
 
+      if (!context.Asian_Recipe.Any())
+      {
+        var _Asian_Recipe = new Asian_Recipe[]
+        {
+            
+            new Asian_Recipe { AsianId = Asians[r.Next(Asians.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Asian_Recipe { AsianId = Asians[r.Next(Asians.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Asian_Recipe { AsianId = Asians[r.Next(Asians.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Asian_Recipe { AsianId = Asians[r.Next(Asians.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Asian_Recipe { AsianId = Asians[r.Next(Asians.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Asian_Recipe { AsianId = Asians[r.Next(Asians.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Asian_Recipe { AsianId = Asians[r.Next(Asians.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Asian_Recipe { AsianId = Asians[r.Next(Asians.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Asian_Recipe { AsianId = Asians[r.Next(Asians.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Asian_Recipe { AsianId = Asians[r.Next(Asians.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Asian_Recipe { AsianId = Asians[r.Next(Asians.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Asian_Recipe { AsianId = Asians[r.Next(Asians.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Asian_Recipe { AsianId = Asians[r.Next(Asians.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Asian_Recipe { AsianId = Asians[r.Next(Asians.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+        };
+        foreach (var x in _Asian_Recipe)
+        {
+          context.Asian_Recipe.Add(x);
+        }
+        context.SaveChanges();
+      }
+      var Asian_Recipe = context.Asian_Recipe.ToArray();
+      if (!context.Mediterranean_Recipe.Any())
+      {
+        var _Mediterranean_Recipe = new Mediterranean_Recipe[]
+        {
+            
+            new Mediterranean_Recipe { MediterraneanId = Mediterraneans[r.Next(Mediterraneans.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Mediterranean_Recipe { MediterraneanId = Mediterraneans[r.Next(Mediterraneans.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Mediterranean_Recipe { MediterraneanId = Mediterraneans[r.Next(Mediterraneans.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Mediterranean_Recipe { MediterraneanId = Mediterraneans[r.Next(Mediterraneans.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Mediterranean_Recipe { MediterraneanId = Mediterraneans[r.Next(Mediterraneans.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Mediterranean_Recipe { MediterraneanId = Mediterraneans[r.Next(Mediterraneans.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Mediterranean_Recipe { MediterraneanId = Mediterraneans[r.Next(Mediterraneans.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Mediterranean_Recipe { MediterraneanId = Mediterraneans[r.Next(Mediterraneans.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Mediterranean_Recipe { MediterraneanId = Mediterraneans[r.Next(Mediterraneans.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Mediterranean_Recipe { MediterraneanId = Mediterraneans[r.Next(Mediterraneans.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Mediterranean_Recipe { MediterraneanId = Mediterraneans[r.Next(Mediterraneans.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Mediterranean_Recipe { MediterraneanId = Mediterraneans[r.Next(Mediterraneans.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Mediterranean_Recipe { MediterraneanId = Mediterraneans[r.Next(Mediterraneans.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Mediterranean_Recipe { MediterraneanId = Mediterraneans[r.Next(Mediterraneans.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+        };
+        foreach (var x in _Mediterranean_Recipe)
+        {
+          context.Mediterranean_Recipe.Add(x);
+        }
+        context.SaveChanges();
+      }
+      var Mediterranean_Recipe = context.Mediterranean_Recipe.ToArray();
+      if (!context.Grill_Recipe.Any())
+      {
+        var _Grill_Recipe = new Grill_Recipe[]
+        {
+            
+            new Grill_Recipe { GrillId = Grills[r.Next(Grills.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Grill_Recipe { GrillId = Grills[r.Next(Grills.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Grill_Recipe { GrillId = Grills[r.Next(Grills.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Grill_Recipe { GrillId = Grills[r.Next(Grills.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Grill_Recipe { GrillId = Grills[r.Next(Grills.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Grill_Recipe { GrillId = Grills[r.Next(Grills.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Grill_Recipe { GrillId = Grills[r.Next(Grills.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Grill_Recipe { GrillId = Grills[r.Next(Grills.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Grill_Recipe { GrillId = Grills[r.Next(Grills.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Grill_Recipe { GrillId = Grills[r.Next(Grills.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Grill_Recipe { GrillId = Grills[r.Next(Grills.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Grill_Recipe { GrillId = Grills[r.Next(Grills.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Grill_Recipe { GrillId = Grills[r.Next(Grills.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Grill_Recipe { GrillId = Grills[r.Next(Grills.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+        };
+        foreach (var x in _Grill_Recipe)
+        {
+          context.Grill_Recipe.Add(x);
+        }
+        context.SaveChanges();
+      }
+      var Grill_Recipe = context.Grill_Recipe.ToArray();
+      if (!context.Breakfast_Recipe.Any())
+      {
+        var _Breakfast_Recipe = new Breakfast_Recipe[]
+        {
+            
+            new Breakfast_Recipe { BreakfastId = Breakfasts[r.Next(Breakfasts.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Breakfast_Recipe { BreakfastId = Breakfasts[r.Next(Breakfasts.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Breakfast_Recipe { BreakfastId = Breakfasts[r.Next(Breakfasts.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Breakfast_Recipe { BreakfastId = Breakfasts[r.Next(Breakfasts.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Breakfast_Recipe { BreakfastId = Breakfasts[r.Next(Breakfasts.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Breakfast_Recipe { BreakfastId = Breakfasts[r.Next(Breakfasts.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Breakfast_Recipe { BreakfastId = Breakfasts[r.Next(Breakfasts.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Breakfast_Recipe { BreakfastId = Breakfasts[r.Next(Breakfasts.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Breakfast_Recipe { BreakfastId = Breakfasts[r.Next(Breakfasts.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Breakfast_Recipe { BreakfastId = Breakfasts[r.Next(Breakfasts.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Breakfast_Recipe { BreakfastId = Breakfasts[r.Next(Breakfasts.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+        };
+        foreach (var x in _Breakfast_Recipe)
+        {
+          context.Breakfast_Recipe.Add(x);
+        }
+        context.SaveChanges();
+      }
+      var Breakfast_Recipe = context.Breakfast_Recipe.ToArray();
+      if (!context.Brunch_Recipe.Any())
+      {
+        var _Brunch_Recipe = new Brunch_Recipe[]
+        {
+            
+            new Brunch_Recipe { BrunchId = Brunches[r.Next(Brunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Brunch_Recipe { BrunchId = Brunches[r.Next(Brunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Brunch_Recipe { BrunchId = Brunches[r.Next(Brunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Brunch_Recipe { BrunchId = Brunches[r.Next(Brunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Brunch_Recipe { BrunchId = Brunches[r.Next(Brunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Brunch_Recipe { BrunchId = Brunches[r.Next(Brunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Brunch_Recipe { BrunchId = Brunches[r.Next(Brunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Brunch_Recipe { BrunchId = Brunches[r.Next(Brunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Brunch_Recipe { BrunchId = Brunches[r.Next(Brunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Brunch_Recipe { BrunchId = Brunches[r.Next(Brunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Brunch_Recipe { BrunchId = Brunches[r.Next(Brunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Brunch_Recipe { BrunchId = Brunches[r.Next(Brunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+        };
+        foreach (var x in _Brunch_Recipe)
+        {
+          context.Brunch_Recipe.Add(x);
+        }
+        context.SaveChanges();
+      }
+      var Brunch_Recipe = context.Brunch_Recipe.ToArray();
+      if (!context.Lunch_Recipe.Any())
+      {
+        var _Lunch_Recipe = new Lunch_Recipe[]
+        {
+            
+            new Lunch_Recipe { LunchId = Lunches[r.Next(Lunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Lunch_Recipe { LunchId = Lunches[r.Next(Lunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Lunch_Recipe { LunchId = Lunches[r.Next(Lunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Lunch_Recipe { LunchId = Lunches[r.Next(Lunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Lunch_Recipe { LunchId = Lunches[r.Next(Lunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Lunch_Recipe { LunchId = Lunches[r.Next(Lunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Lunch_Recipe { LunchId = Lunches[r.Next(Lunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Lunch_Recipe { LunchId = Lunches[r.Next(Lunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Lunch_Recipe { LunchId = Lunches[r.Next(Lunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Lunch_Recipe { LunchId = Lunches[r.Next(Lunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Lunch_Recipe { LunchId = Lunches[r.Next(Lunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Lunch_Recipe { LunchId = Lunches[r.Next(Lunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Lunch_Recipe { LunchId = Lunches[r.Next(Lunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Lunch_Recipe { LunchId = Lunches[r.Next(Lunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Lunch_Recipe { LunchId = Lunches[r.Next(Lunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Lunch_Recipe { LunchId = Lunches[r.Next(Lunches.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+        };
+        foreach (var x in _Lunch_Recipe)
+        {
+          context.Lunch_Recipe.Add(x);
+        }
+        context.SaveChanges();
+      }
+      var Lunch_Recipe = context.Lunch_Recipe.ToArray();
+      if (!context.Dinner_Recipe.Any())
+      {
+        var _Dinner_Recipe = new Dinner_Recipe[]
+        {
+            
+            new Dinner_Recipe { DinnerId = Dinners[r.Next(Dinners.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Dinner_Recipe { DinnerId = Dinners[r.Next(Dinners.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Dinner_Recipe { DinnerId = Dinners[r.Next(Dinners.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Dinner_Recipe { DinnerId = Dinners[r.Next(Dinners.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Dinner_Recipe { DinnerId = Dinners[r.Next(Dinners.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Dinner_Recipe { DinnerId = Dinners[r.Next(Dinners.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Dinner_Recipe { DinnerId = Dinners[r.Next(Dinners.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Dinner_Recipe { DinnerId = Dinners[r.Next(Dinners.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Dinner_Recipe { DinnerId = Dinners[r.Next(Dinners.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Dinner_Recipe { DinnerId = Dinners[r.Next(Dinners.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Dinner_Recipe { DinnerId = Dinners[r.Next(Dinners.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Dinner_Recipe { DinnerId = Dinners[r.Next(Dinners.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Dinner_Recipe { DinnerId = Dinners[r.Next(Dinners.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Dinner_Recipe { DinnerId = Dinners[r.Next(Dinners.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+        };
+        foreach (var x in _Dinner_Recipe)
+        {
+          context.Dinner_Recipe.Add(x);
+        }
+        context.SaveChanges();
+      }
+      var Dinner_Recipe = context.Dinner_Recipe.ToArray();
+      if (!context.PreparationTime_Recipe.Any())
+      {
+        var _PreparationTime_Recipe = new PreparationTime_Recipe[]
+        {
+            
+            new PreparationTime_Recipe { PreparationTimeId = PreparationTimes[r.Next(PreparationTimes.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new PreparationTime_Recipe { PreparationTimeId = PreparationTimes[r.Next(PreparationTimes.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new PreparationTime_Recipe { PreparationTimeId = PreparationTimes[r.Next(PreparationTimes.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new PreparationTime_Recipe { PreparationTimeId = PreparationTimes[r.Next(PreparationTimes.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new PreparationTime_Recipe { PreparationTimeId = PreparationTimes[r.Next(PreparationTimes.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new PreparationTime_Recipe { PreparationTimeId = PreparationTimes[r.Next(PreparationTimes.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new PreparationTime_Recipe { PreparationTimeId = PreparationTimes[r.Next(PreparationTimes.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new PreparationTime_Recipe { PreparationTimeId = PreparationTimes[r.Next(PreparationTimes.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new PreparationTime_Recipe { PreparationTimeId = PreparationTimes[r.Next(PreparationTimes.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new PreparationTime_Recipe { PreparationTimeId = PreparationTimes[r.Next(PreparationTimes.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new PreparationTime_Recipe { PreparationTimeId = PreparationTimes[r.Next(PreparationTimes.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new PreparationTime_Recipe { PreparationTimeId = PreparationTimes[r.Next(PreparationTimes.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new PreparationTime_Recipe { PreparationTimeId = PreparationTimes[r.Next(PreparationTimes.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new PreparationTime_Recipe { PreparationTimeId = PreparationTimes[r.Next(PreparationTimes.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new PreparationTime_Recipe { PreparationTimeId = PreparationTimes[r.Next(PreparationTimes.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+        };
+        foreach (var x in _PreparationTime_Recipe)
+        {
+          context.PreparationTime_Recipe.Add(x);
+        }
+        context.SaveChanges();
+      }
+      var PreparationTime_Recipe = context.PreparationTime_Recipe.ToArray();
+      if (!context.User_Favorite.Any())
+      {
+        var _User_Favorite = new User_Favorite[]
+        {
+            
+            new User_Favorite { UserId = Users[r.Next(Users.Length)].Id, FavoriteId = Favorites[r.Next(Favorites.Length)].Id, },
+
+            new User_Favorite { UserId = Users[r.Next(Users.Length)].Id, FavoriteId = Favorites[r.Next(Favorites.Length)].Id, },
+
+            new User_Favorite { UserId = Users[r.Next(Users.Length)].Id, FavoriteId = Favorites[r.Next(Favorites.Length)].Id, },
+
+            new User_Favorite { UserId = Users[r.Next(Users.Length)].Id, FavoriteId = Favorites[r.Next(Favorites.Length)].Id, },
+
+            new User_Favorite { UserId = Users[r.Next(Users.Length)].Id, FavoriteId = Favorites[r.Next(Favorites.Length)].Id, },
+
+            new User_Favorite { UserId = Users[r.Next(Users.Length)].Id, FavoriteId = Favorites[r.Next(Favorites.Length)].Id, },
+
+            new User_Favorite { UserId = Users[r.Next(Users.Length)].Id, FavoriteId = Favorites[r.Next(Favorites.Length)].Id, },
+
+            new User_Favorite { UserId = Users[r.Next(Users.Length)].Id, FavoriteId = Favorites[r.Next(Favorites.Length)].Id, },
+
+            new User_Favorite { UserId = Users[r.Next(Users.Length)].Id, FavoriteId = Favorites[r.Next(Favorites.Length)].Id, },
+
+            new User_Favorite { UserId = Users[r.Next(Users.Length)].Id, FavoriteId = Favorites[r.Next(Favorites.Length)].Id, },
+
+            new User_Favorite { UserId = Users[r.Next(Users.Length)].Id, FavoriteId = Favorites[r.Next(Favorites.Length)].Id, },
+
+            new User_Favorite { UserId = Users[r.Next(Users.Length)].Id, FavoriteId = Favorites[r.Next(Favorites.Length)].Id, },
+
+            new User_Favorite { UserId = Users[r.Next(Users.Length)].Id, FavoriteId = Favorites[r.Next(Favorites.Length)].Id, },
+
+        };
+        foreach (var x in _User_Favorite)
+        {
+          context.User_Favorite.Add(x);
+        }
+        context.SaveChanges();
+      }
+      var User_Favorite = context.User_Favorite.ToArray();
+      if (!context.User_Rating.Any())
+      {
+        var _User_Rating = new User_Rating[]
+        {
+            
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+        };
+        foreach (var x in _User_Rating)
+        {
+          context.User_Rating.Add(x);
+        }
+        context.SaveChanges();
+      }
+      var User_Rating = context.User_Rating.ToArray();
+      if (!context.User_RecommendationPage.Any())
+      {
+        var _User_RecommendationPage = new User_RecommendationPage[]
+        {
+            
+            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
+
+            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
+
+            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
+
+            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
+
+            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
+
+            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
+
+            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
+
+            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
+
+            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
+
+            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
+
+            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
+
+            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
+
+        };
+        foreach (var x in _User_RecommendationPage)
+        {
+          context.User_RecommendationPage.Add(x);
+        }
+        context.SaveChanges();
+      }
+      var User_RecommendationPage = context.User_RecommendationPage.ToArray();
+      if (!context.Favorite_Recipe.Any())
+      {
+        var _Favorite_Recipe = new Favorite_Recipe[]
+        {
+            
+            new Favorite_Recipe { FavoriteId = Favorites[r.Next(Favorites.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Favorite_Recipe { FavoriteId = Favorites[r.Next(Favorites.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Favorite_Recipe { FavoriteId = Favorites[r.Next(Favorites.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Favorite_Recipe { FavoriteId = Favorites[r.Next(Favorites.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Favorite_Recipe { FavoriteId = Favorites[r.Next(Favorites.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Favorite_Recipe { FavoriteId = Favorites[r.Next(Favorites.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Favorite_Recipe { FavoriteId = Favorites[r.Next(Favorites.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Favorite_Recipe { FavoriteId = Favorites[r.Next(Favorites.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Favorite_Recipe { FavoriteId = Favorites[r.Next(Favorites.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Favorite_Recipe { FavoriteId = Favorites[r.Next(Favorites.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Favorite_Recipe { FavoriteId = Favorites[r.Next(Favorites.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Favorite_Recipe { FavoriteId = Favorites[r.Next(Favorites.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Favorite_Recipe { FavoriteId = Favorites[r.Next(Favorites.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+        };
+        foreach (var x in _Favorite_Recipe)
+        {
+          context.Favorite_Recipe.Add(x);
+        }
+        context.SaveChanges();
+      }
+      var Favorite_Recipe = context.Favorite_Recipe.ToArray();
+      if (!context.Rating_Recipe.Any())
+      {
+        var _Rating_Recipe = new Rating_Recipe[]
+        {
+            
+            new Rating_Recipe { RatingId = Ratings[r.Next(Ratings.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Rating_Recipe { RatingId = Ratings[r.Next(Ratings.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Rating_Recipe { RatingId = Ratings[r.Next(Ratings.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Rating_Recipe { RatingId = Ratings[r.Next(Ratings.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Rating_Recipe { RatingId = Ratings[r.Next(Ratings.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Rating_Recipe { RatingId = Ratings[r.Next(Ratings.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Rating_Recipe { RatingId = Ratings[r.Next(Ratings.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Rating_Recipe { RatingId = Ratings[r.Next(Ratings.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Rating_Recipe { RatingId = Ratings[r.Next(Ratings.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Rating_Recipe { RatingId = Ratings[r.Next(Ratings.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Rating_Recipe { RatingId = Ratings[r.Next(Ratings.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new Rating_Recipe { RatingId = Ratings[r.Next(Ratings.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+        };
+        foreach (var x in _Rating_Recipe)
+        {
+          context.Rating_Recipe.Add(x);
+        }
+        context.SaveChanges();
+      }
+      var Rating_Recipe = context.Rating_Recipe.ToArray();
+      if (!context.RecommendationPage_Recipe.Any())
+      {
+        var _RecommendationPage_Recipe = new RecommendationPage_Recipe[]
+        {
+            
+            new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+        };
+        foreach (var x in _RecommendationPage_Recipe)
+        {
+          context.RecommendationPage_Recipe.Add(x);
+        }
+        context.SaveChanges();
+      }
+      var RecommendationPage_Recipe = context.RecommendationPage_Recipe.ToArray();
 
       InitializePagesAndSingletons(context);
     }

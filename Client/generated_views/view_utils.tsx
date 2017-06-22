@@ -7,13 +7,13 @@ import * as KeepAliveApi from '../generated_keep_alive_api'
 import * as i18next from 'i18next'
 import 'whatwg-fetch'
 
-export let any_of = (predicates:Array<(() => boolean)>) =>
-  () =>
-  predicates.map(p => p()).some(p => p)
+export let any_of = (predicates:Array<((current_User:Models.User) => boolean)>) =>
+  (current_User:Models.User) =>
+  predicates.map(p => p(current_User)).some(p => p)
 
 export type AuthenticationMenuProps = {
-    
-    
+    current_User:Models.User
+    set_User:(new_User:Models.User) => void
   }
 export type AuthenticationMenuState =
     { kind:"menu" }
@@ -31,7 +31,7 @@ export class AuthenticationMenu extends React.Component<AuthenticationMenuProps,
   }
 
   render() {
-    let current_logged_in_entity =  null
+    let current_logged_in_entity = this.props.current_User || null
     let current_state = this.state
     let restore_state = () => this.setState(current_state)
     let error = (message:string) => () => this.setState({...this.state, kind:"error", message:i18next.t(message), action:restore_state})
@@ -50,8 +50,8 @@ export class AuthenticationMenu extends React.Component<AuthenticationMenuProps,
         </a>
         {
           current_logged_in_entity ?
-            <LanguageSelector 
-                               />
+            <LanguageSelector current_User={this.props.current_User}
+                              set_User={u => this.props.set_User(u)} />
           :
             null
         }
@@ -62,7 +62,21 @@ export class AuthenticationMenu extends React.Component<AuthenticationMenuProps,
         <div className="overlay"
              onClick={e => e.target == e.currentTarget && this.setState({kind:"menu"})}>
           <div className="authentication-menu__popup">
-            
+            <a className="button-login"
+                      onClick={() => {
+                        this.setState({...this.state, kind:"logging-in",
+                          action:(username, password) =>
+                            Api.login_User(username, username, password).then(e =>
+                              this.setState({kind:"menu"}, () =>
+                                this.props.set_User(e))
+                            ).catch(error("Login error. Please check your username or email.")),
+                          reset_action:(username:string) =>
+                            Api.reset_User_password(username, username).then(() => this.setState({...this.state, kind:"menu"})).catch(error("Error: please check your username or email."))
+                        })
+                      }
+                      }>
+                {i18next.t('Login as User')}
+              </a>
             
           </div>
         </div>
@@ -79,7 +93,8 @@ export class AuthenticationMenu extends React.Component<AuthenticationMenuProps,
                                       new_password_confirmation != new_password ?
                                         error("Password and password confirmation do not match.")()
                                       :
-                                      
+                                      this.props.current_User ? Api.change_User_password(this.props.current_User.Username, this.props.current_User.Email, password, new_password, new_password_confirmation).then(() =>
+                                        this.setState({kind:"menu"})).catch(error("Server error.")) : 
                                       null
 
                         this.setState({...this.state,
@@ -92,7 +107,11 @@ export class AuthenticationMenu extends React.Component<AuthenticationMenuProps,
               </a>
               <a
                     onClick={() =>
-                      
+                      this.props.current_User ? Api.logout_User().then(() =>
+                          this.setState({kind:"menu"}, () =>
+                            this.props.set_User(null)
+                          )
+                        ) : 
                       null
                     }>
                 {i18next.t('Logout')}
@@ -274,8 +293,8 @@ export class AuthenticationMenu extends React.Component<AuthenticationMenuProps,
 }
 
 export type LanguageSelectorProps = {
-  
-   }
+  current_User:Models.User
+  set_User:(new_User:Models.User) => void }
 export type LanguageSelectorState = { changing_language:boolean }
 class LanguageSelector extends React.Component<LanguageSelectorProps,LanguageSelectorState> {
   constructor(props:LanguageSelectorProps, context:any) {
@@ -289,7 +308,7 @@ class LanguageSelector extends React.Component<LanguageSelectorProps,LanguageSel
 }
 
 export type EntityComponentProps<T> = {
-  
+  current_User:Models.User
   entity:T,
   pages_count:number
   set_page:(new_page:Page, callback?:()=>void)=>void
@@ -388,7 +407,7 @@ type SceneProps<T> = { initial_renderer : Renderer<T>, get_element:Promise<Api.I
                        authentication_menu:() => JSX.Element, breadcrumbs:() => JSX.Element,
                        nested_entity_names:Immutable.Stack<string>, entity_name:string,
                        is_breadcrumb:boolean, is_animating:boolean, pages_count:number, set_page:(new_page:Page, callback?:()=>void)=>void, push:(new_page:Page, callback?:()=>void)=>void, pop:(callback?:()=>void)=>void
-                       , logic_frame:number, force_reload:(callback?:()=>void) => void }
+                       current_User:Models.User, logic_frame:number, force_reload:(callback?:()=>void) => void }
 type SceneState<T> = { current_renderer : Renderer<T>, element?:Api.ItemWithEditable<T>, is_dirty:boolean, size:EntitySize, mode:EntityMode }
 
 // the scene will be responsible for most of the animations and transitions, but also
@@ -437,7 +456,7 @@ class Scene<T> extends React.Component<SceneProps<T>, SceneState<T>> {
                 {
                   this.state.current_renderer(
                   {
-                    
+                    current_User:this.props.current_User,
                     shown_relation:this.props.shown_relation,
                     set_shown_relation:this.props.set_shown_relation,
                     is_animating:this.props.is_animating,
@@ -473,12 +492,12 @@ class Scene<T> extends React.Component<SceneProps<T>, SceneState<T>> {
   }
 }
 
-export function scene_to_page<T>(can_edit:() => boolean, renderer:Renderer<T>,
+export function scene_to_page<T>(can_edit:(current_User:Models.User) => boolean, renderer:Renderer<T>,
   get_element:Promise<Api.ItemWithEditable<T>>,
   save_element:(new_element:T)=>Promise<void>, entity_name:string, title: string, url: string) : Page {
   let SceneT: new() => React.Component<SceneProps<T>, SceneState<T>> = (Scene as any) as new() => React.Component<SceneProps<T>, SceneState<T>>;
   return {
-    render: (is_breadcrumb:boolean) => (is_animating:boolean) => (pages_count:number, logic_frame:number, force_reload:(callback?:()=>void) => void) => () =>
+    render: (is_breadcrumb:boolean) => (is_animating:boolean) => (pages_count:number, logic_frame:number, force_reload:(callback?:()=>void) => void) => (current_User:Models.User) =>
         (shown_relation:string, set_shown_relation:(new_shown_relation:string, callback?:()=>void)=>void) =>
         (authentication_menu:() => JSX.Element, breadcrumbs:() => JSX.Element) =>
         (nested_entity_names:Immutable.Stack<string>) =>
@@ -490,27 +509,27 @@ export function scene_to_page<T>(can_edit:() => boolean, renderer:Renderer<T>,
               authentication_menu={authentication_menu} breadcrumbs={breadcrumbs}
               allow_fullscreen={true} allow_maximisation={true} always_maximised={true}
               nested_entity_names={nested_entity_names} entity_name={entity_name}
-              save_element={e => save_element(e)} can_edit={can_edit() && !is_breadcrumb}  />,
+              save_element={e => save_element(e)} can_edit={can_edit(current_User) && !is_breadcrumb} current_User={current_User} />,
     url: url,
     title: title
   }
 }
 
-export type PageRenderer = (is_breadcrumb:boolean) => (is_animating:boolean) => (pages_count:number, logic_frame:number, force_reload:(callback?:()=>void) => void) => () =>
+export type PageRenderer = (is_breadcrumb:boolean) => (is_animating:boolean) => (pages_count:number, logic_frame:number, force_reload:(callback?:()=>void) => void) => (current_User:Models.User) =>
   (shown_relation:string, set_shown_relation:(new_shown_relation:string, callback?:()=>void)=>void) =>
   (authentication_menu:() => JSX.Element, breadcrumbs:() => JSX.Element) =>
   (nested_entity_names:Immutable.Stack<string>) =>
   (set_page:(new_page:Page, callback?:()=>void)=>void, push:(new_page:Page, callback?:()=>void)=>void, pop:(callback?:()=>void)=>void) => JSX.Element
 export type Page = { render: PageRenderer, url: string, title: string }
-export type PageManagerProps = { initial_page: Page,  }
-export type PageManagerState = { connection:"connected"|"maybe-disconnected1"|"maybe-disconnected2"|"disconnected", pages: Immutable.Stack<Page & {shown_relation:string}>, logic_frame:number }
+export type PageManagerProps = { initial_page: Page, current_User:Models.User }
+export type PageManagerState = { connection:"connected"|"maybe-disconnected1"|"maybe-disconnected2"|"disconnected", pages: Immutable.Stack<Page & {shown_relation:string}>, current_User:Models.User, logic_frame:number }
 export class PageManager extends React.Component<PageManagerProps, PageManagerState> {
   constructor(props:PageManagerProps, context:any) {
     super()
     this.state = {
       connection:"connected",
       pages: Immutable.Stack<Page & {shown_relation:string}>([{...props.initial_page, shown_relation:"none"}]),
-      logic_frame:0 }
+      current_User:props.current_User,logic_frame:0 }
   }
 
   onpopstate:any
@@ -522,6 +541,21 @@ export class PageManager extends React.Component<PageManagerProps, PageManagerSt
     })
 
     this.keep_alive_thread = setInterval(() => {
+      if (this.props.current_User)
+        KeepAliveApi.ping_as_User().then(() =>
+          this.setState({...this.state, connection:"connected" })
+        ).catch(() => {
+          if (this.state.connection == "maybe-disconnected1")
+            this.setState({...this.state, connection:"maybe-disconnected2" })
+          else if (this.state.connection == "maybe-disconnected2")
+            this.setState({...this.state, connection:"disconnected" })
+          else if (this.state.connection == "connected")
+            this.setState({...this.state, connection:"maybe-disconnected1" })
+          else
+            this.setState({...this.state, connection:"disconnected" })
+        })
+      else
+      
         KeepAliveApi.ping().then(() =>
           this.setState({...this.state, connection:"connected" })
         ).catch(() => {
@@ -562,7 +596,10 @@ export class PageManager extends React.Component<PageManagerProps, PageManagerSt
   }
 
   render() {
-    let authentication_menu = () => null
+    let authentication_menu = () => <AuthenticationMenu
+      current_User={this.state.current_User}
+      set_User={(new_User:Models.User) =>
+        this.setState({...this.state, current_User:new_User}, () => location.reload())} />
     let breadcrumbs = () => <div className="breadcrumbs">
         {
           this.state.pages.count() == 1 ?
@@ -586,7 +623,7 @@ export class PageManager extends React.Component<PageManagerProps, PageManagerSt
                 }
               }>
               {p.render(true)(false)(this.state.pages.count(), this.state.logic_frame, (c) => c && c())
-                       ()
+                       (this.state.current_User)
                        (p.shown_relation, np => {})
                        (authentication_menu, breadcrumbs)(Immutable.Stack<string>())
                        ((np,c) => {}, (np,c) => {}, c => {})}
@@ -605,7 +642,7 @@ export class PageManager extends React.Component<PageManagerProps, PageManagerSt
     return <div id="curr" key={`${this.state.pages.peek().url}_${this.state.pages.count()}`}>
         { disconnected_warning }
         { this.state.pages.peek().render(false)(false)(this.state.pages.count(), this.state.logic_frame, (c) => this.setState({...this.state, logic_frame: this.state.logic_frame+1}, c))
-          ()
+          (this.state.current_User)
           (this.state.pages.peek().shown_relation, (np, c) =>
             this.setState({...this.state,
               pages:this.state.pages.pop().push({...this.state.pages.peek(), shown_relation: np})
@@ -616,17 +653,17 @@ export class PageManager extends React.Component<PageManagerProps, PageManagerSt
   }
 }
 
-export async function render_page_manager(target_element_id:string, initial_page:Page, ) {
+export async function render_page_manager(target_element_id:string, initial_page:Page, current_User:Models.User) {
   let res = await fetch(`/translations.json`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
   let resources = await res.json()
   i18next.init({
-    lng:  "nl",
+    lng: current_User ? current_User.Language :  "nl",
     fallbackLng: "en",
-    ns: ["common","Meal","Asian","Cuisine","PreparationTime","Lunch","Homepage","Brunch","Recipe","Dinner","Mediterranean","Breakfast","Grill"],
+    ns: ["common","nintee","thirty","Meal","Asian","Cuisine","PreparationTime","sixty","RecommendationPage","Lunch","User","Homepage","Brunch","Recipe","Dinner","Mediterranean","Breakfast","Favorite","fifteen","Rating","Grill"],
     resources: resources
   }, (err, t) => {
     ReactDOM.render(
-      <PageManager initial_page={initial_page}  />,
+      <PageManager initial_page={initial_page} current_User={current_User} />,
       document.getElementById(target_element_id)
     )
   })

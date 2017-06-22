@@ -31,9 +31,9 @@ using SimpleModelsAndRelations.Filters;
     public IActionResult View(int id)
     {
       var session = HttpContext.Get<LoggableEntities>(_context);
-
+      var current_User = session == null ? null : session.User;
       
-
+      ViewData["CurrentUser"] = session == null ? null : session.User;
       ViewData["id"] = id;
       ViewData["Page"] = "Mediterraneans/View";
       return View();

@@ -37,10 +37,10 @@ using System.IO;
     public ItemWithEditable<Meal> GetById(int id)
     {
       var session = HttpContext.Get<LoggableEntities>(_context);
-
+      var current_User = session == null ? null : session.User;
       var allowed_items = ApiTokenValid ? _context.Meal : _context.Meal;
       var editable_items = ApiTokenValid ? _context.Meal : _context.Meal;
-      var item = SimpleModelsAndRelations.Models.Meal.FilterViewableAttributesLocal()(allowed_items.FirstOrDefault(e => e.Id == id));
+      var item = SimpleModelsAndRelations.Models.Meal.FilterViewableAttributesLocal(current_User)(allowed_items.FirstOrDefault(e => e.Id == id));
       item = SimpleModelsAndRelations.Models.Meal.WithoutImages(item);
       return new ItemWithEditable<Meal>() {
         Item = item,
@@ -54,12 +54,12 @@ using System.IO;
     public Meal Create()
     {
       var session = HttpContext.Get<LoggableEntities>(_context);
-
+      var current_User = session == null ? null : session.User;
       var can_create_by_token = ApiTokenValid || true;
       if (!can_create_by_token)
         throw new Exception("Unauthorized create attempt");
       var item = new Meal() { CreatedDate = DateTime.Now, Id = _context.Meal.Max(i => i.Id) + 1 };
-      _context.Meal.Add(SimpleModelsAndRelations.Models.Meal.FilterViewableAttributesLocal()(item));
+      _context.Meal.Add(SimpleModelsAndRelations.Models.Meal.FilterViewableAttributesLocal(current_User)(item));
       _context.SaveChanges();
       item = SimpleModelsAndRelations.Models.Meal.WithoutImages(item);
       return item;
@@ -71,7 +71,7 @@ using System.IO;
     public void Update([FromBody] Meal item)
     {
       var session = HttpContext.Get<LoggableEntities>(_context);
-
+      var current_User = session == null ? null : session.User;
       var allowed_items = ApiTokenValid ? _context.Meal : _context.Meal;
       if (!allowed_items.Any(i => i.Id == item.Id)) return;
       var new_item = item;
@@ -90,7 +90,7 @@ using System.IO;
     public void Delete(int id)
     {
       var session = HttpContext.Get<LoggableEntities>(_context);
-
+      var current_User = session == null ? null : session.User;
       var allowed_items = ApiTokenValid ? _context.Meal : _context.Meal;
       var item = _context.Meal.FirstOrDefault(e => e.Id == id);
       var can_delete_by_token = ApiTokenValid || true;
@@ -109,14 +109,14 @@ using System.IO;
     public Page<Meal> GetAll([FromQuery] int page_index, [FromQuery] int page_size = 25)
     {
       var session = HttpContext.Get<LoggableEntities>(_context);
-
+      var current_User = session == null ? null : session.User;
       var allowed_items = ApiTokenValid ? _context.Meal : _context.Meal;
       var editable_items = ApiTokenValid ? _context.Meal : _context.Meal;
       var can_edit_by_token = ApiTokenValid || true;
       var can_create_by_token = ApiTokenValid || true;
       var can_delete_by_token = ApiTokenValid || true;
       return allowed_items
-        .Select(SimpleModelsAndRelations.Models.Meal.FilterViewableAttributes())
+        .Select(SimpleModelsAndRelations.Models.Meal.FilterViewableAttributes(current_User))
         .Select(s => Tuple.Create(s, can_edit_by_token && editable_items.Any(es => es.Id == s.Id)))
         .Paginate(can_create_by_token, can_delete_by_token, false, page_index, page_size, SimpleModelsAndRelations.Models.Meal.WithoutImages, item => item);
     }

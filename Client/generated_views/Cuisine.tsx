@@ -37,9 +37,9 @@ export let Cuisine_to_page = (id:number) => {
   return Utils.scene_to_page<Models.Cuisine>(can_edit, Cuisine, Api.get_Cuisine(id), Api.update_Cuisine, "Cuisine", "Cuisine", `/Cuisines/${id}`)
 }
 
-export let Cuisine_to = (id:number, target_element_id:string, ) => {
+export let Cuisine_to = (id:number, target_element_id:string, current_User:Models.User) => {
   Utils.render_page_manager(target_element_id,
     Cuisine_to_page(id),
-    
+    current_User
   )
 }

@@ -6,5 +6,5 @@
 <div id="react-content"></div>
 
 <script>
-  app.Mediterranean_to(@ViewData["id"], "react-content")
+  app.Mediterranean_to(@ViewData["id"], "react-content", @(Html.Raw(JsonConvert.SerializeObject(ViewData["CurrentUser"]))))
 </script>

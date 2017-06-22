@@ -42,9 +42,9 @@ export let Meal_to_page = (id:number) => {
   return Utils.scene_to_page<Models.Meal>(can_edit, Meal, Api.get_Meal(id), Api.update_Meal, "Meal", "Meal", `/Meals/${id}`)
 }
 
-export let Meal_to = (id:number, target_element_id:string, ) => {
+export let Meal_to = (id:number, target_element_id:string, current_User:Models.User) => {
   Utils.render_page_manager(target_element_id,
     Meal_to_page(id),
-    
+    current_User
   )
 }

@@ -33,7 +33,7 @@ namespace SimpleModelsAndRelations.Controllers
     public IActionResult Index()
     {
       var session = HttpContext.Get<LoggableEntities>(_context);
-
+      ViewData["CurrentUser"] = session == null ? null : session.User;
 
       ViewData["id"] = _context.Homepage.First().Id;
 
@@ -45,7 +45,7 @@ namespace SimpleModelsAndRelations.Controllers
     public IActionResult Error()
     {
       var session = HttpContext.Get<LoggableEntities>(_context);
-
+      ViewData["CurrentUser"] = session == null ? null : session.User;
 
       ViewData["Page"] = "Home/Error";
       return View();
@@ -55,7 +55,7 @@ namespace SimpleModelsAndRelations.Controllers
     public IActionResult Unauthorised()
     {
       var session = HttpContext.Get<LoggableEntities>(_context);
-
+      ViewData["CurrentUser"] = session == null ? null : session.User;
 
       ViewData["Page"] = "Home/Unauthorised";
       return View();

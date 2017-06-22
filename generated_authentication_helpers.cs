@@ -27,12 +27,12 @@ namespace SimpleModelsAndRelations.Filters
       dynamic controller = context.Controller;
       var _context = controller._context as SimpleModelsAndRelationsContext;
       var session = HttpContext.Get<LoggableEntities>(_context);
-
+      var current_User = session == null ? null : session.User;
 
       if ((ApiToken != null && context.HttpContext.Request.Headers["ApiToken"] == ApiToken) ||
           user_types.Any(user_type =>
             user_type == "*"
-            )) {
+            || user_type == "User" && current_User != null)) {
         base.OnActionExecuting(context);
       } else {
         context.Result = new RedirectResult("/Home/Unauthorised");

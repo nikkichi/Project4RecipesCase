@@ -30,5 +30,15 @@ public class KeepAliveApiController : Controller
   public IActionResult Ping() {
     return Ok();
   }
+  [HttpGet("ping_as_User")]
+  [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+  public IActionResult PingAsUser() {
+    var session = HttpContext.Get<LoggableEntities>(_context);
+      var current_User = session == null ? null : session.User;
+    if (current_User != null)
+      return Ok();
+    else
+      return NotFound();
+  }
 
 }
