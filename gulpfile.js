@@ -8,7 +8,8 @@ var sass         = require('gulp-sass'),
     rename       = require('gulp-rename'),
     mmq          = require('gulp-merge-media-queries');
 
-gulp.task("default", ['stylesheets']);
+gulp.task("default", ['stylesheets', 'fonts']);
+
 // Compile Stylesheets
 gulp.task('stylesheets', function() {
     return gulp.src('./Client/stylesheets/**/*.scss')
@@ -21,8 +22,13 @@ gulp.task('stylesheets', function() {
         .pipe(gulp.dest("./wwwroot/css"))
 });
 
+// Compile fonts
+gulp.task('fonts', function() {
+    return gulp.src('./Client/fonts/**/*')
+        .pipe(gulp.dest("./wwwroot/fonts"))
+});
 
 // Watch Stylesheets
 gulp.task('watch', function(callback) {
-    gulp.watch('./Client/stylesheets/**/*.scss', ['stylesheets']);
+    gulp.watch('./Client/stylesheets/**/*.scss', ['stylesheets', 'fonts']);
 });

@@ -15,60 +15,6 @@ namespace SimpleModelsAndRelations.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1");
 
-            modelBuilder.Entity("SimpleModelsAndRelations.Models.Asian_Recipe", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AsianId");
-
-                    b.Property<int>("RecipeId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AsianId");
-
-                    b.HasIndex("RecipeId");
-
-                    b.ToTable("Asian_Recipe");
-                });
-
-            modelBuilder.Entity("SimpleModelsAndRelations.Models.Breakfast_Recipe", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("BreakfastId");
-
-                    b.Property<int>("RecipeId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BreakfastId");
-
-                    b.HasIndex("RecipeId");
-
-                    b.ToTable("Breakfast_Recipe");
-                });
-
-            modelBuilder.Entity("SimpleModelsAndRelations.Models.Brunch_Recipe", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("BrunchId");
-
-                    b.Property<int>("RecipeId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BrunchId");
-
-                    b.HasIndex("RecipeId");
-
-                    b.ToTable("Brunch_Recipe");
-                });
-
             modelBuilder.Entity("SimpleModelsAndRelations.Models.Cuisine", b =>
                 {
                     b.Property<int>("Id")
@@ -86,70 +32,22 @@ namespace SimpleModelsAndRelations.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("Cuisine");
                 });
 
-            modelBuilder.Entity("SimpleModelsAndRelations.Models.Dinner_Recipe", b =>
+            modelBuilder.Entity("SimpleModelsAndRelations.Models.Cuisine_Meal", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("DinnerId");
+                    b.Property<int>("CuisineId");
 
-                    b.Property<int>("RecipeId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DinnerId");
-
-                    b.HasIndex("RecipeId");
-
-                    b.ToTable("Dinner_Recipe");
-                });
-
-            modelBuilder.Entity("SimpleModelsAndRelations.Models.Favorite", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CreatedDate");
+                    b.Property<int>("MealId");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Favorite");
-                });
+                    b.HasIndex("CuisineId");
 
-            modelBuilder.Entity("SimpleModelsAndRelations.Models.Favorite_Recipe", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.HasIndex("MealId");
 
-                    b.Property<int>("FavoriteId");
-
-                    b.Property<int>("RecipeId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FavoriteId");
-
-                    b.HasIndex("RecipeId");
-
-                    b.ToTable("Favorite_Recipe");
-                });
-
-            modelBuilder.Entity("SimpleModelsAndRelations.Models.Grill_Recipe", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("GrillId");
-
-                    b.Property<int>("RecipeId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GrillId");
-
-                    b.HasIndex("RecipeId");
-
-                    b.ToTable("Grill_Recipe");
+                    b.ToTable("Cuisine_Meal");
                 });
 
             modelBuilder.Entity("SimpleModelsAndRelations.Models.Homepage", b =>
@@ -162,24 +60,6 @@ namespace SimpleModelsAndRelations.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Homepage");
-                });
-
-            modelBuilder.Entity("SimpleModelsAndRelations.Models.Lunch_Recipe", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("LunchId");
-
-                    b.Property<int>("RecipeId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LunchId");
-
-                    b.HasIndex("RecipeId");
-
-                    b.ToTable("Lunch_Recipe");
                 });
 
             modelBuilder.Entity("SimpleModelsAndRelations.Models.Meal", b =>
@@ -199,22 +79,22 @@ namespace SimpleModelsAndRelations.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("Meal");
                 });
 
-            modelBuilder.Entity("SimpleModelsAndRelations.Models.Mediterranean_Recipe", b =>
+            modelBuilder.Entity("SimpleModelsAndRelations.Models.Meal_Recipe", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("MediterraneanId");
+                    b.Property<int>("MealId");
 
                     b.Property<int>("RecipeId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MediterraneanId");
+                    b.HasIndex("MealId");
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("Mediterranean_Recipe");
+                    b.ToTable("Meal_Recipe");
                 });
 
             modelBuilder.Entity("SimpleModelsAndRelations.Models.PreparationTime", b =>
@@ -259,27 +139,11 @@ namespace SimpleModelsAndRelations.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
+                    b.Property<int>("Number");
+
                     b.HasKey("Id");
 
                     b.ToTable("Rating");
-                });
-
-            modelBuilder.Entity("SimpleModelsAndRelations.Models.Rating_Recipe", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("RatingId");
-
-                    b.Property<int>("RecipeId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RatingId");
-
-                    b.HasIndex("RecipeId");
-
-                    b.ToTable("Rating_Recipe");
                 });
 
             modelBuilder.Entity("SimpleModelsAndRelations.Models.Recipe", b =>
@@ -297,11 +161,27 @@ namespace SimpleModelsAndRelations.Migrations
 
                     b.Property<string>("Picture");
 
-                    b.Property<int>("RatingType");
-
                     b.HasKey("Id");
 
                     b.ToTable("Recipe");
+                });
+
+            modelBuilder.Entity("SimpleModelsAndRelations.Models.Recipe_Rating", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("RatingId");
+
+                    b.Property<int>("RecipeId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RatingId");
+
+                    b.HasIndex("RecipeId");
+
+                    b.ToTable("Recipe_Rating");
                 });
 
             modelBuilder.Entity("SimpleModelsAndRelations.Models.RecommendationPage", b =>
@@ -339,15 +219,27 @@ namespace SimpleModelsAndRelations.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("AdditionalInfo");
+
                     b.Property<string>("Content");
 
                     b.Property<string>("CookieName");
 
                     b.Property<DateTime>("CreatedAt");
 
+                    b.Property<int?>("LoggedEntityId");
+
+                    b.Property<string>("LoggedEntityName");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CookieName");
+
+                    b.HasIndex("CreatedAt");
+
+                    b.HasIndex("LoggedEntityId");
+
+                    b.HasIndex("LoggedEntityName");
 
                     b.ToTable("Session");
                 });
@@ -362,6 +254,8 @@ namespace SimpleModelsAndRelations.Migrations
                     b.Property<string>("Email");
 
                     b.Property<string>("Language");
+
+                    b.Property<DateTime>("LastLoginAttempt");
 
                     b.Property<string>("PasswordHash");
 
@@ -380,40 +274,22 @@ namespace SimpleModelsAndRelations.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("SimpleModelsAndRelations.Models.User_Favorite", b =>
+            modelBuilder.Entity("SimpleModelsAndRelations.Models.User_Recipe", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("FavoriteId");
+                    b.Property<int>("RecipeId");
 
                     b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FavoriteId");
+                    b.HasIndex("RecipeId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("User_Favorite");
-                });
-
-            modelBuilder.Entity("SimpleModelsAndRelations.Models.User_Rating", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("RatingId");
-
-                    b.Property<int>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RatingId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("User_Rating");
+                    b.ToTable("User_Recipe");
                 });
 
             modelBuilder.Entity("SimpleModelsAndRelations.Models.User_RecommendationPage", b =>
@@ -438,6 +314,7 @@ namespace SimpleModelsAndRelations.Migrations
                 {
                     b.HasBaseType("SimpleModelsAndRelations.Models.Cuisine");
 
+                    b.Property<string>("Description");
 
                     b.ToTable("Asian");
 
@@ -448,6 +325,7 @@ namespace SimpleModelsAndRelations.Migrations
                 {
                     b.HasBaseType("SimpleModelsAndRelations.Models.Cuisine");
 
+                    b.Property<string>("Description");
 
                     b.ToTable("Grill");
 
@@ -458,6 +336,7 @@ namespace SimpleModelsAndRelations.Migrations
                 {
                     b.HasBaseType("SimpleModelsAndRelations.Models.Cuisine");
 
+                    b.Property<string>("Description");
 
                     b.ToTable("Mediterranean");
 
@@ -468,6 +347,7 @@ namespace SimpleModelsAndRelations.Migrations
                 {
                     b.HasBaseType("SimpleModelsAndRelations.Models.Meal");
 
+                    b.Property<string>("Description");
 
                     b.ToTable("Breakfast");
 
@@ -478,6 +358,7 @@ namespace SimpleModelsAndRelations.Migrations
                 {
                     b.HasBaseType("SimpleModelsAndRelations.Models.Meal");
 
+                    b.Property<string>("Description");
 
                     b.ToTable("Brunch");
 
@@ -488,6 +369,7 @@ namespace SimpleModelsAndRelations.Migrations
                 {
                     b.HasBaseType("SimpleModelsAndRelations.Models.Meal");
 
+                    b.Property<string>("Description");
 
                     b.ToTable("Dinner");
 
@@ -498,156 +380,79 @@ namespace SimpleModelsAndRelations.Migrations
                 {
                     b.HasBaseType("SimpleModelsAndRelations.Models.Meal");
 
+                    b.Property<string>("Description");
 
                     b.ToTable("Lunch");
 
                     b.HasDiscriminator().HasValue("Lunch");
                 });
 
-            modelBuilder.Entity("SimpleModelsAndRelations.Models.fifteen", b =>
+            modelBuilder.Entity("SimpleModelsAndRelations.Models.Fifteen", b =>
                 {
                     b.HasBaseType("SimpleModelsAndRelations.Models.PreparationTime");
 
                     b.Property<string>("Description");
 
-                    b.ToTable("fifteen");
+                    b.ToTable("Fifteen");
 
-                    b.HasDiscriminator().HasValue("fifteen");
+                    b.HasDiscriminator().HasValue("Fifteen");
                 });
 
-            modelBuilder.Entity("SimpleModelsAndRelations.Models.nintee", b =>
+            modelBuilder.Entity("SimpleModelsAndRelations.Models.Ninety", b =>
                 {
                     b.HasBaseType("SimpleModelsAndRelations.Models.PreparationTime");
 
                     b.Property<string>("Description");
 
-                    b.ToTable("nintee");
+                    b.ToTable("Ninety");
 
-                    b.HasDiscriminator().HasValue("nintee");
+                    b.HasDiscriminator().HasValue("Ninety");
                 });
 
-            modelBuilder.Entity("SimpleModelsAndRelations.Models.sixty", b =>
+            modelBuilder.Entity("SimpleModelsAndRelations.Models.Sixty", b =>
                 {
                     b.HasBaseType("SimpleModelsAndRelations.Models.PreparationTime");
 
                     b.Property<string>("Description");
 
-                    b.ToTable("sixty");
+                    b.ToTable("Sixty");
 
-                    b.HasDiscriminator().HasValue("sixty");
+                    b.HasDiscriminator().HasValue("Sixty");
                 });
 
-            modelBuilder.Entity("SimpleModelsAndRelations.Models.thirty", b =>
+            modelBuilder.Entity("SimpleModelsAndRelations.Models.Thirty", b =>
                 {
                     b.HasBaseType("SimpleModelsAndRelations.Models.PreparationTime");
 
                     b.Property<string>("Description");
 
-                    b.ToTable("thirty");
+                    b.ToTable("Thirty");
 
-                    b.HasDiscriminator().HasValue("thirty");
+                    b.HasDiscriminator().HasValue("Thirty");
                 });
 
-            modelBuilder.Entity("SimpleModelsAndRelations.Models.Asian_Recipe", b =>
+            modelBuilder.Entity("SimpleModelsAndRelations.Models.Cuisine_Meal", b =>
                 {
-                    b.HasOne("SimpleModelsAndRelations.Models.Asian", "Asian")
-                        .WithMany("Asian_Recipes")
-                        .HasForeignKey("AsianId")
+                    b.HasOne("SimpleModelsAndRelations.Models.Cuisine", "Cuisine")
+                        .WithMany("Cuisine_Meals")
+                        .HasForeignKey("CuisineId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("SimpleModelsAndRelations.Models.Recipe", "Recipe")
-                        .WithMany("Asian_Recipes")
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("SimpleModelsAndRelations.Models.Breakfast_Recipe", b =>
-                {
-                    b.HasOne("SimpleModelsAndRelations.Models.Breakfast", "Breakfast")
-                        .WithMany("Breakfast_Recipes")
-                        .HasForeignKey("BreakfastId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("SimpleModelsAndRelations.Models.Recipe", "Recipe")
-                        .WithMany("Breakfast_Recipes")
-                        .HasForeignKey("RecipeId")
+                    b.HasOne("SimpleModelsAndRelations.Models.Meal", "Meal")
+                        .WithMany("Cuisine_Meals")
+                        .HasForeignKey("MealId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("SimpleModelsAndRelations.Models.Brunch_Recipe", b =>
+            modelBuilder.Entity("SimpleModelsAndRelations.Models.Meal_Recipe", b =>
                 {
-                    b.HasOne("SimpleModelsAndRelations.Models.Brunch", "Brunch")
-                        .WithMany("Brunch_Recipes")
-                        .HasForeignKey("BrunchId")
+                    b.HasOne("SimpleModelsAndRelations.Models.Meal", "Meal")
+                        .WithMany("Meal_Recipes")
+                        .HasForeignKey("MealId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("SimpleModelsAndRelations.Models.Recipe", "Recipe")
-                        .WithMany("Brunch_Recipes")
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("SimpleModelsAndRelations.Models.Dinner_Recipe", b =>
-                {
-                    b.HasOne("SimpleModelsAndRelations.Models.Dinner", "Dinner")
-                        .WithMany("Dinner_Recipes")
-                        .HasForeignKey("DinnerId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("SimpleModelsAndRelations.Models.Recipe", "Recipe")
-                        .WithMany("Dinner_Recipes")
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("SimpleModelsAndRelations.Models.Favorite_Recipe", b =>
-                {
-                    b.HasOne("SimpleModelsAndRelations.Models.Favorite", "Favorite")
-                        .WithMany("Favorite_Recipes")
-                        .HasForeignKey("FavoriteId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("SimpleModelsAndRelations.Models.Recipe", "Recipe")
-                        .WithMany("Favorite_Recipes")
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("SimpleModelsAndRelations.Models.Grill_Recipe", b =>
-                {
-                    b.HasOne("SimpleModelsAndRelations.Models.Grill", "Grill")
-                        .WithMany("Grill_Recipes")
-                        .HasForeignKey("GrillId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("SimpleModelsAndRelations.Models.Recipe", "Recipe")
-                        .WithMany("Grill_Recipes")
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("SimpleModelsAndRelations.Models.Lunch_Recipe", b =>
-                {
-                    b.HasOne("SimpleModelsAndRelations.Models.Lunch", "Lunch")
-                        .WithMany("Lunch_Recipes")
-                        .HasForeignKey("LunchId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("SimpleModelsAndRelations.Models.Recipe", "Recipe")
-                        .WithMany("Lunch_Recipes")
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("SimpleModelsAndRelations.Models.Mediterranean_Recipe", b =>
-                {
-                    b.HasOne("SimpleModelsAndRelations.Models.Mediterranean", "Mediterranean")
-                        .WithMany("Mediterranean_Recipes")
-                        .HasForeignKey("MediterraneanId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("SimpleModelsAndRelations.Models.Recipe", "Recipe")
-                        .WithMany("Mediterranean_Recipes")
+                        .WithMany("Meal_Recipes")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -665,15 +470,15 @@ namespace SimpleModelsAndRelations.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("SimpleModelsAndRelations.Models.Rating_Recipe", b =>
+            modelBuilder.Entity("SimpleModelsAndRelations.Models.Recipe_Rating", b =>
                 {
                     b.HasOne("SimpleModelsAndRelations.Models.Rating", "Rating")
-                        .WithMany("Rating_Recipes")
+                        .WithMany("Recipe_Ratings")
                         .HasForeignKey("RatingId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("SimpleModelsAndRelations.Models.Recipe", "Recipe")
-                        .WithMany("Rating_Recipes")
+                        .WithMany("Recipe_Ratings")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -691,28 +496,15 @@ namespace SimpleModelsAndRelations.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("SimpleModelsAndRelations.Models.User_Favorite", b =>
+            modelBuilder.Entity("SimpleModelsAndRelations.Models.User_Recipe", b =>
                 {
-                    b.HasOne("SimpleModelsAndRelations.Models.Favorite", "Favorite")
-                        .WithMany("User_Favorites")
-                        .HasForeignKey("FavoriteId")
+                    b.HasOne("SimpleModelsAndRelations.Models.Recipe", "Recipe")
+                        .WithMany("User_Recipes")
+                        .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("SimpleModelsAndRelations.Models.User", "User")
-                        .WithMany("User_Favorites")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("SimpleModelsAndRelations.Models.User_Rating", b =>
-                {
-                    b.HasOne("SimpleModelsAndRelations.Models.Rating", "Rating")
-                        .WithMany("User_Ratings")
-                        .HasForeignKey("RatingId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("SimpleModelsAndRelations.Models.User", "User")
-                        .WithMany("User_Ratings")
+                        .WithMany("User_Recipes")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

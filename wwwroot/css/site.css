@@ -769,7 +769,7 @@ textarea:disabled {
 }
 
 input[type="file"] {
-	margin-top: 10px;
+	margin: 10px 0 6px 0;
 }
 
 textarea {
@@ -972,7 +972,8 @@ th {
 }
 
 .local-menu {
-	margin: 20px 50px 0 50px;
+	margin: 50px 0;
+	padding-top: 20px;
 	border-bottom: solid 1px #ddd;
 }
 
@@ -1257,12 +1258,28 @@ th {
 	content: "";
 }
 
+.button--toggle {
+	background: #08ABCE;
+	color: #fff;
+	padding: 0 10px;
+}
+
+.button--toggle:hover {
+	color: #fff;
+}
+
 .button--toggle:before {
 	content: "";
 }
 
 .button--toggle--open:before {
 	content: "";
+}
+
+.button--search {
+	height: 42px;
+	line-height: 42px;
+	margin-left: 20px;
 }
 
 .dropdown {
@@ -1462,14 +1479,6 @@ th {
 	border-top: none;
 }
 
-.model-nested__item .control .button {
-	margin-top: 19px;
-}
-
-.model-nested__item .control .button--toggle {
-	margin-top: 0;
-}
-
 .model-nested__item--open {
 	background: #E1E1E1;
 }
@@ -1509,7 +1518,6 @@ th {
 }
 
 .inline-relation input {
-	margin-left: -20px;
 	margin-right: 40px;
 	max-width: calc(100% - 21px);
 }
@@ -1526,8 +1534,9 @@ th {
 }
 
 .inline-relation .control {
-	right: 50px;
-	margin-top: 0;
+	display: table-cell;
+	width: 47px;
+	position: relative;
 }
 
 .inline-relation .control .button {
@@ -1549,13 +1558,18 @@ th {
 	margin-top: 0;
 }
 
-.inline-relation .model__attribute-content {
-	padding-left: 20px;
-}
-
 .inline-relation .model__attribute-content a {
 	min-height: 42px;
 	padding-top: 8px;
+}
+
+.inline-relation .content {
+	display: table;
+	width: 100%;
+}
+
+.inline-relation .model-content--preview {
+	display: table-cell;
 }
 
 .model__attribute-content .radio:last-child,
@@ -1567,12 +1581,21 @@ th {
 .control {
 	position: absolute;
 	right: 0;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
 }
 
 .control:after {
 	content: '';
 	display: table;
 	clear: both;
+}
+
+.control .button--toggle {
+	-webkit-box-ordinal-group: 11;
+	-ms-flex-order: 10;
+	order: 10;
 }
 
 .control__button {
@@ -1772,9 +1795,16 @@ th {
 	top: 38px;
 }
 
-.slide__text__editor {
+.newly-created {
+	-webkit-animation: new 2s;
+	animation: new 2s;
+}
+
+.public-DraftEditor-content[contenteditable="true"] {
 	border: 1px solid #ddd;
 	min-height: 250px;
+	padding: 10px 15px;
+	background: #fff;
 }
 
 .text__editor__menu__bar img {
@@ -1884,13 +1914,9 @@ th {
 	margin: 0;
 }
 
-.column-view-menu .model-content {
+.column-view-menu .content .model-content {
 	padding: 21px 50px;
 	min-height: auto;
-}
-
-.column-view-content .topbar {
-	display: none;
 }
 
 .column-view-menu__item {
@@ -1902,6 +1928,13 @@ th {
 .column-view-menu__item--selected {
 	border-right-color: currentColor;
 	color: #08ABCE;
+}
+
+.searchform {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	margin-bottom: 19px;
 }
 
 @media (min-width: 768px) and (max-width: 1279px) {
@@ -1960,6 +1993,11 @@ th {
 	max-width: 100%;
 }
 
+.cards:after {
+	content: '';
+	width: calc(33.3333% - 20px);
+}
+
 .card {
 	width: calc(33.3333% - 20px);
 	margin-bottom: 20px;
@@ -2000,6 +2038,20 @@ th {
 
 .column-view-content {
 	margin-left: 250px;
+	padding: 20px 0 20px 50px;
+}
+
+.column-view-content .local-menu {
+	margin-top: 0;
+}
+
+.column-view-content .content .model-content {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.column-view-content .content .model-content .model-content {
+	padding: 5px 50px 25px 50px;
 }
 
 }
@@ -2062,8 +2114,12 @@ label {
 }
 
 .model-content {
-	padding: 5px 50px 25px 50px;
+	padding: 25px 50px 25px 50px;
 	min-height: 84px;
+}
+
+.model-content .model-content {
+	padding: 5px 50px 25px 50px;
 }
 
 .model-content--preview {
@@ -2140,8 +2196,12 @@ h3 {
 }
 
 .model-content {
-	padding: 5px 20px 10px 20px;
+	padding: 1px 0 10px 0;
 	min-height: 45px;
+}
+
+.model-content .model-content {
+	padding: 5px 20px 10px 20px;
 }
 
 .model-content--preview {
@@ -2195,6 +2255,30 @@ h3 {
 100% {
 	-webkit-transform: rotate(360deg);
 	transform: rotate(360deg);
+}
+
+}
+
+@-webkit-keyframes new {
+
+0% {
+	background: rgba(8, 171, 206, 0.15);
+}
+
+100% {
+	background: #fff;
+}
+
+}
+
+@keyframes new {
+
+0% {
+	background: rgba(8, 171, 206, 0.15);
+}
+
+100% {
+	background: #fff;
 }
 
 }
