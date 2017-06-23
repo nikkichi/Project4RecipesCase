@@ -175,7 +175,6 @@
                 { "type" : "string", "name": "Name" },
                 { "type" : "string", "name": "Ingredients" },
                 { "type" : "string", "name": "Description" },
-                { "type" : "int", "name": "Rating" },
                 { "type" : "image", "name": "Picture" }],
             "allow_maximisation": true,
             "allow_fullscreen": true,
@@ -187,7 +186,6 @@
                 "Name":"\"Flat Iron Steak Simplicity!/",
                 "Ingredients":"\"2 (8 ounce) flat iron steaks, 1/2 teaspoon lemon pepper seasoning, or to taste ,1/2 teaspoon onion powder, or to taste, 1/2 teaspoon garlic powder, or to taste/",
                 "Description":"\"Season the steaks with lemon pepper, onion powder and garlic powder on both sides. Wrap in plastic wrap and marinate for at least 2 hours in the refrigerator. Preheat the grill for medium-high heat and allow the steaks to come to room temperature. Unwrap steaks and place on the preheated grill. Cook to your desired degree of doneness, about 3 minutes per side for medium rare. Allow steaks to rest for a few minutes before serving./",
-                "Rating": 4,
                 "Picture" : "\"\""
             },
             {
@@ -196,7 +194,6 @@
                 "Ingredients": "\" 1 cup bread crumbs, 1/2 teaspoon garlic powder, 1/2 teaspoon dried thyme, 1/4 cup Dijon mustard, 1/3 cup light mayonnaise, 1 1/2 pounds chicken tenders, cut into 1-inch pieces, 3/4 pound green beans, washed, trimmed and steamed./",
                 "Description":"\"Heat oven to broil. Coat baking rack with nonstick cooking spray. Place rack over baking sheet; set aside. Stir together bread crumbs, garlic powder and thyme in a pie plate; set aside. Stir together mustard and mayonnaise. Reserve about 1/2 cup of mustard mixture for dipping sauce. Brush chicken pieces with remaining mustard mix; place chicken in pie plate with bread crumb mixture, spooning crumbs on top of pieces and pressing to adhere. Transfer to prepared baking rack. Broil for 10 minutes or until cooked through. Serve with reserved dipping sauce and green beans on the side./",
 
-                "Rating": 4,
 
                 "Picture" : "\"\""
             },
@@ -205,7 +202,6 @@
                 "Name":"\"Griddled chicken with quinoa Greek salad/",
                 "Ingredients":"\"225g quinoa, 25g butter, 1 red chilli, deseeded and finely chopped, 1 garlic clove-- crushed, 400g chicken, mini fillets, 1½ tbsp extra-virgin olive oil, 300g vine tomato roughly chopped, handful pitted black kalamata olives, 1 red onion finely sliced, 100g feta cheese crumbled, small bunch mint leaves chopped, juice and zest ½ lemon./",
                 "Description":"\"Cook the quinoa following the pack instructions, then rinse in cold water and drain thoroughly. Meanwhile, mix the butter, chilli and garlic into a paste. Toss the chicken fillets in 2 tsp of the olive oil with some seasoning. Lay in a hot griddle pan and cook for 3-4 mins each side or until cooked through. Transfer to a plate, dot with the spicy butter and set aside to melt. Next, tip the tomatoes, olives, onion, feta and mint into a bowl. Toss in the cooked quinoa. Stir through the remaining olive oil, lemon juice and zest, and season well. Serve with the chicken fillets on top, drizzled with any buttery chicken juices./",
-                "Rating": 5,
 
                 "Picture" : "\"\""
             },
@@ -215,7 +211,6 @@
                 "Ingredients":"\"4 boneless pork loin chops, cut 1/4 inch thick, 4 (7 inch) French bread baguettes split lengthwise, 4 teaspoons mayonnaise, or to taste, 1 ounce chile sauce with garlic, 1/4 cup fresh lime juice, 1 small red onion sliced into rings, 1 medium cucumber peeled and sliced lengthwise, 2 tablespoons chopped fresh cilantro, salt and pepper to taste. /",
                 "Description":"\"Heat oven to broil. Coat baking rack with nonstick cooking spray. Place rack over baking sheet; set aside. Stir together bread crumbs, garlic powder and thyme in a pie plate; set aside. Stir together mustard and mayonnaise. Reserve about 1/2 cup of mustard mixture for dipping sauce. Brush chicken pieces with remaining mustard mix; place chicken in pie plate with bread crumb mixture, spooning crumbs on top of pieces and pressing to adhere. Transfer to prepared baking rack. Broil for 10 minutes or until cooked through. Serve with reserved dipping sauce and green beans on the side./",
 
-                "Rating": 5,
 
                 "Picture" : "\"\""
             }
