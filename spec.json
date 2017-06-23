@@ -242,17 +242,6 @@
         ]
         },
         {
-        "source": "Cuisine",
-        "target": "Recipe",
-        "sort": "1-N",
-        "seeds": [
-            {"CuisineId": 3, "RecipeId": 1},
-            {"CuisineId": 3, "RecipeId": 2},
-            {"CuisineId": 1, "RecipeId": 4},
-            {"CuisineId": 2, "RecipeId": 3}
-        ]
-        },
-        {
         "source": "Meal",
         "target": "Recipe",
         "sort": "1-N",
