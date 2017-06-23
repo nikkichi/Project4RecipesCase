@@ -2,6 +2,11 @@
   @include clearfix();
   position: absolute;
   right: 0;
+  display: flex;
+
+  .button--toggle {
+    order: 10;
+  }
 
   &__button  {
     border: 1px solid $grey-400;

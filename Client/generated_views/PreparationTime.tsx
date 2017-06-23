@@ -14,28 +14,28 @@ import * as i18next from 'i18next'
 import * as Moment from 'moment'
 import * as HomepageViews from './Homepage'
 import * as RecipeViews from './Recipe'
-import * as ninteeViews from './nintee'
-import * as thirtyViews from './thirty'
-import * as sixtyViews from './sixty'
-import * as fifteenViews from './fifteen'
+import * as ThirtyViews from './Thirty'
+import * as SixtyViews from './Sixty'
+import * as NinetyViews from './Ninety'
+import * as FifteenViews from './Fifteen'
 
 export let PreparationTime = (props:Utils.EntityComponentProps<Models.PreparationTime>) : JSX.Element =>
-  props.entity.Kind == "nintee" ?
-      ninteeViews.nintee({...props,
+  props.entity.Kind == "Thirty" ?
+      ThirtyViews.Thirty({...props,
             set_entity:(e,c) => props.set_entity(e as Models.PreparationTime, c),
-            entity:props.entity as Models.nintee})
-       : props.entity.Kind == "thirty" ?
-      thirtyViews.thirty({...props,
+            entity:props.entity as Models.Thirty})
+       : props.entity.Kind == "Sixty" ?
+      SixtyViews.Sixty({...props,
             set_entity:(e,c) => props.set_entity(e as Models.PreparationTime, c),
-            entity:props.entity as Models.thirty})
-       : props.entity.Kind == "sixty" ?
-      sixtyViews.sixty({...props,
+            entity:props.entity as Models.Sixty})
+       : props.entity.Kind == "Ninety" ?
+      NinetyViews.Ninety({...props,
             set_entity:(e,c) => props.set_entity(e as Models.PreparationTime, c),
-            entity:props.entity as Models.sixty})
-       : props.entity.Kind == "fifteen" ?
-      fifteenViews.fifteen({...props,
+            entity:props.entity as Models.Ninety})
+       : props.entity.Kind == "Fifteen" ?
+      FifteenViews.Fifteen({...props,
             set_entity:(e,c) => props.set_entity(e as Models.PreparationTime, c),
-            entity:props.entity as Models.fifteen})
+            entity:props.entity as Models.Fifteen})
        : null
 
 export let PreparationTime_to_page = (id:number) => {

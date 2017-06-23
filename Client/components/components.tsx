@@ -105,7 +105,7 @@ export function Text(
   return <textarea disabled={!can_edit || mode == "view"} type="text"
         value={get_item()}
         onChange={(e) => {
-          let new_value = (e.target as HTMLInputElement).value
+          let new_value = (e.target as HTMLTextAreaElement).value
           if (!validation || validation(new_value))
             set_item(new_value)
         } }/>
@@ -118,12 +118,13 @@ export function Number(
   set_item:(v:number)=>void,
   validation?:(_:number)=>"ok"|{ error:string }) : JSX.Element {
   return mode == "view" ?
-      <div>{(get_item() == NaN || get_item() == undefined ? '' : get_item())}</div>
+      <div>{(get_item() == NaN || get_item() == undefined) ? '' : get_item()}</div>
     :
       <input disabled={!can_edit} type="number"
         value={`${get_item()}`}
         onChange={(e) => {
           let new_value = (e.target as HTMLInputElement).valueAsNumber
+          if (isNaN(new_value)) new_value = 0
           if (!validation || validation(new_value))
             set_item(new_value)
         } }/>

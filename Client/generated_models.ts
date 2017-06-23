@@ -1,18 +1,11 @@
 import * as Immutable from 'immutable'
 import * as Moment from 'moment'
 
-export type nintee = {
+export type Thirty = {
     Id : number
     CreatedDate:Moment.Moment
     Description : string
-    Kind:"nintee"
-  }
-  
-export type thirty = {
-    Id : number
-    CreatedDate:Moment.Moment
-    Description : string
-    Kind:"thirty"
+    Kind:"Thirty"
   }
   
 export type Meal = {
@@ -25,7 +18,7 @@ export type Meal = {
 export type Asian = {
     Id : number
     CreatedDate:Moment.Moment
-    
+    Description : string
     Kind:"Asian"
   }
   
@@ -41,13 +34,13 @@ export type PreparationTime = {
     CreatedDate:Moment.Moment
     
     
-  } & (nintee | thirty | sixty | fifteen)
+  } & (Thirty | Sixty | Ninety | Fifteen)
   
-export type sixty = {
+export type Sixty = {
     Id : number
     CreatedDate:Moment.Moment
     Description : string
-    Kind:"sixty"
+    Kind:"Sixty"
   }
   
 export type RecommendationPage = {
@@ -60,7 +53,7 @@ export type RecommendationPage = {
 export type Lunch = {
     Id : number
     CreatedDate:Moment.Moment
-    
+    Description : string
     Kind:"Lunch"
   }
   
@@ -84,7 +77,7 @@ export type Homepage = {
 export type Brunch = {
     Id : number
     CreatedDate:Moment.Moment
-    
+    Description : string
     Kind:"Brunch"
   }
   
@@ -94,7 +87,6 @@ export type Recipe = {
     Name : string
   Ingredients : string
   Description : string
-  RatingType : number
   Picture : string
     
   }
@@ -102,110 +94,65 @@ export type Recipe = {
 export type Dinner = {
     Id : number
     CreatedDate:Moment.Moment
-    
+    Description : string
     Kind:"Dinner"
   }
   
 export type Mediterranean = {
     Id : number
     CreatedDate:Moment.Moment
-    
+    Description : string
     Kind:"Mediterranean"
+  }
+  
+export type Ninety = {
+    Id : number
+    CreatedDate:Moment.Moment
+    Description : string
+    Kind:"Ninety"
   }
   
 export type Breakfast = {
     Id : number
     CreatedDate:Moment.Moment
-    
+    Description : string
     Kind:"Breakfast"
   }
   
-export type Favorite = {
-    Id : number
-    CreatedDate:Moment.Moment
-    
-    
-  }
-  
-export type fifteen = {
+export type Fifteen = {
     Id : number
     CreatedDate:Moment.Moment
     Description : string
-    Kind:"fifteen"
+    Kind:"Fifteen"
   }
   
 export type Rating = {
     Id : number
     CreatedDate:Moment.Moment
-    
+    Number : number
     
   }
   
 export type Grill = {
     Id : number
     CreatedDate:Moment.Moment
-    
+    Description : string
     Kind:"Grill"
   }
   
-export type Asian_Recipe = {
+export type Cuisine_Meal = {
     Id : number
     CreatedDate:Moment.Moment
-    AsianId : number
-  RecipeId : number
+    CuisineId : number
+  MealId : number
     
   }
   
 
-export type Mediterranean_Recipe = {
+export type Meal_Recipe = {
     Id : number
     CreatedDate:Moment.Moment
-    MediterraneanId : number
-  RecipeId : number
-    
-  }
-  
-
-export type Grill_Recipe = {
-    Id : number
-    CreatedDate:Moment.Moment
-    GrillId : number
-  RecipeId : number
-    
-  }
-  
-
-export type Breakfast_Recipe = {
-    Id : number
-    CreatedDate:Moment.Moment
-    BreakfastId : number
-  RecipeId : number
-    
-  }
-  
-
-export type Brunch_Recipe = {
-    Id : number
-    CreatedDate:Moment.Moment
-    BrunchId : number
-  RecipeId : number
-    
-  }
-  
-
-export type Lunch_Recipe = {
-    Id : number
-    CreatedDate:Moment.Moment
-    LunchId : number
-  RecipeId : number
-    
-  }
-  
-
-export type Dinner_Recipe = {
-    Id : number
-    CreatedDate:Moment.Moment
-    DinnerId : number
+    MealId : number
   RecipeId : number
     
   }
@@ -220,19 +167,19 @@ export type PreparationTime_Recipe = {
   }
   
 
-export type User_Favorite = {
+export type User_Recipe = {
     Id : number
     CreatedDate:Moment.Moment
     UserId : number
-  FavoriteId : number
+  RecipeId : number
     
   }
   
 
-export type User_Rating = {
+export type Recipe_Rating = {
     Id : number
     CreatedDate:Moment.Moment
-    UserId : number
+    RecipeId : number
   RatingId : number
     
   }
@@ -243,24 +190,6 @@ export type User_RecommendationPage = {
     CreatedDate:Moment.Moment
     UserId : number
   RecommendationPageId : number
-    
-  }
-  
-
-export type Favorite_Recipe = {
-    Id : number
-    CreatedDate:Moment.Moment
-    FavoriteId : number
-  RecipeId : number
-    
-  }
-  
-
-export type Rating_Recipe = {
-    Id : number
-    CreatedDate:Moment.Moment
-    RatingId : number
-  RecipeId : number
     
   }
   
@@ -279,6 +208,24 @@ export type Homepage_Recipe = {
     CreatedDate:Moment.Moment
     HomepageId : number
   RecipeId : number
+    
+  }
+  
+
+export type Homepage_RecommendationPage = {
+    Id : number
+    CreatedDate:Moment.Moment
+    HomepageId : number
+  RecommendationPageId : number
+    
+  }
+  
+
+export type Homepage_Cuisine = {
+    Id : number
+    CreatedDate:Moment.Moment
+    HomepageId : number
+  CuisineId : number
     
   }
   

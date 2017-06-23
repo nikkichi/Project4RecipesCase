@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Hosting;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using SimpleModelsAndRelations;
@@ -15,15 +16,17 @@ using SimpleModelsAndRelations.Filters;
 
 
 [Route("/[controller]")]
-  public class thirtiesController : Controller
+  public class ThirtiesController : Controller
   {
     private readonly MailOptions _mailOptions;
     public readonly SimpleModelsAndRelationsContext _context;
+    public IHostingEnvironment env;
 
-    public thirtiesController(SimpleModelsAndRelationsContext context, IOptions<MailOptions> mailOptionsAccessor)
+    public ThirtiesController(SimpleModelsAndRelationsContext context, IHostingEnvironment env, IOptions<MailOptions> mailOptionsAccessor)
     {
       _context = context;
       _mailOptions = mailOptionsAccessor.Value;
+      this.env = env;
     }
 
     [RestrictToUserType(new string[] {"*"})]
@@ -35,7 +38,7 @@ using SimpleModelsAndRelations.Filters;
       
       ViewData["CurrentUser"] = session == null ? null : session.User;
       ViewData["id"] = id;
-      ViewData["Page"] = "thirties/View";
+      ViewData["Page"] = "Thirties/View";
       return View();
     }
   }

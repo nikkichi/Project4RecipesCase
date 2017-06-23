@@ -80,3 +80,24 @@
     top: 38px;
   }
 }
+
+@-webkit-keyframes new {
+  0%   { background: rgba($main-color, .15); }
+  100% { background: #fff; }
+}
+@-moz-keyframes new {
+  0%   { background: rgba($main-color, .15); }
+  100% { background: #fff; }
+}
+@-o-keyframes new {
+  0%   { background: rgba($main-color, .15); }
+  100% { background: #fff; }
+}
+@keyframes new {
+  0%   { background: rgba($main-color, .15); }
+  100% { background: #fff; }
+}
+
+.newly-created {
+  animation: new 2s;
+}

@@ -13,6 +13,7 @@ import * as Draft from 'draft-js'
 import * as i18next from 'i18next'
 import * as Moment from 'moment'
 import * as HomepageViews from './Homepage'
+import * as MealViews from './Meal'
 import * as AsianViews from './Asian'
 import * as MediterraneanViews from './Mediterranean'
 import * as GrillViews from './Grill'
@@ -33,7 +34,7 @@ export let Cuisine = (props:Utils.EntityComponentProps<Models.Cuisine>) : JSX.El
        : null
 
 export let Cuisine_to_page = (id:number) => {
-  let can_edit = Utils.any_of([Permissions.can_edit_Cuisine])
+  let can_edit = Utils.any_of([Permissions.can_edit_Cuisine, Permissions.can_edit_Cuisine_Meal, Permissions.can_edit_Homepage_Cuisine, Permissions.can_edit_Meal, Permissions.can_edit_Homepage])
   return Utils.scene_to_page<Models.Cuisine>(can_edit, Cuisine, Api.get_Cuisine(id), Api.update_Cuisine, "Cuisine", "Cuisine", `/Cuisines/${id}`)
 }
 

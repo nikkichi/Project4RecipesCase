@@ -5,6 +5,12 @@
   .model-nested__title {
     width: 100%;
   }
+  @include tablet-desktop {
+    &:after {
+      content: '';
+      width: calc(33.3333% - 20px);
+    }
+  }
 }
 
 .card {

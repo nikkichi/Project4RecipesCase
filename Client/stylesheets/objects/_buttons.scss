@@ -101,6 +101,13 @@
 }
 
 .button--toggle {
+  background: $button--toggle-bg;
+  color: #fff;
+  padding: 0 10px;
+  &:hover {
+    color: #fff;
+  }
+
   &:before {
     content: $icon-plus;
   }
@@ -110,4 +117,10 @@
       content: $icon-minus;
     }
   }
+}
+
+.button--search {
+  height: 42px;
+  line-height: 42px;
+  margin-left: 20px;
 }

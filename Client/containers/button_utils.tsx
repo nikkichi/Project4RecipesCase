@@ -21,3 +21,8 @@ export let Create = (props:{onClick:() => void, target_name:string}) =>
           onClick={() => props.onClick()}>
     {i18next.t(`Create new ${props.target_name}`)}
   </button>
+export let Search = (props:{onClick:() => void}) =>
+  <button className="button button--search"
+          onClick={() => props.onClick()}>
+    {i18next.t(`Search`)}
+  </button>

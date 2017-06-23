@@ -13,122 +13,123 @@ import * as Draft from 'draft-js'
 import * as i18next from 'i18next'
 import * as Moment from 'moment'
 import * as HomepageViews from './Homepage'
-import * as FavoriteViews from './Favorite'
-import * as RatingViews from './Rating'
+import * as RecipeViews from './Recipe'
 import * as RecommendationPageViews from './RecommendationPage'
 
 
-export function User_User_Favorite_can_create(self:UserContext) {
+export function User_User_Recipe_can_create(self:UserContext) {
   let state = self.state()
-  return state.Favorite == "loading" ? false : state.Favorite.CanCreate
-}
-export function User_User_Rating_can_create(self:UserContext) {
-  let state = self.state()
-  return state.Rating == "loading" ? false : state.Rating.CanCreate
+  return state.Recipe == "loading" ? false : state.Recipe.CanCreate
 }
 export function User_User_RecommendationPage_can_create(self:UserContext) {
   let state = self.state()
   return state.RecommendationPage == "loading" ? false : state.RecommendationPage.CanCreate
 }
-export function User_User_Favorite_can_delete(self:UserContext) {
+export function User_User_Recipe_can_delete(self:UserContext) {
   let state = self.state()
-  return state.Favorite == "loading" ? false : state.Favorite.CanDelete
-}
-export function User_User_Rating_can_delete(self:UserContext) {
-  let state = self.state()
-  return state.Rating == "loading" ? false : state.Rating.CanDelete
+  return state.Recipe == "loading" ? false : state.Recipe.CanDelete
 }
 export function User_User_RecommendationPage_can_delete(self:UserContext) {
   let state = self.state()
   return state.RecommendationPage == "loading" ? false : state.RecommendationPage.CanDelete
 }
-export function User_User_Favorite_page_index(self:UserContext) {
+export function User_User_Recipe_page_index(self:UserContext) {
   let state = self.state()
-  return state.Favorite == "loading" ? 0 : state.Favorite.PageIndex
-}
-export function User_User_Rating_page_index(self:UserContext) {
-  let state = self.state()
-  return state.Rating == "loading" ? 0 : state.Rating.PageIndex
+  return state.Recipe == "loading" ? 0 : state.Recipe.PageIndex
 }
 export function User_User_RecommendationPage_page_index(self:UserContext) {
   let state = self.state()
   return state.RecommendationPage == "loading" ? 0 : state.RecommendationPage.PageIndex
 }
-export function User_User_Favorite_page_size(self:UserContext) {
+export function User_User_Recipe_page_size(self:UserContext) {
   let state = self.state()
-  return state.Favorite == "loading" ? 25 : state.Favorite.PageSize
-}
-export function User_User_Rating_page_size(self:UserContext) {
-  let state = self.state()
-  return state.Rating == "loading" ? 25 : state.Rating.PageSize
+  return state.Recipe == "loading" ? 25 : state.Recipe.PageSize
 }
 export function User_User_RecommendationPage_page_size(self:UserContext) {
   let state = self.state()
   return state.RecommendationPage == "loading" ? 25 : state.RecommendationPage.PageSize
 }
-export function User_User_Favorite_num_pages(self:UserContext) {
+export function User_User_Recipe_search_query(self:UserContext) {
   let state = self.state()
-  return state.Favorite == "loading" ? 1 : state.Favorite.NumPages
+  return state.Recipe == "loading" ? null : state.Recipe.SearchQuery
 }
-export function User_User_Rating_num_pages(self:UserContext) {
+export function User_User_RecommendationPage_search_query(self:UserContext) {
   let state = self.state()
-  return state.Rating == "loading" ? 1 : state.Rating.NumPages
+  return state.RecommendationPage == "loading" ? null : state.RecommendationPage.SearchQuery
+}
+export function User_User_Recipe_num_pages(self:UserContext) {
+  let state = self.state()
+  return state.Recipe == "loading" ? 1 : state.Recipe.NumPages
 }
 export function User_User_RecommendationPage_num_pages(self:UserContext) {
   let state = self.state()
   return state.RecommendationPage == "loading" ? 1 : state.RecommendationPage.NumPages
 }
 
-export function load_relation_User_User_Favorite(self:UserContext, current_User:Models.User, callback?:()=>void) {
-  Permissions.can_view_Favorite(current_User) ?
-    Api.get_User_User_Favorites(self.props.entity, User_User_Favorite_page_index(self), User_User_Favorite_page_size(self)).then(Favorites =>
-      self.setState({...self.state(), update_count:self.state().update_count+1,
-          Favorite:Utils.raw_page_to_paginated_items<Models.Favorite, Utils.EntityAndSize<Models.Favorite> & { shown_relation:string }>(i => {
-            let state = self.state()
-            return {
-              element:i,
-              size: state.Favorite != "loading" && state.Favorite.Items.has(i.Id) ? state.Favorite.Items.get(i.Id).size : "preview",
-              shown_relation:"all"}}, Favorites)
-          }, callback))
-  :
-    callback && callback()
+export function load_relation_User_User_Recipe(self:UserContext, force_first_page:boolean, current_User:Models.User, callback?:()=>void) {
+  let state = self.state()
+  let prelude = force_first_page && state.Recipe != "loading" ?
+    (c:() => void) => state.Recipe != "loading" && self.setState({
+      ...state,
+      Recipe: {...state.Recipe, PageIndex:0 }
+    }, c)
+    :
+    (c:() => void) => c()
+  Permissions.can_view_Recipe(current_User) ?
+    prelude(() =>
+      Api.get_User_User_Recipes(self.props.entity, User_User_Recipe_page_index(self), User_User_Recipe_page_size(self), User_User_Recipe_search_query(self)).then(Recipes =>
+        self.setState({...self.state(), update_count:self.state().update_count+1,
+            Recipe:Utils.raw_page_to_paginated_items<Models.Recipe, Utils.EntityAndSize<Models.Recipe> & { shown_relation:string }>((i, i_just_created) => {
+              let state = self.state()
+              return {
+                element:i,
+                size: state.Recipe != "loading" ?
+                  (state.Recipe.Items.has(i.Id) ?
+                    state.Recipe.Items.get(i.Id).size
+                  :
+                    "preview" /* i_just_created ? "large" : "preview" */)
+                  :
+                    "preview" /* i_just_created ? "large" : "preview" */,
+                shown_relation:"all"}}, Recipes)
+            }, callback)))
+    :
+      prelude(() => callback && callback())
 }
 
-export function load_relation_User_User_Rating(self:UserContext, current_User:Models.User, callback?:()=>void) {
-  Permissions.can_view_Rating(current_User) ?
-    Api.get_User_User_Ratings(self.props.entity, User_User_Rating_page_index(self), User_User_Rating_page_size(self)).then(Ratings =>
-      self.setState({...self.state(), update_count:self.state().update_count+1,
-          Rating:Utils.raw_page_to_paginated_items<Models.Rating, Utils.EntityAndSize<Models.Rating> & { shown_relation:string }>(i => {
-            let state = self.state()
-            return {
-              element:i,
-              size: state.Rating != "loading" && state.Rating.Items.has(i.Id) ? state.Rating.Items.get(i.Id).size : "preview",
-              shown_relation:"all"}}, Ratings)
-          }, callback))
-  :
-    callback && callback()
-}
-
-export function load_relation_User_User_RecommendationPage(self:UserContext, current_User:Models.User, callback?:()=>void) {
+export function load_relation_User_User_RecommendationPage(self:UserContext, force_first_page:boolean, current_User:Models.User, callback?:()=>void) {
+  let state = self.state()
+  let prelude = force_first_page && state.RecommendationPage != "loading" ?
+    (c:() => void) => state.RecommendationPage != "loading" && self.setState({
+      ...state,
+      RecommendationPage: {...state.RecommendationPage, PageIndex:0 }
+    }, c)
+    :
+    (c:() => void) => c()
   Permissions.can_view_RecommendationPage(current_User) ?
-    Api.get_User_User_RecommendationPages(self.props.entity, User_User_RecommendationPage_page_index(self), User_User_RecommendationPage_page_size(self)).then(RecommendationPages =>
-      self.setState({...self.state(), update_count:self.state().update_count+1,
-          RecommendationPage:Utils.raw_page_to_paginated_items<Models.RecommendationPage, Utils.EntityAndSize<Models.RecommendationPage> & { shown_relation:string }>(i => {
-            let state = self.state()
-            return {
-              element:i,
-              size: state.RecommendationPage != "loading" && state.RecommendationPage.Items.has(i.Id) ? state.RecommendationPage.Items.get(i.Id).size : "preview",
-              shown_relation:"all"}}, RecommendationPages)
-          }, callback))
-  :
-    callback && callback()
+    prelude(() =>
+      Api.get_User_User_RecommendationPages(self.props.entity, User_User_RecommendationPage_page_index(self), User_User_RecommendationPage_page_size(self), User_User_RecommendationPage_search_query(self)).then(RecommendationPages =>
+        self.setState({...self.state(), update_count:self.state().update_count+1,
+            RecommendationPage:Utils.raw_page_to_paginated_items<Models.RecommendationPage, Utils.EntityAndSize<Models.RecommendationPage> & { shown_relation:string }>((i, i_just_created) => {
+              let state = self.state()
+              return {
+                element:i,
+                size: state.RecommendationPage != "loading" ?
+                  (state.RecommendationPage.Items.has(i.Id) ?
+                    state.RecommendationPage.Items.get(i.Id).size
+                  :
+                    "preview" /* i_just_created ? "large" : "preview" */)
+                  :
+                    "preview" /* i_just_created ? "large" : "preview" */,
+                shown_relation:"all"}}, RecommendationPages)
+            }, callback)))
+    :
+      prelude(() => callback && callback())
 }
 
 export function load_relations_User(self, current_User:Models.User, callback?:()=>void) {
-  load_relation_User_User_RecommendationPage(self, self.props.current_User, 
-        () => load_relation_User_User_Rating(self, self.props.current_User, 
-        () => load_relation_User_User_Favorite(self, self.props.current_User, 
-        () => callback && callback())))
+  load_relation_User_User_RecommendationPage(self, false, self.props.current_User, 
+        () => load_relation_User_User_Recipe(self, false, self.props.current_User, 
+        () => callback && callback()))
 }
 
 export function set_size_User(self:UserContext, new_size:Utils.EntitySize) {
@@ -146,7 +147,7 @@ export function render_User_Username_editable_minimised(self:UserContext) : JSX.
   <label className="attribute-label attribute-label-username">{i18next.t(`User:Username`, {context: self.props.inline ? "inline" : ""})}</label>
   <div className="model__attribute-content">
     { Components.String(
-        false,
+        false /* because username and email cannot be edited */,
         self.props.mode,
         () => self.props.entity.Username,
         v => self.props.set_entity({...self.props.entity, Username:v})) } 
@@ -187,7 +188,7 @@ export function render_User_Username_editable_maximised(self:UserContext) : JSX.
   <label className="attribute-label attribute-label-username">{i18next.t(`User:Username`, {context: self.props.inline ? "inline" : ""})}</label>
   <div className="model__attribute-content">
     { Components.String(
-        false,
+        false /* because username and email cannot be edited */,
         self.props.mode,
         () => self.props.entity.Username,
         v => self.props.set_entity({...self.props.entity, Username:v})) } 
@@ -230,7 +231,7 @@ export function render_User_Email_editable_maximised(self:UserContext) : JSX.Ele
 
 
 export function render_editable_attributes_minimised_User(self:UserContext) {
-  let attributes = (<div><button onClick={() => Api.reset_User_password(self.props.entity.Username, self.props.entity.Email)}>{self.props.entity.HasPassword ? i18next.t('common:Reset password') : i18next.t('common:Create password')}</button>
+  let attributes = (<div>
       {render_User_Username_editable_minimised(self)}
         {render_User_Language_editable_minimised(self)}
     </div>)
@@ -238,10 +239,22 @@ export function render_editable_attributes_minimised_User(self:UserContext) {
 }
 
 export function render_editable_attributes_maximised_User(self:UserContext) {
-    let attributes = (<div><button onClick={() => Api.reset_User_password(self.props.entity.Username, self.props.entity.Email)}>{self.props.entity.HasPassword ? i18next.t('common:Reset password') : i18next.t('common:Create password')}</button>
+    let state = self.state()
+    let attributes = (<div>
         {render_User_Username_editable_maximised(self)}
         {render_User_Language_editable_maximised(self)}
         {render_User_Email_editable_maximised(self)}
+        <button onClick={() => Api.reset_User_password(self.props.entity.Username, self.props.entity.Email).then(() => location.reload())}>{self.props.entity.HasPassword ? i18next.t('common:Reset password') : i18next.t('common:Create password')}</button>
+        <button onClick={() => Api.delete_User_sessions().then(() => location.reload())}>{i18next.t('common:Delete sessions')}</button>
+        {state.active_sessions != "loading" ?
+            <div className="active-user-sessions">
+              <label className="attribute-label attribute-label-active_sessions">{i18next.t("Active sessions")}</label>
+              {
+                state.active_sessions.map(s => <div>{s.Item1} - {Moment(s.Item2).format("DD/MM/YYYY")}</div>)
+              }
+            </div>
+          :
+            <div className="loading">{i18next.t("loading")}</div>}
       </div>)
     return attributes
   }
@@ -282,6 +295,34 @@ export function render_menu_User(self:UserContext) {
                     </a>
                   </div>
                 }
+        {!Permissions.can_view_RecommendationPage(self.props.current_User) ? null :
+                  <div className={`menu_entry${self.props.shown_relation == "Homepage_RecommendationPage" ? " active" : ""}`}>
+                    <a onClick={() =>
+                        {
+                            Api.get_Homepages(0, 1).then(e =>
+                              e.Items.length > 0 && self.props.set_page(HomepageViews.Homepage_to_page(e.Items[0].Item.Id),
+                                () => self.props.set_shown_relation("Homepage_RecommendationPage"))
+                            )
+                        }
+                      }>
+                      {i18next.t('Homepage_RecommendationPages')}
+                    </a>
+                  </div>
+                }
+        {!Permissions.can_view_Cuisine(self.props.current_User) ? null :
+                  <div className={`menu_entry${self.props.shown_relation == "Homepage_Cuisine" ? " active" : ""}`}>
+                    <a onClick={() =>
+                        {
+                            Api.get_Homepages(0, 1).then(e =>
+                              e.Items.length > 0 && self.props.set_page(HomepageViews.Homepage_to_page(e.Items[0].Item.Id),
+                                () => self.props.set_shown_relation("Homepage_Cuisine"))
+                            )
+                        }
+                      }>
+                      {i18next.t('Homepage_Cuisines')}
+                    </a>
+                  </div>
+                }
                 <div className="menu_entry menu_entry--with-sub">
                 
                 </div>  
@@ -302,25 +343,15 @@ export function render_local_menu_User(self:UserContext) {
               </a>
             </div>
           
-            {!Permissions.can_view_Favorite(self.props.current_User) ? null :
-                  <div key={"User_Favorite"} className={`local_menu_entry${self.props.shown_relation == "User_Favorite" ? " local_menu_entry--active" : ""}`}>
+            {!Permissions.can_view_Recipe(self.props.current_User) ? null :
+                  <div key={"User_Recipe"} className={`local_menu_entry${self.props.shown_relation == "User_Recipe" ? " local_menu_entry--active" : ""}`}>
                     <a onClick={() =>
-                      load_relation_User_User_Favorite(self,
+                      load_relation_User_User_Recipe(self,
+                        false,
                         self.props.current_User, 
-                        () => self.props.set_shown_relation("User_Favorite"))
+                        () => self.props.set_shown_relation("User_Recipe"))
                     }>
-                      {i18next.t('User_Favorites')}
-                    </a>
-                  </div>
-                }
-        {!Permissions.can_view_Rating(self.props.current_User) ? null :
-                  <div key={"User_Rating"} className={`local_menu_entry${self.props.shown_relation == "User_Rating" ? " local_menu_entry--active" : ""}`}>
-                    <a onClick={() =>
-                      load_relation_User_User_Rating(self,
-                        self.props.current_User, 
-                        () => self.props.set_shown_relation("User_Rating"))
-                    }>
-                      {i18next.t('User_Ratings')}
+                      {i18next.t('User_Recipes')}
                     </a>
                   </div>
                 }
@@ -328,6 +359,7 @@ export function render_local_menu_User(self:UserContext) {
                   <div key={"User_RecommendationPage"} className={`local_menu_entry${self.props.shown_relation == "User_RecommendationPage" ? " local_menu_entry--active" : ""}`}>
                     <a onClick={() =>
                       load_relation_User_User_RecommendationPage(self,
+                        false,
                         self.props.current_User, 
                         () => self.props.set_shown_relation("User_RecommendationPage"))
                     }>
@@ -367,8 +399,12 @@ export function render_controls_User(self:UserContext) {
 }
 
 export function render_content_User(self:UserContext) {
-  return <div className={`${self.props.inline != undefined && self.props.inline ? "" : "model-content"} ${self.props.size == 'preview' ? 'model-content--preview' : ''}`}>
-    {Permissions.can_view_User(self.props.current_User) ?
+  let actions:Array<()=>void> =
+    [
+      
+    ].filter(a => a != null)
+  let content =
+    Permissions.can_view_User(self.props.current_User) ?
       self.props.size == "preview" ?
         render_preview_User(self)
       : self.props.size == "large" ?
@@ -377,8 +413,16 @@ export function render_content_User(self:UserContext) {
         render_large_User(self)
       : "Error: unauthorised access to entity."
     : "Error: unauthorised access to entity."
-    }
-  </div>
+  if (self.props.mode == "view" && actions.length == 1 && !false)
+    return <a onClick={() => actions[0]()}>
+      <div className={`${self.props.inline != undefined && self.props.inline ? "" : "model-content"} ${self.props.size == 'preview' ? 'model-content--preview' : ''}`}>
+        {content}
+      </div>
+    </a>
+  else
+    return <div className={`${self.props.inline != undefined && self.props.inline ? "" : "model-content"} ${self.props.size == 'preview' ? 'model-content--preview' : ''}`}>
+      {content}
+    </div>
 }
 
 export function render_User_Username_minimised(self:UserContext) : JSX.Element {
@@ -386,7 +430,7 @@ export function render_User_Username_minimised(self:UserContext) : JSX.Element {
   <label className="attribute-label attribute-label-username">{i18next.t(`User:Username`, {context: self.props.inline ? "inline" : ""})}</label>
   <div className="model__attribute-content">
     { Components.String(
-        false,
+        false /* because username and email cannot be edited */,
         self.props.mode,
         () => self.props.entity.Username,
         v => self.props.set_entity({...self.props.entity, Username:v})) } 
@@ -417,7 +461,7 @@ export function render_User_Username_maximised(self:UserContext) : JSX.Element {
   <label className="attribute-label attribute-label-username">{i18next.t(`User:Username`, {context: self.props.inline ? "inline" : ""})}</label>
   <div className="model__attribute-content">
     { Components.String(
-        false,
+        false /* because username and email cannot be edited */,
         self.props.mode,
         () => self.props.entity.Username,
         v => self.props.set_entity({...self.props.entity, Username:v})) } 
@@ -466,12 +510,22 @@ export function render_preview_User(self:UserContext) {
 }
 
 export function render_large_User(self:UserContext) {
+  let state = self.state()
   let attributes:JSX.Element = null
   if (self.props.mode == "view" || !Permissions.can_edit_User(self.props.current_User))
     attributes = (<div className="model__attributes">
       { render_User_Username_maximised(self) }
         { render_User_Language_maximised(self) }
         { render_User_Email_maximised(self) }
+        {state.active_sessions != "loading" ?
+            <div className="active-user-sessions">
+              <label className="attribute-label attribute-label-active_sessions">{i18next.t("Active sessions")}</label>
+              {
+                state.active_sessions.map(s => <div>{s.Item1} - {Moment(s.Item2).format("DD/MM/YYYY")}</div>)
+              }
+            </div>
+          :
+            <div className="loading">{i18next.t("loading")}</div>}
     </div>)
   else
     attributes = render_editable_attributes_maximised_User(self)
@@ -482,158 +536,48 @@ export function render_large_User(self:UserContext) {
 }
 
 
-export function render_User_User_Favorite(self:UserContext, context:"presentation_structure"|"default") {
-  if ((context == "default" && self.props.shown_relation != "all" && self.props.shown_relation != "User_Favorite") || !Permissions.can_view_Favorite(self.props.current_User))
+export function render_User_User_Recipe(self:UserContext, context:"presentation_structure"|"default") {
+  if ((context == "default" && self.props.shown_relation != "all" && self.props.shown_relation != "User_Recipe") || !Permissions.can_view_Recipe(self.props.current_User))
     return null
   let state = self.state()
   return <div>
-    { List.render_relation("user_user_favorite",
-   "User",
-   "Favorite",
-   "Favorites",
-   self.props.nesting_depth > 0,
-   false,
-   false,
-   false)
-  (
-      state.Favorite != "loading" ? state.Favorite.Items : state.Favorite,
-      User_User_Favorite_page_index(self),
-      User_User_Favorite_num_pages(self),
-      new_page_index => {
-          let state = self.state()
-          state.Favorite != "loading" &&
-          self.setState({...self.state(),
-            update_count:self.state().update_count+1,
-            Favorite: {
-              ...state.Favorite,
-              PageIndex:new_page_index
-            }
-          }, () =>  load_relation_User_User_Favorite(self, self.props.current_User))
-        },
-      (i,i_id) => {
-          let state = self.state()
-          return <div key={i_id}
-            className={`model-nested__item ${i.size != "preview" ? "model-nested__item--open" : ""} ` }
-          
-            >
-            <div key={i_id}>
-              {
-                FavoriteViews.Favorite({
-                  ...self.props,
-                  entity:i.element,
-                  inline:false,
-                  nesting_depth:self.props.nesting_depth+1,
-                  size: i.size,
-                  allow_maximisation:true,
-                  allow_fullscreen:true,
-                  mode:self.props.mode == "edit" && (Permissions.can_edit_User_Favorite(self.props.current_User)
-                        || Permissions.can_create_User_Favorite(self.props.current_User)
-                        || Permissions.can_delete_User_Favorite(self.props.current_User)) ?
-                    self.props.mode : "view",
-                  is_editable:state.Favorite != "loading" && state.Favorite.Editable.get(i_id),
-                  shown_relation:i.shown_relation,
-                  set_shown_relation:(new_shown_relation:string, callback) => {
-                    let state = self.state()
-                    state.Favorite != "loading" &&
-                    self.setState({...self.state(),
-                      Favorite:
-                        {
-                          ...state.Favorite,
-                          Items:state.Favorite.Items.set(i_id,{...state.Favorite.Items.get(i_id), shown_relation:new_shown_relation})
-                        }
-                    }, callback)
-                  },
-                  nested_entity_names: self.props.nested_entity_names.push("Favorite"),
-                  
-                  set_size:(new_size:Utils.EntitySize, callback) => {
-                    let new_shown_relation = new_size == "large" ? "all" : i.shown_relation
-                    let state = self.state()
-                    state.Favorite != "loading" &&
-                    self.setState({...self.state(),
-                      Favorite:
-                        {
-                          ...state.Favorite,
-                          Items:state.Favorite.Items.set(i_id,
-                            {...state.Favorite.Items.get(i_id),
-                              size:new_size, shown_relation:new_shown_relation})
-                        }
-                    }, callback)
-                  },
-                    
-                  toggle_button:undefined,
-                  set_mode:undefined,
-                  set_entity:(new_entity:Models.Favorite, callback?:()=>void, force_update_count_increment?:boolean) => {
-                    let state = self.state()
-                    state.Favorite != "loading" &&
-                    self.setState({...self.state(),
-                      dirty_Favorite:state.dirty_Favorite.set(i_id, new_entity),
-                      update_count:force_update_count_increment ? self.state().update_count+1 : state.update_count,
-                      Favorite:
-                        {
-                          ...state.Favorite,
-                          Items:state.Favorite.Items.set(i_id,{...state.Favorite.Items.get(i_id), element:new_entity})
-                        }
-                    }, callback)
-                  },
-                  delete: undefined,
-                  unlink: !Permissions.can_delete_User_Favorite(self.props.current_User) ?
-                    null
-                    :
-                    () => confirm(i18next.t('Are you sure?')) && Api.unlink_User_User_Favorites(self.props.entity, i.element).then(() =>
-                      load_relation_User_User_Favorite(self, self.props.current_User))
-                })
-              }
-            </div>
-          </div>
-        },
-      () =>
-        <div>
-          {Permissions.can_create_Favorite(self.props.current_User) && Permissions.can_create_User_Favorite(self.props.current_User) && User_User_Favorite_can_create(self) ? render_new_User_User_Favorite(self) : null}
-          {Permissions.can_create_User_Favorite(self.props.current_User) ? render_add_existing_User_User_Favorite(self) : null}
-        </div>)
-    }
     
-    </div>
-}
-
-
-export function render_User_User_Rating(self:UserContext, context:"presentation_structure"|"default") {
-  if ((context == "default" && self.props.shown_relation != "all" && self.props.shown_relation != "User_Rating") || !Permissions.can_view_Rating(self.props.current_User))
-    return null
-  let state = self.state()
-  return <div>
-    { List.render_relation("user_user_rating",
+    { List.render_relation("user_user_recipe",
    "User",
-   "Rating",
-   "Ratings",
+   "Recipe",
+   "Recipes",
    self.props.nesting_depth > 0,
    false,
    false,
    false)
   (
-      state.Rating != "loading" ? state.Rating.Items : state.Rating,
-      User_User_Rating_page_index(self),
-      User_User_Rating_num_pages(self),
+      state.Recipe != "loading" ?
+        state.Recipe.IdsInServerOrder.map(id => state.Recipe != "loading" && state.Recipe.Items.get(id)):
+        state.Recipe,
+      User_User_Recipe_page_index(self),
+      User_User_Recipe_num_pages(self),
       new_page_index => {
           let state = self.state()
-          state.Rating != "loading" &&
+          state.Recipe != "loading" &&
           self.setState({...self.state(),
             update_count:self.state().update_count+1,
-            Rating: {
-              ...state.Rating,
+            Recipe: {
+              ...state.Recipe,
               PageIndex:new_page_index
             }
-          }, () =>  load_relation_User_User_Rating(self, self.props.current_User))
+          }, () =>  load_relation_User_User_Recipe(self, false, self.props.current_User))
         },
-      (i,i_id) => {
+      (i,_) => {
+          let i_id = i.element.Id
           let state = self.state()
           return <div key={i_id}
-            className={`model-nested__item ${i.size != "preview" ? "model-nested__item--open" : ""} ` }
+            className={`model-nested__item ${i.size != "preview" ? "model-nested__item--open" : ""}
+                        ${state.Recipe != "loading" && state.Recipe.JustCreated.has(i_id) && state.Recipe.JustCreated.get(i_id) ? "newly-created" : ""}` }
           
             >
             <div key={i_id}>
               {
-                RatingViews.Rating({
+                RecipeViews.Recipe({
                   ...self.props,
                   entity:i.element,
                   inline:false,
@@ -641,35 +585,35 @@ export function render_User_User_Rating(self:UserContext, context:"presentation_
                   size: i.size,
                   allow_maximisation:true,
                   allow_fullscreen:true,
-                  mode:self.props.mode == "edit" && (Permissions.can_edit_User_Rating(self.props.current_User)
-                        || Permissions.can_create_User_Rating(self.props.current_User)
-                        || Permissions.can_delete_User_Rating(self.props.current_User)) ?
+                  mode:self.props.mode == "edit" && (Permissions.can_edit_User_Recipe(self.props.current_User)
+                        || Permissions.can_create_User_Recipe(self.props.current_User)
+                        || Permissions.can_delete_User_Recipe(self.props.current_User)) ?
                     self.props.mode : "view",
-                  is_editable:state.Rating != "loading" && state.Rating.Editable.get(i_id),
+                  is_editable:state.Recipe != "loading" && state.Recipe.Editable.get(i_id),
                   shown_relation:i.shown_relation,
                   set_shown_relation:(new_shown_relation:string, callback) => {
                     let state = self.state()
-                    state.Rating != "loading" &&
+                    state.Recipe != "loading" &&
                     self.setState({...self.state(),
-                      Rating:
+                      Recipe:
                         {
-                          ...state.Rating,
-                          Items:state.Rating.Items.set(i_id,{...state.Rating.Items.get(i_id), shown_relation:new_shown_relation})
+                          ...state.Recipe,
+                          Items:state.Recipe.Items.set(i_id,{...state.Recipe.Items.get(i_id), shown_relation:new_shown_relation})
                         }
                     }, callback)
                   },
-                  nested_entity_names: self.props.nested_entity_names.push("Rating"),
+                  nested_entity_names: self.props.nested_entity_names.push("Recipe"),
                   
                   set_size:(new_size:Utils.EntitySize, callback) => {
                     let new_shown_relation = new_size == "large" ? "all" : i.shown_relation
                     let state = self.state()
-                    state.Rating != "loading" &&
+                    state.Recipe != "loading" &&
                     self.setState({...self.state(),
-                      Rating:
+                      Recipe:
                         {
-                          ...state.Rating,
-                          Items:state.Rating.Items.set(i_id,
-                            {...state.Rating.Items.get(i_id),
+                          ...state.Recipe,
+                          Items:state.Recipe.Items.set(i_id,
+                            {...state.Recipe.Items.get(i_id),
                               size:new_size, shown_relation:new_shown_relation})
                         }
                     }, callback)
@@ -677,25 +621,25 @@ export function render_User_User_Rating(self:UserContext, context:"presentation_
                     
                   toggle_button:undefined,
                   set_mode:undefined,
-                  set_entity:(new_entity:Models.Rating, callback?:()=>void, force_update_count_increment?:boolean) => {
+                  set_entity:(new_entity:Models.Recipe, callback?:()=>void, force_update_count_increment?:boolean) => {
                     let state = self.state()
-                    state.Rating != "loading" &&
+                    state.Recipe != "loading" &&
                     self.setState({...self.state(),
-                      dirty_Rating:state.dirty_Rating.set(i_id, new_entity),
+                      dirty_Recipe:state.dirty_Recipe.set(i_id, new_entity),
                       update_count:force_update_count_increment ? self.state().update_count+1 : state.update_count,
-                      Rating:
+                      Recipe:
                         {
-                          ...state.Rating,
-                          Items:state.Rating.Items.set(i_id,{...state.Rating.Items.get(i_id), element:new_entity})
+                          ...state.Recipe,
+                          Items:state.Recipe.Items.set(i_id,{...state.Recipe.Items.get(i_id), element:new_entity})
                         }
                     }, callback)
                   },
                   delete: undefined,
-                  unlink: !Permissions.can_delete_User_Rating(self.props.current_User) ?
+                  unlink: !Permissions.can_delete_User_Recipe(self.props.current_User) ?
                     null
                     :
-                    () => confirm(i18next.t('Are you sure?')) && Api.unlink_User_User_Ratings(self.props.entity, i.element).then(() =>
-                      load_relation_User_User_Rating(self, self.props.current_User))
+                    () => confirm(i18next.t('Are you sure?')) && Api.unlink_User_User_Recipes(self.props.entity, i.element).then(() =>
+                      load_relation_User_User_Recipe(self, false, self.props.current_User))
                 })
               }
             </div>
@@ -703,8 +647,8 @@ export function render_User_User_Rating(self:UserContext, context:"presentation_
         },
       () =>
         <div>
-          {Permissions.can_create_Rating(self.props.current_User) && Permissions.can_create_User_Rating(self.props.current_User) && User_User_Rating_can_create(self) ? render_new_User_User_Rating(self) : null}
-          {Permissions.can_create_User_Rating(self.props.current_User) ? render_add_existing_User_User_Rating(self) : null}
+          {Permissions.can_create_Recipe(self.props.current_User) && Permissions.can_create_User_Recipe(self.props.current_User) && User_User_Recipe_can_create(self) ? render_new_User_User_Recipe(self) : null}
+          {Permissions.can_create_User_Recipe(self.props.current_User) ? render_add_existing_User_User_Recipe(self) : null}
         </div>)
     }
     
@@ -717,6 +661,7 @@ export function render_User_User_RecommendationPage(self:UserContext, context:"p
     return null
   let state = self.state()
   return <div>
+    
     { List.render_relation("user_user_recommendationpage",
    "User",
    "RecommendationPage",
@@ -726,7 +671,9 @@ export function render_User_User_RecommendationPage(self:UserContext, context:"p
    false,
    false)
   (
-      state.RecommendationPage != "loading" ? state.RecommendationPage.Items : state.RecommendationPage,
+      state.RecommendationPage != "loading" ?
+        state.RecommendationPage.IdsInServerOrder.map(id => state.RecommendationPage != "loading" && state.RecommendationPage.Items.get(id)):
+        state.RecommendationPage,
       User_User_RecommendationPage_page_index(self),
       User_User_RecommendationPage_num_pages(self),
       new_page_index => {
@@ -738,12 +685,14 @@ export function render_User_User_RecommendationPage(self:UserContext, context:"p
               ...state.RecommendationPage,
               PageIndex:new_page_index
             }
-          }, () =>  load_relation_User_User_RecommendationPage(self, self.props.current_User))
+          }, () =>  load_relation_User_User_RecommendationPage(self, false, self.props.current_User))
         },
-      (i,i_id) => {
+      (i,_) => {
+          let i_id = i.element.Id
           let state = self.state()
           return <div key={i_id}
-            className={`model-nested__item ${i.size != "preview" ? "model-nested__item--open" : ""} ` }
+            className={`model-nested__item ${i.size != "preview" ? "model-nested__item--open" : ""}
+                        ${state.RecommendationPage != "loading" && state.RecommendationPage.JustCreated.has(i_id) && state.RecommendationPage.JustCreated.get(i_id) ? "newly-created" : ""}` }
           
             >
             <div key={i_id}>
@@ -810,7 +759,7 @@ export function render_User_User_RecommendationPage(self:UserContext, context:"p
                     null
                     :
                     () => confirm(i18next.t('Are you sure?')) && Api.unlink_User_User_RecommendationPages(self.props.entity, i.element).then(() =>
-                      load_relation_User_User_RecommendationPage(self, self.props.current_User))
+                      load_relation_User_User_RecommendationPage(self, false, self.props.current_User))
                 })
               }
             </div>
@@ -830,127 +779,65 @@ export function render_User_User_RecommendationPage(self:UserContext, context:"p
 
 export function render_relations_User(self:UserContext) {
   return <div className="relations">
-      { render_User_User_Favorite(self, "default") }
-      { render_User_User_Rating(self, "default") }
+      { render_User_User_Recipe(self, "default") }
       { render_User_User_RecommendationPage(self, "default") }
       
     </div>
 }
 
-export function render_add_existing_User_User_Favorite(self:UserContext) {
+export function render_add_existing_User_User_Recipe(self:UserContext) {
     
     let state = self.state()
     return self.props.mode == "edit" ?
       <div className="button__actions">
         {
-          state.add_step_Favorite != "open" ?
-            <Buttons.Add disabled={state.Favorite == "loading" ? true : state.Favorite.TotalCount >= 1} 
-              onClick={() =>
-                self.setState({...self.state(), add_step_Favorite:"open"}) }
-                  target_name={"Favorite"} />
-          :
-          React.createElement(List.AddToRelation,
-            {
-              relation_name:"user_user_favorite",
-              source_name:"User",
-              target_name:"Favorite",
-              target_plural:"Favorites",
-              page_size:10,
-              render_target:(i,i_id) =>
-                <div key={i_id} className="group__item">
-                  <a className="group__button button button--existing"
-                    onClick={() =>
-                        self.setState({...self.state(), add_step_Favorite:"saving"}, () =>
-                          Api.link_User_User_Favorites(self.props.entity, i).then(() =>
-                            self.setState({...self.state(), add_step_Favorite:"closed"}, () =>
-                              load_relation_User_User_Favorite(self, self.props.current_User))))
-                      }>
-                      Add existing
-                  </a>
-                  <div className="group__title" disabled={true}>
-                    {
-                      FavoriteViews.Favorite({
-                        ...self.props,
-                        entity:i,
-                        nesting_depth:self.props.nesting_depth+1,
-                        size:"preview",
-                        mode:"view",
-                        is_editable:false,
-                        nested_entity_names: self.props.nested_entity_names.push("Favorite"),
-                        set_size:undefined,
-                        toggle_button:undefined,
-                        set_mode:undefined,
-                        set_entity:(new_entity:Models.Favorite, callback?:()=>void) => {},
-                        unlink: undefined,
-                        delete: undefined
-                      })
-                    }
-                  </div>
-                </div>,
-              cancel:() => self.setState({...self.state(), add_step_Favorite:"closed"}),
-              get_items:[
-                { name: "Favorite", get: async(i,s) => Api.get_unlinked_User_User_Favorites(self.props.entity, i, s) },
-              ]
-            })
-        }
-      </div>
-    :
-      null
-    }
-  
-export function render_add_existing_User_User_Rating(self:UserContext) {
-    
-    let state = self.state()
-    return self.props.mode == "edit" ?
-      <div className="button__actions">
-        {
-          state.add_step_Rating != "open" ?
+          state.add_step_Recipe != "open" ?
             <Buttons.Add 
               onClick={() =>
-                self.setState({...self.state(), add_step_Rating:"open"}) }
-                  target_name={"Rating"} />
+                self.setState({...self.state(), add_step_Recipe:"open"}) }
+                  target_name={"Recipe"} />
           :
           React.createElement(List.AddToRelation,
             {
-              relation_name:"user_user_rating",
+              relation_name:"user_user_recipe",
               source_name:"User",
-              target_name:"Rating",
-              target_plural:"Ratings",
-              page_size:10,
+              target_name:"Recipe",
+              target_plural:"Recipes",
+              page_size:25,
               render_target:(i,i_id) =>
                 <div key={i_id} className="group__item">
                   <a className="group__button button button--existing"
                     onClick={() =>
-                        self.setState({...self.state(), add_step_Rating:"saving"}, () =>
-                          Api.link_User_User_Ratings(self.props.entity, i).then(() =>
-                            self.setState({...self.state(), add_step_Rating:"closed"}, () =>
-                              load_relation_User_User_Rating(self, self.props.current_User))))
+                        self.setState({...self.state(), add_step_Recipe:"saving"}, () =>
+                          Api.link_User_User_Recipes(self.props.entity, i).then(() =>
+                            self.setState({...self.state(), add_step_Recipe:"closed"}, () =>
+                              load_relation_User_User_Recipe(self, false, self.props.current_User))))
                       }>
                       Add existing
                   </a>
                   <div className="group__title" disabled={true}>
                     {
-                      RatingViews.Rating({
+                      RecipeViews.Recipe({
                         ...self.props,
                         entity:i,
                         nesting_depth:self.props.nesting_depth+1,
                         size:"preview",
                         mode:"view",
                         is_editable:false,
-                        nested_entity_names: self.props.nested_entity_names.push("Rating"),
+                        nested_entity_names: self.props.nested_entity_names.push("Recipe"),
                         set_size:undefined,
                         toggle_button:undefined,
                         set_mode:undefined,
-                        set_entity:(new_entity:Models.Rating, callback?:()=>void) => {},
+                        set_entity:(new_entity:Models.Recipe, callback?:()=>void) => {},
                         unlink: undefined,
                         delete: undefined
                       })
                     }
                   </div>
                 </div>,
-              cancel:() => self.setState({...self.state(), add_step_Rating:"closed"}),
+              cancel:() => self.setState({...self.state(), add_step_Recipe:"closed"}),
               get_items:[
-                { name: "Rating", get: async(i,s) => Api.get_unlinked_User_User_Ratings(self.props.entity, i, s) },
+                { name: "Recipe", get: async(i,s) => Api.get_unlinked_User_User_Recipes(self.props.entity, i, s) },
               ]
             })
         }
@@ -977,7 +864,7 @@ export function render_add_existing_User_User_RecommendationPage(self:UserContex
               source_name:"User",
               target_name:"RecommendationPage",
               target_plural:"RecommendationPages",
-              page_size:10,
+              page_size:25,
               render_target:(i,i_id) =>
                 <div key={i_id} className="group__item">
                   <a className="group__button button button--existing"
@@ -985,7 +872,7 @@ export function render_add_existing_User_User_RecommendationPage(self:UserContex
                         self.setState({...self.state(), add_step_RecommendationPage:"saving"}, () =>
                           Api.link_User_User_RecommendationPages(self.props.entity, i).then(() =>
                             self.setState({...self.state(), add_step_RecommendationPage:"closed"}, () =>
-                              load_relation_User_User_RecommendationPage(self, self.props.current_User))))
+                              load_relation_User_User_RecommendationPage(self, false, self.props.current_User))))
                       }>
                       Add existing
                   </a>
@@ -1021,51 +908,25 @@ export function render_add_existing_User_User_RecommendationPage(self:UserContex
     }
   
 
-export function render_new_User_User_Favorite(self:UserContext) {
+export function render_new_User_User_Recipe(self:UserContext) {
     let state = self.state()
     return  self.props.mode == "edit" ?
       <div className="button__actions">
-        <div className="new-favorite">
-              <button disabled={state.Favorite == "loading" ? true : state.Favorite.TotalCount >= 1} 
-                      className="new-favorite button button--new"
-                      onClick={() =>
-                          Api.create_linked_User_User_Favorites_Favorite(self.props.entity).then(e => {
-                              e.length > 0 &&
-                              Api.update_Favorite(
-                                ({ ...e[0],  } as Models.Favorite)).then(() =>
-                                load_relation_User_User_Favorite(self, self.props.current_User, () =>
-                                    self.setState({...self.state(), add_step_Favorite:"closed"})
-                                  )
-                                )
-                          })
-                      }>
-                  {i18next.t('Create new Favorite')}
-              </button>
-            </div>
-        </div>
-      :
-      null
-    }
-  
-export function render_new_User_User_Rating(self:UserContext) {
-    let state = self.state()
-    return  self.props.mode == "edit" ?
-      <div className="button__actions">
-        <div className="new-rating">
+        <div className="new-recipe">
               <button 
-                      className="new-rating button button--new"
+                      className="new-recipe button button--new"
                       onClick={() =>
-                          Api.create_linked_User_User_Ratings_Rating(self.props.entity).then(e => {
+                          Api.create_linked_User_User_Recipes_Recipe(self.props.entity).then(e => {
                               e.length > 0 &&
-                              Api.update_Rating(
-                                ({ ...e[0],  } as Models.Rating)).then(() =>
-                                load_relation_User_User_Rating(self, self.props.current_User, () =>
-                                    self.setState({...self.state(), add_step_Rating:"closed"})
+                              Api.update_Recipe(
+                                ({ ...e[0], Name:"", Ingredients:"", Description:"", Picture:"" } as Models.Recipe)).then(() =>
+                                load_relation_User_User_Recipe(self, true, self.props.current_User, () =>
+                                    self.setState({...self.state(), add_step_Recipe:"closed"})
                                   )
                                 )
                           })
                       }>
-                  {i18next.t('Create new Rating')}
+                  {i18next.t('Create new Recipe')}
               </button>
             </div>
         </div>
@@ -1085,7 +946,7 @@ export function render_new_User_User_RecommendationPage(self:UserContext) {
                               e.length > 0 &&
                               Api.update_RecommendationPage(
                                 ({ ...e[0],  } as Models.RecommendationPage)).then(() =>
-                                load_relation_User_User_RecommendationPage(self, self.props.current_User, () =>
+                                load_relation_User_User_RecommendationPage(self, true, self.props.current_User, () =>
                                     self.setState({...self.state(), add_step_RecommendationPage:"closed"})
                                   )
                                 )
@@ -1101,9 +962,7 @@ export function render_new_User_User_RecommendationPage(self:UserContext) {
   
 
 export function render_saving_animations_User(self:UserContext) {
-  return self.state().dirty_Favorite.count() > 0 ?
-    <div style={{position:"fixed", zIndex:10000, top:0, left:0, width:"20px", height:"20px", backgroundColor:"red"}} className="saving"/> : 
-    self.state().dirty_Rating.count() > 0 ?
+  return self.state().dirty_Recipe.count() > 0 ?
     <div style={{position:"fixed", zIndex:10000, top:0, left:0, width:"20px", height:"20px", backgroundColor:"red"}} className="saving"/> : 
     self.state().dirty_RecommendationPage.count() > 0 ?
     <div style={{position:"fixed", zIndex:10000, top:0, left:0, width:"20px", height:"20px", backgroundColor:"red"}} className="saving"/>
@@ -1114,12 +973,10 @@ export type UserContext = {state:()=>UserState, props:Utils.EntityComponentProps
 
 export type UserState = {
     update_count:number
-    add_step_Favorite:"closed"|"open"|"saving",
-      dirty_Favorite:Immutable.Map<number,Models.Favorite>,
-      Favorite:Utils.PaginatedItems<{ shown_relation: string } & Utils.EntityAndSize<Models.Favorite>>|"loading"
-  add_step_Rating:"closed"|"open"|"saving",
-      dirty_Rating:Immutable.Map<number,Models.Rating>,
-      Rating:Utils.PaginatedItems<{ shown_relation: string } & Utils.EntityAndSize<Models.Rating>>|"loading"
+    active_sessions:"loading"|Array<{Item1:string, Item2:Date}>,
+    add_step_Recipe:"closed"|"open"|"saving",
+      dirty_Recipe:Immutable.Map<number,Models.Recipe>,
+      Recipe:Utils.PaginatedItems<{ shown_relation: string } & Utils.EntityAndSize<Models.Recipe>>|"loading"
   add_step_RecommendationPage:"closed"|"open"|"saving",
       dirty_RecommendationPage:Immutable.Map<number,Models.RecommendationPage>,
       RecommendationPage:Utils.PaginatedItems<{ shown_relation: string } & Utils.EntityAndSize<Models.RecommendationPage>>|"loading"
@@ -1127,7 +984,7 @@ export type UserState = {
 export class UserComponent extends React.Component<Utils.EntityComponentProps<Models.User>, UserState> {
   constructor(props:Utils.EntityComponentProps<Models.User>, context:any) {
     super(props, context)
-    this.state = { update_count:0, add_step_Favorite:"closed", dirty_Favorite:Immutable.Map<number,Models.Favorite>(), Favorite:"loading", add_step_Rating:"closed", dirty_Rating:Immutable.Map<number,Models.Rating>(), Rating:"loading", add_step_RecommendationPage:"closed", dirty_RecommendationPage:Immutable.Map<number,Models.RecommendationPage>(), RecommendationPage:"loading" }
+    this.state = { update_count:0,active_sessions:"loading", add_step_Recipe:"closed", dirty_Recipe:Immutable.Map<number,Models.Recipe>(), Recipe:"loading", add_step_RecommendationPage:"closed", dirty_RecommendationPage:Immutable.Map<number,Models.RecommendationPage>(), RecommendationPage:"loading" }
   }
 
   get_self() {
@@ -1143,26 +1000,23 @@ export class UserComponent extends React.Component<Utils.EntityComponentProps<Mo
         (current_logged_in_entity && !new_logged_in_entity) ||
         (!current_logged_in_entity && new_logged_in_entity) ||
         (current_logged_in_entity && new_logged_in_entity && current_logged_in_entity.Id != new_logged_in_entity.Id)) {
-      load_relations_User(this.get_self(), new_props.current_User)
+      load_relations_User(this.get_self(),  new_props.current_User)
     }
   }
 
   thread:number = null
   componentWillMount() {
     if (this.props.size == "breadcrumb") return
-    if (this.props.size != "preview")
+    if (this.props.size != "preview") {
+      Api.active_User_sessions().then(active_sessions => this.setState({...this.state, active_sessions:active_sessions}))
       load_relations_User(this.get_self(), this.props.current_User)
+    }
 
     this.thread = setInterval(() => {
-      if (this.state.dirty_Favorite.count() > 0) {
-         let first = this.state.dirty_Favorite.first()
-         this.setState({...this.state, dirty_Favorite: this.state.dirty_Favorite.remove(first.Id)}, () =>
-           Api.update_Favorite(first)
-         )
-       } else if (this.state.dirty_Rating.count() > 0) {
-         let first = this.state.dirty_Rating.first()
-         this.setState({...this.state, dirty_Rating: this.state.dirty_Rating.remove(first.Id)}, () =>
-           Api.update_Rating(first)
+      if (this.state.dirty_Recipe.count() > 0) {
+         let first = this.state.dirty_Recipe.first()
+         this.setState({...this.state, dirty_Recipe: this.state.dirty_Recipe.remove(first.Id)}, () =>
+           Api.update_Recipe(first)
          )
        } else if (this.state.dirty_RecommendationPage.count() > 0) {
          let first = this.state.dirty_RecommendationPage.first()
@@ -1214,7 +1068,7 @@ export let User = (props:Utils.EntityComponentProps<Models.User>) : JSX.Element 
   <UserComponent {...props} />
 
 export let User_to_page = (id:number) => {
-  let can_edit = Utils.any_of([Permissions.can_edit_User, Permissions.can_edit_User_Favorite, Permissions.can_edit_User_Rating, Permissions.can_edit_User_RecommendationPage, Permissions.can_edit_Favorite, Permissions.can_edit_Rating, Permissions.can_edit_RecommendationPage])
+  let can_edit = Utils.any_of([Permissions.can_edit_User, Permissions.can_edit_User_Recipe, Permissions.can_edit_User_RecommendationPage, Permissions.can_edit_Recipe, Permissions.can_edit_RecommendationPage])
   return Utils.scene_to_page<Models.User>(can_edit, User, Api.get_User(id), Api.update_User, "User", "User", `/Users/${id}`)
 }
 

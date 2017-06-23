@@ -25,6 +25,10 @@ export function RecommendationPage_RecommendationPage_Recipe_can_create(self:Rec
   let state = self.state()
   return state.Recipe == "loading" ? false : state.Recipe.CanCreate
 }
+export function RecommendationPage_Homepage_RecommendationPage_can_create(self:RecommendationPageContext) {
+  let state = self.state()
+  return state.Homepage == "loading" ? false : state.Homepage.CanCreate
+}
 export function RecommendationPage_User_RecommendationPage_can_delete(self:RecommendationPageContext) {
   let state = self.state()
   return state.User == "loading" ? false : state.User.CanDelete
@@ -32,6 +36,10 @@ export function RecommendationPage_User_RecommendationPage_can_delete(self:Recom
 export function RecommendationPage_RecommendationPage_Recipe_can_delete(self:RecommendationPageContext) {
   let state = self.state()
   return state.Recipe == "loading" ? false : state.Recipe.CanDelete
+}
+export function RecommendationPage_Homepage_RecommendationPage_can_delete(self:RecommendationPageContext) {
+  let state = self.state()
+  return state.Homepage == "loading" ? false : state.Homepage.CanDelete
 }
 export function RecommendationPage_User_RecommendationPage_page_index(self:RecommendationPageContext) {
   let state = self.state()
@@ -41,6 +49,10 @@ export function RecommendationPage_RecommendationPage_Recipe_page_index(self:Rec
   let state = self.state()
   return state.Recipe == "loading" ? 0 : state.Recipe.PageIndex
 }
+export function RecommendationPage_Homepage_RecommendationPage_page_index(self:RecommendationPageContext) {
+  let state = self.state()
+  return state.Homepage == "loading" ? 0 : state.Homepage.PageIndex
+}
 export function RecommendationPage_User_RecommendationPage_page_size(self:RecommendationPageContext) {
   let state = self.state()
   return state.User == "loading" ? 25 : state.User.PageSize
@@ -48,6 +60,22 @@ export function RecommendationPage_User_RecommendationPage_page_size(self:Recomm
 export function RecommendationPage_RecommendationPage_Recipe_page_size(self:RecommendationPageContext) {
   let state = self.state()
   return state.Recipe == "loading" ? 25 : state.Recipe.PageSize
+}
+export function RecommendationPage_Homepage_RecommendationPage_page_size(self:RecommendationPageContext) {
+  let state = self.state()
+  return state.Homepage == "loading" ? 25 : state.Homepage.PageSize
+}
+export function RecommendationPage_User_RecommendationPage_search_query(self:RecommendationPageContext) {
+  let state = self.state()
+  return state.User == "loading" ? null : state.User.SearchQuery
+}
+export function RecommendationPage_RecommendationPage_Recipe_search_query(self:RecommendationPageContext) {
+  let state = self.state()
+  return state.Recipe == "loading" ? null : state.Recipe.SearchQuery
+}
+export function RecommendationPage_Homepage_RecommendationPage_search_query(self:RecommendationPageContext) {
+  let state = self.state()
+  return state.Homepage == "loading" ? null : state.Homepage.SearchQuery
 }
 export function RecommendationPage_User_RecommendationPage_num_pages(self:RecommendationPageContext) {
   let state = self.state()
@@ -57,41 +85,106 @@ export function RecommendationPage_RecommendationPage_Recipe_num_pages(self:Reco
   let state = self.state()
   return state.Recipe == "loading" ? 1 : state.Recipe.NumPages
 }
-
-export function load_relation_RecommendationPage_User_RecommendationPage(self:RecommendationPageContext, current_User:Models.User, callback?:()=>void) {
-  Permissions.can_view_User(current_User) ?
-    Api.get_RecommendationPage_User_RecommendationPages(self.props.entity, RecommendationPage_User_RecommendationPage_page_index(self), RecommendationPage_User_RecommendationPage_page_size(self)).then(Users =>
-      self.setState({...self.state(), update_count:self.state().update_count+1,
-          User:Utils.raw_page_to_paginated_items<Models.User, Utils.EntityAndSize<Models.User> & { shown_relation:string }>(i => {
-            let state = self.state()
-            return {
-              element:i,
-              size: state.User != "loading" && state.User.Items.has(i.Id) ? state.User.Items.get(i.Id).size : "preview",
-              shown_relation:"all"}}, Users)
-          }, callback))
-  :
-    callback && callback()
+export function RecommendationPage_Homepage_RecommendationPage_num_pages(self:RecommendationPageContext) {
+  let state = self.state()
+  return state.Homepage == "loading" ? 1 : state.Homepage.NumPages
 }
 
-export function load_relation_RecommendationPage_RecommendationPage_Recipe(self:RecommendationPageContext, current_User:Models.User, callback?:()=>void) {
+export function load_relation_RecommendationPage_User_RecommendationPage(self:RecommendationPageContext, force_first_page:boolean, current_User:Models.User, callback?:()=>void) {
+  let state = self.state()
+  let prelude = force_first_page && state.User != "loading" ?
+    (c:() => void) => state.User != "loading" && self.setState({
+      ...state,
+      User: {...state.User, PageIndex:0 }
+    }, c)
+    :
+    (c:() => void) => c()
+  Permissions.can_view_User(current_User) ?
+    prelude(() =>
+      Api.get_RecommendationPage_User_RecommendationPages(self.props.entity, RecommendationPage_User_RecommendationPage_page_index(self), RecommendationPage_User_RecommendationPage_page_size(self), RecommendationPage_User_RecommendationPage_search_query(self)).then(Users =>
+        self.setState({...self.state(), update_count:self.state().update_count+1,
+            User:Utils.raw_page_to_paginated_items<Models.User, Utils.EntityAndSize<Models.User> & { shown_relation:string }>((i, i_just_created) => {
+              let state = self.state()
+              return {
+                element:i,
+                size: state.User != "loading" ?
+                  (state.User.Items.has(i.Id) ?
+                    state.User.Items.get(i.Id).size
+                  :
+                    "preview" /* i_just_created ? "large" : "preview" */)
+                  :
+                    "preview" /* i_just_created ? "large" : "preview" */,
+                shown_relation:"all"}}, Users)
+            }, callback)))
+    :
+      prelude(() => callback && callback())
+}
+
+export function load_relation_RecommendationPage_RecommendationPage_Recipe(self:RecommendationPageContext, force_first_page:boolean, current_User:Models.User, callback?:()=>void) {
+  let state = self.state()
+  let prelude = force_first_page && state.Recipe != "loading" ?
+    (c:() => void) => state.Recipe != "loading" && self.setState({
+      ...state,
+      Recipe: {...state.Recipe, PageIndex:0 }
+    }, c)
+    :
+    (c:() => void) => c()
   Permissions.can_view_Recipe(current_User) ?
-    Api.get_RecommendationPage_RecommendationPage_Recipes(self.props.entity, RecommendationPage_RecommendationPage_Recipe_page_index(self), RecommendationPage_RecommendationPage_Recipe_page_size(self)).then(Recipes =>
-      self.setState({...self.state(), update_count:self.state().update_count+1,
-          Recipe:Utils.raw_page_to_paginated_items<Models.Recipe, Utils.EntityAndSize<Models.Recipe> & { shown_relation:string }>(i => {
-            let state = self.state()
-            return {
-              element:i,
-              size: state.Recipe != "loading" && state.Recipe.Items.has(i.Id) ? state.Recipe.Items.get(i.Id).size : "preview",
-              shown_relation:"all"}}, Recipes)
-          }, callback))
-  :
-    callback && callback()
+    prelude(() =>
+      Api.get_RecommendationPage_RecommendationPage_Recipes(self.props.entity, RecommendationPage_RecommendationPage_Recipe_page_index(self), RecommendationPage_RecommendationPage_Recipe_page_size(self), RecommendationPage_RecommendationPage_Recipe_search_query(self)).then(Recipes =>
+        self.setState({...self.state(), update_count:self.state().update_count+1,
+            Recipe:Utils.raw_page_to_paginated_items<Models.Recipe, Utils.EntityAndSize<Models.Recipe> & { shown_relation:string }>((i, i_just_created) => {
+              let state = self.state()
+              return {
+                element:i,
+                size: state.Recipe != "loading" ?
+                  (state.Recipe.Items.has(i.Id) ?
+                    state.Recipe.Items.get(i.Id).size
+                  :
+                    "preview" /* i_just_created ? "large" : "preview" */)
+                  :
+                    "preview" /* i_just_created ? "large" : "preview" */,
+                shown_relation:"all"}}, Recipes)
+            }, callback)))
+    :
+      prelude(() => callback && callback())
+}
+
+export function load_relation_RecommendationPage_Homepage_RecommendationPage(self:RecommendationPageContext, force_first_page:boolean, current_User:Models.User, callback?:()=>void) {
+  let state = self.state()
+  let prelude = force_first_page && state.Homepage != "loading" ?
+    (c:() => void) => state.Homepage != "loading" && self.setState({
+      ...state,
+      Homepage: {...state.Homepage, PageIndex:0 }
+    }, c)
+    :
+    (c:() => void) => c()
+  Permissions.can_view_Homepage(current_User) ?
+    prelude(() =>
+      Api.get_RecommendationPage_Homepage_RecommendationPages(self.props.entity, RecommendationPage_Homepage_RecommendationPage_page_index(self), RecommendationPage_Homepage_RecommendationPage_page_size(self), RecommendationPage_Homepage_RecommendationPage_search_query(self)).then(Homepages =>
+        self.setState({...self.state(), update_count:self.state().update_count+1,
+            Homepage:Utils.raw_page_to_paginated_items<Models.Homepage, Utils.EntityAndSize<Models.Homepage> & { shown_relation:string }>((i, i_just_created) => {
+              let state = self.state()
+              return {
+                element:i,
+                size: state.Homepage != "loading" ?
+                  (state.Homepage.Items.has(i.Id) ?
+                    state.Homepage.Items.get(i.Id).size
+                  :
+                    "preview" /* i_just_created ? "large" : "preview" */)
+                  :
+                    "preview" /* i_just_created ? "large" : "preview" */,
+                shown_relation:"all"}}, Homepages)
+            }, callback)))
+    :
+      prelude(() => callback && callback())
 }
 
 export function load_relations_RecommendationPage(self, current_User:Models.User, callback?:()=>void) {
-  load_relation_RecommendationPage_RecommendationPage_Recipe(self, self.props.current_User, 
-        () => load_relation_RecommendationPage_User_RecommendationPage(self, self.props.current_User, 
-        () => callback && callback()))
+  load_relation_RecommendationPage_Homepage_RecommendationPage(self, false, self.props.current_User, 
+        () => load_relation_RecommendationPage_RecommendationPage_Recipe(self, false, self.props.current_User, 
+        () => load_relation_RecommendationPage_User_RecommendationPage(self, false, self.props.current_User, 
+        () => callback && callback())))
 }
 
 export function set_size_RecommendationPage(self:RecommendationPageContext, new_size:Utils.EntitySize) {
@@ -113,7 +206,11 @@ export function render_editable_attributes_minimised_RecommendationPage(self:Rec
 }
 
 export function render_editable_attributes_maximised_RecommendationPage(self:RecommendationPageContext) {
+    let state = self.state()
     let attributes = (<div>
+        
+        
+        
         
       </div>)
     return attributes
@@ -155,6 +252,34 @@ export function render_menu_RecommendationPage(self:RecommendationPageContext) {
                     </a>
                   </div>
                 }
+        {!Permissions.can_view_RecommendationPage(self.props.current_User) ? null :
+                  <div className={`menu_entry active`}>
+                    <a onClick={() =>
+                        {
+                            Api.get_Homepages(0, 1).then(e =>
+                              e.Items.length > 0 && self.props.set_page(HomepageViews.Homepage_to_page(e.Items[0].Item.Id),
+                                () => self.props.set_shown_relation("Homepage_RecommendationPage"))
+                            )
+                        }
+                      }>
+                      {i18next.t('Homepage_RecommendationPages')}
+                    </a>
+                  </div>
+                }
+        {!Permissions.can_view_Cuisine(self.props.current_User) ? null :
+                  <div className={`menu_entry${self.props.shown_relation == "Homepage_Cuisine" ? " active" : ""}`}>
+                    <a onClick={() =>
+                        {
+                            Api.get_Homepages(0, 1).then(e =>
+                              e.Items.length > 0 && self.props.set_page(HomepageViews.Homepage_to_page(e.Items[0].Item.Id),
+                                () => self.props.set_shown_relation("Homepage_Cuisine"))
+                            )
+                        }
+                      }>
+                      {i18next.t('Homepage_Cuisines')}
+                    </a>
+                  </div>
+                }
                 <div className="menu_entry menu_entry--with-sub">
                 
                 </div>  
@@ -179,6 +304,7 @@ export function render_local_menu_RecommendationPage(self:RecommendationPageCont
                   <div key={"RecommendationPage_Recipe"} className={`local_menu_entry${self.props.shown_relation == "RecommendationPage_Recipe" ? " local_menu_entry--active" : ""}`}>
                     <a onClick={() =>
                       load_relation_RecommendationPage_RecommendationPage_Recipe(self,
+                        false,
                         self.props.current_User, 
                         () => self.props.set_shown_relation("RecommendationPage_Recipe"))
                     }>
@@ -226,8 +352,18 @@ export function render_controls_RecommendationPage(self:RecommendationPageContex
 }
 
 export function render_content_RecommendationPage(self:RecommendationPageContext) {
-  return <div className={`${self.props.inline != undefined && self.props.inline ? "" : "model-content"} ${self.props.size == 'preview' ? 'model-content--preview' : ''}`}>
-    {Permissions.can_view_RecommendationPage(self.props.current_User) ?
+  let actions:Array<()=>void> =
+    [
+      self.props.allow_maximisation && self.props.set_size && self.props.size == "preview" ?
+        () => set_size_RecommendationPage(self, self.props.size == "preview" ? "large" : "preview")
+      :
+        null,self.props.allow_fullscreen && self.props.set_size && self.props.size == "preview" ?
+        () => set_size_RecommendationPage(self, self.props.size == "fullscreen" ? "large" : "fullscreen")
+      :
+        null,
+    ].filter(a => a != null)
+  let content =
+    Permissions.can_view_RecommendationPage(self.props.current_User) ?
       self.props.size == "preview" ?
         render_preview_RecommendationPage(self)
       : self.props.size == "large" ?
@@ -236,8 +372,16 @@ export function render_content_RecommendationPage(self:RecommendationPageContext
         render_large_RecommendationPage(self)
       : "Error: unauthorised access to entity."
     : "Error: unauthorised access to entity."
-    }
-  </div>
+  if (self.props.mode == "view" && actions.length == 1 && !false)
+    return <a onClick={() => actions[0]()}>
+      <div className={`${self.props.inline != undefined && self.props.inline ? "" : "model-content"} ${self.props.size == 'preview' ? 'model-content--preview' : ''}`}>
+        {content}
+      </div>
+    </a>
+  else
+    return <div className={`${self.props.inline != undefined && self.props.inline ? "" : "model-content"} ${self.props.size == 'preview' ? 'model-content--preview' : ''}`}>
+      {content}
+    </div>
 }
 
 
@@ -258,10 +402,12 @@ export function render_preview_RecommendationPage(self:RecommendationPageContext
 }
 
 export function render_large_RecommendationPage(self:RecommendationPageContext) {
+  let state = self.state()
   let attributes:JSX.Element = null
   if (self.props.mode == "view" || !Permissions.can_edit_RecommendationPage(self.props.current_User))
     attributes = (<div className="model__attributes">
       
+        
     </div>)
   else
     attributes = render_editable_attributes_maximised_RecommendationPage(self)
@@ -277,6 +423,7 @@ export function render_RecommendationPage_User_RecommendationPage(self:Recommend
     return null
   let state = self.state()
   return <div>
+    
     { List.render_relation("recommendationpage_user_recommendationpage",
    "RecommendationPage",
    "User",
@@ -286,7 +433,9 @@ export function render_RecommendationPage_User_RecommendationPage(self:Recommend
    false,
    false)
   (
-      state.User != "loading" ? state.User.Items : state.User,
+      state.User != "loading" ?
+        state.User.IdsInServerOrder.map(id => state.User != "loading" && state.User.Items.get(id)):
+        state.User,
       RecommendationPage_User_RecommendationPage_page_index(self),
       RecommendationPage_User_RecommendationPage_num_pages(self),
       new_page_index => {
@@ -298,12 +447,14 @@ export function render_RecommendationPage_User_RecommendationPage(self:Recommend
               ...state.User,
               PageIndex:new_page_index
             }
-          }, () =>  load_relation_RecommendationPage_User_RecommendationPage(self, self.props.current_User))
+          }, () =>  load_relation_RecommendationPage_User_RecommendationPage(self, false, self.props.current_User))
         },
-      (i,i_id) => {
+      (i,_) => {
+          let i_id = i.element.Id
           let state = self.state()
           return <div key={i_id}
-            className={`model-nested__item ${i.size != "preview" ? "model-nested__item--open" : ""} ` }
+            className={`model-nested__item ${i.size != "preview" ? "model-nested__item--open" : ""}
+                        ${state.User != "loading" && state.User.JustCreated.has(i_id) && state.User.JustCreated.get(i_id) ? "newly-created" : ""}` }
           
             >
             <div key={i_id}>
@@ -370,7 +521,7 @@ export function render_RecommendationPage_User_RecommendationPage(self:Recommend
                     null
                     :
                     () => confirm(i18next.t('Are you sure?')) && Api.unlink_User_User_RecommendationPages(i.element, self.props.entity).then(() =>
-                      load_relation_RecommendationPage_User_RecommendationPage(self, self.props.current_User))
+                      load_relation_RecommendationPage_User_RecommendationPage(self, false, self.props.current_User))
                 })
               }
             </div>
@@ -392,6 +543,7 @@ export function render_RecommendationPage_RecommendationPage_Recipe(self:Recomme
     return null
   let state = self.state()
   return <div>
+    
     { List.render_relation("recommendationpage_recommendationpage_recipe",
    "RecommendationPage",
    "Recipe",
@@ -401,7 +553,9 @@ export function render_RecommendationPage_RecommendationPage_Recipe(self:Recomme
    false,
    false)
   (
-      state.Recipe != "loading" ? state.Recipe.Items : state.Recipe,
+      state.Recipe != "loading" ?
+        state.Recipe.IdsInServerOrder.map(id => state.Recipe != "loading" && state.Recipe.Items.get(id)):
+        state.Recipe,
       RecommendationPage_RecommendationPage_Recipe_page_index(self),
       RecommendationPage_RecommendationPage_Recipe_num_pages(self),
       new_page_index => {
@@ -413,12 +567,14 @@ export function render_RecommendationPage_RecommendationPage_Recipe(self:Recomme
               ...state.Recipe,
               PageIndex:new_page_index
             }
-          }, () =>  load_relation_RecommendationPage_RecommendationPage_Recipe(self, self.props.current_User))
+          }, () =>  load_relation_RecommendationPage_RecommendationPage_Recipe(self, false, self.props.current_User))
         },
-      (i,i_id) => {
+      (i,_) => {
+          let i_id = i.element.Id
           let state = self.state()
           return <div key={i_id}
-            className={`model-nested__item ${i.size != "preview" ? "model-nested__item--open" : ""} ` }
+            className={`model-nested__item ${i.size != "preview" ? "model-nested__item--open" : ""}
+                        ${state.Recipe != "loading" && state.Recipe.JustCreated.has(i_id) && state.Recipe.JustCreated.get(i_id) ? "newly-created" : ""}` }
           
             >
             <div key={i_id}>
@@ -485,7 +641,7 @@ export function render_RecommendationPage_RecommendationPage_Recipe(self:Recomme
                     null
                     :
                     () => confirm(i18next.t('Are you sure?')) && Api.unlink_RecommendationPage_RecommendationPage_Recipes(self.props.entity, i.element).then(() =>
-                      load_relation_RecommendationPage_RecommendationPage_Recipe(self, self.props.current_User))
+                      load_relation_RecommendationPage_RecommendationPage_Recipe(self, false, self.props.current_User))
                 })
               }
             </div>
@@ -495,6 +651,126 @@ export function render_RecommendationPage_RecommendationPage_Recipe(self:Recomme
         <div>
           {Permissions.can_create_Recipe(self.props.current_User) && Permissions.can_create_RecommendationPage_Recipe(self.props.current_User) && RecommendationPage_RecommendationPage_Recipe_can_create(self) ? render_new_RecommendationPage_RecommendationPage_Recipe(self) : null}
           {Permissions.can_create_RecommendationPage_Recipe(self.props.current_User) ? render_add_existing_RecommendationPage_RecommendationPage_Recipe(self) : null}
+        </div>)
+    }
+    
+    </div>
+}
+
+
+export function render_RecommendationPage_Homepage_RecommendationPage(self:RecommendationPageContext, context:"presentation_structure"|"default") {
+  if ((context == "default" && self.props.shown_relation != "all" && self.props.shown_relation != "Homepage_RecommendationPage") || !Permissions.can_view_Homepage(self.props.current_User))
+    return null
+  let state = self.state()
+  return <div>
+    
+    { List.render_relation("recommendationpage_homepage_recommendationpage",
+   "RecommendationPage",
+   "Homepage",
+   "Homepages",
+   self.props.nesting_depth > 0,
+   false,
+   false,
+   false)
+  (
+      state.Homepage != "loading" ?
+        state.Homepage.IdsInServerOrder.map(id => state.Homepage != "loading" && state.Homepage.Items.get(id)):
+        state.Homepage,
+      RecommendationPage_Homepage_RecommendationPage_page_index(self),
+      RecommendationPage_Homepage_RecommendationPage_num_pages(self),
+      new_page_index => {
+          let state = self.state()
+          state.Homepage != "loading" &&
+          self.setState({...self.state(),
+            update_count:self.state().update_count+1,
+            Homepage: {
+              ...state.Homepage,
+              PageIndex:new_page_index
+            }
+          }, () =>  load_relation_RecommendationPage_Homepage_RecommendationPage(self, false, self.props.current_User))
+        },
+      (i,_) => {
+          let i_id = i.element.Id
+          let state = self.state()
+          return <div key={i_id}
+            className={`model-nested__item ${i.size != "preview" ? "model-nested__item--open" : ""}
+                        ${state.Homepage != "loading" && state.Homepage.JustCreated.has(i_id) && state.Homepage.JustCreated.get(i_id) ? "newly-created" : ""}` }
+          
+            >
+            <div key={i_id}>
+              {
+                HomepageViews.Homepage({
+                  ...self.props,
+                  entity:i.element,
+                  inline:false,
+                  nesting_depth:self.props.nesting_depth+1,
+                  size: i.size,
+                  allow_maximisation:true,
+                  allow_fullscreen:true,
+                  mode:self.props.mode == "edit" && (Permissions.can_edit_Homepage_RecommendationPage(self.props.current_User)
+                        || Permissions.can_create_Homepage_RecommendationPage(self.props.current_User)
+                        || Permissions.can_delete_Homepage_RecommendationPage(self.props.current_User)) ?
+                    self.props.mode : "view",
+                  is_editable:state.Homepage != "loading" && state.Homepage.Editable.get(i_id),
+                  shown_relation:i.shown_relation,
+                  set_shown_relation:(new_shown_relation:string, callback) => {
+                    let state = self.state()
+                    state.Homepage != "loading" &&
+                    self.setState({...self.state(),
+                      Homepage:
+                        {
+                          ...state.Homepage,
+                          Items:state.Homepage.Items.set(i_id,{...state.Homepage.Items.get(i_id), shown_relation:new_shown_relation})
+                        }
+                    }, callback)
+                  },
+                  nested_entity_names: self.props.nested_entity_names.push("Homepage"),
+                  
+                  set_size:(new_size:Utils.EntitySize, callback) => {
+                    let new_shown_relation = new_size == "large" ? "all" : i.shown_relation
+                    let state = self.state()
+                    state.Homepage != "loading" &&
+                    self.setState({...self.state(),
+                      Homepage:
+                        {
+                          ...state.Homepage,
+                          Items:state.Homepage.Items.set(i_id,
+                            {...state.Homepage.Items.get(i_id),
+                              size:new_size, shown_relation:new_shown_relation})
+                        }
+                    }, callback)
+                  },
+                    
+                  toggle_button:undefined,
+                  set_mode:undefined,
+                  set_entity:(new_entity:Models.Homepage, callback?:()=>void, force_update_count_increment?:boolean) => {
+                    let state = self.state()
+                    state.Homepage != "loading" &&
+                    self.setState({...self.state(),
+                      dirty_Homepage:state.dirty_Homepage.set(i_id, new_entity),
+                      update_count:force_update_count_increment ? self.state().update_count+1 : state.update_count,
+                      Homepage:
+                        {
+                          ...state.Homepage,
+                          Items:state.Homepage.Items.set(i_id,{...state.Homepage.Items.get(i_id), element:new_entity})
+                        }
+                    }, callback)
+                  },
+                  unlink: undefined,
+                    delete: !Permissions.can_delete_Homepage(self.props.current_User) || !RecommendationPage_Homepage_RecommendationPage_can_delete(self) ?
+                    null
+                    :
+                    () => confirm(i18next.t('Are you sure?')) && Api.delete_Homepage(i.element).then(() =>
+                      load_relation_RecommendationPage_Homepage_RecommendationPage(self, false, self.props.current_User))
+                })
+              }
+            </div>
+          </div>
+        },
+      () =>
+        <div>
+          
+          
         </div>)
     }
     
@@ -528,7 +804,7 @@ export function render_add_existing_RecommendationPage_User_RecommendationPage(s
               source_name:"RecommendationPage",
               target_name:"User",
               target_plural:"Users",
-              page_size:10,
+              page_size:25,
               render_target:(i,i_id) =>
                 <div key={i_id} className="group__item">
                   <a className="group__button button button--existing"
@@ -536,7 +812,7 @@ export function render_add_existing_RecommendationPage_User_RecommendationPage(s
                         self.setState({...self.state(), add_step_User:"saving"}, () =>
                           Api.link_RecommendationPage_User_RecommendationPages(self.props.entity, i).then(() =>
                             self.setState({...self.state(), add_step_User:"closed"}, () =>
-                              load_relation_RecommendationPage_User_RecommendationPage(self, self.props.current_User))))
+                              load_relation_RecommendationPage_User_RecommendationPage(self, false, self.props.current_User))))
                       }>
                       Add existing
                   </a>
@@ -589,7 +865,7 @@ export function render_add_existing_RecommendationPage_RecommendationPage_Recipe
               source_name:"RecommendationPage",
               target_name:"Recipe",
               target_plural:"Recipes",
-              page_size:10,
+              page_size:25,
               render_target:(i,i_id) =>
                 <div key={i_id} className="group__item">
                   <a className="group__button button button--existing"
@@ -597,7 +873,7 @@ export function render_add_existing_RecommendationPage_RecommendationPage_Recipe
                         self.setState({...self.state(), add_step_Recipe:"saving"}, () =>
                           Api.link_RecommendationPage_RecommendationPage_Recipes(self.props.entity, i).then(() =>
                             self.setState({...self.state(), add_step_Recipe:"closed"}, () =>
-                              load_relation_RecommendationPage_RecommendationPage_Recipe(self, self.props.current_User))))
+                              load_relation_RecommendationPage_RecommendationPage_Recipe(self, false, self.props.current_User))))
                       }>
                       Add existing
                   </a>
@@ -679,7 +955,7 @@ export function render_new_RecommendationPage_User_RecommendationPage(self:Recom
                     {
                       if (state.create_step_User != "none" && is_valid) {
                         Api.register_User(state.create_step_User.username, state.create_step_User.email, state.create_step_User.email_confirmation).then(() =>
-                          load_relation_RecommendationPage_User_RecommendationPage(self, self.props.current_User, () =>
+                          load_relation_RecommendationPage_User_RecommendationPage(self, false, self.props.current_User, () =>
                             self.setState({...self.state(), create_step_User:"none"})
                           )
                         )
@@ -727,8 +1003,8 @@ export function render_new_RecommendationPage_RecommendationPage_Recipe(self:Rec
                           Api.create_linked_RecommendationPage_RecommendationPage_Recipes_Recipe(self.props.entity).then(e => {
                               e.length > 0 &&
                               Api.update_Recipe(
-                                ({ ...e[0], Name:"", Ingredients:"", Description:"", RatingType:0, Picture:"" } as Models.Recipe)).then(() =>
-                                load_relation_RecommendationPage_RecommendationPage_Recipe(self, self.props.current_User, () =>
+                                ({ ...e[0], Name:"", Ingredients:"", Description:"", Picture:"" } as Models.Recipe)).then(() =>
+                                load_relation_RecommendationPage_RecommendationPage_Recipe(self, true, self.props.current_User, () =>
                                     self.setState({...self.state(), add_step_Recipe:"closed"})
                                   )
                                 )
@@ -747,6 +1023,8 @@ export function render_saving_animations_RecommendationPage(self:RecommendationP
   return self.state().dirty_User.count() > 0 ?
     <div style={{position:"fixed", zIndex:10000, top:0, left:0, width:"20px", height:"20px", backgroundColor:"red"}} className="saving"/> : 
     self.state().dirty_Recipe.count() > 0 ?
+    <div style={{position:"fixed", zIndex:10000, top:0, left:0, width:"20px", height:"20px", backgroundColor:"red"}} className="saving"/> : 
+    self.state().dirty_Homepage.count() > 0 ?
     <div style={{position:"fixed", zIndex:10000, top:0, left:0, width:"20px", height:"20px", backgroundColor:"red"}} className="saving"/>
     : <div style={{position:"fixed", zIndex:10000, top:0, left:0, width:"20px", height:"20px", backgroundColor:"cornflowerblue"}} className="saved"/>
 }
@@ -761,11 +1039,14 @@ export type RecommendationPageState = {
   add_step_Recipe:"closed"|"open"|"saving",
       dirty_Recipe:Immutable.Map<number,Models.Recipe>,
       Recipe:Utils.PaginatedItems<{ shown_relation: string } & Utils.EntityAndSize<Models.Recipe>>|"loading"
+  add_step_Homepage:"closed"|"open"|"saving",
+      dirty_Homepage:Immutable.Map<number,Models.Homepage>,
+      Homepage:Utils.PaginatedItems<{ shown_relation: string } & Utils.EntityAndSize<Models.Homepage>>|"loading"
   }
 export class RecommendationPageComponent extends React.Component<Utils.EntityComponentProps<Models.RecommendationPage>, RecommendationPageState> {
   constructor(props:Utils.EntityComponentProps<Models.RecommendationPage>, context:any) {
     super(props, context)
-    this.state = { update_count:0, add_step_User:"closed", create_step_User:"none",dirty_User:Immutable.Map<number,Models.User>(), User:"loading", add_step_Recipe:"closed", dirty_Recipe:Immutable.Map<number,Models.Recipe>(), Recipe:"loading" }
+    this.state = { update_count:0,add_step_User:"closed", create_step_User:"none",dirty_User:Immutable.Map<number,Models.User>(), User:"loading", add_step_Recipe:"closed", dirty_Recipe:Immutable.Map<number,Models.Recipe>(), Recipe:"loading", add_step_Homepage:"closed", dirty_Homepage:Immutable.Map<number,Models.Homepage>(), Homepage:"loading" }
   }
 
   get_self() {
@@ -781,15 +1062,17 @@ export class RecommendationPageComponent extends React.Component<Utils.EntityCom
         (current_logged_in_entity && !new_logged_in_entity) ||
         (!current_logged_in_entity && new_logged_in_entity) ||
         (current_logged_in_entity && new_logged_in_entity && current_logged_in_entity.Id != new_logged_in_entity.Id)) {
-      load_relations_RecommendationPage(this.get_self(), new_props.current_User)
+      load_relations_RecommendationPage(this.get_self(),  new_props.current_User)
     }
   }
 
   thread:number = null
   componentWillMount() {
     if (this.props.size == "breadcrumb") return
-    if (this.props.size != "preview")
+    if (this.props.size != "preview") {
+      
       load_relations_RecommendationPage(this.get_self(), this.props.current_User)
+    }
 
     this.thread = setInterval(() => {
       if (this.state.dirty_User.count() > 0) {
@@ -801,6 +1084,11 @@ export class RecommendationPageComponent extends React.Component<Utils.EntityCom
          let first = this.state.dirty_Recipe.first()
          this.setState({...this.state, dirty_Recipe: this.state.dirty_Recipe.remove(first.Id)}, () =>
            Api.update_Recipe(first)
+         )
+       } else if (this.state.dirty_Homepage.count() > 0) {
+         let first = this.state.dirty_Homepage.first()
+         this.setState({...this.state, dirty_Homepage: this.state.dirty_Homepage.remove(first.Id)}, () =>
+           Api.update_Homepage(first)
          )
        }
 
@@ -847,7 +1135,7 @@ export let RecommendationPage = (props:Utils.EntityComponentProps<Models.Recomme
   <RecommendationPageComponent {...props} />
 
 export let RecommendationPage_to_page = (id:number) => {
-  let can_edit = Utils.any_of([Permissions.can_edit_RecommendationPage, Permissions.can_edit_User_RecommendationPage, Permissions.can_edit_RecommendationPage_Recipe, Permissions.can_edit_User, Permissions.can_edit_Recipe])
+  let can_edit = Utils.any_of([Permissions.can_edit_RecommendationPage, Permissions.can_edit_User_RecommendationPage, Permissions.can_edit_RecommendationPage_Recipe, Permissions.can_edit_Homepage_RecommendationPage, Permissions.can_edit_User, Permissions.can_edit_Recipe, Permissions.can_edit_Homepage])
   return Utils.scene_to_page<Models.RecommendationPage>(can_edit, RecommendationPage, Api.get_RecommendationPage(id), Api.update_RecommendationPage, "RecommendationPage", "RecommendationPage", `/RecommendationPages/${id}`)
 }
 

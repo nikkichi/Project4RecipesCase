@@ -21,7 +21,7 @@
   .model__attribute {
     margin: 0;
   }
-  .model-content {
+  .content .model-content {
     padding: 21px 50px;
     min-height: auto;
   }
@@ -30,9 +30,17 @@
 .column-view-content {
   @include tablet-desktop {
     margin-left: 250px;
-  }
-  .topbar {
-    display: none; // remove this ugly fix when giuseppe fixed the double topbar
+    padding: 20px 0 20px 50px;
+    .local-menu {
+      margin-top: 0;
+    }
+    .content .model-content {
+      padding-left: 0;
+      padding-right: 0;
+      .model-content {
+        padding: 5px 50px 25px 50px;
+      }
+    }
   }
 }
 

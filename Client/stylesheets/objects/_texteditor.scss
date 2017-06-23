@@ -1,9 +1,11 @@
-// TODO: fix this weird classes
-.slide__text__editor {
+.public-DraftEditor-content[contenteditable="true"] {
   border: 1px solid $grey-400;
   min-height: 250px;
+  padding: 10px 15px;
+  background: #fff;
 }
 
+// TODO: fix this weird classes
 .text__editor__menu__bar {
   img {
     width: 25px;
