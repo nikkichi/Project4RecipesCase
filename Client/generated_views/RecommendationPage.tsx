@@ -15,7 +15,7 @@ import * as Moment from 'moment'
 import * as HomepageViews from './Homepage'
 import * as UserViews from './User'
 import * as RecipeViews from './Recipe'
-
+import * as CustomViews from '../custom_views'
 
 export function RecommendationPage_User_RecommendationPage_can_create(self:RecommendationPageContext) {
   let state = self.state()

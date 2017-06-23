@@ -71,6 +71,7 @@ export type Homepage = {
     Id : number
     CreatedDate:Moment.Moment
     
+  Test : string
     
   }
   

@@ -18,7 +18,7 @@ import * as ThirtyViews from './Thirty'
 import * as SixtyViews from './Sixty'
 import * as NinetyViews from './Ninety'
 import * as FifteenViews from './Fifteen'
-
+import * as CustomViews from '../custom_views'
 export let PreparationTime = (props:Utils.EntityComponentProps<Models.PreparationTime>) : JSX.Element =>
   props.entity.Kind == "Thirty" ?
       ThirtyViews.Thirty({...props,

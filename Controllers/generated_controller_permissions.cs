@@ -147,7 +147,14 @@ static public bool can_view_Homepage(User current_User) { return true; }
 
     static public bool can_delete_Homepage(User current_User) { return false; }
       
-  
+    static public bool can_view_Homepage_AppTest(User current_User) { return true; }
+
+    static public bool can_edit_Homepage_AppTest(User current_User) { return true; }
+    
+  static public bool can_view_Homepage_Test(User current_User) { return true; }
+
+    static public bool can_edit_Homepage_Test(User current_User) { return true; }
+    
 
     
 static public bool can_view_Brunch(User current_User) { return true; }

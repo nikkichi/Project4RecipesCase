@@ -14,7 +14,7 @@ import * as i18next from 'i18next'
 import * as Moment from 'moment'
 import * as HomepageViews from './Homepage'
 import * as RecipeViews from './Recipe'
-
+import * as CustomViews from '../custom_views'
 
 export function Rating_Recipe_Rating_can_create(self:RatingContext) {
   let state = self.state()

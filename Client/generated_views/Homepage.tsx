@@ -15,7 +15,7 @@ import * as Moment from 'moment'
 import * as RecipeViews from './Recipe'
 import * as RecommendationPageViews from './RecommendationPage'
 import * as CuisineViews from './Cuisine'
-
+import * as CustomViews from '../custom_views'
 
 export function Homepage_Homepage_Recipe_can_create(self:HomepageContext) {
   let state = self.state()
@@ -194,13 +194,65 @@ export function set_size_Homepage(self:HomepageContext, new_size:Utils.EntitySiz
   })
 }
 
+export function render_Homepage_AppTest_editable_minimised(self:HomepageContext) : JSX.Element {
+  if (!Permissions.can_edit_Homepage(self.props.current_User)) return render_Homepage_AppTest_minimised(self)
+  else
+    return !Permissions.can_view_Homepage_AppTest(self.props.current_User) ? <div /> :
+          <div className="model__attribute apptest">
+  <div className="model__attribute-content">
+    {CustomViews.AppTest({...self.props})}
+  </div>
+</div>
+}
+
+export function render_Homepage_Test_editable_minimised(self:HomepageContext) : JSX.Element {
+  if (!Permissions.can_edit_Homepage(self.props.current_User)) return render_Homepage_Test_minimised(self)
+  else
+    return !Permissions.can_view_Homepage_Test(self.props.current_User) ? <div /> :
+          <div className="model__attribute test">
+  <label className="attribute-label attribute-label-test">{i18next.t(`Homepage:Test`, {context: self.props.inline ? "inline" : ""})}</label>
+  <div className="model__attribute-content">
+    { Components.String(
+        self.props.is_editable && Permissions.can_edit_Homepage(self.props.current_User) && Permissions.can_edit_Homepage_Test(self.props.current_User),
+        self.props.mode,
+        () => self.props.entity.Test,
+        v => self.props.set_entity({...self.props.entity, Test:v})) } 
+  </div>
+</div>
+}
 
 
+export function render_Homepage_AppTest_editable_maximised(self:HomepageContext) : JSX.Element {
+  if (!Permissions.can_edit_Homepage(self.props.current_User)) return render_Homepage_AppTest_maximised(self)
+  else
+    return !Permissions.can_view_Homepage_AppTest(self.props.current_User) ? <div /> :
+          <div className="model__attribute apptest">
+  <div className="model__attribute-content">
+    {CustomViews.AppTest({...self.props})}
+  </div>
+</div>
+}
+
+export function render_Homepage_Test_editable_maximised(self:HomepageContext) : JSX.Element {
+  if (!Permissions.can_edit_Homepage(self.props.current_User)) return render_Homepage_Test_maximised(self)
+  else
+    return !Permissions.can_view_Homepage_Test(self.props.current_User) ? <div /> :
+          <div className="model__attribute test">
+  <label className="attribute-label attribute-label-test">{i18next.t(`Homepage:Test`, {context: self.props.inline ? "inline" : ""})}</label>
+  <div className="model__attribute-content">
+    { Components.String(
+        self.props.is_editable && Permissions.can_edit_Homepage(self.props.current_User) && Permissions.can_edit_Homepage_Test(self.props.current_User),
+        self.props.mode,
+        () => self.props.entity.Test,
+        v => self.props.set_entity({...self.props.entity, Test:v})) } 
+  </div>
+</div>
+}
 
 
 export function render_editable_attributes_minimised_Homepage(self:HomepageContext) {
   let attributes = (<div>
-      
+      {render_Homepage_Test_editable_minimised(self)}{CustomViews.AppTest({...self.props})}
     </div>)
   return attributes
 }
@@ -208,7 +260,7 @@ export function render_editable_attributes_minimised_Homepage(self:HomepageConte
 export function render_editable_attributes_maximised_Homepage(self:HomepageContext) {
     let state = self.state()
     let attributes = (<div>
-        
+        {render_Homepage_Test_editable_maximised(self)}{CustomViews.AppTest({...self.props})}
         
         
         
@@ -350,15 +402,54 @@ export function render_content_Homepage(self:HomepageContext) {
     </div>
 }
 
+export function render_Homepage_AppTest_minimised(self:HomepageContext) : JSX.Element {
+      return !Permissions.can_view_Homepage_AppTest(self.props.current_User) ? null : <div className="model__attribute apptest">
+  <div className="model__attribute-content">
+    {CustomViews.AppTest({...self.props})}
+  </div>
+</div>
+      
+}
+        export function render_Homepage_Test_minimised(self:HomepageContext) : JSX.Element {
+      return !Permissions.can_view_Homepage_Test(self.props.current_User) ? null : <div className="model__attribute test">
+  <label className="attribute-label attribute-label-test">{i18next.t(`Homepage:Test`, {context: self.props.inline ? "inline" : ""})}</label>
+  <div className="model__attribute-content">
+    { Components.String(
+        self.props.is_editable && Permissions.can_edit_Homepage(self.props.current_User) && Permissions.can_edit_Homepage_Test(self.props.current_User),
+        self.props.mode,
+        () => self.props.entity.Test,
+        v => self.props.set_entity({...self.props.entity, Test:v})) } 
+  </div>
+</div>
+      
+}
 
-
-
+export function render_Homepage_AppTest_maximised(self:HomepageContext) : JSX.Element {
+        return !Permissions.can_view_Homepage_AppTest(self.props.current_User) ? null : <div className="model__attribute apptest">
+  <div className="model__attribute-content">
+    {CustomViews.AppTest({...self.props})}
+  </div>
+</div>
+}
+        export function render_Homepage_Test_maximised(self:HomepageContext) : JSX.Element {
+        return !Permissions.can_view_Homepage_Test(self.props.current_User) ? null : <div className="model__attribute test">
+  <label className="attribute-label attribute-label-test">{i18next.t(`Homepage:Test`, {context: self.props.inline ? "inline" : ""})}</label>
+  <div className="model__attribute-content">
+    { Components.String(
+        self.props.is_editable && Permissions.can_edit_Homepage(self.props.current_User) && Permissions.can_edit_Homepage_Test(self.props.current_User),
+        self.props.mode,
+        () => self.props.entity.Test,
+        v => self.props.set_entity({...self.props.entity, Test:v})) } 
+  </div>
+</div>
+}
 
 export function render_preview_Homepage(self:HomepageContext) {
   let attributes:JSX.Element = null
   if (self.props.mode == "view" || !Permissions.can_edit_Homepage(self.props.current_User))
     attributes = (<div className="model__attributes">
-      
+      { render_Homepage_AppTest_minimised(self) }
+        { render_Homepage_Test_minimised(self) }
     </div>)
   else
     attributes = render_editable_attributes_minimised_Homepage(self)
@@ -372,7 +463,8 @@ export function render_large_Homepage(self:HomepageContext) {
   let attributes:JSX.Element = null
   if (self.props.mode == "view" || !Permissions.can_edit_Homepage(self.props.current_User))
     attributes = (<div className="model__attributes">
-      
+      { render_Homepage_AppTest_maximised(self) }
+        { render_Homepage_Test_maximised(self) }
         
     </div>)
   else

@@ -57,6 +57,8 @@ namespace SimpleModelsAndRelations.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
+                    b.Property<string>("Test");
+
                     b.HasKey("Id");
 
                     b.ToTable("Homepage");

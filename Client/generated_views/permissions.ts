@@ -135,6 +135,13 @@ export let can_edit_Homepage = (current_User:Models.User) => true
 
 export let can_delete_Homepage = (current_User:Models.User) => false
   
+export let can_view_Homepage_AppTest = (current_User:Models.User) => true
+
+export let can_edit_Homepage_AppTest = (current_User:Models.User) => true
+
+export let can_view_Homepage_Test = (current_User:Models.User) => true
+
+export let can_edit_Homepage_Test = (current_User:Models.User) => true
 
 
 

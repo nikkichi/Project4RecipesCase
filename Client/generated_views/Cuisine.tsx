@@ -17,7 +17,7 @@ import * as MealViews from './Meal'
 import * as AsianViews from './Asian'
 import * as MediterraneanViews from './Mediterranean'
 import * as GrillViews from './Grill'
-
+import * as CustomViews from '../custom_views'
 export let Cuisine = (props:Utils.EntityComponentProps<Models.Cuisine>) : JSX.Element =>
   props.entity.Kind == "Asian" ?
       AsianViews.Asian({...props,

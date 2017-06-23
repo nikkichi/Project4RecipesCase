@@ -14,7 +14,7 @@ import * as i18next from 'i18next'
 import * as Moment from 'moment'
 import * as HomepageViews from './Homepage'
 import * as MealViews from './Meal'
-
+import * as CustomViews from '../custom_views'
 
 export function Asian_Cuisine_Meal_can_create(self:AsianContext) {
   let state = self.state()

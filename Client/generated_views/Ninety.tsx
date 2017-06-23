@@ -14,7 +14,7 @@ import * as i18next from 'i18next'
 import * as Moment from 'moment'
 import * as HomepageViews from './Homepage'
 import * as RecipeViews from './Recipe'
-
+import * as CustomViews from '../custom_views'
 
 export function Ninety_PreparationTime_Recipe_can_create(self:NinetyContext) {
   let state = self.state()

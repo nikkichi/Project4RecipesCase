@@ -18,7 +18,7 @@ import * as PreparationTimeViews from './PreparationTime'
 import * as UserViews from './User'
 import * as RatingViews from './Rating'
 import * as RecommendationPageViews from './RecommendationPage'
-
+import * as CustomViews from '../custom_views'
 
 export function Recipe_Meal_Recipe_can_create(self:RecipeContext) {
   let state = self.state()

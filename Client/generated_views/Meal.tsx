@@ -19,7 +19,7 @@ import * as LunchViews from './Lunch'
 import * as BrunchViews from './Brunch'
 import * as DinnerViews from './Dinner'
 import * as BreakfastViews from './Breakfast'
-
+import * as CustomViews from '../custom_views'
 export let Meal = (props:Utils.EntityComponentProps<Models.Meal>) : JSX.Element =>
   props.entity.Kind == "Lunch" ?
       LunchViews.Lunch({...props,

@@ -15,7 +15,7 @@ import * as Moment from 'moment'
 import * as HomepageViews from './Homepage'
 import * as CuisineViews from './Cuisine'
 import * as RecipeViews from './Recipe'
-
+import * as CustomViews from '../custom_views'
 
 export function Brunch_Cuisine_Meal_can_create(self:BrunchContext) {
   let state = self.state()

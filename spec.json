@@ -3,7 +3,7 @@
     "context_name": "SimpleModelsAndRelationsContext",
     "api_version": "v1",
     "database_provider": "sqlite",
-    "custom_view_imports": "",
+    "custom_view_imports": "import * as CustomViews from '../custom_views'",
     "custom_restriction_imports": "",
     "models": [
     
@@ -11,8 +11,12 @@
             "name": "Homepage",
             "allow_maximisation" : true,
             "type": "homepage",
-            "attributes": [],
-            "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
+            "attributes": [
+                { "type": "null", "name": "AppTest", "custom_rendering": "CustomViews.AppTest", "hidden_label": true },
+                { "type": "string", "name": "Test" }
+            ],
+            "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] },
+            "seeds": [ { "Id":1, "Test":"\"\"" } ]
         },
             {
         "name": "User",
