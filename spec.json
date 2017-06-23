@@ -44,7 +44,7 @@
             "attributes":[{"type": "string", "name": "Description"}],
             "allow_maximisation": true,
             "allow_fullscreen": true,
-            "seeds": [{ "Id": 1, "Description": "Asian"}],
+            "seeds": [{ "Id": 1, "Description": "\"Asian\""}],
             "permissions": { "view": ["*"], "edit": ["*"], "delete": ["*"], "create": ["*"] }
 
         },
@@ -55,7 +55,7 @@
             "attributes":[{"type": "string", "name": "Description"}],
             "allow_maximisation": true,
             "allow_fullscreen": true,
-            "seeds": [{ "Id": 2, "Description": "Mediterranean"}],
+            "seeds": [{ "Id": 2, "Description": "\"Mediterranean\""}],
             "permissions": { "view": ["*"], "edit": ["*"], "delete": ["*"], "create": ["*"] }
         },
         {
@@ -64,7 +64,7 @@
             "attributes":[{"type": "string", "name": "Description"}],
             "allow_maximisation": true,
             "allow_fullscreen": true,
-            "seeds": [{ "Id": 3, "Description": "Grill"}],
+            "seeds": [{ "Id": 3, "Description": "\"Grill\""}],
             "permissions": { "view": ["*"], "edit": ["*"], "delete": ["*"], "create": ["*"] }
         },
         {
@@ -81,7 +81,7 @@
             "attributes" : [{"type": "string", "name": "Description"}],
             "allow_maximisation": true,
             "allow_fullscreen": true,
-            "seeds": [{"Id": 1, "Description": "Breakfast"}],
+            "seeds": [{"Id": 1, "Description": "\"Breakfast\""}],
             "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
         },
         {
@@ -90,7 +90,7 @@
             "attributes" : [{"type": "string", "name": "Description"}],
             "allow_maximisation": true,
             "allow_fullscreen": true,
-            "seeds": [{"Id": 2, "Description": "Brunch"}],
+            "seeds": [{"Id": 2, "Description": "\"Brunch\""}],
             "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
         },
                 {
@@ -99,7 +99,7 @@
             "attributes" : [{"type": "string", "name": "Description"}],
             "allow_maximisation": true,
             "allow_fullscreen": true,
-            "seeds": [{"Id": 3, "Description": "Lunch"}],
+            "seeds": [{"Id": 3, "Description": "\"Lunch\""}],
             "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
         },
         {
@@ -108,7 +108,7 @@
             "attributes" : [{"type": "string", "name": "Description"}],
             "allow_maximisation": true,
             "allow_fullscreen": true,
-            "seeds": [{"Id": 4, "Description": "Dinner"}],
+            "seeds": [{"Id": 4, "Description": "\"Dinner\""}],
             "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
         },
         {
@@ -117,7 +117,7 @@
             "inherits":"PreparationTime",
             "allow_maximisation": true,
             "allow_fullscreen": true,
-            "seeds": [{"Id": 1, "Description": "Fifteen"}],
+            "seeds": [{"Id": 1, "Description": "\"Fifteen\""}],
             "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
         },
         {
@@ -126,7 +126,7 @@
             "allow_maximisation": true,
             "inherits":"PreparationTime",
             "allow_fullscreen": true,
-            "seeds": [{"Id": 2, "Description": "Thirty"}],
+            "seeds": [{"Id": 2, "Description": "\"Thirty\""}],
             "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
         },
         {
@@ -135,7 +135,7 @@
             "inherits":"PreparationTime",
             "allow_maximisation": true,
             "allow_fullscreen": true,
-            "seeds": [{"Id": 3, "Description": "Sixty"}],
+            "seeds": [{"Id": 3, "Description": "\"Sixty\""}],
             "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
         },
         {
@@ -144,7 +144,7 @@
             "inherits":"PreparationTime",
             "allow_maximisation": true,
             "allow_fullscreen": true,
-            "seeds": [{"Id": 4, "Descriptioni": "Ninety"}],
+            "seeds": [{"Id": 4, "Description": "\"Ninety\""}],
             "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
         },
         {
