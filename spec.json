@@ -251,7 +251,7 @@
         "target": "Recipe",
         "sort": "1-N",
         "seeds": [
-            {"CuisineID": 1, "RecipeId": 4}
+            {"CuisineId": 1, "RecipeId": 4}
         ]
         },
         {
@@ -259,7 +259,7 @@
         "target": "Recipe",
         "sort": "1-N",
         "seeds": [
-            {"CuisineID": 2, "RecipeId": 3}
+            {"CuisineId": 2, "RecipeId": 3}
         ]
 
         },
@@ -273,7 +273,7 @@
         ]
         },
         {
-        "source": "Meals",
+        "source": "Meal",
         "target": "Recipe",
         "sort": "1-N",
         "seeds": [
@@ -281,7 +281,7 @@
         ]
         },
         {
-        "source": "Meals",
+        "source": "Meal",
         "target": "Recipe",
         "sort": "1-N",
         "seeds": [
@@ -289,7 +289,7 @@
         ]
         },
         {
-        "source": "Meals",
+        "source": "Meal",
         "target": "Recipe",
         "sort": "1-N",
         "seeds": [
@@ -298,7 +298,7 @@
         ]
         },
         {
-        "source": "Meals",
+        "source": "Meal",
         "target": "Recipe",
         "sort": "1-N",
         "seeds": [
