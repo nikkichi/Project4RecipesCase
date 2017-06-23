@@ -321,7 +321,7 @@
         
         {
         "source": "User",
-        "target": "Receipe",
+        "target": "Recipe",
         "sort": "N-N"
         },
         {
