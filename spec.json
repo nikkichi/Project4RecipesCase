@@ -148,15 +148,8 @@
             "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
         },
         {
-            "name" : "Favorite",
-            "attributes" : [],
-            "allow_maximisation": true,
-            "allow_fullscreen": true,
-            "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
-        },
-        {
             "name" : "Rating",
-            "attributes" : [],
+            "attributes" : [{ "type" : "int", "name": "Number" }],
             "allow_maximisation": true,
             "allow_fullscreen": true,
             "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] }
@@ -328,11 +321,11 @@
         
         {
         "source": "User",
-        "target": "Favorite",
-        "sort": "1-1"
-        },   
+        "target": "Receipe",
+        "sort": "N-N"
+        },
         {
-        "source": "User",
+        "source": "Recipe",
         "target": "Rating",
         "sort": "1-N"
         },
@@ -340,16 +333,6 @@
         "source": "User",
         "target": "RecommendationPage",
         "sort": "1-1"
-        },
-        {
-        "source": "Favorite",
-        "target": "Recipe",
-        "sort": "N-N"
-        },
-        {
-        "source": "Rating",
-        "target": "Recipe",
-        "sort": "N-N"
         },
         {
         "source": "RecommendationPage",
@@ -363,23 +346,13 @@
         },
         {
         "source": "Homepage",
-        "target": "Cuisine",
+        "target": "RecommendationPage",
         "sort": "1-N"
         },
-                {
-        "source": "Recipe",
-        "target": "Homepage",
-        "sort": "1-1"
-        },
-                {
-        "source": "Recipe",
-        "target": "Rating",
-        "sort": "N-1"
-        },
-                {
-        "source": "Recipe",
-        "target": "RecommendationPage",
-        "sort": "N-1"
+        {
+        "source": "Homepage",
+        "target": "Cuisine",
+        "sort": "1-N"
         }
         ]
     }
