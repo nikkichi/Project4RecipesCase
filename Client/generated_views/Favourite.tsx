@@ -12,6 +12,7 @@ import * as Utils from './view_utils'
 import * as Draft from 'draft-js'
 import * as i18next from 'i18next'
 import * as Moment from 'moment'
+import * as BrowseViews from './Browse'
 import * as HomepageViews from './Homepage'
 import * as CustomViews from '../custom_views'
 
@@ -45,22 +46,6 @@ export function render_Favourite_FavouriteView_editable_minimised(self:Favourite
 </div>
 }
 
-export function render_Favourite_Test_editable_minimised(self:FavouriteContext) : JSX.Element {
-  if (!Permissions.can_edit_Favourite(self.props.current_User)) return render_Favourite_Test_minimised(self)
-  else
-    return !Permissions.can_view_Favourite_Test(self.props.current_User) ? <div /> :
-          <div className="model__attribute test">
-  <label className="attribute-label attribute-label-test">{i18next.t(`Favourite:Test`, {context: self.props.inline ? "inline" : ""})}</label>
-  <div className="model__attribute-content">
-    { Components.String(
-        self.props.is_editable && Permissions.can_edit_Favourite(self.props.current_User) && Permissions.can_edit_Favourite_Test(self.props.current_User),
-        self.props.mode,
-        () => self.props.entity.Test,
-        v => self.props.set_entity({...self.props.entity, Test:v})) } 
-  </div>
-</div>
-}
-
 
 export function render_Favourite_FavouriteView_editable_maximised(self:FavouriteContext) : JSX.Element {
   if (!Permissions.can_edit_Favourite(self.props.current_User)) return render_Favourite_FavouriteView_maximised(self)
@@ -73,26 +58,10 @@ export function render_Favourite_FavouriteView_editable_maximised(self:Favourite
 </div>
 }
 
-export function render_Favourite_Test_editable_maximised(self:FavouriteContext) : JSX.Element {
-  if (!Permissions.can_edit_Favourite(self.props.current_User)) return render_Favourite_Test_maximised(self)
-  else
-    return !Permissions.can_view_Favourite_Test(self.props.current_User) ? <div /> :
-          <div className="model__attribute test">
-  <label className="attribute-label attribute-label-test">{i18next.t(`Favourite:Test`, {context: self.props.inline ? "inline" : ""})}</label>
-  <div className="model__attribute-content">
-    { Components.String(
-        self.props.is_editable && Permissions.can_edit_Favourite(self.props.current_User) && Permissions.can_edit_Favourite_Test(self.props.current_User),
-        self.props.mode,
-        () => self.props.entity.Test,
-        v => self.props.set_entity({...self.props.entity, Test:v})) } 
-  </div>
-</div>
-}
-
 
 export function render_editable_attributes_minimised_Favourite(self:FavouriteContext) {
   let attributes = (<div>
-      {render_Favourite_Test_editable_minimised(self)}{CustomViews.FavouriteView({...self.props})}
+      {CustomViews.FavouriteView({...self.props})}
     </div>)
   return attributes
 }
@@ -100,7 +69,7 @@ export function render_editable_attributes_minimised_Favourite(self:FavouriteCon
 export function render_editable_attributes_maximised_Favourite(self:FavouriteContext) {
     let state = self.state()
     let attributes = (<div>
-        {render_Favourite_Test_editable_maximised(self)}{CustomViews.FavouriteView({...self.props})}
+        {CustomViews.FavouriteView({...self.props})}
         
         
         
@@ -124,6 +93,17 @@ export function render_menu_Favourite(self:FavouriteContext) {
                   
                 }>
                   {i18next.t('Favourite')}
+                </a>
+              </div>
+            }
+        {!Permissions.can_view_Browse(self.props.current_User) ? null :
+              <div className={`menu_entry page_link`}>
+                <a onClick={() => 
+                  Api.get_Browses(0, 1).then(e =>
+                    e.Items.length > 0 && self.props.set_page(BrowseViews.Browse_to_page(e.Items[0].Item.Id))
+                  )
+                }>
+                  {i18next.t('Browse')}
                 </a>
               </div>
             }
@@ -232,36 +212,11 @@ export function render_Favourite_FavouriteView_minimised(self:FavouriteContext) 
 </div>
       
 }
-        export function render_Favourite_Test_minimised(self:FavouriteContext) : JSX.Element {
-      return !Permissions.can_view_Favourite_Test(self.props.current_User) ? null : <div className="model__attribute test">
-  <label className="attribute-label attribute-label-test">{i18next.t(`Favourite:Test`, {context: self.props.inline ? "inline" : ""})}</label>
-  <div className="model__attribute-content">
-    { Components.String(
-        self.props.is_editable && Permissions.can_edit_Favourite(self.props.current_User) && Permissions.can_edit_Favourite_Test(self.props.current_User),
-        self.props.mode,
-        () => self.props.entity.Test,
-        v => self.props.set_entity({...self.props.entity, Test:v})) } 
-  </div>
-</div>
-      
-}
 
 export function render_Favourite_FavouriteView_maximised(self:FavouriteContext) : JSX.Element {
         return !Permissions.can_view_Favourite_FavouriteView(self.props.current_User) ? null : <div className="model__attribute favouriteview">
   <div className="model__attribute-content">
     {CustomViews.FavouriteView({...self.props})}
-  </div>
-</div>
-}
-        export function render_Favourite_Test_maximised(self:FavouriteContext) : JSX.Element {
-        return !Permissions.can_view_Favourite_Test(self.props.current_User) ? null : <div className="model__attribute test">
-  <label className="attribute-label attribute-label-test">{i18next.t(`Favourite:Test`, {context: self.props.inline ? "inline" : ""})}</label>
-  <div className="model__attribute-content">
-    { Components.String(
-        self.props.is_editable && Permissions.can_edit_Favourite(self.props.current_User) && Permissions.can_edit_Favourite_Test(self.props.current_User),
-        self.props.mode,
-        () => self.props.entity.Test,
-        v => self.props.set_entity({...self.props.entity, Test:v})) } 
   </div>
 </div>
 }
@@ -271,7 +226,6 @@ export function render_preview_Favourite(self:FavouriteContext) {
   if (self.props.mode == "view" || !Permissions.can_edit_Favourite(self.props.current_User))
     attributes = (<div className="model__attributes">
       { render_Favourite_FavouriteView_minimised(self) }
-        { render_Favourite_Test_minimised(self) }
     </div>)
   else
     attributes = render_editable_attributes_minimised_Favourite(self)
@@ -286,7 +240,6 @@ export function render_large_Favourite(self:FavouriteContext) {
   if (self.props.mode == "view" || !Permissions.can_edit_Favourite(self.props.current_User))
     attributes = (<div className="model__attributes">
       { render_Favourite_FavouriteView_maximised(self) }
-        { render_Favourite_Test_maximised(self) }
         
     </div>)
   else

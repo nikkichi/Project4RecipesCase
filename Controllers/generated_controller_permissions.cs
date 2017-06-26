@@ -115,9 +115,19 @@ static public bool can_view_Favourite(User current_User) { return true; }
 
     static public bool can_edit_Favourite_FavouriteView(User current_User) { return true; }
     
-  static public bool can_view_Favourite_Test(User current_User) { return true; }
 
-    static public bool can_edit_Favourite_Test(User current_User) { return true; }
+    
+static public bool can_view_Browse(User current_User) { return true; }
+
+    static public bool can_create_Browse(User current_User) { return false; }
+
+    static public bool can_edit_Browse(User current_User) { return true; }
+
+    static public bool can_delete_Browse(User current_User) { return false; }
+      
+    static public bool can_view_Browse_BrowseView(User current_User) { return true; }
+
+    static public bool can_edit_Browse_BrowseView(User current_User) { return true; }
     
 
     

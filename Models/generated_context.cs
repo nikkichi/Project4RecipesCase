@@ -12,6 +12,7 @@ namespace SimpleModelsAndRelations.Models{
     public DbSet<Sixty> Sixty { get; set; }
     public DbSet<RecommendationPage> RecommendationPage { get; set; }
     public DbSet<Favourite> Favourite { get; set; }
+    public DbSet<Browse> Browse { get; set; }
     public DbSet<Lunch> Lunch { get; set; }
     public DbSet<User> User { get; set; }
     public DbSet<Homepage> Homepage { get; set; }
@@ -24,6 +25,7 @@ namespace SimpleModelsAndRelations.Models{
     public DbSet<Fifteen> Fifteen { get; set; }
     public DbSet<Rating> Rating { get; set; }
     public DbSet<Grill> Grill { get; set; }
+    
     
     
     
@@ -65,6 +67,7 @@ namespace SimpleModelsAndRelations.Models{
 
 
   
+    
     
     
     

@@ -53,4 +53,5 @@ export default class IComponent extends React.Component<IComponentProps, ICompon
 export let AppTest = (props:ViewUtils.EntityComponentProps<Models.Homepage>) => {
     return <IComponent props={props}/>
     }
-export let FavouriteView = (props:ViewUtils.EntityComponentProps<Models.Homepage>) => <div>hello favourite</div>
+export let FavouriteView = (props:ViewUtils.EntityComponentProps<Models.Favourite>) => <div><div>hello favourite</div></div>
+export let BrowseView   = (props:ViewUtils.EntityComponentProps<Models.Browse>) => <div><div>Hello recipe</div></div>

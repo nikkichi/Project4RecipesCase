@@ -103,9 +103,19 @@ export let can_view_Favourite_FavouriteView = (current_User:Models.User) => true
 
 export let can_edit_Favourite_FavouriteView = (current_User:Models.User) => true
 
-export let can_view_Favourite_Test = (current_User:Models.User) => true
 
-export let can_edit_Favourite_Test = (current_User:Models.User) => true
+
+export let can_view_Browse = (current_User:Models.User) => true
+
+export let can_create_Browse = (current_User:Models.User) => false
+
+export let can_edit_Browse = (current_User:Models.User) => true
+
+export let can_delete_Browse = (current_User:Models.User) => false
+  
+export let can_view_Browse_BrowseView = (current_User:Models.User) => true
+
+export let can_edit_Browse_BrowseView = (current_User:Models.User) => true
 
 
 

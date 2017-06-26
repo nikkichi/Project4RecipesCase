@@ -179,7 +179,7 @@ namespace SimpleModelsAndRelations.Models
     public int Id {get;set;}
     
     [Newtonsoft.Json.JsonProperty(ItemConverterType = typeof(Newtonsoft.Json.Converters.JavaScriptDateTimeConverter))] public DateTime CreatedDate{ get; set; }
-        public string Test {get;set;}
+        
     
     static public Expression<Func<Favourite,Favourite>> FilterViewableAttributes(User current_User) {
       return self => self;
@@ -188,6 +188,29 @@ namespace SimpleModelsAndRelations.Models
       return self => self;
     }
     static public Favourite WithoutImages(Favourite self) {
+      
+      return self;
+    }
+  }
+
+  
+  
+  public partial class Browse: IEntity {
+    public Browse() {
+      
+    }
+    public int Id {get;set;}
+    
+    [Newtonsoft.Json.JsonProperty(ItemConverterType = typeof(Newtonsoft.Json.Converters.JavaScriptDateTimeConverter))] public DateTime CreatedDate{ get; set; }
+        
+    
+    static public Expression<Func<Browse,Browse>> FilterViewableAttributes(User current_User) {
+      return self => self;
+    }
+    static public Func<Browse,Browse> FilterViewableAttributesLocal(User current_User) {
+      return self => self;
+    }
+    static public Browse WithoutImages(Browse self) {
       
       return self;
     }

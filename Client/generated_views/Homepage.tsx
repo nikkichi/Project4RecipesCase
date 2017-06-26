@@ -13,6 +13,7 @@ import * as Draft from 'draft-js'
 import * as i18next from 'i18next'
 import * as Moment from 'moment'
 import * as FavouriteViews from './Favourite'
+import * as BrowseViews from './Browse'
 import * as CustomViews from '../custom_views'
 
 
@@ -125,6 +126,17 @@ export function render_menu_Homepage(self:HomepageContext) {
                   )
                 }>
                   {i18next.t('Favourite')}
+                </a>
+              </div>
+            }
+        {!Permissions.can_view_Browse(self.props.current_User) ? null :
+              <div className={`menu_entry page_link`}>
+                <a onClick={() => 
+                  Api.get_Browses(0, 1).then(e =>
+                    e.Items.length > 0 && self.props.set_page(BrowseViews.Browse_to_page(e.Items[0].Item.Id))
+                  )
+                }>
+                  {i18next.t('Browse')}
                 </a>
               </div>
             }

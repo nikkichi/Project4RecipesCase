@@ -24,6 +24,8 @@ namespace SimpleModelsAndRelations.Data
     static RecommendationPage[] RecommendationPages = null;
      static Action seed_Favourites = null;
     static Favourite[] Favourites = null;
+     static Action seed_Browses = null;
+    static Browse[] Browses = null;
      static Action seed_Lunches = null;
     static Lunch[] Lunches = null;
      static Action seed_Users = null;
@@ -61,6 +63,17 @@ namespace SimpleModelsAndRelations.Data
         Favourites = context.Favourite.ToArray();
       }
       seed_Favourites = () => {};
+        
+      
+      if (!context.Browse.Any()) {
+        var root = new Browse() { CreatedDate = DateTime.Now,  };
+        Browses = new [] {root};
+        context.Browse.Add(root);
+        context.SaveChanges();
+      } else {
+        Browses = context.Browse.ToArray();
+      }
+      seed_Browses = () => {};
         
       
       if (!context.Homepage.Any()) {
@@ -215,6 +228,9 @@ namespace SimpleModelsAndRelations.Data
             
             _RecommendationPage.Add(new RecommendationPage { CreatedDate = DateTime.Now,   });
 
+            
+            _RecommendationPage.Add(new RecommendationPage { CreatedDate = DateTime.Now,   });
+
           foreach (var x in _RecommendationPage)
           {
             context.RecommendationPage.Add(x);
@@ -231,7 +247,7 @@ namespace SimpleModelsAndRelations.Data
           
           
             
-            _Favourite.Add(new Favourite { Id = 1, CreatedDate = DateTime.Now, Test = "",   });
+            _Favourite.Add(new Favourite { Id = 1, CreatedDate = DateTime.Now,   });
 
           foreach (var x in _Favourite)
           {
@@ -240,6 +256,24 @@ namespace SimpleModelsAndRelations.Data
           context.SaveChanges();
         }
         Favourites = context.Favourite.ToArray();
+      };
+      seed_Browses = () => {
+        
+        if (!context.Browse.Any())
+        {
+          var _Browse = new System.Collections.Generic.List<Browse>();
+          
+          
+            
+            _Browse.Add(new Browse { Id = 1, CreatedDate = DateTime.Now,   });
+
+          foreach (var x in _Browse)
+          {
+            context.Browse.Add(x);
+          }
+          context.SaveChanges();
+        }
+        Browses = context.Browse.ToArray();
       };
       seed_Lunches = () => {
         
@@ -444,28 +478,25 @@ namespace SimpleModelsAndRelations.Data
           
           
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 39,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 50,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -42,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 7,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -95,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -56,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 65,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -48,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -68,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 81,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -84,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -98,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 40,   });
-
-            
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 60,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -37,   });
 
           foreach (var x in _Rating)
           {
@@ -501,6 +532,7 @@ namespace SimpleModelsAndRelations.Data
       seed_Sixties();
       seed_RecommendationPages();
       seed_Favourites();
+      seed_Browses();
       seed_Lunches();
       seed_Users();
       seed_Homepages();
@@ -638,6 +670,14 @@ namespace SimpleModelsAndRelations.Data
 
             new User_Recipe { UserId = Users[r.Next(Users.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
 
+            new User_Recipe { UserId = Users[r.Next(Users.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new User_Recipe { UserId = Users[r.Next(Users.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new User_Recipe { UserId = Users[r.Next(Users.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new User_Recipe { UserId = Users[r.Next(Users.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
         };
         foreach (var x in _User_Recipe)
         {
@@ -677,6 +717,8 @@ namespace SimpleModelsAndRelations.Data
 
             new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
 
+            new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
         };
         foreach (var x in _Recipe_Rating)
         {
@@ -690,6 +732,8 @@ namespace SimpleModelsAndRelations.Data
         var _User_RecommendationPage = new User_RecommendationPage[]
         {
             
+            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
+
             new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
 
             new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },

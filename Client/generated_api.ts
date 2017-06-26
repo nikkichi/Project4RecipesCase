@@ -776,6 +776,52 @@ export async function get_Favourites(page_index:number, page_size:number, search
 
   
   
+export async function create_Browse() : Promise<Models.Browse> {
+  let res = await fetch(`/api/v1/Browse/`,
+    { method: 'post', credentials: 'include', headers:{'content-type': 'application/json',
+      'X-XSRF-TOKEN': (document.getElementsByName("__RequestVerificationToken")[0] as any).value } })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return {...json, CreatedDate: Moment.utc(json.CreatedDate),  } as Models.Browse
+}
+
+export async function update_Browse(item:Models.Browse) : Promise<void> {
+  let res = await fetch(`/api/v1/Browse/`, { method: 'put',
+      body: JSON.stringify({...item, CreatedDate:undefined, }), credentials: 'include', headers:{'content-type': 'application/json', 'X-XSRF-TOKEN': (document.getElementsByName("__RequestVerificationToken")[0] as any).value } })
+  if (!res.ok) throw Error(res.statusText)
+  return
+}
+
+export async function delete_Browse(source:Models.Browse) : Promise<void> {
+  let res = await fetch(`/api/v1/Browse/${source.Id}`, { method: 'delete', credentials: 'include', headers:{'content-type': 'application/json', 'X-XSRF-TOKEN': (document.getElementsByName("__RequestVerificationToken")[0] as any).value} })
+  if (!res.ok) throw Error(res.statusText)
+  return
+}
+
+export async function get_Browse(id:number) : Promise<ItemWithEditable<Models.Browse>> {
+  let res = await fetch(`/api/v1/Browse/${id}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return { Item: {...json.Item, CreatedDate: Moment.utc(json.Item.CreatedDate),  } as Models.Browse,
+           Editable: !!json.Editable, JustCreated:false }
+}
+
+export async function get_Browses(page_index:number, page_size:number, search_query:string = null) : Promise<RawPage<Models.Browse>> {
+  let res = await fetch(`/api/v1/Browse?page_index=${page_index}&page_size=${page_size}${(search_query != null ? "&page_size=" + search_query : "")}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
+
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return make_page<Models.Browse>(json, e => { return {...e, }})
+}
+
+
+
+
+
+
+
+  
+  
 export async function create_Lunch() : Promise<Models.Lunch> {
   let res = await fetch(`/api/v1/Lunch/`,
     { method: 'post', credentials: 'include', headers:{'content-type': 'application/json',

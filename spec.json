@@ -19,15 +19,24 @@
             "seeds": [ { "Id":1, "Test":"\"\"" } ]
         },
         {
+            "name": "Browse",    
+            "allow_maximisation" : true,
+            "type": "page",
+            "attributes": [
+                { "type": "null", "name": "BrowseView", "custom_rendering": "CustomViews.BrowseView", "hidden_label": true }
+            ],
+            "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] },
+            "seeds": [ { "Id": 1 } ]
+        },
+        {
             "name": "Favourite",
             "allow_maximisation" : true,
             "type": "page",
             "attributes": [
-                { "type": "null", "name": "FavouriteView", "custom_rendering": "CustomViews.FavouriteView", "hidden_label": true },
-                { "type": "string", "name": "Test" }
+                { "type": "null", "name": "FavouriteView", "custom_rendering": "CustomViews.FavouriteView", "hidden_label": true }
             ],
             "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] },
-            "seeds": [ { "Id":1, "Test":"\"\"" } ]
+            "seeds": [ { "Id":1 } ]
         },
             {
         "name": "User",

@@ -15,6 +15,18 @@ namespace SimpleModelsAndRelations.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1");
 
+            modelBuilder.Entity("SimpleModelsAndRelations.Models.Browse", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Browse");
+                });
+
             modelBuilder.Entity("SimpleModelsAndRelations.Models.Cuisine", b =>
                 {
                     b.Property<int>("Id")
@@ -56,8 +68,6 @@ namespace SimpleModelsAndRelations.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreatedDate");
-
-                    b.Property<string>("Test");
 
                     b.HasKey("Id");
 

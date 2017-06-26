@@ -54,7 +54,13 @@ export type Favourite = {
     Id : number
     CreatedDate:Moment.Moment
     
-  Test : string
+    
+  }
+  
+export type Browse = {
+    Id : number
+    CreatedDate:Moment.Moment
+    
     
   }
   
