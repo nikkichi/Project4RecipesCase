@@ -50,6 +50,20 @@ namespace SimpleModelsAndRelations.Migrations
                     b.ToTable("Cuisine_Meal");
                 });
 
+            modelBuilder.Entity("SimpleModelsAndRelations.Models.Favourite", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("Test");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Favourite");
+                });
+
             modelBuilder.Entity("SimpleModelsAndRelations.Models.Homepage", b =>
                 {
                     b.Property<int>("Id")

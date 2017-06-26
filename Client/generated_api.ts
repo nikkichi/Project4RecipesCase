@@ -398,30 +398,6 @@ export async function unlink_Cuisine_Cuisine_Meals(source:Models.Cuisine, target
 }
 
 
-export async function get_Cuisine_Homepage_Cuisines(source:Models.Cuisine, page_index:number, page_size:number, query_string:string = null) : Promise<RawPage<Models.Homepage>> {
-  let res = await fetch(`/api/v1/Cuisine/${source.Id}/Homepage_Cuisines?page_index=${page_index}&page_size=${page_size}${(query_string != null ? "&search_query=" + query_string : "")}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
-  if (!res.ok) throw Error(res.statusText)
-  let json = await res.json()
-  return make_page<Models.Homepage>(json, e => { return {...e, }})
-}
-
-export async function get_Cuisine_Homepage_Cuisines_Homepage(source:Models.Cuisine, page_index:number, page_size:number, id:number) : Promise<Models.Homepage> {
-  let res = await fetch(`/api/v1/Cuisine/${source.Id}/Homepage_Cuisines/${id}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
-  if (!res.ok) throw Error(res.statusText)
-  let json = await res.json()
-  return {...json, CreatedDate: Moment.utc(json.CreatedDate),  } as Models.Homepage
-}
-
-export async function get_Cuisine_Homepage_Cuisines_Homepage_by_id(source:Models.Cuisine, id:number) : Promise<Models.Homepage> {
-  let res = await fetch(`/api/v1/Cuisine/${source.Id}/Homepage_Cuisines/${id}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
-  if (!res.ok) throw Error(res.statusText)
-  let json = await res.json()
-  return {...json, CreatedDate: Moment.utc(json.CreatedDate),  } as Models.Homepage
-}
-
-
-
-
 export async function create_Cuisine() : Promise<Models.Cuisine> {
   let res = await fetch(`/api/v1/Cuisine/`,
     { method: 'post', credentials: 'include', headers:{'content-type': 'application/json',
@@ -708,30 +684,6 @@ export async function unlink_RecommendationPage_RecommendationPage_Recipes(sourc
 }
 
 
-export async function get_RecommendationPage_Homepage_RecommendationPages(source:Models.RecommendationPage, page_index:number, page_size:number, query_string:string = null) : Promise<RawPage<Models.Homepage>> {
-  let res = await fetch(`/api/v1/RecommendationPage/${source.Id}/Homepage_RecommendationPages?page_index=${page_index}&page_size=${page_size}${(query_string != null ? "&search_query=" + query_string : "")}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
-  if (!res.ok) throw Error(res.statusText)
-  let json = await res.json()
-  return make_page<Models.Homepage>(json, e => { return {...e, }})
-}
-
-export async function get_RecommendationPage_Homepage_RecommendationPages_Homepage(source:Models.RecommendationPage, page_index:number, page_size:number, id:number) : Promise<Models.Homepage> {
-  let res = await fetch(`/api/v1/RecommendationPage/${source.Id}/Homepage_RecommendationPages/${id}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
-  if (!res.ok) throw Error(res.statusText)
-  let json = await res.json()
-  return {...json, CreatedDate: Moment.utc(json.CreatedDate),  } as Models.Homepage
-}
-
-export async function get_RecommendationPage_Homepage_RecommendationPages_Homepage_by_id(source:Models.RecommendationPage, id:number) : Promise<Models.Homepage> {
-  let res = await fetch(`/api/v1/RecommendationPage/${source.Id}/Homepage_RecommendationPages/${id}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
-  if (!res.ok) throw Error(res.statusText)
-  let json = await res.json()
-  return {...json, CreatedDate: Moment.utc(json.CreatedDate),  } as Models.Homepage
-}
-
-
-
-
 export async function create_RecommendationPage() : Promise<Models.RecommendationPage> {
   let res = await fetch(`/api/v1/RecommendationPage/`,
     { method: 'post', credentials: 'include', headers:{'content-type': 'application/json',
@@ -768,6 +720,52 @@ export async function get_RecommendationPages(page_index:number, page_size:numbe
   if (!res.ok) throw Error(res.statusText)
   let json = await res.json()
   return make_page<Models.RecommendationPage>(json, e => { return {...e, }})
+}
+
+
+
+
+
+
+
+  
+  
+export async function create_Favourite() : Promise<Models.Favourite> {
+  let res = await fetch(`/api/v1/Favourite/`,
+    { method: 'post', credentials: 'include', headers:{'content-type': 'application/json',
+      'X-XSRF-TOKEN': (document.getElementsByName("__RequestVerificationToken")[0] as any).value } })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return {...json, CreatedDate: Moment.utc(json.CreatedDate),  } as Models.Favourite
+}
+
+export async function update_Favourite(item:Models.Favourite) : Promise<void> {
+  let res = await fetch(`/api/v1/Favourite/`, { method: 'put',
+      body: JSON.stringify({...item, CreatedDate:undefined, }), credentials: 'include', headers:{'content-type': 'application/json', 'X-XSRF-TOKEN': (document.getElementsByName("__RequestVerificationToken")[0] as any).value } })
+  if (!res.ok) throw Error(res.statusText)
+  return
+}
+
+export async function delete_Favourite(source:Models.Favourite) : Promise<void> {
+  let res = await fetch(`/api/v1/Favourite/${source.Id}`, { method: 'delete', credentials: 'include', headers:{'content-type': 'application/json', 'X-XSRF-TOKEN': (document.getElementsByName("__RequestVerificationToken")[0] as any).value} })
+  if (!res.ok) throw Error(res.statusText)
+  return
+}
+
+export async function get_Favourite(id:number) : Promise<ItemWithEditable<Models.Favourite>> {
+  let res = await fetch(`/api/v1/Favourite/${id}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return { Item: {...json.Item, CreatedDate: Moment.utc(json.Item.CreatedDate),  } as Models.Favourite,
+           Editable: !!json.Editable, JustCreated:false }
+}
+
+export async function get_Favourites(page_index:number, page_size:number, search_query:string = null) : Promise<RawPage<Models.Favourite>> {
+  let res = await fetch(`/api/v1/Favourite?page_index=${page_index}&page_size=${page_size}${(search_query != null ? "&page_size=" + search_query : "")}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
+
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return make_page<Models.Favourite>(json, e => { return {...e, }})
 }
 
 
@@ -1053,78 +1051,6 @@ export async function reset_User_password(username:string, email:string) : Promi
     
   
   
-export async function get_Homepage_Homepage_Recipes(source:Models.Homepage, page_index:number, page_size:number, query_string:string = null) : Promise<RawPage<Models.Recipe>> {
-  let res = await fetch(`/api/v1/Homepage/${source.Id}/Homepage_Recipes?page_index=${page_index}&page_size=${page_size}${(query_string != null ? "&search_query=" + query_string : "")}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
-  if (!res.ok) throw Error(res.statusText)
-  let json = await res.json()
-  return make_page<Models.Recipe>(json, e => { return {...e, }})
-}
-
-export async function get_Homepage_Homepage_Recipes_Recipe(source:Models.Homepage, page_index:number, page_size:number, id:number) : Promise<Models.Recipe> {
-  let res = await fetch(`/api/v1/Homepage/${source.Id}/Homepage_Recipes/${id}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
-  if (!res.ok) throw Error(res.statusText)
-  let json = await res.json()
-  return {...json, CreatedDate: Moment.utc(json.CreatedDate),  } as Models.Recipe
-}
-
-export async function get_Homepage_Homepage_Recipes_Recipe_by_id(source:Models.Homepage, id:number) : Promise<Models.Recipe> {
-  let res = await fetch(`/api/v1/Homepage/${source.Id}/Homepage_Recipes/${id}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
-  if (!res.ok) throw Error(res.statusText)
-  let json = await res.json()
-  return {...json, CreatedDate: Moment.utc(json.CreatedDate),  } as Models.Recipe
-}
-
-
-
-
-export async function get_Homepage_Homepage_RecommendationPages(source:Models.Homepage, page_index:number, page_size:number, query_string:string = null) : Promise<RawPage<Models.RecommendationPage>> {
-  let res = await fetch(`/api/v1/Homepage/${source.Id}/Homepage_RecommendationPages?page_index=${page_index}&page_size=${page_size}${(query_string != null ? "&search_query=" + query_string : "")}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
-  if (!res.ok) throw Error(res.statusText)
-  let json = await res.json()
-  return make_page<Models.RecommendationPage>(json, e => { return {...e, }})
-}
-
-export async function get_Homepage_Homepage_RecommendationPages_RecommendationPage(source:Models.Homepage, page_index:number, page_size:number, id:number) : Promise<Models.RecommendationPage> {
-  let res = await fetch(`/api/v1/Homepage/${source.Id}/Homepage_RecommendationPages/${id}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
-  if (!res.ok) throw Error(res.statusText)
-  let json = await res.json()
-  return {...json, CreatedDate: Moment.utc(json.CreatedDate),  } as Models.RecommendationPage
-}
-
-export async function get_Homepage_Homepage_RecommendationPages_RecommendationPage_by_id(source:Models.Homepage, id:number) : Promise<Models.RecommendationPage> {
-  let res = await fetch(`/api/v1/Homepage/${source.Id}/Homepage_RecommendationPages/${id}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
-  if (!res.ok) throw Error(res.statusText)
-  let json = await res.json()
-  return {...json, CreatedDate: Moment.utc(json.CreatedDate),  } as Models.RecommendationPage
-}
-
-
-
-
-export async function get_Homepage_Homepage_Cuisines(source:Models.Homepage, page_index:number, page_size:number, query_string:string = null) : Promise<RawPage<Models.Cuisine>> {
-  let res = await fetch(`/api/v1/Homepage/${source.Id}/Homepage_Cuisines?page_index=${page_index}&page_size=${page_size}${(query_string != null ? "&search_query=" + query_string : "")}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
-  if (!res.ok) throw Error(res.statusText)
-  let json = await res.json()
-  return make_page<Models.Cuisine>(json, e => { return {...e, }})
-}
-
-export async function get_Homepage_Homepage_Cuisines_Cuisine(source:Models.Homepage, page_index:number, page_size:number, id:number) : Promise<Models.Cuisine> {
-  let res = await fetch(`/api/v1/Homepage/${source.Id}/Homepage_Cuisines/${id}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
-  if (!res.ok) throw Error(res.statusText)
-  let json = await res.json()
-  return {...json, CreatedDate: Moment.utc(json.CreatedDate),  } as Models.Cuisine
-}
-
-export async function get_Homepage_Homepage_Cuisines_Cuisine_by_id(source:Models.Homepage, id:number) : Promise<Models.Cuisine> {
-  let res = await fetch(`/api/v1/Homepage/${source.Id}/Homepage_Cuisines/${id}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
-  if (!res.ok) throw Error(res.statusText)
-  let json = await res.json()
-  return {...json, CreatedDate: Moment.utc(json.CreatedDate),  } as Models.Cuisine
-}
-
-
-
-
 export async function create_Homepage() : Promise<Models.Homepage> {
   let res = await fetch(`/api/v1/Homepage/`,
     { method: 'post', credentials: 'include', headers:{'content-type': 'application/json',
@@ -1561,30 +1487,6 @@ export async function unlink_Recipe_RecommendationPage_Recipes(source:Models.Rec
   if (!res.ok) throw Error(res.statusText)
   return
 }
-
-
-export async function get_Recipe_Homepage_Recipes(source:Models.Recipe, page_index:number, page_size:number, query_string:string = null) : Promise<RawPage<Models.Homepage>> {
-  let res = await fetch(`/api/v1/Recipe/${source.Id}/Homepage_Recipes?page_index=${page_index}&page_size=${page_size}${(query_string != null ? "&search_query=" + query_string : "")}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
-  if (!res.ok) throw Error(res.statusText)
-  let json = await res.json()
-  return make_page<Models.Homepage>(json, e => { return {...e, }})
-}
-
-export async function get_Recipe_Homepage_Recipes_Homepage(source:Models.Recipe, page_index:number, page_size:number, id:number) : Promise<Models.Homepage> {
-  let res = await fetch(`/api/v1/Recipe/${source.Id}/Homepage_Recipes/${id}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
-  if (!res.ok) throw Error(res.statusText)
-  let json = await res.json()
-  return {...json, CreatedDate: Moment.utc(json.CreatedDate),  } as Models.Homepage
-}
-
-export async function get_Recipe_Homepage_Recipes_Homepage_by_id(source:Models.Recipe, id:number) : Promise<Models.Homepage> {
-  let res = await fetch(`/api/v1/Recipe/${source.Id}/Homepage_Recipes/${id}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
-  if (!res.ok) throw Error(res.statusText)
-  let json = await res.json()
-  return {...json, CreatedDate: Moment.utc(json.CreatedDate),  } as Models.Homepage
-}
-
-
 
 
 export async function create_Recipe() : Promise<Models.Recipe> {

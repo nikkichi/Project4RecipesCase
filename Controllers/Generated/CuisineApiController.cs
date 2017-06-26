@@ -424,59 +424,6 @@ using System.IO;
       return Ok();
     }
     [RestrictToUserType(new string[] {"*"})]
-    [HttpGet("{Cuisine_id}/Homepage_Cuisines")]
-    [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
-    public Page<Homepage> GetHomepage_Cuisines(int Cuisine_id, [FromQuery] int page_index, [FromQuery] int page_size = 25 )
-    {
-      var session = HttpContext.Get<LoggableEntities>(_context);
-      var current_User = session == null ? null : session.User;
-      var allowed_sources = ApiTokenValid ? _context.Cuisine : _context.Cuisine;
-      var source = allowed_sources.FirstOrDefault(s => s.Id == Cuisine_id);
-      var can_create_by_token = ApiTokenValid || true;
-      var can_delete_by_token = ApiTokenValid || true || true;
-      var can_link_by_token = ApiTokenValid || true;
-      var can_view_by_token = ApiTokenValid || true;
-      if (source == null || !can_view_by_token) // test
-        return Enumerable.Empty<SimpleModelsAndRelations.Models.Homepage>() // B
-              .AsQueryable()
-              .Select(SimpleModelsAndRelations.Models.Homepage.FilterViewableAttributes(current_User))
-              .Select(t => Tuple.Create(t, false))
-              .Paginate(can_create_by_token, can_delete_by_token, can_link_by_token, page_index, page_size, SimpleModelsAndRelations.Models.Homepage.WithoutImages, item => item , null);
-      var allowed_targets = ApiTokenValid ? _context.Homepage : _context.Homepage;
-      var editable_targets = ApiTokenValid ? _context.Homepage : (_context.Homepage);
-      var can_edit_by_token = ApiTokenValid || true;
-      var items = (from target in allowed_targets
-              select target).OrderBy(i => i.CreatedDate).AsQueryable();
-      
-      return items
-              .Select(SimpleModelsAndRelations.Models.Homepage.FilterViewableAttributes(current_User))
-              .Select(t => Tuple.Create(t, can_edit_by_token && editable_targets.Any(et => et.Id == t.Id)))
-              .Paginate(can_create_by_token, can_delete_by_token, can_link_by_token, page_index, page_size, SimpleModelsAndRelations.Models.Homepage.WithoutImages, item => item , null);
-    }
-
-    [HttpGet("{Cuisine_id}/Homepage_Cuisines/{Homepage_id}")]
-    [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult /*Homepage*/ GetHomepage_CuisineById(int Cuisine_id, int Homepage_id)
-    {
-      var session = HttpContext.Get<LoggableEntities>(_context);
-      var current_User = session == null ? null : session.User;
-      var allowed_sources = ApiTokenValid ? _context.Cuisine : _context.Cuisine;
-      var source = allowed_sources.FirstOrDefault(s => s.Id == Cuisine_id);
-      var can_view_by_token = ApiTokenValid || true;
-      if (source == null || !can_view_by_token)
-        return NotFound();
-      var allowed_targets = ApiTokenValid ? _context.Homepage : _context.Homepage;
-      var item = (from target in allowed_targets
-              select target).OrderBy(i => i.CreatedDate)
-              .Select(SimpleModelsAndRelations.Models.Homepage.FilterViewableAttributes(current_User))
-              .FirstOrDefault(t => t.Id == Homepage_id);
-      if (item == null) return NotFound();
-      item = SimpleModelsAndRelations.Models.Homepage.WithoutImages(item);
-      return Ok(item);
-    }
-
-    
-    [RestrictToUserType(new string[] {"*"})]
     [HttpGet("{id}")]
     [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult /*ItemWithEditable<Cuisine>*/ GetById(int id)

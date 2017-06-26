@@ -12,6 +12,7 @@ import * as Utils from './view_utils'
 import * as Draft from 'draft-js'
 import * as i18next from 'i18next'
 import * as Moment from 'moment'
+import * as FavouriteViews from './Favourite'
 import * as HomepageViews from './Homepage'
 import * as MealViews from './Meal'
 import * as PreparationTimeViews from './PreparationTime'
@@ -40,10 +41,6 @@ export function Recipe_RecommendationPage_Recipe_can_create(self:RecipeContext) 
   let state = self.state()
   return state.RecommendationPage == "loading" ? false : state.RecommendationPage.CanCreate
 }
-export function Recipe_Homepage_Recipe_can_create(self:RecipeContext) {
-  let state = self.state()
-  return state.Homepage == "loading" ? false : state.Homepage.CanCreate
-}
 export function Recipe_Meal_Recipe_can_delete(self:RecipeContext) {
   let state = self.state()
   return state.Meal == "loading" ? false : state.Meal.CanDelete
@@ -63,10 +60,6 @@ export function Recipe_Recipe_Rating_can_delete(self:RecipeContext) {
 export function Recipe_RecommendationPage_Recipe_can_delete(self:RecipeContext) {
   let state = self.state()
   return state.RecommendationPage == "loading" ? false : state.RecommendationPage.CanDelete
-}
-export function Recipe_Homepage_Recipe_can_delete(self:RecipeContext) {
-  let state = self.state()
-  return state.Homepage == "loading" ? false : state.Homepage.CanDelete
 }
 export function Recipe_Meal_Recipe_page_index(self:RecipeContext) {
   let state = self.state()
@@ -88,10 +81,6 @@ export function Recipe_RecommendationPage_Recipe_page_index(self:RecipeContext) 
   let state = self.state()
   return state.RecommendationPage == "loading" ? 0 : state.RecommendationPage.PageIndex
 }
-export function Recipe_Homepage_Recipe_page_index(self:RecipeContext) {
-  let state = self.state()
-  return state.Homepage == "loading" ? 0 : state.Homepage.PageIndex
-}
 export function Recipe_Meal_Recipe_page_size(self:RecipeContext) {
   let state = self.state()
   return state.Meal == "loading" ? 25 : state.Meal.PageSize
@@ -111,10 +100,6 @@ export function Recipe_Recipe_Rating_page_size(self:RecipeContext) {
 export function Recipe_RecommendationPage_Recipe_page_size(self:RecipeContext) {
   let state = self.state()
   return state.RecommendationPage == "loading" ? 25 : state.RecommendationPage.PageSize
-}
-export function Recipe_Homepage_Recipe_page_size(self:RecipeContext) {
-  let state = self.state()
-  return state.Homepage == "loading" ? 25 : state.Homepage.PageSize
 }
 export function Recipe_Meal_Recipe_search_query(self:RecipeContext) {
   let state = self.state()
@@ -136,10 +121,6 @@ export function Recipe_RecommendationPage_Recipe_search_query(self:RecipeContext
   let state = self.state()
   return state.RecommendationPage == "loading" ? null : state.RecommendationPage.SearchQuery
 }
-export function Recipe_Homepage_Recipe_search_query(self:RecipeContext) {
-  let state = self.state()
-  return state.Homepage == "loading" ? null : state.Homepage.SearchQuery
-}
 export function Recipe_Meal_Recipe_num_pages(self:RecipeContext) {
   let state = self.state()
   return state.Meal == "loading" ? 1 : state.Meal.NumPages
@@ -159,10 +140,6 @@ export function Recipe_Recipe_Rating_num_pages(self:RecipeContext) {
 export function Recipe_RecommendationPage_Recipe_num_pages(self:RecipeContext) {
   let state = self.state()
   return state.RecommendationPage == "loading" ? 1 : state.RecommendationPage.NumPages
-}
-export function Recipe_Homepage_Recipe_num_pages(self:RecipeContext) {
-  let state = self.state()
-  return state.Homepage == "loading" ? 1 : state.Homepage.NumPages
 }
 
 export function load_relation_Recipe_Meal_Recipe(self:RecipeContext, force_first_page:boolean, current_User:Models.User, callback?:()=>void) {
@@ -315,44 +292,13 @@ export function load_relation_Recipe_RecommendationPage_Recipe(self:RecipeContex
       prelude(() => callback && callback())
 }
 
-export function load_relation_Recipe_Homepage_Recipe(self:RecipeContext, force_first_page:boolean, current_User:Models.User, callback?:()=>void) {
-  let state = self.state()
-  let prelude = force_first_page && state.Homepage != "loading" ?
-    (c:() => void) => state.Homepage != "loading" && self.setState({
-      ...state,
-      Homepage: {...state.Homepage, PageIndex:0 }
-    }, c)
-    :
-    (c:() => void) => c()
-  Permissions.can_view_Homepage(current_User) ?
-    prelude(() =>
-      Api.get_Recipe_Homepage_Recipes(self.props.entity, Recipe_Homepage_Recipe_page_index(self), Recipe_Homepage_Recipe_page_size(self), Recipe_Homepage_Recipe_search_query(self)).then(Homepages =>
-        self.setState({...self.state(), update_count:self.state().update_count+1,
-            Homepage:Utils.raw_page_to_paginated_items<Models.Homepage, Utils.EntityAndSize<Models.Homepage> & { shown_relation:string }>((i, i_just_created) => {
-              let state = self.state()
-              return {
-                element:i,
-                size: state.Homepage != "loading" ?
-                  (state.Homepage.Items.has(i.Id) ?
-                    state.Homepage.Items.get(i.Id).size
-                  :
-                    "preview" /* i_just_created ? "large" : "preview" */)
-                  :
-                    "preview" /* i_just_created ? "large" : "preview" */,
-                shown_relation:"all"}}, Homepages)
-            }, callback)))
-    :
-      prelude(() => callback && callback())
-}
-
 export function load_relations_Recipe(self, current_User:Models.User, callback?:()=>void) {
-  load_relation_Recipe_Homepage_Recipe(self, false, self.props.current_User, 
-        () => load_relation_Recipe_RecommendationPage_Recipe(self, false, self.props.current_User, 
+  load_relation_Recipe_RecommendationPage_Recipe(self, false, self.props.current_User, 
         () => load_relation_Recipe_Recipe_Rating(self, false, self.props.current_User, 
         () => load_relation_Recipe_User_Recipe(self, false, self.props.current_User, 
         () => load_relation_Recipe_PreparationTime_Recipe(self, false, self.props.current_User, 
         () => load_relation_Recipe_Meal_Recipe(self, false, self.props.current_User, 
-        () => callback && callback()))))))
+        () => callback && callback())))))
 }
 
 export function set_size_Recipe(self:RecipeContext, new_size:Utils.EntitySize) {
@@ -525,7 +471,18 @@ export function render_menu_Recipe(self:RecipeContext) {
   return <div className="menu">
         <img className="logo" src={"/images/logo.png"} alt="Logo"/>
         <div className="pages">
-          {!Permissions.can_view_Homepage(self.props.current_User) ? null :
+          {!Permissions.can_view_Favourite(self.props.current_User) ? null :
+              <div className={`menu_entry page_link`}>
+                <a onClick={() => 
+                  Api.get_Favourites(0, 1).then(e =>
+                    e.Items.length > 0 && self.props.set_page(FavouriteViews.Favourite_to_page(e.Items[0].Item.Id))
+                  )
+                }>
+                  {i18next.t('Favourite')}
+                </a>
+              </div>
+            }
+        {!Permissions.can_view_Homepage(self.props.current_User) ? null :
               <div className={`menu_entry page_link`}>
                 <a onClick={() => 
                   Api.get_Homepages(0, 1).then(e =>
@@ -538,48 +495,7 @@ export function render_menu_Recipe(self:RecipeContext) {
             }
           <div className="menu_entries">
           
-            {!Permissions.can_view_Recipe(self.props.current_User) ? null :
-                  <div className={`menu_entry active`}>
-                    <a onClick={() =>
-                        {
-                            Api.get_Homepages(0, 1).then(e =>
-                              e.Items.length > 0 && self.props.set_page(HomepageViews.Homepage_to_page(e.Items[0].Item.Id),
-                                () => self.props.set_shown_relation("Homepage_Recipe"))
-                            )
-                        }
-                      }>
-                      {i18next.t('Homepage_Recipes')}
-                    </a>
-                  </div>
-                }
-        {!Permissions.can_view_RecommendationPage(self.props.current_User) ? null :
-                  <div className={`menu_entry${self.props.shown_relation == "Homepage_RecommendationPage" ? " active" : ""}`}>
-                    <a onClick={() =>
-                        {
-                            Api.get_Homepages(0, 1).then(e =>
-                              e.Items.length > 0 && self.props.set_page(HomepageViews.Homepage_to_page(e.Items[0].Item.Id),
-                                () => self.props.set_shown_relation("Homepage_RecommendationPage"))
-                            )
-                        }
-                      }>
-                      {i18next.t('Homepage_RecommendationPages')}
-                    </a>
-                  </div>
-                }
-        {!Permissions.can_view_Cuisine(self.props.current_User) ? null :
-                  <div className={`menu_entry${self.props.shown_relation == "Homepage_Cuisine" ? " active" : ""}`}>
-                    <a onClick={() =>
-                        {
-                            Api.get_Homepages(0, 1).then(e =>
-                              e.Items.length > 0 && self.props.set_page(HomepageViews.Homepage_to_page(e.Items[0].Item.Id),
-                                () => self.props.set_shown_relation("Homepage_Cuisine"))
-                            )
-                        }
-                      }>
-                      {i18next.t('Homepage_Cuisines')}
-                    </a>
-                  </div>
-                }
+            
                 <div className="menu_entry menu_entry--with-sub">
                 
                 </div>  
@@ -1434,126 +1350,6 @@ export function render_Recipe_RecommendationPage_Recipe(self:RecipeContext, cont
 }
 
 
-export function render_Recipe_Homepage_Recipe(self:RecipeContext, context:"presentation_structure"|"default") {
-  if ((context == "default" && self.props.shown_relation != "all" && self.props.shown_relation != "Homepage_Recipe") || !Permissions.can_view_Homepage(self.props.current_User))
-    return null
-  let state = self.state()
-  return <div>
-    
-    { List.render_relation("recipe_homepage_recipe",
-   "Recipe",
-   "Homepage",
-   "Homepages",
-   self.props.nesting_depth > 0,
-   false,
-   false,
-   false)
-  (
-      state.Homepage != "loading" ?
-        state.Homepage.IdsInServerOrder.map(id => state.Homepage != "loading" && state.Homepage.Items.get(id)):
-        state.Homepage,
-      Recipe_Homepage_Recipe_page_index(self),
-      Recipe_Homepage_Recipe_num_pages(self),
-      new_page_index => {
-          let state = self.state()
-          state.Homepage != "loading" &&
-          self.setState({...self.state(),
-            update_count:self.state().update_count+1,
-            Homepage: {
-              ...state.Homepage,
-              PageIndex:new_page_index
-            }
-          }, () =>  load_relation_Recipe_Homepage_Recipe(self, false, self.props.current_User))
-        },
-      (i,_) => {
-          let i_id = i.element.Id
-          let state = self.state()
-          return <div key={i_id}
-            className={`model-nested__item ${i.size != "preview" ? "model-nested__item--open" : ""}
-                        ${state.Homepage != "loading" && state.Homepage.JustCreated.has(i_id) && state.Homepage.JustCreated.get(i_id) ? "newly-created" : ""}` }
-          
-            >
-            <div key={i_id}>
-              {
-                HomepageViews.Homepage({
-                  ...self.props,
-                  entity:i.element,
-                  inline:false,
-                  nesting_depth:self.props.nesting_depth+1,
-                  size: i.size,
-                  allow_maximisation:true,
-                  allow_fullscreen:true,
-                  mode:self.props.mode == "edit" && (Permissions.can_edit_Homepage_Recipe(self.props.current_User)
-                        || Permissions.can_create_Homepage_Recipe(self.props.current_User)
-                        || Permissions.can_delete_Homepage_Recipe(self.props.current_User)) ?
-                    self.props.mode : "view",
-                  is_editable:state.Homepage != "loading" && state.Homepage.Editable.get(i_id),
-                  shown_relation:i.shown_relation,
-                  set_shown_relation:(new_shown_relation:string, callback) => {
-                    let state = self.state()
-                    state.Homepage != "loading" &&
-                    self.setState({...self.state(),
-                      Homepage:
-                        {
-                          ...state.Homepage,
-                          Items:state.Homepage.Items.set(i_id,{...state.Homepage.Items.get(i_id), shown_relation:new_shown_relation})
-                        }
-                    }, callback)
-                  },
-                  nested_entity_names: self.props.nested_entity_names.push("Homepage"),
-                  
-                  set_size:(new_size:Utils.EntitySize, callback) => {
-                    let new_shown_relation = new_size == "large" ? "all" : i.shown_relation
-                    let state = self.state()
-                    state.Homepage != "loading" &&
-                    self.setState({...self.state(),
-                      Homepage:
-                        {
-                          ...state.Homepage,
-                          Items:state.Homepage.Items.set(i_id,
-                            {...state.Homepage.Items.get(i_id),
-                              size:new_size, shown_relation:new_shown_relation})
-                        }
-                    }, callback)
-                  },
-                    
-                  toggle_button:undefined,
-                  set_mode:undefined,
-                  set_entity:(new_entity:Models.Homepage, callback?:()=>void, force_update_count_increment?:boolean) => {
-                    let state = self.state()
-                    state.Homepage != "loading" &&
-                    self.setState({...self.state(),
-                      dirty_Homepage:state.dirty_Homepage.set(i_id, new_entity),
-                      update_count:force_update_count_increment ? self.state().update_count+1 : state.update_count,
-                      Homepage:
-                        {
-                          ...state.Homepage,
-                          Items:state.Homepage.Items.set(i_id,{...state.Homepage.Items.get(i_id), element:new_entity})
-                        }
-                    }, callback)
-                  },
-                  unlink: undefined,
-                    delete: !Permissions.can_delete_Homepage(self.props.current_User) || !Recipe_Homepage_Recipe_can_delete(self) ?
-                    null
-                    :
-                    () => confirm(i18next.t('Are you sure?')) && Api.delete_Homepage(i.element).then(() =>
-                      load_relation_Recipe_Homepage_Recipe(self, false, self.props.current_User))
-                })
-              }
-            </div>
-          </div>
-        },
-      () =>
-        <div>
-          
-          
-        </div>)
-    }
-    
-    </div>
-}
-
-
 
 export function render_relations_Recipe(self:RecipeContext) {
   return <div className="relations">
@@ -2193,8 +1989,6 @@ export function render_saving_animations_Recipe(self:RecipeContext) {
     self.state().dirty_Rating.count() > 0 ?
     <div style={{position:"fixed", zIndex:10000, top:0, left:0, width:"20px", height:"20px", backgroundColor:"red"}} className="saving"/> : 
     self.state().dirty_RecommendationPage.count() > 0 ?
-    <div style={{position:"fixed", zIndex:10000, top:0, left:0, width:"20px", height:"20px", backgroundColor:"red"}} className="saving"/> : 
-    self.state().dirty_Homepage.count() > 0 ?
     <div style={{position:"fixed", zIndex:10000, top:0, left:0, width:"20px", height:"20px", backgroundColor:"red"}} className="saving"/>
     : <div style={{position:"fixed", zIndex:10000, top:0, left:0, width:"20px", height:"20px", backgroundColor:"cornflowerblue"}} className="saved"/>
 }
@@ -2218,14 +2012,11 @@ export type RecipeState = {
   add_step_RecommendationPage:"closed"|"open"|"saving",
       dirty_RecommendationPage:Immutable.Map<number,Models.RecommendationPage>,
       RecommendationPage:Utils.PaginatedItems<{ shown_relation: string } & Utils.EntityAndSize<Models.RecommendationPage>>|"loading"
-  add_step_Homepage:"closed"|"open"|"saving",
-      dirty_Homepage:Immutable.Map<number,Models.Homepage>,
-      Homepage:Utils.PaginatedItems<{ shown_relation: string } & Utils.EntityAndSize<Models.Homepage>>|"loading"
   }
 export class RecipeComponent extends React.Component<Utils.EntityComponentProps<Models.Recipe>, RecipeState> {
   constructor(props:Utils.EntityComponentProps<Models.Recipe>, context:any) {
     super(props, context)
-    this.state = { update_count:0,add_step_Meal:"closed", dirty_Meal:Immutable.Map<number,Models.Meal>(), Meal:"loading", add_step_PreparationTime:"closed", dirty_PreparationTime:Immutable.Map<number,Models.PreparationTime>(), PreparationTime:"loading", add_step_User:"closed", create_step_User:"none",dirty_User:Immutable.Map<number,Models.User>(), User:"loading", add_step_Rating:"closed", dirty_Rating:Immutable.Map<number,Models.Rating>(), Rating:"loading", add_step_RecommendationPage:"closed", dirty_RecommendationPage:Immutable.Map<number,Models.RecommendationPage>(), RecommendationPage:"loading", add_step_Homepage:"closed", dirty_Homepage:Immutable.Map<number,Models.Homepage>(), Homepage:"loading" }
+    this.state = { update_count:0,add_step_Meal:"closed", dirty_Meal:Immutable.Map<number,Models.Meal>(), Meal:"loading", add_step_PreparationTime:"closed", dirty_PreparationTime:Immutable.Map<number,Models.PreparationTime>(), PreparationTime:"loading", add_step_User:"closed", create_step_User:"none",dirty_User:Immutable.Map<number,Models.User>(), User:"loading", add_step_Rating:"closed", dirty_Rating:Immutable.Map<number,Models.Rating>(), Rating:"loading", add_step_RecommendationPage:"closed", dirty_RecommendationPage:Immutable.Map<number,Models.RecommendationPage>(), RecommendationPage:"loading" }
   }
 
   get_self() {
@@ -2279,11 +2070,6 @@ export class RecipeComponent extends React.Component<Utils.EntityComponentProps<
          this.setState({...this.state, dirty_RecommendationPage: this.state.dirty_RecommendationPage.remove(first.Id)}, () =>
            Api.update_RecommendationPage(first)
          )
-       } else if (this.state.dirty_Homepage.count() > 0) {
-         let first = this.state.dirty_Homepage.first()
-         this.setState({...this.state, dirty_Homepage: this.state.dirty_Homepage.remove(first.Id)}, () =>
-           Api.update_Homepage(first)
-         )
        }
 
     }, 500)
@@ -2329,7 +2115,7 @@ export let Recipe = (props:Utils.EntityComponentProps<Models.Recipe>) : JSX.Elem
   <RecipeComponent {...props} />
 
 export let Recipe_to_page = (id:number) => {
-  let can_edit = Utils.any_of([Permissions.can_edit_Recipe, Permissions.can_edit_Meal_Recipe, Permissions.can_edit_PreparationTime_Recipe, Permissions.can_edit_User_Recipe, Permissions.can_edit_Recipe_Rating, Permissions.can_edit_RecommendationPage_Recipe, Permissions.can_edit_Homepage_Recipe, Permissions.can_edit_Meal, Permissions.can_edit_PreparationTime, Permissions.can_edit_User, Permissions.can_edit_Rating, Permissions.can_edit_RecommendationPage, Permissions.can_edit_Homepage])
+  let can_edit = Utils.any_of([Permissions.can_edit_Recipe, Permissions.can_edit_Meal_Recipe, Permissions.can_edit_PreparationTime_Recipe, Permissions.can_edit_User_Recipe, Permissions.can_edit_Recipe_Rating, Permissions.can_edit_RecommendationPage_Recipe, Permissions.can_edit_Meal, Permissions.can_edit_PreparationTime, Permissions.can_edit_User, Permissions.can_edit_Rating, Permissions.can_edit_RecommendationPage])
   return Utils.scene_to_page<Models.Recipe>(can_edit, Recipe, Api.get_Recipe(id), Api.update_Recipe, "Recipe", "Recipe", `/Recipes/${id}`)
 }
 

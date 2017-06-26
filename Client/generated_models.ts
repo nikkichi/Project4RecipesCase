@@ -50,6 +50,14 @@ export type RecommendationPage = {
     
   }
   
+export type Favourite = {
+    Id : number
+    CreatedDate:Moment.Moment
+    
+  Test : string
+    
+  }
+  
 export type Lunch = {
     Id : number
     CreatedDate:Moment.Moment
@@ -200,33 +208,6 @@ export type RecommendationPage_Recipe = {
     CreatedDate:Moment.Moment
     RecommendationPageId : number
   RecipeId : number
-    
-  }
-  
-
-export type Homepage_Recipe = {
-    Id : number
-    CreatedDate:Moment.Moment
-    HomepageId : number
-  RecipeId : number
-    
-  }
-  
-
-export type Homepage_RecommendationPage = {
-    Id : number
-    CreatedDate:Moment.Moment
-    HomepageId : number
-  RecommendationPageId : number
-    
-  }
-  
-
-export type Homepage_Cuisine = {
-    Id : number
-    CreatedDate:Moment.Moment
-    HomepageId : number
-  CuisineId : number
     
   }
   

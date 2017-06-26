@@ -91,6 +91,24 @@ export let can_delete_RecommendationPage = (current_User:Models.User) => false
 
 
 
+export let can_view_Favourite = (current_User:Models.User) => true
+
+export let can_create_Favourite = (current_User:Models.User) => false
+
+export let can_edit_Favourite = (current_User:Models.User) => true
+
+export let can_delete_Favourite = (current_User:Models.User) => false
+  
+export let can_view_Favourite_FavouriteView = (current_User:Models.User) => true
+
+export let can_edit_Favourite_FavouriteView = (current_User:Models.User) => true
+
+export let can_view_Favourite_Test = (current_User:Models.User) => true
+
+export let can_edit_Favourite_Test = (current_User:Models.User) => true
+
+
+
 export let can_view_Lunch = (current_User:Models.User) => true
 
 export let can_create_Lunch = (current_User:Models.User) => false
@@ -345,33 +363,6 @@ export let can_create_RecommendationPage_Recipe = (current_User:Models.User) => 
 export let can_edit_RecommendationPage_Recipe = (current_User:Models.User) => true
 
 export let can_delete_RecommendationPage_Recipe = (current_User:Models.User) => true
-  
-
-export let can_view_Homepage_Recipe = (current_User:Models.User) => true
-
-export let can_create_Homepage_Recipe = (current_User:Models.User) => true
-
-export let can_edit_Homepage_Recipe = (current_User:Models.User) => true
-
-export let can_delete_Homepage_Recipe = (current_User:Models.User) => true
-  
-
-export let can_view_Homepage_RecommendationPage = (current_User:Models.User) => true
-
-export let can_create_Homepage_RecommendationPage = (current_User:Models.User) => true
-
-export let can_edit_Homepage_RecommendationPage = (current_User:Models.User) => true
-
-export let can_delete_Homepage_RecommendationPage = (current_User:Models.User) => true
-  
-
-export let can_view_Homepage_Cuisine = (current_User:Models.User) => true
-
-export let can_create_Homepage_Cuisine = (current_User:Models.User) => true
-
-export let can_edit_Homepage_Cuisine = (current_User:Models.User) => true
-
-export let can_delete_Homepage_Cuisine = (current_User:Models.User) => true
   
 
 

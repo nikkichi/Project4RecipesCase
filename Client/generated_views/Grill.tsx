@@ -12,6 +12,7 @@ import * as Utils from './view_utils'
 import * as Draft from 'draft-js'
 import * as i18next from 'i18next'
 import * as Moment from 'moment'
+import * as FavouriteViews from './Favourite'
 import * as HomepageViews from './Homepage'
 import * as MealViews from './Meal'
 import * as CustomViews from '../custom_views'
@@ -20,49 +21,25 @@ export function Grill_Cuisine_Meal_can_create(self:GrillContext) {
   let state = self.state()
   return state.Meal == "loading" ? false : state.Meal.CanCreate
 }
-export function Grill_Homepage_Cuisine_can_create(self:GrillContext) {
-  let state = self.state()
-  return state.Homepage == "loading" ? false : state.Homepage.CanCreate
-}
 export function Grill_Cuisine_Meal_can_delete(self:GrillContext) {
   let state = self.state()
   return state.Meal == "loading" ? false : state.Meal.CanDelete
-}
-export function Grill_Homepage_Cuisine_can_delete(self:GrillContext) {
-  let state = self.state()
-  return state.Homepage == "loading" ? false : state.Homepage.CanDelete
 }
 export function Grill_Cuisine_Meal_page_index(self:GrillContext) {
   let state = self.state()
   return state.Meal == "loading" ? 0 : state.Meal.PageIndex
 }
-export function Grill_Homepage_Cuisine_page_index(self:GrillContext) {
-  let state = self.state()
-  return state.Homepage == "loading" ? 0 : state.Homepage.PageIndex
-}
 export function Grill_Cuisine_Meal_page_size(self:GrillContext) {
   let state = self.state()
   return state.Meal == "loading" ? 25 : state.Meal.PageSize
-}
-export function Grill_Homepage_Cuisine_page_size(self:GrillContext) {
-  let state = self.state()
-  return state.Homepage == "loading" ? 25 : state.Homepage.PageSize
 }
 export function Grill_Cuisine_Meal_search_query(self:GrillContext) {
   let state = self.state()
   return state.Meal == "loading" ? null : state.Meal.SearchQuery
 }
-export function Grill_Homepage_Cuisine_search_query(self:GrillContext) {
-  let state = self.state()
-  return state.Homepage == "loading" ? null : state.Homepage.SearchQuery
-}
 export function Grill_Cuisine_Meal_num_pages(self:GrillContext) {
   let state = self.state()
   return state.Meal == "loading" ? 1 : state.Meal.NumPages
-}
-export function Grill_Homepage_Cuisine_num_pages(self:GrillContext) {
-  let state = self.state()
-  return state.Homepage == "loading" ? 1 : state.Homepage.NumPages
 }
 
 export function load_relation_Grill_Cuisine_Meal(self:GrillContext, force_first_page:boolean, current_User:Models.User, callback?:()=>void) {
@@ -95,40 +72,9 @@ export function load_relation_Grill_Cuisine_Meal(self:GrillContext, force_first_
       prelude(() => callback && callback())
 }
 
-export function load_relation_Grill_Homepage_Cuisine(self:GrillContext, force_first_page:boolean, current_User:Models.User, callback?:()=>void) {
-  let state = self.state()
-  let prelude = force_first_page && state.Homepage != "loading" ?
-    (c:() => void) => state.Homepage != "loading" && self.setState({
-      ...state,
-      Homepage: {...state.Homepage, PageIndex:0 }
-    }, c)
-    :
-    (c:() => void) => c()
-  Permissions.can_view_Homepage(current_User) ?
-    prelude(() =>
-      Api.get_Cuisine_Homepage_Cuisines(self.props.entity, Grill_Homepage_Cuisine_page_index(self), Grill_Homepage_Cuisine_page_size(self), Grill_Homepage_Cuisine_search_query(self)).then(Homepages =>
-        self.setState({...self.state(), update_count:self.state().update_count+1,
-            Homepage:Utils.raw_page_to_paginated_items<Models.Homepage, Utils.EntityAndSize<Models.Homepage> & { shown_relation:string }>((i, i_just_created) => {
-              let state = self.state()
-              return {
-                element:i,
-                size: state.Homepage != "loading" ?
-                  (state.Homepage.Items.has(i.Id) ?
-                    state.Homepage.Items.get(i.Id).size
-                  :
-                    "preview" /* i_just_created ? "large" : "preview" */)
-                  :
-                    "preview" /* i_just_created ? "large" : "preview" */,
-                shown_relation:"all"}}, Homepages)
-            }, callback)))
-    :
-      prelude(() => callback && callback())
-}
-
 export function load_relations_Grill(self, current_User:Models.User, callback?:()=>void) {
-  load_relation_Grill_Homepage_Cuisine(self, false, self.props.current_User, 
-        () => load_relation_Grill_Cuisine_Meal(self, false, self.props.current_User, 
-        () => callback && callback()))
+  load_relation_Grill_Cuisine_Meal(self, false, self.props.current_User, 
+        () => callback && callback())
 }
 
 export function set_size_Grill(self:GrillContext, new_size:Utils.EntitySize) {
@@ -199,7 +145,18 @@ export function render_menu_Grill(self:GrillContext) {
   return <div className="menu">
         <img className="logo" src={"/images/logo.png"} alt="Logo"/>
         <div className="pages">
-          {!Permissions.can_view_Homepage(self.props.current_User) ? null :
+          {!Permissions.can_view_Favourite(self.props.current_User) ? null :
+              <div className={`menu_entry page_link`}>
+                <a onClick={() => 
+                  Api.get_Favourites(0, 1).then(e =>
+                    e.Items.length > 0 && self.props.set_page(FavouriteViews.Favourite_to_page(e.Items[0].Item.Id))
+                  )
+                }>
+                  {i18next.t('Favourite')}
+                </a>
+              </div>
+            }
+        {!Permissions.can_view_Homepage(self.props.current_User) ? null :
               <div className={`menu_entry page_link`}>
                 <a onClick={() => 
                   Api.get_Homepages(0, 1).then(e =>
@@ -212,48 +169,7 @@ export function render_menu_Grill(self:GrillContext) {
             }
           <div className="menu_entries">
           
-            {!Permissions.can_view_Recipe(self.props.current_User) ? null :
-                  <div className={`menu_entry${self.props.shown_relation == "Homepage_Recipe" ? " active" : ""}`}>
-                    <a onClick={() =>
-                        {
-                            Api.get_Homepages(0, 1).then(e =>
-                              e.Items.length > 0 && self.props.set_page(HomepageViews.Homepage_to_page(e.Items[0].Item.Id),
-                                () => self.props.set_shown_relation("Homepage_Recipe"))
-                            )
-                        }
-                      }>
-                      {i18next.t('Homepage_Recipes')}
-                    </a>
-                  </div>
-                }
-        {!Permissions.can_view_RecommendationPage(self.props.current_User) ? null :
-                  <div className={`menu_entry${self.props.shown_relation == "Homepage_RecommendationPage" ? " active" : ""}`}>
-                    <a onClick={() =>
-                        {
-                            Api.get_Homepages(0, 1).then(e =>
-                              e.Items.length > 0 && self.props.set_page(HomepageViews.Homepage_to_page(e.Items[0].Item.Id),
-                                () => self.props.set_shown_relation("Homepage_RecommendationPage"))
-                            )
-                        }
-                      }>
-                      {i18next.t('Homepage_RecommendationPages')}
-                    </a>
-                  </div>
-                }
-        {!Permissions.can_view_Cuisine(self.props.current_User) ? null :
-                  <div className={`menu_entry${self.props.shown_relation == "Homepage_Cuisine" ? " active" : ""}`}>
-                    <a onClick={() =>
-                        {
-                            Api.get_Homepages(0, 1).then(e =>
-                              e.Items.length > 0 && self.props.set_page(HomepageViews.Homepage_to_page(e.Items[0].Item.Id),
-                                () => self.props.set_shown_relation("Homepage_Cuisine"))
-                            )
-                        }
-                      }>
-                      {i18next.t('Homepage_Cuisines')}
-                    </a>
-                  </div>
-                }
+            
                 <div className="menu_entry menu_entry--with-sub">
                 
                 </div>  
@@ -535,126 +451,6 @@ export function render_Grill_Cuisine_Meal(self:GrillContext, context:"presentati
 }
 
 
-export function render_Grill_Homepage_Cuisine(self:GrillContext, context:"presentation_structure"|"default") {
-  if ((context == "default" && self.props.shown_relation != "all" && self.props.shown_relation != "Homepage_Cuisine") || !Permissions.can_view_Homepage(self.props.current_User))
-    return null
-  let state = self.state()
-  return <div>
-    
-    { List.render_relation("grill_homepage_cuisine",
-   "Cuisine",
-   "Homepage",
-   "Homepages",
-   self.props.nesting_depth > 0,
-   false,
-   false,
-   false)
-  (
-      state.Homepage != "loading" ?
-        state.Homepage.IdsInServerOrder.map(id => state.Homepage != "loading" && state.Homepage.Items.get(id)):
-        state.Homepage,
-      Grill_Homepage_Cuisine_page_index(self),
-      Grill_Homepage_Cuisine_num_pages(self),
-      new_page_index => {
-          let state = self.state()
-          state.Homepage != "loading" &&
-          self.setState({...self.state(),
-            update_count:self.state().update_count+1,
-            Homepage: {
-              ...state.Homepage,
-              PageIndex:new_page_index
-            }
-          }, () =>  load_relation_Grill_Homepage_Cuisine(self, false, self.props.current_User))
-        },
-      (i,_) => {
-          let i_id = i.element.Id
-          let state = self.state()
-          return <div key={i_id}
-            className={`model-nested__item ${i.size != "preview" ? "model-nested__item--open" : ""}
-                        ${state.Homepage != "loading" && state.Homepage.JustCreated.has(i_id) && state.Homepage.JustCreated.get(i_id) ? "newly-created" : ""}` }
-          
-            >
-            <div key={i_id}>
-              {
-                HomepageViews.Homepage({
-                  ...self.props,
-                  entity:i.element,
-                  inline:false,
-                  nesting_depth:self.props.nesting_depth+1,
-                  size: i.size,
-                  allow_maximisation:true,
-                  allow_fullscreen:true,
-                  mode:self.props.mode == "edit" && (Permissions.can_edit_Homepage_Cuisine(self.props.current_User)
-                        || Permissions.can_create_Homepage_Cuisine(self.props.current_User)
-                        || Permissions.can_delete_Homepage_Cuisine(self.props.current_User)) ?
-                    self.props.mode : "view",
-                  is_editable:state.Homepage != "loading" && state.Homepage.Editable.get(i_id),
-                  shown_relation:i.shown_relation,
-                  set_shown_relation:(new_shown_relation:string, callback) => {
-                    let state = self.state()
-                    state.Homepage != "loading" &&
-                    self.setState({...self.state(),
-                      Homepage:
-                        {
-                          ...state.Homepage,
-                          Items:state.Homepage.Items.set(i_id,{...state.Homepage.Items.get(i_id), shown_relation:new_shown_relation})
-                        }
-                    }, callback)
-                  },
-                  nested_entity_names: self.props.nested_entity_names.push("Homepage"),
-                  
-                  set_size:(new_size:Utils.EntitySize, callback) => {
-                    let new_shown_relation = new_size == "large" ? "all" : i.shown_relation
-                    let state = self.state()
-                    state.Homepage != "loading" &&
-                    self.setState({...self.state(),
-                      Homepage:
-                        {
-                          ...state.Homepage,
-                          Items:state.Homepage.Items.set(i_id,
-                            {...state.Homepage.Items.get(i_id),
-                              size:new_size, shown_relation:new_shown_relation})
-                        }
-                    }, callback)
-                  },
-                    
-                  toggle_button:undefined,
-                  set_mode:undefined,
-                  set_entity:(new_entity:Models.Homepage, callback?:()=>void, force_update_count_increment?:boolean) => {
-                    let state = self.state()
-                    state.Homepage != "loading" &&
-                    self.setState({...self.state(),
-                      dirty_Homepage:state.dirty_Homepage.set(i_id, new_entity),
-                      update_count:force_update_count_increment ? self.state().update_count+1 : state.update_count,
-                      Homepage:
-                        {
-                          ...state.Homepage,
-                          Items:state.Homepage.Items.set(i_id,{...state.Homepage.Items.get(i_id), element:new_entity})
-                        }
-                    }, callback)
-                  },
-                  unlink: undefined,
-                    delete: !Permissions.can_delete_Homepage(self.props.current_User) || !Grill_Homepage_Cuisine_can_delete(self) ?
-                    null
-                    :
-                    () => confirm(i18next.t('Are you sure?')) && Api.delete_Homepage(i.element).then(() =>
-                      load_relation_Grill_Homepage_Cuisine(self, false, self.props.current_User))
-                })
-              }
-            </div>
-          </div>
-        },
-      () =>
-        <div>
-          
-          
-        </div>)
-    }
-    
-    </div>
-}
-
-
 
 export function render_relations_Grill(self:GrillContext) {
   return <div className="relations">
@@ -817,8 +613,6 @@ export function render_new_Grill_Cuisine_Meal(self:GrillContext) {
 
 export function render_saving_animations_Grill(self:GrillContext) {
   return self.state().dirty_Meal.count() > 0 ?
-    <div style={{position:"fixed", zIndex:10000, top:0, left:0, width:"20px", height:"20px", backgroundColor:"red"}} className="saving"/> : 
-    self.state().dirty_Homepage.count() > 0 ?
     <div style={{position:"fixed", zIndex:10000, top:0, left:0, width:"20px", height:"20px", backgroundColor:"red"}} className="saving"/>
     : <div style={{position:"fixed", zIndex:10000, top:0, left:0, width:"20px", height:"20px", backgroundColor:"cornflowerblue"}} className="saved"/>
 }
@@ -830,14 +624,11 @@ export type GrillState = {
     add_step_Meal:"closed"|"open"|"saving"|"adding"|"creating",
       dirty_Meal:Immutable.Map<number,Models.Meal>,
       Meal:Utils.PaginatedItems<{ shown_relation: string } & Utils.EntityAndSize<Models.Meal>>|"loading"
-  add_step_Homepage:"closed"|"open"|"saving",
-      dirty_Homepage:Immutable.Map<number,Models.Homepage>,
-      Homepage:Utils.PaginatedItems<{ shown_relation: string } & Utils.EntityAndSize<Models.Homepage>>|"loading"
   }
 export class GrillComponent extends React.Component<Utils.EntityComponentProps<Models.Grill>, GrillState> {
   constructor(props:Utils.EntityComponentProps<Models.Grill>, context:any) {
     super(props, context)
-    this.state = { update_count:0,add_step_Meal:"closed", dirty_Meal:Immutable.Map<number,Models.Meal>(), Meal:"loading", add_step_Homepage:"closed", dirty_Homepage:Immutable.Map<number,Models.Homepage>(), Homepage:"loading" }
+    this.state = { update_count:0,add_step_Meal:"closed", dirty_Meal:Immutable.Map<number,Models.Meal>(), Meal:"loading" }
   }
 
   get_self() {
@@ -870,11 +661,6 @@ export class GrillComponent extends React.Component<Utils.EntityComponentProps<M
          let first = this.state.dirty_Meal.first()
          this.setState({...this.state, dirty_Meal: this.state.dirty_Meal.remove(first.Id)}, () =>
            Api.update_Meal(first)
-         )
-       } else if (this.state.dirty_Homepage.count() > 0) {
-         let first = this.state.dirty_Homepage.first()
-         this.setState({...this.state, dirty_Homepage: this.state.dirty_Homepage.remove(first.Id)}, () =>
-           Api.update_Homepage(first)
          )
        }
 
@@ -921,7 +707,7 @@ export let Grill = (props:Utils.EntityComponentProps<Models.Grill>) : JSX.Elemen
   <GrillComponent {...props} />
 
 export let Grill_to_page = (id:number) => {
-  let can_edit = Utils.any_of([Permissions.can_edit_Grill, Permissions.can_edit_Cuisine_Meal, Permissions.can_edit_Homepage_Cuisine, Permissions.can_edit_Meal, Permissions.can_edit_Homepage])
+  let can_edit = Utils.any_of([Permissions.can_edit_Grill, Permissions.can_edit_Cuisine_Meal, Permissions.can_edit_Meal])
   return Utils.scene_to_page<Models.Grill>(can_edit, Grill, Api.get_Grill(id), Api.update_Grill, "Grill", "Grill", `/Grills/${id}`)
 }
 

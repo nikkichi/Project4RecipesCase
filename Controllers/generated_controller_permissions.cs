@@ -103,6 +103,24 @@ static public bool can_view_RecommendationPage(User current_User) { return true;
   
 
     
+static public bool can_view_Favourite(User current_User) { return true; }
+
+    static public bool can_create_Favourite(User current_User) { return false; }
+
+    static public bool can_edit_Favourite(User current_User) { return true; }
+
+    static public bool can_delete_Favourite(User current_User) { return false; }
+      
+    static public bool can_view_Favourite_FavouriteView(User current_User) { return true; }
+
+    static public bool can_edit_Favourite_FavouriteView(User current_User) { return true; }
+    
+  static public bool can_view_Favourite_Test(User current_User) { return true; }
+
+    static public bool can_edit_Favourite_Test(User current_User) { return true; }
+    
+
+    
 static public bool can_view_Lunch(User current_User) { return true; }
 
     static public bool can_create_Lunch(User current_User) { return false; }
@@ -345,26 +363,5 @@ static public bool can_view_RecommendationPage_Recipe(User current_User) { retur
     static public bool can_edit_RecommendationPage_Recipe(User current_User) { return true; }
 
     static public bool can_delete_RecommendationPage_Recipe(User current_User) { return true; }
-static public bool can_view_Homepage_Recipe(User current_User) { return true; }
-
-    static public bool can_create_Homepage_Recipe(User current_User) { return true; }
-
-    static public bool can_edit_Homepage_Recipe(User current_User) { return true; }
-
-    static public bool can_delete_Homepage_Recipe(User current_User) { return true; }
-static public bool can_view_Homepage_RecommendationPage(User current_User) { return true; }
-
-    static public bool can_create_Homepage_RecommendationPage(User current_User) { return true; }
-
-    static public bool can_edit_Homepage_RecommendationPage(User current_User) { return true; }
-
-    static public bool can_delete_Homepage_RecommendationPage(User current_User) { return true; }
-static public bool can_view_Homepage_Cuisine(User current_User) { return true; }
-
-    static public bool can_create_Homepage_Cuisine(User current_User) { return true; }
-
-    static public bool can_edit_Homepage_Cuisine(User current_User) { return true; }
-
-    static public bool can_delete_Homepage_Cuisine(User current_User) { return true; }
   }
 }

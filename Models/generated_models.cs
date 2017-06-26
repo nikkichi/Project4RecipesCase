@@ -172,6 +172,29 @@ namespace SimpleModelsAndRelations.Models
 
   
   
+  public partial class Favourite: IEntity {
+    public Favourite() {
+      
+    }
+    public int Id {get;set;}
+    
+    [Newtonsoft.Json.JsonProperty(ItemConverterType = typeof(Newtonsoft.Json.Converters.JavaScriptDateTimeConverter))] public DateTime CreatedDate{ get; set; }
+        public string Test {get;set;}
+    
+    static public Expression<Func<Favourite,Favourite>> FilterViewableAttributes(User current_User) {
+      return self => self;
+    }
+    static public Func<Favourite,Favourite> FilterViewableAttributesLocal(User current_User) {
+      return self => self;
+    }
+    static public Favourite WithoutImages(Favourite self) {
+      
+      return self;
+    }
+  }
+
+  
+  
   public partial class Lunch: Meal {
     public Lunch() {
       
@@ -645,12 +668,6 @@ namespace SimpleModelsAndRelations.Models
 
   
   
-
-
-
-
-
-
 
   public partial class LoggableEntities {
   public User User {get;set;}

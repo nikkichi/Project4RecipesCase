@@ -18,6 +18,17 @@
             "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] },
             "seeds": [ { "Id":1, "Test":"\"\"" } ]
         },
+        {
+            "name": "Favourite",
+            "allow_maximisation" : true,
+            "type": "page",
+            "attributes": [
+                { "type": "null", "name": "FavouriteView", "custom_rendering": "CustomViews.FavouriteView", "hidden_label": true },
+                { "type": "string", "name": "Test" }
+            ],
+            "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] },
+            "seeds": [ { "Id":1, "Test":"\"\"" } ]
+        },
             {
         "name": "User",
         "can_login": true,
@@ -290,23 +301,8 @@
         "source": "RecommendationPage",
         "target": "Recipe",
         "sort": "N-N"
-        },
-        {
-        "source": "Homepage",
-        "target": "Recipe",
-        "sort": "1-N"
-        },
-        {
-        "source": "Homepage",
-        "target": "RecommendationPage",
-        "sort": "1-N"
-        },
-        {
-        "source": "Homepage",
-        "target": "Cuisine",
-        "sort": "1-N"
         }
-        ]
+    ]
     }
         
 
