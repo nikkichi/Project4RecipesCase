@@ -1731,6 +1731,52 @@ export async function get_Nineties(page_index:number, page_size:number, search_q
 
   
   
+export async function create_Recommendation() : Promise<Models.Recommendation> {
+  let res = await fetch(`/api/v1/Recommendation/`,
+    { method: 'post', credentials: 'include', headers:{'content-type': 'application/json',
+      'X-XSRF-TOKEN': (document.getElementsByName("__RequestVerificationToken")[0] as any).value } })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return {...json, CreatedDate: Moment.utc(json.CreatedDate),  } as Models.Recommendation
+}
+
+export async function update_Recommendation(item:Models.Recommendation) : Promise<void> {
+  let res = await fetch(`/api/v1/Recommendation/`, { method: 'put',
+      body: JSON.stringify({...item, CreatedDate:undefined, }), credentials: 'include', headers:{'content-type': 'application/json', 'X-XSRF-TOKEN': (document.getElementsByName("__RequestVerificationToken")[0] as any).value } })
+  if (!res.ok) throw Error(res.statusText)
+  return
+}
+
+export async function delete_Recommendation(source:Models.Recommendation) : Promise<void> {
+  let res = await fetch(`/api/v1/Recommendation/${source.Id}`, { method: 'delete', credentials: 'include', headers:{'content-type': 'application/json', 'X-XSRF-TOKEN': (document.getElementsByName("__RequestVerificationToken")[0] as any).value} })
+  if (!res.ok) throw Error(res.statusText)
+  return
+}
+
+export async function get_Recommendation(id:number) : Promise<ItemWithEditable<Models.Recommendation>> {
+  let res = await fetch(`/api/v1/Recommendation/${id}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return { Item: {...json.Item, CreatedDate: Moment.utc(json.Item.CreatedDate),  } as Models.Recommendation,
+           Editable: !!json.Editable, JustCreated:false }
+}
+
+export async function get_Recommendations(page_index:number, page_size:number, search_query:string = null) : Promise<RawPage<Models.Recommendation>> {
+  let res = await fetch(`/api/v1/Recommendation?page_index=${page_index}&page_size=${page_size}${(search_query != null ? "&page_size=" + search_query : "")}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
+
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return make_page<Models.Recommendation>(json, e => { return {...e, }})
+}
+
+
+
+
+
+
+
+  
+  
 export async function create_Breakfast() : Promise<Models.Breakfast> {
   let res = await fetch(`/api/v1/Breakfast/`,
     { method: 'post', credentials: 'include', headers:{'content-type': 'application/json',

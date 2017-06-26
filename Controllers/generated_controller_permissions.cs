@@ -267,6 +267,20 @@ static public bool can_view_Ninety(User current_User) { return true; }
     
 
     
+static public bool can_view_Recommendation(User current_User) { return true; }
+
+    static public bool can_create_Recommendation(User current_User) { return false; }
+
+    static public bool can_edit_Recommendation(User current_User) { return true; }
+
+    static public bool can_delete_Recommendation(User current_User) { return false; }
+      
+    static public bool can_view_Recommendation_RecView(User current_User) { return true; }
+
+    static public bool can_edit_Recommendation_RecView(User current_User) { return true; }
+    
+
+    
 static public bool can_view_Breakfast(User current_User) { return true; }
 
     static public bool can_create_Breakfast(User current_User) { return false; }

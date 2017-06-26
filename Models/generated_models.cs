@@ -435,6 +435,29 @@ namespace SimpleModelsAndRelations.Models
 
   
   
+  public partial class Recommendation: IEntity {
+    public Recommendation() {
+      
+    }
+    public int Id {get;set;}
+    
+    [Newtonsoft.Json.JsonProperty(ItemConverterType = typeof(Newtonsoft.Json.Converters.JavaScriptDateTimeConverter))] public DateTime CreatedDate{ get; set; }
+        
+    
+    static public Expression<Func<Recommendation,Recommendation>> FilterViewableAttributes(User current_User) {
+      return self => self;
+    }
+    static public Func<Recommendation,Recommendation> FilterViewableAttributesLocal(User current_User) {
+      return self => self;
+    }
+    static public Recommendation WithoutImages(Recommendation self) {
+      
+      return self;
+    }
+  }
+
+  
+  
   public partial class Breakfast: Meal {
     public Breakfast() {
       

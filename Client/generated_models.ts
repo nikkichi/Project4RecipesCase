@@ -127,6 +127,13 @@ export type Ninety = {
     Kind:"Ninety"
   }
   
+export type Recommendation = {
+    Id : number
+    CreatedDate:Moment.Moment
+    
+    
+  }
+  
 export type Breakfast = {
     Id : number
     CreatedDate:Moment.Moment

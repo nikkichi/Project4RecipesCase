@@ -29,6 +29,16 @@
             "seeds": [ { "Id": 1 } ]
         },
         {
+            "name": "Recommendation",    
+            "allow_maximisation" : true,
+            "type": "page",
+            "attributes": [
+                { "type": "null", "name": "RecView", "custom_rendering": "CustomViews.RecView", "hidden_label": true }
+            ],
+            "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] },
+            "seeds": [ { "Id": 1 } ]
+        },
+        {
             "name": "Favourite",
             "allow_maximisation" : true,
             "type": "page",

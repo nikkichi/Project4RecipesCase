@@ -21,10 +21,12 @@ namespace SimpleModelsAndRelations.Models{
     public DbSet<Dinner> Dinner { get; set; }
     public DbSet<Mediterranean> Mediterranean { get; set; }
     public DbSet<Ninety> Ninety { get; set; }
+    public DbSet<Recommendation> Recommendation { get; set; }
     public DbSet<Breakfast> Breakfast { get; set; }
     public DbSet<Fifteen> Fifteen { get; set; }
     public DbSet<Rating> Rating { get; set; }
     public DbSet<Grill> Grill { get; set; }
+    
     
     
     
@@ -67,6 +69,7 @@ namespace SimpleModelsAndRelations.Models{
 
 
   
+    
     
     
     

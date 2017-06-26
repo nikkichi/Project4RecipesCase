@@ -21,6 +21,7 @@ import * as BreakfastViews from './Breakfast'
 import * as CuisineViews from './Cuisine'
 import * as LunchViews from './Lunch'
 import * as BrowseViews from './Browse'
+import * as RecommendationViews from './Recommendation'
 import * as CustomViews from '../custom_views'
 export let Meal = (props:Utils.EntityComponentProps<Models.Meal>) : JSX.Element =>
   props.entity.Kind == "Lunch" ?

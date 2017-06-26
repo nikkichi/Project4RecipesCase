@@ -14,6 +14,7 @@ import * as i18next from 'i18next'
 import * as Moment from 'moment'
 import * as BrowseViews from './Browse'
 import * as HomepageViews from './Homepage'
+import * as RecommendationViews from './Recommendation'
 import * as CustomViews from '../custom_views'
 
 
@@ -115,6 +116,17 @@ export function render_menu_Favourite(self:FavouriteContext) {
                   )
                 }>
                   {i18next.t('Homepage')}
+                </a>
+              </div>
+            }
+        {!Permissions.can_view_Recommendation(self.props.current_User) ? null :
+              <div className={`menu_entry page_link`}>
+                <a onClick={() => 
+                  Api.get_Recommendations(0, 1).then(e =>
+                    e.Items.length > 0 && self.props.set_page(RecommendationViews.Recommendation_to_page(e.Items[0].Item.Id))
+                  )
+                }>
+                  {i18next.t('Recommendation')}
                 </a>
               </div>
             }

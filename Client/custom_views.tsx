@@ -54,4 +54,8 @@ export let AppTest = (props:ViewUtils.EntityComponentProps<Models.Homepage>) => 
     return <IComponent props={props}/>
     }
 export let FavouriteView = (props:ViewUtils.EntityComponentProps<Models.Favourite>) => <div><div>hello favourite</div></div>
-export let BrowseView   = (props:ViewUtils.EntityComponentProps<Models.Browse>) => <div><div>Hello recipe</div></div>
+export let BrowseView    = (props:ViewUtils.EntityComponentProps<Models.Browse>) => <div>
+                                                                                   <img src="{{../image.jpg}}" />
+                                                                                   <div>Hello recipe</div>
+                                                                                   </div>
+export let RecView       = (props:ViewUtils.EntityComponentProps<Models.Recommendation>) => <div><div> Hello recommended </div></div>

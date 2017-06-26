@@ -255,6 +255,20 @@ export let can_edit_Ninety_Description = (current_User:Models.User) => true
 
 
 
+export let can_view_Recommendation = (current_User:Models.User) => true
+
+export let can_create_Recommendation = (current_User:Models.User) => false
+
+export let can_edit_Recommendation = (current_User:Models.User) => true
+
+export let can_delete_Recommendation = (current_User:Models.User) => false
+  
+export let can_view_Recommendation_RecView = (current_User:Models.User) => true
+
+export let can_edit_Recommendation_RecView = (current_User:Models.User) => true
+
+
+
 export let can_view_Breakfast = (current_User:Models.User) => true
 
 export let can_create_Breakfast = (current_User:Models.User) => false

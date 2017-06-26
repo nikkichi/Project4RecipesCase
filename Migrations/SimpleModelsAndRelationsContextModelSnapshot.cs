@@ -210,6 +210,18 @@ namespace SimpleModelsAndRelations.Migrations
                     b.ToTable("Recipe_Rating");
                 });
 
+            modelBuilder.Entity("SimpleModelsAndRelations.Models.Recommendation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Recommendation");
+                });
+
             modelBuilder.Entity("SimpleModelsAndRelations.Models.RecommendationPage", b =>
                 {
                     b.Property<int>("Id")
