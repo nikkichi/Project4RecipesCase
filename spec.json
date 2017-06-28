@@ -306,22 +306,16 @@
         "target": "Meal",
         "sort": "1-N",
         "seeds": [
-        {"CuisineId": 1, "MealId": 1},
-        {"CuisineId": 1, "MealId": 2},
-        {"CuisineId": 1, "MealId": 3},
-        {"CuisineId": 1, "MealId": 4},
-        {"CuisineId": 2, "MealId": 1},
-        {"CuisineId": 2, "MealId": 2},
-        {"CuisineId": 2, "MealId": 3},
-        {"CuisineId": 2, "MealId": 4},
         {"CuisineId": 3, "MealId": 1},
         {"CuisineId": 3, "MealId": 2},
-        {"CuisineId": 3, "MealId": 3},
-        {"CuisineId": 3, "MealId": 4},
-        {"CuisineId": 4, "MealId": 1},
-        {"CuisineId": 4, "MealId": 2},
-        {"CuisineId": 4, "MealId": 3}, 
-        {"CuisineId": 4, "MealId": 4}     
+        {"CuisineId": 2, "MealId": 3},
+        {"CuisineId": 1, "MealId": 4},
+        {"CuisineId": 1, "MealId": 5},
+        {"CuisineId": 2, "MealId": 6},
+        {"CuisineId": 2, "MealId": 7},
+        {"CuisineId": 2, "MealId": 8},
+        {"CuisineId": 3, "MealId": 9},
+        {"CuisineId": 3, "MealId": 10}  
         ]
         },
         {
@@ -336,9 +330,9 @@
             {"MealId": 4, "RecipeId": 1},
             {"MealId": 4, "RecipeId": 2},
             {"MealId": 2, "RecipeId": 7},
-            {"MealId": 1, "RecipeId": 8},
+            {"MealId": 2, "RecipeId": 8},
             {"MealId": 2, "RecipeId": 9},
-            {"MealId": 4, "RecipeId": 10}
+            {"MealId": 2, "RecipeId": 10}
         ]
         },
         {
