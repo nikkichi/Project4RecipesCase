@@ -241,6 +241,15 @@ namespace SimpleModelsAndRelations.Data
             
             _RecommendationPage.Add(new RecommendationPage { CreatedDate = DateTime.Now,   });
 
+            
+            _RecommendationPage.Add(new RecommendationPage { CreatedDate = DateTime.Now,   });
+
+            
+            _RecommendationPage.Add(new RecommendationPage { CreatedDate = DateTime.Now,   });
+
+            
+            _RecommendationPage.Add(new RecommendationPage { CreatedDate = DateTime.Now,   });
+
           foreach (var x in _RecommendationPage)
           {
             context.RecommendationPage.Add(x);
@@ -374,10 +383,10 @@ namespace SimpleModelsAndRelations.Data
             _Recipe.Add(new Recipe { Id = 1, CreatedDate = DateTime.Now, Name = "Flat Iron Steak Simplicity!/", Ingredients = "2 (8 ounce) flat iron steaks, 1/2 teaspoon lemon pepper seasoning, or to taste ,1/2 teaspoon onion powder, or to taste, 1/2 teaspoon garlic powder, or to taste/", Description = "Season the steaks with lemon pepper, onion powder and garlic powder on both sides. Wrap in plastic wrap and marinate for at least 2 hours in the refrigerator. Preheat the grill for medium-high heat and allow the steaks to come to room temperature. Unwrap steaks and place on the preheated grill. Cook to your desired degree of doneness, about 3 minutes per side for medium rare. Allow steaks to rest for a few minutes before serving./", Picture = "",   });
 
             
-            _Recipe.Add(new Recipe { Id = 2, CreatedDate = DateTime.Now, Name = "Quick Chicken Nuggets!/", Ingredients = " 1 cup bread crumbs, 1/2 teaspoon garlic powder, 1/2 teaspoon dried thyme, 1/4 cup Dijon mustard, 1/3 cup light mayonnaise, 1 1/2 pounds chicken tenders, cut into 1-inch pieces, 3/4 pound green beans, washed, trimmed and steamed./", Description = "Heat oven to broil. Coat baking rack with nonstick cooking spray. Place rack over baking sheet; set aside. Stir together bread crumbs, garlic powder and thyme in a pie plate; set aside. Stir together mustard and mayonnaise. Reserve about 1/2 cup of mustard mixture for dipping sauce. Brush chicken pieces with remaining mustard mix; place chicken in pie plate with bread crumb mixture, spooning crumbs on top of pieces and pressing to adhere. Transfer to prepared baking rack. Broil for 10 minutes or until cooked through. Serve with reserved dipping sauce and green beans on the side./", Picture = "",   });
+            _Recipe.Add(new Recipe { Id = 2, CreatedDate = DateTime.Now, Name = "Quick Chicken Nuggets!/", Ingredients = " 1 cup bread crumbs, 1/2 teaspoon garlic powder, 1/2 teaspoon dried thyme, 1/4 cup Dijon mustard, 1/3 cup light mayonnaise, 1 1/2 pounds chicken tenders, cut into 1-inch pieces, 3/4 pound green beans, washed, trimmed and steamed./", Description = "Heat oven to broil. Coat baking rack with nonstick cooking spray. Place rack over baking sheet; set aside. Stir together bread crumbs, garlic powder and thyme in a pie plate; set aside. Stir together mustard and mayonnaise. Reserve about 1/2 cup of mustard mixture for dipping sauce. Brush chicken pieces with remaining mustard mix; place chicken in pie plate with bread crumb mixture, spooning crumbs on top of pieces and pressing to adhere. Transfer to prepared baking rack. Broil for 10 minutes or until cooked through. Serve with reserved dipping sauce and green beans on the side./", Picture = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg/220px-Good_Food_Display_-_NCI_Visuals_Online.jpg",   });
 
             
-            _Recipe.Add(new Recipe { Id = 3, CreatedDate = DateTime.Now, Name = "Griddled chicken with quinoa Greek salad/", Ingredients = "225g quinoa, 25g butter, 1 red chilli, deseeded and finely chopped, 1 garlic clove-- crushed, 400g chicken, mini fillets, 1½ tbsp extra-virgin olive oil, 300g vine tomato roughly chopped, handful pitted black kalamata olives, 1 red onion finely sliced, 100g feta cheese crumbled, small bunch mint leaves chopped, juice and zest ½ lemon./", Description = "Cook the quinoa following the pack instructions, then rinse in cold water and drain thoroughly. Meanwhile, mix the butter, chilli and garlic into a paste. Toss the chicken fillets in 2 tsp of the olive oil with some seasoning. Lay in a hot griddle pan and cook for 3-4 mins each side or until cooked through. Transfer to a plate, dot with the spicy butter and set aside to melt. Next, tip the tomatoes, olives, onion, feta and mint into a bowl. Toss in the cooked quinoa. Stir through the remaining olive oil, lemon juice and zest, and season well. Serve with the chicken fillets on top, drizzled with any buttery chicken juices./", Picture = "",   });
+            _Recipe.Add(new Recipe { Id = 3, CreatedDate = DateTime.Now, Name = "Griddled chicken with quinoa Greek salad/", Ingredients = "225g quinoa, 25g butter, 1 red chilli, deseeded and finely chopped, 1 garlic clove-- crushed, 400g chicken, mini fillets, 1½ tbsp extra-virgin olive oil, 300g vine tomato roughly chopped, handful pitted black kalamata olives, 1 red onion finely sliced, 100g feta cheese crumbled, small bunch mint leaves chopped, juice and zest ½ lemon./", Description = "Cook the quinoa following the pack instructions, then rinse in cold water and drain thoroughly. Meanwhile, mix the butter, chilli and garlic into a paste. Toss the chicken fillets in 2 tsp of the olive oil with some seasoning. Lay in a hot griddle pan and cook for 3-4 mins each side or until cooked through. Transfer to a plate, dot with the spicy butter and set aside to melt. Next, tip the tomatoes, olives, onion, feta and mint into a bowl. Toss in the cooked quinoa. Stir through the remaining olive oil, lemon juice and zest, and season well. Serve with the chicken fillets on top, drizzled with any buttery chicken juices./", Picture = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg/220px-Good_Food_Display_-_NCI_Visuals_Online.jpg",   });
 
             
             _Recipe.Add(new Recipe { Id = 4, CreatedDate = DateTime.Now, Name = "Vietnamese Sandwich/", Ingredients = "4 boneless pork loin chops, cut 1/4 inch thick, 4 (7 inch) French bread baguettes split lengthwise, 4 teaspoons mayonnaise, or to taste, 1 ounce chile sauce with garlic, 1/4 cup fresh lime juice, 1 small red onion sliced into rings, 1 medium cucumber peeled and sliced lengthwise, 2 tablespoons chopped fresh cilantro, salt and pepper to taste. /", Description = "Heat oven to broil. Coat baking rack with nonstick cooking spray. Place rack over baking sheet; set aside. Stir together bread crumbs, garlic powder and thyme in a pie plate; set aside. Stir together mustard and mayonnaise. Reserve about 1/2 cup of mustard mixture for dipping sauce. Brush chicken pieces with remaining mustard mix; place chicken in pie plate with bread crumb mixture, spooning crumbs on top of pieces and pressing to adhere. Transfer to prepared baking rack. Broil for 10 minutes or until cooked through. Serve with reserved dipping sauce and green beans on the side./", Picture = "",   });
@@ -509,22 +518,28 @@ namespace SimpleModelsAndRelations.Data
             _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -2,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 16,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 89,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 73,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 53,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 84,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 62,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -41,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 66,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 45,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 72,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -10,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 79,   });
+
+            
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 72,   });
+
+            
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -76,   });
 
           foreach (var x in _Rating)
           {
@@ -699,8 +714,6 @@ namespace SimpleModelsAndRelations.Data
 
             new User_Recipe { UserId = Users[r.Next(Users.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
 
-            new User_Recipe { UserId = Users[r.Next(Users.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
-
         };
         foreach (var x in _User_Recipe)
         {
@@ -714,6 +727,14 @@ namespace SimpleModelsAndRelations.Data
         var _Recipe_Rating = new Recipe_Rating[]
         {
             
+            new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
             new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
 
             new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
@@ -788,10 +809,6 @@ namespace SimpleModelsAndRelations.Data
         var _RecommendationPage_Recipe = new RecommendationPage_Recipe[]
         {
             
-            new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
-
-            new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
-
             new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
 
             new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },

@@ -27087,6 +27087,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(6);
 const Immutable = __webpack_require__(26);
 const Api = __webpack_require__(14);
+var recipeStyle = {
+    marginTop: '10%'
+};
+function searching(props) {
+    if (props.Name.toLowerCase().indexOf('chicken') !== -1) {
+        return React.createElement("div", null,
+            React.createElement("h1", null, props.Name),
+            React.createElement("p", null, props.Description));
+    }
+    return React.createElement("div", null);
+}
 class IComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -27117,24 +27128,54 @@ class IComponent extends React.Component {
             React.createElement("div", null,
                 " Hello ",
                 this.props.props.current_User.Username),
-            React.createElement("div", { id: "recipes" }, this.state.recipes.map(recipe => React.createElement("div", null,
-                " ",
-                recipe.Name,
-                " "))),
+            React.createElement("div", { id: "recipes" }, this.state.recipes.map(recipe => searching(recipe))),
             React.createElement("div", null, this.state.i));
     }
 }
 exports.default = IComponent;
+class BrowseComponent extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.state = { i: 0, j: 1, recipes: Immutable.List() };
+    }
+    componentWillMount() {
+        var thread = setInterval(() => {
+            this.setState(Object.assign({}, this.state, { i: this.state.i + 1 }));
+        }, 1000);
+        this.get_recipes().then(online_recipes => this.setState(Object.assign({}, this.state, { recipes: online_recipes })));
+    }
+    get_recipes() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let recipes_page = yield Api.get_Recipes(0, 100);
+            let loaded_recipes = Immutable.List(recipes_page.Items.map(r => r.Item));
+            for (let i = 1; i < recipes_page.NumPages; i++) {
+                let recipes = yield Api.get_Recipes(i, 100);
+                loaded_recipes = loaded_recipes.concat(Immutable.List(recipes.Items.map(r => r.Item))).toList();
+            }
+            return Immutable.List(loaded_recipes);
+        });
+    }
+    render() {
+        return React.createElement("div", null,
+            React.createElement("div", null,
+                React.createElement("input", { name: 'Search Recipe', type: 'text' })),
+            React.createElement("div", { id: "recipes" }, this.state.recipes.map(recipe => searching(recipe))));
+    }
+}
+exports.BrowseComponent = BrowseComponent;
 exports.AppTest = (props) => {
     return React.createElement(IComponent, { props: props });
 };
 exports.FavouriteView = (props) => React.createElement("div", null,
-    React.createElement("div", null, "hello favourite"));
-exports.BrowseView = (props) => React.createElement("div", null,
-    React.createElement("img", { src: "{{../image.jpg}}" }),
-    React.createElement("div", null, "Hello recipe"));
+    React.createElement("div", null, "hello favourite"),
+    " ",
+    React.createElement("button", null, " Greg "),
+    "  ");
+exports.BrowseView = (props) => {
+    return React.createElement(BrowseComponent, { props: props });
+};
 exports.RecView = (props) => React.createElement("div", null,
-    React.createElement("div", null, " Hello recommended "));
+    React.createElement("div", null, " Hello recommendations "));
 
 
 /***/ }),
