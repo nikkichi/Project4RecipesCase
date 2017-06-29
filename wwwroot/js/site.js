@@ -27087,9 +27087,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(6);
 const Immutable = __webpack_require__(26);
 const Api = __webpack_require__(14);
-var recipeStyle = {
-    marginTop: '10%'
-};
 function searching(props) {
     if (props.Name.toLowerCase().indexOf('chicken') !== -1) {
         return React.createElement("div", null,
@@ -27128,21 +27125,27 @@ class IComponent extends React.Component {
             React.createElement("div", null,
                 " Hello ",
                 this.props.props.current_User.Username),
-            React.createElement("div", { id: "recipes" }, this.state.recipes.map(recipe => searching(recipe))),
-            React.createElement("div", null, this.state.i));
+            React.createElement("div", { id: "recipes" }, this.state.recipes.map(recipe => React.createElement("div", null,
+                " ",
+                recipe.Name,
+                " "))));
     }
 }
 exports.default = IComponent;
 class BrowseComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.state = { i: 0, j: 1, recipes: Immutable.List() };
+        this.state = {
+            SearchedQuery: "", i: 0, j: 1,
+            recipes: Immutable.List(),
+            Items: Immutable.List()
+        };
     }
     componentWillMount() {
         var thread = setInterval(() => {
             this.setState(Object.assign({}, this.state, { i: this.state.i + 1 }));
         }, 1000);
-        this.get_recipes().then(online_recipes => this.setState(Object.assign({}, this.state, { recipes: online_recipes })));
+        this.get_recipes().then(online_recipes => this.setState({ recipes: online_recipes }, () => this.setState(Object.assign({}, this.state, { Items: this.state.recipes.map(recipe => { return { title: recipe.Name, info: recipe.Description, is_expanded: false }; }).toList() }))));
     }
     get_recipes() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -27157,12 +27160,32 @@ class BrowseComponent extends React.Component {
     }
     render() {
         return React.createElement("div", null,
-            React.createElement("div", null,
-                React.createElement("input", { name: 'Search Recipe', type: 'text' })),
-            React.createElement("div", { id: "recipes" }, this.state.recipes.map(recipe => searching(recipe))));
+            React.createElement("input", { value: this.state.SearchedQuery, onChange: event => this.setState(Object.assign({}, this.state, { SearchedQuery: event.target.value })) }),
+            this.state.Items.filter(item => item.title.toLowerCase().includes(this.state.SearchedQuery.toLowerCase()))
+                .map(item => React.createElement(ItemComponent, { title: item.title, info: item.info, is_expanded: item.is_expanded, update_me: value => this.setState(Object.assign({}, this.state, { Items: this.state.Items.map(item1 => {
+                        if (item.title == item1.title) {
+                            return Object.assign({}, item1, { is_expanded: value });
+                        }
+                        else {
+                            return item1;
+                        }
+                    }).toList() })) })));
     }
 }
 exports.BrowseComponent = BrowseComponent;
+class ItemComponent extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.state = {};
+    }
+    render() {
+        return React.createElement("div", null,
+            React.createElement("span", null, this.props.title),
+            this.props.is_expanded ? React.createElement("div", null, this.props.info) : React.createElement("span", null),
+            !this.props.is_expanded ? React.createElement("button", { onClick: () => this.props.update_me(true) }, "+") :
+                React.createElement("button", { onClick: () => this.props.update_me(false) }, "-"));
+    }
+}
 exports.AppTest = (props) => {
     return React.createElement(IComponent, { props: props });
 };
@@ -27172,7 +27195,7 @@ exports.FavouriteView = (props) => React.createElement("div", null,
     React.createElement("button", null, " Greg "),
     "  ");
 exports.BrowseView = (props) => {
-    return React.createElement(BrowseComponent, { props: props });
+    return React.createElement(BrowseComponent, null);
 };
 exports.RecView = (props) => React.createElement("div", null,
     React.createElement("div", null, " Hello recommendations "));

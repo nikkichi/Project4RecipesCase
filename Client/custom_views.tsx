@@ -13,9 +13,6 @@ type BrowseComponentProps = {props:ViewUtils.EntityComponentProps<Models.Browse>
 type BrowseComponentState = { i : number, j : number, recipes : Immutable.List<Models.Recipe>}
 
 
-var recipeStyle = {
-    marginTop: '10%'
-}
 
 function searching (props) {
     if(props.Name.toLowerCase().indexOf('chicken') !== -1) {
@@ -57,32 +54,36 @@ export default class IComponent extends React.Component<IComponentProps, ICompon
         console.log(this.props.props)
         if(this.props.props.current_User == undefined) return <div>Log in first ...</div>
         return <div>
-                
                 <div> Hello {this.props.props.current_User.Username}</div>
                 <div id = "recipes">
-                    {this.state.recipes.map(recipe => searching(recipe) )} 
+                    {this.state.recipes.map(recipe => <div> {recipe.Name} </div> )} 
                 </div> 
-                <div>{this.state.i}</div>
             </div>    
         }
 
 }
 
 
-export class BrowseComponent extends React.Component<BrowseComponentProps, BrowseComponentState> {
-    constructor(props: IComponentProps, context){
+export class BrowseComponent extends React.Component<{}, { i : number, j : number,recipes:Immutable.List<Models.Recipe >,Items:Immutable.List<{title:string, info:string, is_expanded:boolean}>,SearchedQuery:string}>{
+    constructor(props: BrowseComponentProps, context)
+    {
         super(props, context)
-        this.state = { i : 0, j : 1, recipes : Immutable.List<Models.Recipe>()}
-    }
+        this.state = {  
+            SearchedQuery:"", i : 0, j : 1,
+                        recipes : Immutable.List<Models.Recipe>(),
+                        Items: Immutable.List<{title:string, info:string, is_expanded:boolean}>()
+    } 
+}    
 
     componentWillMount(){
         var thread = setInterval(()=> {
             this.setState({... this.state, i : this.state.i + 1})
         }, 1000)
+        this.get_recipes().then(online_recipes => this.setState({recipes: online_recipes}, 
+            () => this.setState({... this.state, Items: this.state.recipes.map(recipe => { return {title:recipe.Name, info:recipe.Description, is_expanded:false} }).toList()})))
+}
 
-        this.get_recipes().then(online_recipes => this.setState({... this.state, recipes: online_recipes}))
 
-    }
 
     async get_recipes(){
         let recipes_page = await Api.get_Recipes(0, 100)
@@ -95,20 +96,54 @@ export class BrowseComponent extends React.Component<BrowseComponentProps, Brows
         return Immutable.List<Models.Recipe>(loaded_recipes)
     }
 
+
+
     render(){
-        return <div>               
-                <div><input name='Search Recipe' type='text' /></div>
-                <div id = "recipes">
-                    {this.state.recipes.map(recipe => searching(recipe) )} 
-                </div> 
-            </div>    
-        }
+
+        return <div>
+                <input value={this.state.SearchedQuery} onChange={event=>this.setState({...this.state, SearchedQuery: event.target.value})}/>
+                {this.state.Items.filter(item => item.title.toLowerCase().includes(this.state.SearchedQuery.toLowerCase()))
+                                 .map(item => <ItemComponent 
+                                                    title={item.title} 
+                                                    info={item.info} 
+                                                    is_expanded={item.is_expanded} 
+                                                    update_me={value=>
+                                                                this.setState({...this.state, 
+                                                                                Items: this.state.Items.map(item1 => {
+                                                                                    if(item.title == item1.title){
+                                                                                        return {...item1, is_expanded: value}
+                                                                                    }
+                                                                                    else{ return item1}
+                                                                                }).toList()})
+                                                                }
+                                                    />)}
+            </div>
+    }
 }
+
+
+class ItemComponent extends React.Component<{title:string, info:string, is_expanded:boolean, update_me: (boolean) => void}, {}>{
+    constructor(props: {title:string, info:string, is_expanded:boolean, update_me: (boolean) => void}, context)
+    {
+        super(props, context)
+        this.state = { }
+    }     
+
+    render(){
+        return <div >
+                <span>{this.props.title}</span>
+                {this.props.is_expanded?<div>{this.props.info}</div>:<span/>}
+                {!this.props.is_expanded?<button onClick={()=>this.props.update_me(true)}>+</button>:
+                                         <button onClick={()=>this.props.update_me(false)}>-</button>}
+                </div>
+    }
+}
+
 export let AppTest = (props:ViewUtils.EntityComponentProps<Models.Homepage>) => {
     return <IComponent props={props}/>
     }
 export let FavouriteView = (props:ViewUtils.EntityComponentProps<Models.Favourite>) => <div><div>hello favourite</div> <button> Greg </button>  </div>
 export let BrowseView    = (props:ViewUtils.EntityComponentProps<Models.Browse>) => {
-    return <BrowseComponent props={props}/>
+    return <BrowseComponent />
 }
 export let RecView       = (props:ViewUtils.EntityComponentProps<Models.Recommendation>) => <div><div> Hello recommendations </div></div>
