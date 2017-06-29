@@ -45,8 +45,18 @@ export class StarsComponent extends React.Component<StarsComponentProps, StarsCo
 
 }
 
-export class CuisineComponent extends React.Component<{},{}> {
+export class CuisineComponent extends React.Component<{cuisine: Models.Cuisine},{}> {
+    constructor( props, context) {
+        super(props,context)
+        this.state = {}
+    }
 
+    render() {
+        return <div>
+            <div><h1>{this.props.cuisine.Kind}</h1></div>
+            <div><Meals cuisine={this.props.cuisine}/></div>
+        </div>
+    }
 }
 
 export class Cuisines extends React.Component<{}, { cuisines: Immutable.List<Models.Cuisine> }> {
@@ -74,7 +84,21 @@ export class Cuisines extends React.Component<{}, { cuisines: Immutable.List<Mod
     
     render() {
         return <div>
-            <div>{this.state.cuisines.map(r => <div>{r.Kind}</div>)}</div>             
+            <div>{this.state.cuisines.map(r => <div><CuisineComponent cuisine={r} /></div> )}</div>             
+        </div>
+    }
+}
+
+export class MealsComponent extends React.Component<{meal: Models.Meal},{}> {
+    constructor( props, context) {
+        super(props,context)
+        this.state = {}
+    }
+
+    render() {
+        return <div>
+            <div><h2>{this.props.meal.Kind}</h2></div>
+            <div><Recipes meal={this.props.meal}/></div>
         </div>
     }
 }
@@ -104,7 +128,20 @@ export class Meals extends React.Component<{cuisine: Models.Cuisine}, {meals: Im
 
     render() {
         return <div>
+            <div>{this.state.meals.map(r => <MealsComponent meal={r}/>)}</div>
+        </div>
+    }
+}
 
+export class RecipesComponent extends React.Component<{recipe: Models.Recipe},{}> {
+    constructor( props, context) {
+        super(props,context)
+        this.state = {}
+    }
+
+    render() {
+        return <div>
+            <div><p>{this.props.recipe.Name}</p></div>
         </div>
     }
 }
@@ -135,7 +172,7 @@ export class Recipes extends React.Component<{meal: Models.Meal}, {recipes: Immu
 
     render() {
         return <div>
-
+            <div>{this.state.recipes.map(r => <RecipesComponent recipe={r}/>)}</div>
         </div>
     }
 }
@@ -212,12 +249,8 @@ export default class IComponent extends React.Component<IComponentProps, ICompon
     render(){
         console.log(this.props.props)
         if(this.props.props.current_User == undefined) return <div>Log in first ...</div>
-        return <div> <Cuisines />
-                <div> Hello {this.props.props.current_User.Username}</div>
-                <div id = "recipes">
-                    {this.state.recipes.map(recipe => <div> <h1>{recipe.Name}</h1> </div> )} 
-                    <input type="checkbox" />
-                </div> 
+        return <div> 
+                <Cuisines/>
             </div>    
         }
 
@@ -296,6 +329,7 @@ class ItemComponent extends React.Component<{title:string, ingredients:string, i
                 </div>
     }
 }
+
 
 export let AppTest = (props:ViewUtils.EntityComponentProps<Models.Homepage>) => {
     return <IComponent props={props}/>

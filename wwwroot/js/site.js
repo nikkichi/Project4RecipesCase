@@ -27115,6 +27115,17 @@ class StarsComponent extends React.Component {
 }
 exports.StarsComponent = StarsComponent;
 class CuisineComponent extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.state = {};
+    }
+    render() {
+        return React.createElement("div", null,
+            React.createElement("div", null,
+                React.createElement("h1", null, this.props.cuisine.Kind)),
+            React.createElement("div", null,
+                React.createElement(Meals, { cuisine: this.props.cuisine })));
+    }
 }
 exports.CuisineComponent = CuisineComponent;
 class Cuisines extends React.Component {
@@ -27140,10 +27151,25 @@ class Cuisines extends React.Component {
     }
     render() {
         return React.createElement("div", null,
-            React.createElement("div", null, this.state.cuisines.map(r => React.createElement("div", null, r.Kind))));
+            React.createElement("div", null, this.state.cuisines.map(r => React.createElement("div", null,
+                React.createElement(CuisineComponent, { cuisine: r })))));
     }
 }
 exports.Cuisines = Cuisines;
+class MealsComponent extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.state = {};
+    }
+    render() {
+        return React.createElement("div", null,
+            React.createElement("div", null,
+                React.createElement("h2", null, this.props.meal.Kind)),
+            React.createElement("div", null,
+                React.createElement(Recipes, { meal: this.props.meal })));
+    }
+}
+exports.MealsComponent = MealsComponent;
 class Meals extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -27166,10 +27192,23 @@ class Meals extends React.Component {
         });
     }
     render() {
-        return React.createElement("div", null);
+        return React.createElement("div", null,
+            React.createElement("div", null, this.state.meals.map(r => React.createElement(MealsComponent, { meal: r }))));
     }
 }
 exports.Meals = Meals;
+class RecipesComponent extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.state = {};
+    }
+    render() {
+        return React.createElement("div", null,
+            React.createElement("div", null,
+                React.createElement("p", null, this.props.recipe.Name)));
+    }
+}
+exports.RecipesComponent = RecipesComponent;
 class Recipes extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -27193,7 +27232,8 @@ class Recipes extends React.Component {
         });
     }
     render() {
-        return React.createElement("div", null);
+        return React.createElement("div", null,
+            React.createElement("div", null, this.state.recipes.map(r => React.createElement(RecipesComponent, { recipe: r }))));
     }
 }
 exports.Recipes = Recipes;
@@ -27247,17 +27287,7 @@ class IComponent extends React.Component {
         if (this.props.props.current_User == undefined)
             return React.createElement("div", null, "Log in first ...");
         return React.createElement("div", null,
-            " ",
-            React.createElement(Cuisines, null),
-            React.createElement("div", null,
-                " Hello ",
-                this.props.props.current_User.Username),
-            React.createElement("div", { id: "recipes" },
-                this.state.recipes.map(recipe => React.createElement("div", null,
-                    " ",
-                    React.createElement("h1", null, recipe.Name),
-                    " ")),
-                React.createElement("input", { type: "checkbox" })));
+            React.createElement(Cuisines, null));
     }
 }
 exports.default = IComponent;
