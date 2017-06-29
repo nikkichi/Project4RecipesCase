@@ -131,7 +131,7 @@ class ItemComponent extends React.Component<{title:string, ingredients:string, i
     render(){
         return <div >
                 <span><h1>{this.props.title}</h1></span>
-                {this.props.is_expanded?<div><h2>Ingredients</h2>{this.props.ingredients}<br/><h2>Description</h2>{this.props.info}</div>:<span/>}
+                {this.props.is_expanded?<div><h2>Ingredients</h2>{this.props.ingredients}<br/><br/><h2>Description</h2>{this.props.info}</div>:<span/>}
                 {!this.props.is_expanded?<button onClick={()=>this.props.update_me(true)}>+</button>:
                                          <button onClick={()=>this.props.update_me(false)}>-</button>}
                 </div>

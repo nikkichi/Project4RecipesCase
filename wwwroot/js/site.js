@@ -27185,6 +27185,7 @@ class ItemComponent extends React.Component {
                 React.createElement("h2", null, "Ingredients"),
                 this.props.ingredients,
                 React.createElement("br", null),
+                React.createElement("br", null),
                 React.createElement("h2", null, "Description"),
                 this.props.info) : React.createElement("span", null),
             !this.props.is_expanded ? React.createElement("button", { onClick: () => this.props.update_me(true) }, "+") :

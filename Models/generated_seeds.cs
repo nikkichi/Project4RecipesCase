@@ -244,6 +244,12 @@ namespace SimpleModelsAndRelations.Data
             
             _RecommendationPage.Add(new RecommendationPage { CreatedDate = DateTime.Now,   });
 
+            
+            _RecommendationPage.Add(new RecommendationPage { CreatedDate = DateTime.Now,   });
+
+            
+            _RecommendationPage.Add(new RecommendationPage { CreatedDate = DateTime.Now,   });
+
           foreach (var x in _RecommendationPage)
           {
             context.RecommendationPage.Add(x);
@@ -527,34 +533,28 @@ namespace SimpleModelsAndRelations.Data
           
           
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 69,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -55,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 68,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -62,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -46,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 80,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 87,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 85,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -28,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 99,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -28,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 46,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -18,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 76,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 52,   });
-
-            
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -12,   });
-
-            
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 83,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 22,   });
 
           foreach (var x in _Rating)
           {
@@ -737,6 +737,12 @@ namespace SimpleModelsAndRelations.Data
 
             new User_Recipe { UserId = Users[r.Next(Users.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
 
+            new User_Recipe { UserId = Users[r.Next(Users.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new User_Recipe { UserId = Users[r.Next(Users.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new User_Recipe { UserId = Users[r.Next(Users.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
         };
         foreach (var x in _User_Recipe)
         {
@@ -772,14 +778,6 @@ namespace SimpleModelsAndRelations.Data
 
             new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
 
-            new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
-
-            new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
-
-            new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
-
-            new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
-
         };
         foreach (var x in _Recipe_Rating)
         {
@@ -793,6 +791,14 @@ namespace SimpleModelsAndRelations.Data
         var _User_RecommendationPage = new User_RecommendationPage[]
         {
             
+            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
+
+            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
+
+            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
+
+            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
+
             new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
 
             new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
