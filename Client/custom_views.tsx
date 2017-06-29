@@ -14,14 +14,34 @@ type BrowseComponentState = { i : number, j : number, recipes : Immutable.List<M
 
 
 
-function searching (props) {
-    if(props.Name.toLowerCase().indexOf("") !== -1) {
-        return  <div>
-                    <h1>{props.Name}</h1>
-                    <p>{props.Description}</p>
-                </div>;
-    }
-    return <div></div>;
+type Rate = {value : number, state:boolean}
+
+
+type StarsComponentProps = {}
+type StarsComponentState = {stars:Immutable.List<Rate>}
+export class StarsComponent extends React.Component<StarsComponentProps, StarsComponentState> {
+  constructor(props:StarsComponentProps, context:any) {
+    super(props, context)
+    this.state = { stars:Immutable.List<Rate>([{value : 0, state:false}, {value : 1, state:false}, {value : 2, state:false}, {value : 3, state:false}, {value : 4, state:false}]) }
+  }
+  render(){
+    return <div>{this.state.stars.map(star => <button onClick={() => this.setState({...this.state, stars: this.state.stars.map(star1 => {if(star1.value <= star.value) return {...star1, state: true}; else return {...star1, state: false}}).toList()})}  
+                                                      style={star.state?{
+                                                                          borderColor: '#000066',
+                                                                          backgroundColor: '#08ABCE',
+                                                                          borderWidth: 1,
+                                                                          borderRadius: 10,
+                                                                          color: 'white',
+                                                                        }:
+                                                                        {
+                                                                          borderColor: '#000066',
+                                                                          borderWidth: 1,
+                                                                          borderRadius: 10,
+                                                                          color: 'black',
+                                                                        }}
+                                                      marginHeight={10} marginWidth={10} width={10} height={10}>{star.value}</button>)} </div>
+  }
+
 }
 
 export default class IComponent extends React.Component<IComponentProps, IComponentState>{
@@ -57,6 +77,7 @@ export default class IComponent extends React.Component<IComponentProps, ICompon
                 <div> Hello {this.props.props.current_User.Username}</div>
                 <div id = "recipes">
                     {this.state.recipes.map(recipe => <div> <h1>{recipe.Name}</h1> </div> )} 
+                    <input type="checkbox" />
                 </div> 
             </div>    
         }
@@ -95,7 +116,6 @@ export class BrowseComponent extends React.Component<{}, { i : number, j : numbe
     }
 
 
-
     render(){
 
         return <div>
@@ -131,7 +151,7 @@ class ItemComponent extends React.Component<{title:string, ingredients:string, i
     render(){
         return <div >
                 <span><h1>{this.props.title}</h1></span>
-                {this.props.is_expanded?<div><h2>Ingredients</h2>{this.props.ingredients}<br/><br/><h2>Description</h2>{this.props.info}</div>:<span/>}
+                {this.props.is_expanded?<div><h2>Ingredients</h2>{this.props.ingredients}<br/><h2>Description</h2>{this.props.info}<br/><h2>Rate</h2><br/><div><StarsComponent/></div></div>:<span/>}
                 {!this.props.is_expanded?<button onClick={()=>this.props.update_me(true)}>+</button>:
                                          <button onClick={()=>this.props.update_me(false)}>-</button>}
                 </div>

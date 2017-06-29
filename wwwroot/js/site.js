@@ -27087,14 +27087,33 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(6);
 const Immutable = __webpack_require__(26);
 const Api = __webpack_require__(14);
-function searching(props) {
-    if (props.Name.toLowerCase().indexOf("") !== -1) {
-        return React.createElement("div", null,
-            React.createElement("h1", null, props.Name),
-            React.createElement("p", null, props.Description));
+class StarsComponent extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.state = { stars: Immutable.List([{ value: 0, state: false }, { value: 1, state: false }, { value: 2, state: false }, { value: 3, state: false }, { value: 4, state: false }]) };
     }
-    return React.createElement("div", null);
+    render() {
+        return React.createElement("div", null,
+            this.state.stars.map(star => React.createElement("button", { onClick: () => this.setState(Object.assign({}, this.state, { stars: this.state.stars.map(star1 => { if (star1.value <= star.value)
+                        return Object.assign({}, star1, { state: true });
+                    else
+                        return Object.assign({}, star1, { state: false }); }).toList() })), style: star.state ? {
+                    borderColor: '#000066',
+                    backgroundColor: '#08ABCE',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    color: 'white',
+                } :
+                    {
+                        borderColor: '#000066',
+                        borderWidth: 1,
+                        borderRadius: 10,
+                        color: 'black',
+                    }, marginHeight: 10, marginWidth: 10, width: 10, height: 10 }, star.value)),
+            " ");
+    }
 }
+exports.StarsComponent = StarsComponent;
 class IComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -27125,10 +27144,12 @@ class IComponent extends React.Component {
             React.createElement("div", null,
                 " Hello ",
                 this.props.props.current_User.Username),
-            React.createElement("div", { id: "recipes" }, this.state.recipes.map(recipe => React.createElement("div", null,
-                " ",
-                React.createElement("h1", null, recipe.Name),
-                " "))));
+            React.createElement("div", { id: "recipes" },
+                this.state.recipes.map(recipe => React.createElement("div", null,
+                    " ",
+                    React.createElement("h1", null, recipe.Name),
+                    " ")),
+                React.createElement("input", { type: "checkbox" })));
     }
 }
 exports.default = IComponent;
@@ -27185,9 +27206,13 @@ class ItemComponent extends React.Component {
                 React.createElement("h2", null, "Ingredients"),
                 this.props.ingredients,
                 React.createElement("br", null),
-                React.createElement("br", null),
                 React.createElement("h2", null, "Description"),
-                this.props.info) : React.createElement("span", null),
+                this.props.info,
+                React.createElement("br", null),
+                React.createElement("h2", null, "Rate"),
+                React.createElement("br", null),
+                React.createElement("div", null,
+                    React.createElement(StarsComponent, null))) : React.createElement("span", null),
             !this.props.is_expanded ? React.createElement("button", { onClick: () => this.props.update_me(true) }, "+") :
                 React.createElement("button", { onClick: () => this.props.update_me(false) }, "-"));
     }
