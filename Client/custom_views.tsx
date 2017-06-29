@@ -24,6 +24,7 @@ export class StarsComponent extends React.Component<StarsComponentProps, StarsCo
     super(props, context)
     this.state = { stars:Immutable.List<Rate>([{value : 0, state:false}, {value : 1, state:false}, {value : 2, state:false}, {value : 3, state:false}, {value : 4, state:false}]) }
   }
+  
   render(){
     return <div>{this.state.stars.map(star => <button onClick={() => this.setState({...this.state, stars: this.state.stars.map(star1 => {if(star1.value <= star.value) return {...star1, state: true}; else return {...star1, state: false}}).toList()})}  
                                                       style={star.state?{
@@ -43,6 +44,144 @@ export class StarsComponent extends React.Component<StarsComponentProps, StarsCo
   }
 
 }
+
+export class CuisineComponent extends React.Component<{},{}> {
+
+}
+
+export class Cuisines extends React.Component<{}, { cuisines: Immutable.List<Models.Cuisine> }> {
+    constructor( props, context) {
+        super(props, context)
+        this.state = {
+            cuisines: Immutable.List<Models.Cuisine>()
+        }
+    }
+    
+    componentWillMount() {
+        this.get_cuisines().then(online_cuisines => this.setState({... this.state, cuisines: online_cuisines}))
+    }
+
+    async get_cuisines() {
+        let cuisine_page = await Api.get_Cuisines(0, 100)
+        let loaded_cuisines = Immutable.List<Models.Cuisine>(cuisine_page.Items.map(r => r.Item))
+
+        for (let i = 1 ; i < cuisine_page.NumPages; i++) {
+            let cuisines = await Api.get_Cuisines(i, 100)
+            loaded_cuisines = loaded_cuisines.concat(Immutable.List<Models.Cuisine>(cuisines.Items.map( r => r.Item))).toList()
+        }
+        return Immutable.List<Models.Cuisine>(loaded_cuisines)
+    }
+    
+    render() {
+        return <div>
+            <div>{this.state.cuisines.map(r => <div>{r.Kind}</div>)}</div>             
+        </div>
+    }
+}
+
+export class Meals extends React.Component<{cuisine: Models.Cuisine}, {meals: Immutable.List<Models.Meal> }> {
+    constructor( props, context) {
+        super(props, context)
+        this.state = {
+            meals: Immutable.List<Models.Meal>()
+        }
+    }
+
+    componentWillMount() {
+        this.get_meals().then(online_meals => this.setState({... this.state, meals: online_meals}))
+    }
+
+    async get_meals() {
+        let meal_page = await Api.get_Cuisine_Cuisine_Meals(this.props.cuisine, 0 , 100)
+        let loaded_meals = Immutable.List<Models.Meal>(meal_page.Items.map(r => r.Item))
+
+        for (let i = 1; i < meal_page.NumPages; i++) {
+            let meals = await Api.get_Cuisine_Cuisine_Meals(this.props.cuisine, 0, 100)
+            loaded_meals = loaded_meals.concat(Immutable.List<Models.Meal>(meals.Items.map( r => r.Item))).toList()
+        }
+        return Immutable.List<Models.Meal>(loaded_meals)
+    }
+
+    render() {
+        return <div>
+
+        </div>
+    }
+}
+
+export class Recipes extends React.Component<{meal: Models.Meal}, {recipes: Immutable.List<Models.Recipe>, SearchedQuery:string}> {
+    constructor( props, context) {
+        super(props, context)
+        this.state = {
+            SearchedQuery: "",
+            recipes: Immutable.List<Models.Recipe>()
+        }
+    }
+
+    componentWillMount() {
+        this.get_recipes().then(online_recipes => this.setState({... this.state, recipes: online_recipes}))
+    }
+
+    async get_recipes() {
+        let recipe_page = await Api.get_Meal_Meal_Recipes(this.props.meal, 0, 100)
+        let loaded_recipes = Immutable.List<Models.Recipe>(recipe_page.Items.map(r => r.Item))
+
+        for (let i = 1; i < recipe_page.NumPages; i++) {
+            let recipes = await Api.get_Meal_Meal_Recipes(this.props.meal, 0, 100)
+            loaded_recipes = loaded_recipes.concat(Immutable.List<Models.Recipe>(recipes.Items.map( r=> r.Item))).toList()
+        }
+        return Immutable.List<Models.Recipe>(loaded_recipes)
+    }
+
+    render() {
+        return <div>
+
+        </div>
+    }
+}
+
+export class Info extends React.Component<{recipes: Models.Recipe}, {Items: Immutable.List<{title: string, ingredients: string, info: string, is_expanded: boolean}>, SearchedQuery:string}> {
+    constructor( props, context) {
+        super(props, context)
+        this.state = {
+            SearchedQuery: "",
+            Items: Immutable.List<{title: string, ingredients: string, info: string, is_expanded: boolean}>()
+        }
+    }
+
+    render(){
+
+        return <div>
+                <input value={this.state.SearchedQuery} onChange={event=>this.setState({...this.state, SearchedQuery: event.target.value})}/>
+                {this.state.Items.filter(item => item.title.toLowerCase().includes(this.state.SearchedQuery.toLowerCase()))
+                                 .map(item => <ItemComponent 
+                                                    title={item.title} 
+                                                    ingredients={item.ingredients}
+                                                    info={item.info} 
+                                                    is_expanded={item.is_expanded} 
+                                                    update_me={value=>
+                                                                this.setState({...this.state, 
+                                                                                Items: this.state.Items.map(item1 => {
+                                                                                    if(item.title == item1.title){
+                                                                                        return {...item1, is_expanded: value}
+                                                                                    }
+                                                                                    else{ return item1}
+                                                                                }).toList()})
+                                                                }
+                                                    />)}
+            </div>
+    }
+}
+
+
+
+
+
+
+
+
+
+
 
 export default class IComponent extends React.Component<IComponentProps, IComponentState>{
     constructor(props: IComponentProps, context){
@@ -73,7 +212,7 @@ export default class IComponent extends React.Component<IComponentProps, ICompon
     render(){
         console.log(this.props.props)
         if(this.props.props.current_User == undefined) return <div>Log in first ...</div>
-        return <div>
+        return <div> <Cuisines />
                 <div> Hello {this.props.props.current_User.Username}</div>
                 <div id = "recipes">
                     {this.state.recipes.map(recipe => <div> <h1>{recipe.Name}</h1> </div> )} 

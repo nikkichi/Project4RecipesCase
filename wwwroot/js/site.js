@@ -27114,6 +27114,112 @@ class StarsComponent extends React.Component {
     }
 }
 exports.StarsComponent = StarsComponent;
+class CuisineComponent extends React.Component {
+}
+exports.CuisineComponent = CuisineComponent;
+class Cuisines extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.state = {
+            cuisines: Immutable.List()
+        };
+    }
+    componentWillMount() {
+        this.get_cuisines().then(online_cuisines => this.setState(Object.assign({}, this.state, { cuisines: online_cuisines })));
+    }
+    get_cuisines() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let cuisine_page = yield Api.get_Cuisines(0, 100);
+            let loaded_cuisines = Immutable.List(cuisine_page.Items.map(r => r.Item));
+            for (let i = 1; i < cuisine_page.NumPages; i++) {
+                let cuisines = yield Api.get_Cuisines(i, 100);
+                loaded_cuisines = loaded_cuisines.concat(Immutable.List(cuisines.Items.map(r => r.Item))).toList();
+            }
+            return Immutable.List(loaded_cuisines);
+        });
+    }
+    render() {
+        return React.createElement("div", null,
+            React.createElement("div", null, this.state.cuisines.map(r => React.createElement("div", null, r.Kind))));
+    }
+}
+exports.Cuisines = Cuisines;
+class Meals extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.state = {
+            meals: Immutable.List()
+        };
+    }
+    componentWillMount() {
+        this.get_meals().then(online_meals => this.setState(Object.assign({}, this.state, { meals: online_meals })));
+    }
+    get_meals() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let meal_page = yield Api.get_Cuisine_Cuisine_Meals(this.props.cuisine, 0, 100);
+            let loaded_meals = Immutable.List(meal_page.Items.map(r => r.Item));
+            for (let i = 1; i < meal_page.NumPages; i++) {
+                let meals = yield Api.get_Cuisine_Cuisine_Meals(this.props.cuisine, 0, 100);
+                loaded_meals = loaded_meals.concat(Immutable.List(meals.Items.map(r => r.Item))).toList();
+            }
+            return Immutable.List(loaded_meals);
+        });
+    }
+    render() {
+        return React.createElement("div", null);
+    }
+}
+exports.Meals = Meals;
+class Recipes extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.state = {
+            SearchedQuery: "",
+            recipes: Immutable.List()
+        };
+    }
+    componentWillMount() {
+        this.get_recipes().then(online_recipes => this.setState(Object.assign({}, this.state, { recipes: online_recipes })));
+    }
+    get_recipes() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let recipe_page = yield Api.get_Meal_Meal_Recipes(this.props.meal, 0, 100);
+            let loaded_recipes = Immutable.List(recipe_page.Items.map(r => r.Item));
+            for (let i = 1; i < recipe_page.NumPages; i++) {
+                let recipes = yield Api.get_Meal_Meal_Recipes(this.props.meal, 0, 100);
+                loaded_recipes = loaded_recipes.concat(Immutable.List(recipes.Items.map(r => r.Item))).toList();
+            }
+            return Immutable.List(loaded_recipes);
+        });
+    }
+    render() {
+        return React.createElement("div", null);
+    }
+}
+exports.Recipes = Recipes;
+class Info extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.state = {
+            SearchedQuery: "",
+            Items: Immutable.List()
+        };
+    }
+    render() {
+        return React.createElement("div", null,
+            React.createElement("input", { value: this.state.SearchedQuery, onChange: event => this.setState(Object.assign({}, this.state, { SearchedQuery: event.target.value })) }),
+            this.state.Items.filter(item => item.title.toLowerCase().includes(this.state.SearchedQuery.toLowerCase()))
+                .map(item => React.createElement(ItemComponent, { title: item.title, ingredients: item.ingredients, info: item.info, is_expanded: item.is_expanded, update_me: value => this.setState(Object.assign({}, this.state, { Items: this.state.Items.map(item1 => {
+                        if (item.title == item1.title) {
+                            return Object.assign({}, item1, { is_expanded: value });
+                        }
+                        else {
+                            return item1;
+                        }
+                    }).toList() })) })));
+    }
+}
+exports.Info = Info;
 class IComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -27141,6 +27247,8 @@ class IComponent extends React.Component {
         if (this.props.props.current_User == undefined)
             return React.createElement("div", null, "Log in first ...");
         return React.createElement("div", null,
+            " ",
+            React.createElement(Cuisines, null),
             React.createElement("div", null,
                 " Hello ",
                 this.props.props.current_User.Username),
