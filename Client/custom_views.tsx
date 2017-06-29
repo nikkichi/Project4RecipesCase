@@ -15,7 +15,7 @@ type BrowseComponentState = { i : number, j : number, recipes : Immutable.List<M
 
 
 function searching (props) {
-    if(props.Name.toLowerCase().indexOf('chicken') !== -1) {
+    if(props.Name.toLowerCase().indexOf("") !== -1) {
         return  <div>
                     <h1>{props.Name}</h1>
                     <p>{props.Description}</p>
@@ -56,7 +56,7 @@ export default class IComponent extends React.Component<IComponentProps, ICompon
         return <div>
                 <div> Hello {this.props.props.current_User.Username}</div>
                 <div id = "recipes">
-                    {this.state.recipes.map(recipe => <div> {recipe.Name} </div> )} 
+                    {this.state.recipes.map(recipe => <div> <h1>{recipe.Name}</h1> </div> )} 
                 </div> 
             </div>    
         }
@@ -64,14 +64,13 @@ export default class IComponent extends React.Component<IComponentProps, ICompon
 }
 
 
-export class BrowseComponent extends React.Component<{}, { i : number, j : number,recipes:Immutable.List<Models.Recipe >,Items:Immutable.List<{title:string, info:string, is_expanded:boolean}>,SearchedQuery:string}>{
+export class BrowseComponent extends React.Component<{}, { i : number, j : number, Items:Immutable.List<{title:string, ingredients: string, info:string, is_expanded:boolean}>,SearchedQuery:string}>{
     constructor(props: BrowseComponentProps, context)
     {
         super(props, context)
         this.state = {  
             SearchedQuery:"", i : 0, j : 1,
-                        recipes : Immutable.List<Models.Recipe>(),
-                        Items: Immutable.List<{title:string, info:string, is_expanded:boolean}>()
+                        Items: Immutable.List<{title:string, ingredients: string, info:string, is_expanded:boolean}>()
     } 
 }    
 
@@ -79,9 +78,8 @@ export class BrowseComponent extends React.Component<{}, { i : number, j : numbe
         var thread = setInterval(()=> {
             this.setState({... this.state, i : this.state.i + 1})
         }, 1000)
-        this.get_recipes().then(online_recipes => this.setState({recipes: online_recipes}, 
-            () => this.setState({... this.state, Items: this.state.recipes.map(recipe => { return {title:recipe.Name, info:recipe.Description, is_expanded:false} }).toList()})))
-}
+        this.get_recipes().then(online_recipes => this.setState({... this.state, Items: online_recipes.map(recipe => { return {title:recipe.Name, ingredients:recipe.Ingredients, info:recipe.Description, is_expanded:false} }).toList()}))
+    }
 
 
 
@@ -105,6 +103,7 @@ export class BrowseComponent extends React.Component<{}, { i : number, j : numbe
                 {this.state.Items.filter(item => item.title.toLowerCase().includes(this.state.SearchedQuery.toLowerCase()))
                                  .map(item => <ItemComponent 
                                                     title={item.title} 
+                                                    ingredients={item.ingredients}
                                                     info={item.info} 
                                                     is_expanded={item.is_expanded} 
                                                     update_me={value=>
@@ -122,8 +121,8 @@ export class BrowseComponent extends React.Component<{}, { i : number, j : numbe
 }
 
 
-class ItemComponent extends React.Component<{title:string, info:string, is_expanded:boolean, update_me: (boolean) => void}, {}>{
-    constructor(props: {title:string, info:string, is_expanded:boolean, update_me: (boolean) => void}, context)
+class ItemComponent extends React.Component<{title:string, ingredients:string, info:string, is_expanded:boolean, update_me: (boolean) => void}, {}>{
+    constructor(props: {title:string, ingredients: string, info:string, is_expanded:boolean, update_me: (boolean) => void}, context)
     {
         super(props, context)
         this.state = { }
@@ -131,8 +130,8 @@ class ItemComponent extends React.Component<{title:string, info:string, is_expan
 
     render(){
         return <div >
-                <span>{this.props.title}</span>
-                {this.props.is_expanded?<div>{this.props.info}</div>:<span/>}
+                <span><h1>{this.props.title}</h1></span>
+                {this.props.is_expanded?<div><h2>Ingredients</h2>{this.props.ingredients}<br/><h2>Description</h2>{this.props.info}</div>:<span/>}
                 {!this.props.is_expanded?<button onClick={()=>this.props.update_me(true)}>+</button>:
                                          <button onClick={()=>this.props.update_me(false)}>-</button>}
                 </div>

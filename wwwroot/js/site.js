@@ -27088,7 +27088,7 @@ const React = __webpack_require__(6);
 const Immutable = __webpack_require__(26);
 const Api = __webpack_require__(14);
 function searching(props) {
-    if (props.Name.toLowerCase().indexOf('chicken') !== -1) {
+    if (props.Name.toLowerCase().indexOf("") !== -1) {
         return React.createElement("div", null,
             React.createElement("h1", null, props.Name),
             React.createElement("p", null, props.Description));
@@ -27127,7 +27127,7 @@ class IComponent extends React.Component {
                 this.props.props.current_User.Username),
             React.createElement("div", { id: "recipes" }, this.state.recipes.map(recipe => React.createElement("div", null,
                 " ",
-                recipe.Name,
+                React.createElement("h1", null, recipe.Name),
                 " "))));
     }
 }
@@ -27137,7 +27137,6 @@ class BrowseComponent extends React.Component {
         super(props, context);
         this.state = {
             SearchedQuery: "", i: 0, j: 1,
-            recipes: Immutable.List(),
             Items: Immutable.List()
         };
     }
@@ -27145,7 +27144,7 @@ class BrowseComponent extends React.Component {
         var thread = setInterval(() => {
             this.setState(Object.assign({}, this.state, { i: this.state.i + 1 }));
         }, 1000);
-        this.get_recipes().then(online_recipes => this.setState({ recipes: online_recipes }, () => this.setState(Object.assign({}, this.state, { Items: this.state.recipes.map(recipe => { return { title: recipe.Name, info: recipe.Description, is_expanded: false }; }).toList() }))));
+        this.get_recipes().then(online_recipes => this.setState(Object.assign({}, this.state, { Items: online_recipes.map(recipe => { return { title: recipe.Name, ingredients: recipe.Ingredients, info: recipe.Description, is_expanded: false }; }).toList() })));
     }
     get_recipes() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -27162,7 +27161,7 @@ class BrowseComponent extends React.Component {
         return React.createElement("div", null,
             React.createElement("input", { value: this.state.SearchedQuery, onChange: event => this.setState(Object.assign({}, this.state, { SearchedQuery: event.target.value })) }),
             this.state.Items.filter(item => item.title.toLowerCase().includes(this.state.SearchedQuery.toLowerCase()))
-                .map(item => React.createElement(ItemComponent, { title: item.title, info: item.info, is_expanded: item.is_expanded, update_me: value => this.setState(Object.assign({}, this.state, { Items: this.state.Items.map(item1 => {
+                .map(item => React.createElement(ItemComponent, { title: item.title, ingredients: item.ingredients, info: item.info, is_expanded: item.is_expanded, update_me: value => this.setState(Object.assign({}, this.state, { Items: this.state.Items.map(item1 => {
                         if (item.title == item1.title) {
                             return Object.assign({}, item1, { is_expanded: value });
                         }
@@ -27180,8 +27179,14 @@ class ItemComponent extends React.Component {
     }
     render() {
         return React.createElement("div", null,
-            React.createElement("span", null, this.props.title),
-            this.props.is_expanded ? React.createElement("div", null, this.props.info) : React.createElement("span", null),
+            React.createElement("span", null,
+                React.createElement("h1", null, this.props.title)),
+            this.props.is_expanded ? React.createElement("div", null,
+                React.createElement("h2", null, "Ingredients"),
+                this.props.ingredients,
+                React.createElement("br", null),
+                React.createElement("h2", null, "Description"),
+                this.props.info) : React.createElement("span", null),
             !this.props.is_expanded ? React.createElement("button", { onClick: () => this.props.update_me(true) }, "+") :
                 React.createElement("button", { onClick: () => this.props.update_me(false) }, "-"));
     }
