@@ -27087,6 +27087,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(6);
 const Immutable = __webpack_require__(26);
 const Api = __webpack_require__(14);
+function getRating(user_id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let res = yield fetch('customcontroller/getrating/${user_id}', { method: 'get', credentials: 'include', headers: { 'content-type': 'application/json' } });
+        let json = yield res.json();
+        Api.link_User_User_Recipes(); //how to add linked recipes
+        Api.get_User_User_Recipes(); //return all linked recipes
+        return Immutable.List(json);
+    });
+}
 class StarsComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -27117,14 +27126,18 @@ exports.StarsComponent = StarsComponent;
 class CuisineComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.state = {};
+        this.state = { is_expanded: false };
+    }
+    update_me(value) {
+        this.setState(Object.assign({}, this.state, { is_expanded: value }));
     }
     render() {
-        return React.createElement("div", null,
-            React.createElement("div", null,
-                React.createElement("h1", null, this.props.cuisine.Kind)),
-            React.createElement("div", null,
-                React.createElement(Meals, { cuisine: this.props.cuisine })));
+        return (React.createElement("span", { style: { marginLeft: 10, marginTop: 10 } },
+            !this.state.is_expanded ? React.createElement("button", { onClick: () => this.update_me(true) }, this.props.cuisine.Kind) :
+                React.createElement("button", { onClick: () => this.update_me(false) },
+                    "Close ",
+                    this.props.cuisine.Kind),
+            this.state.is_expanded ? React.createElement(Meals, { cuisine: this.props.cuisine }) : React.createElement("span", null)));
     }
 }
 exports.CuisineComponent = CuisineComponent;
@@ -27150,23 +27163,26 @@ class Cuisines extends React.Component {
         });
     }
     render() {
-        return React.createElement("div", null,
-            React.createElement("div", null, this.state.cuisines.map(r => React.createElement("div", null,
-                React.createElement(CuisineComponent, { cuisine: r })))));
+        return React.createElement("span", null,
+            React.createElement("view", { style: { flex: 1, flexDirection: 'row' } }, this.state.cuisines.map(r => React.createElement(CuisineComponent, { cuisine: r }))));
     }
 }
 exports.Cuisines = Cuisines;
 class MealsComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.state = {};
+        this.state = { is_expanded: false };
+    }
+    update_me(value) {
+        this.setState(Object.assign({}, this.state, { is_expanded: value }));
     }
     render() {
-        return React.createElement("div", null,
-            React.createElement("div", null,
-                React.createElement("h2", null, this.props.meal.Kind)),
-            React.createElement("div", null,
-                React.createElement(Recipes, { meal: this.props.meal })));
+        return React.createElement("span", { style: { marginLeft: 10, marginTop: 10 } },
+            !this.state.is_expanded ? React.createElement("button", { onClick: () => this.update_me(true) }, this.props.meal.Kind) :
+                React.createElement("button", { onClick: () => this.update_me(false) },
+                    "Close ",
+                    this.props.meal.Kind),
+            this.state.is_expanded ? React.createElement(Recipes, { meal: this.props.meal }) : React.createElement("span", null));
     }
 }
 exports.MealsComponent = MealsComponent;
@@ -27200,12 +27216,18 @@ exports.Meals = Meals;
 class RecipesComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.state = {};
+        this.state = { is_expanded: false };
+    }
+    update_me(value) {
+        this.setState(Object.assign({}, this.state, { is_expanded: value }));
     }
     render() {
         return React.createElement("div", null,
-            React.createElement("div", null,
-                React.createElement("p", null, this.props.recipe.Name)));
+            !this.state.is_expanded ? React.createElement("button", { onClick: () => this.update_me(true) }, this.props.recipe.Name) :
+                React.createElement("button", { onClick: () => this.update_me(false) },
+                    "Close ",
+                    this.props.recipe.Name),
+            this.state.is_expanded ? React.createElement(Info, { ingredients: this.props.recipe.Ingredients, info: this.props.recipe.Description }) : React.createElement("span", null));
     }
 }
 exports.RecipesComponent = RecipesComponent;
@@ -27213,7 +27235,6 @@ class Recipes extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            SearchedQuery: "",
             recipes: Immutable.List()
         };
     }
@@ -27240,23 +27261,19 @@ exports.Recipes = Recipes;
 class Info extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.state = {
-            SearchedQuery: "",
-            Items: Immutable.List()
-        };
+        this.state = {};
     }
     render() {
         return React.createElement("div", null,
-            React.createElement("input", { value: this.state.SearchedQuery, onChange: event => this.setState(Object.assign({}, this.state, { SearchedQuery: event.target.value })) }),
-            this.state.Items.filter(item => item.title.toLowerCase().includes(this.state.SearchedQuery.toLowerCase()))
-                .map(item => React.createElement(ItemComponent, { title: item.title, ingredients: item.ingredients, info: item.info, is_expanded: item.is_expanded, update_me: value => this.setState(Object.assign({}, this.state, { Items: this.state.Items.map(item1 => {
-                        if (item.title == item1.title) {
-                            return Object.assign({}, item1, { is_expanded: value });
-                        }
-                        else {
-                            return item1;
-                        }
-                    }).toList() })) })));
+            React.createElement("div", null,
+                React.createElement("h1", null, "Ingredients")),
+            React.createElement("div", null, this.props.ingredients),
+            React.createElement("br", null),
+            React.createElement("div", null,
+                React.createElement("h1", null, "Description")),
+            React.createElement("div", null, this.props.info),
+            React.createElement("div", null,
+                React.createElement(StarsComponent, null)));
     }
 }
 exports.Info = Info;
@@ -27266,9 +27283,6 @@ class IComponent extends React.Component {
         this.state = { i: 0, j: 1, recipes: Immutable.List() };
     }
     componentWillMount() {
-        var thread = setInterval(() => {
-            this.setState(Object.assign({}, this.state, { i: this.state.i + 1 }));
-        }, 1000);
         this.get_recipes().then(online_recipes => this.setState(Object.assign({}, this.state, { recipes: online_recipes })));
     }
     get_recipes() {
@@ -27300,9 +27314,6 @@ class BrowseComponent extends React.Component {
         };
     }
     componentWillMount() {
-        var thread = setInterval(() => {
-            this.setState(Object.assign({}, this.state, { i: this.state.i + 1 }));
-        }, 1000);
         this.get_recipes().then(online_recipes => this.setState(Object.assign({}, this.state, { Items: online_recipes.map(recipe => { return { title: recipe.Name, ingredients: recipe.Ingredients, info: recipe.Description, is_expanded: false }; }).toList() })));
     }
     get_recipes() {
@@ -27320,27 +27331,23 @@ class BrowseComponent extends React.Component {
         return React.createElement("div", null,
             React.createElement("input", { value: this.state.SearchedQuery, onChange: event => this.setState(Object.assign({}, this.state, { SearchedQuery: event.target.value })) }),
             this.state.Items.filter(item => item.title.toLowerCase().includes(this.state.SearchedQuery.toLowerCase()))
-                .map(item => React.createElement(ItemComponent, { title: item.title, ingredients: item.ingredients, info: item.info, is_expanded: item.is_expanded, update_me: value => this.setState(Object.assign({}, this.state, { Items: this.state.Items.map(item1 => {
-                        if (item.title == item1.title) {
-                            return Object.assign({}, item1, { is_expanded: value });
-                        }
-                        else {
-                            return item1;
-                        }
-                    }).toList() })) })));
+                .map(item => React.createElement(ItemComponent, { title: item.title, ingredients: item.ingredients, info: item.info })));
     }
 }
 exports.BrowseComponent = BrowseComponent;
 class ItemComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.state = {};
+        this.state = { is_expanded: false };
+    }
+    update_me(value) {
+        this.setState(Object.assign({}, this.state, { is_expanded: value }));
     }
     render() {
         return React.createElement("div", null,
             React.createElement("span", null,
                 React.createElement("h1", null, this.props.title)),
-            this.props.is_expanded ? React.createElement("div", null,
+            this.state.is_expanded ? React.createElement("div", null,
                 React.createElement("h2", null, "Ingredients"),
                 this.props.ingredients,
                 React.createElement("br", null),
@@ -27351,8 +27358,8 @@ class ItemComponent extends React.Component {
                 React.createElement("br", null),
                 React.createElement("div", null,
                     React.createElement(StarsComponent, null))) : React.createElement("span", null),
-            !this.props.is_expanded ? React.createElement("button", { onClick: () => this.props.update_me(true) }, "+") :
-                React.createElement("button", { onClick: () => this.props.update_me(false) }, "-"));
+            !this.state.is_expanded ? React.createElement("button", { onClick: () => this.update_me(true) }, "+") :
+                React.createElement("button", { onClick: () => this.update_me(false) }, "-"));
     }
 }
 exports.AppTest = (props) => {
