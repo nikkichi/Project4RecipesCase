@@ -14,7 +14,7 @@ using SimpleModelsAndRelations.Models;
 using SimpleModelsAndRelations.Filters;
 
 
-namespace SimpleModelsAndRelations.Controllers
+/*namespace SimpleModelsAndRelations.Controllers
 {
     [Route("customcontroller")]
   public class CustomController : Controller
@@ -35,4 +35,4 @@ namespace SimpleModelsAndRelations.Controllers
         return new int[]{99,11,3};
     }
   }
-}
+}*/

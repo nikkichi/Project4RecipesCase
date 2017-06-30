@@ -27087,19 +27087,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(6);
 const Immutable = __webpack_require__(26);
 const Api = __webpack_require__(14);
-function getRating(user_id) {
-    return __awaiter(this, void 0, void 0, function* () {
-        let res = yield fetch('customcontroller/getrating/${user_id}', { method: 'get', credentials: 'include', headers: { 'content-type': 'application/json' } });
-        let json = yield res.json();
-        Api.link_User_User_Recipes(); //how to add linked recipes
-        Api.get_User_User_Recipes(); //return all linked recipes
-        return Immutable.List(json);
-    });
-}
 class StarsComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.state = { stars: Immutable.List([{ value: 0, state: false }, { value: 1, state: false }, { value: 2, state: false }, { value: 3, state: false }, { value: 4, state: false }]) };
+        this.state = { stars: Immutable.List([{ value: 1, state: false }, { value: 2, state: false }, { value: 3, state: false }, { value: 4, state: false }, { value: 5, state: false }]) };
     }
     render() {
         return React.createElement("div", null,
@@ -27209,7 +27200,7 @@ class Meals extends React.Component {
     }
     render() {
         return React.createElement("div", null,
-            React.createElement("div", null, this.state.meals.map(r => React.createElement(MealsComponent, { meal: r }))));
+            React.createElement("div", { style: { marginTop: 10 } }, this.state.meals.map(r => React.createElement(MealsComponent, { meal: r }))));
     }
 }
 exports.Meals = Meals;
@@ -27223,10 +27214,11 @@ class RecipesComponent extends React.Component {
     }
     render() {
         return React.createElement("div", null,
-            !this.state.is_expanded ? React.createElement("button", { onClick: () => this.update_me(true) }, this.props.recipe.Name) :
-                React.createElement("button", { onClick: () => this.update_me(false) },
-                    "Close ",
-                    this.props.recipe.Name),
+            " ",
+            React.createElement("br", null),
+            React.createElement("h2", null, this.props.recipe.Name),
+            !this.state.is_expanded ? React.createElement("button", { onClick: () => this.update_me(true) }, "+") :
+                React.createElement("button", { onClick: () => this.update_me(false) }, "Close "),
             this.state.is_expanded ? React.createElement(Info, { ingredients: this.props.recipe.Ingredients, info: this.props.recipe.Description }) : React.createElement("span", null));
     }
 }
@@ -27266,12 +27258,15 @@ class Info extends React.Component {
     render() {
         return React.createElement("div", null,
             React.createElement("div", null,
-                React.createElement("h1", null, "Ingredients")),
+                React.createElement("h3", null, "Ingredients")),
             React.createElement("div", null, this.props.ingredients),
             React.createElement("br", null),
             React.createElement("div", null,
-                React.createElement("h1", null, "Description")),
+                React.createElement("h3", null, "Description")),
             React.createElement("div", null, this.props.info),
+            React.createElement("br", null),
+            React.createElement("div", null,
+                React.createElement("h3", null, "Rate")),
             React.createElement("div", null,
                 React.createElement(StarsComponent, null)));
     }

@@ -12,14 +12,14 @@ type IComponentState = { i : number, j : number, recipes : Immutable.List<Models
 type BrowseComponentProps = {props:ViewUtils.EntityComponentProps<Models.Browse>}
 type BrowseComponentState = { i : number, j : number, recipes : Immutable.List<Models.Recipe>}
 
-async function getRating (user_id: number): Promise<Immutable.List<number>> {
+/**async function getRating (user_id: number): Promise<Immutable.List<number>> {
     let res = await fetch ('customcontroller/getrating/${user_id}', {method:'get', credentials: 'include', headers: {'content-type': 'application/json'}})
     let json = await res.json()
     Api.link_User_User_Recipes() //how to add linked recipes
     Api.get_User_User_Recipes() //return all linked recipes
     
     return Immutable.List<number>(json)
-}
+}**/
 
 
 type Rate = {value : number, state:boolean}
@@ -30,7 +30,7 @@ type StarsComponentState = {stars:Immutable.List<Rate>}
 export class StarsComponent extends React.Component<StarsComponentProps, StarsComponentState> {
   constructor(props:StarsComponentProps, context:any) {
     super(props, context)
-    this.state = { stars:Immutable.List<Rate>([{value : 0, state:false}, {value : 1, state:false}, {value : 2, state:false}, {value : 3, state:false}, {value : 4, state:false}]) }
+    this.state = { stars:Immutable.List<Rate>([{value : 1, state:false}, {value : 2, state:false}, {value : 3, state:false}, {value : 4, state:false}, {value : 5, state:false}]) }
   }
   
   render(){
@@ -148,7 +148,7 @@ export class Meals extends React.Component<{cuisine: Models.Cuisine}, {meals: Im
 
     render() {
         return <div>
-            <div>{this.state.meals.map(r => <MealsComponent meal={r}/>)}</div>
+            <div style={{marginTop: 10}}>{this.state.meals.map(r => <MealsComponent meal={r}/>)}</div>
         </div>
     }
 }
@@ -164,9 +164,10 @@ export class RecipesComponent extends React.Component<{recipe: Models.Recipe},{i
     }
 
     render() {
-        return <div>
-                {!this.state.is_expanded?<button onClick={()=>this.update_me(true)}>{this.props.recipe.Name}</button>:
-                                         <button onClick={()=>this.update_me(false)}>Close {this.props.recipe.Name}</button>}
+        return <div> <br />
+            <h2>{this.props.recipe.Name}</h2>
+                {!this.state.is_expanded?<button onClick={()=>this.update_me(true)}>+</button>:
+                                         <button onClick={()=>this.update_me(false)}>Close </button>}
                 {this.state.is_expanded?<Info ingredients={this.props.recipe.Ingredients}
                                         info={this.props.recipe.Description} />:<span/>}
             </div>
@@ -209,14 +210,16 @@ export class Info extends React.Component<{ingredients: string, info: string},{}
         this.state = {}
     }
 
-    render(){
 
+    render(){
         return <div>
-                <div><h1>Ingredients</h1></div>
+                <div><h3>Ingredients</h3></div>
                 <div>{this.props.ingredients}</div>
                 <br />
-                <div><h1>Description</h1></div>
+                <div><h3>Description</h3></div>
                 <div>{this.props.info}</div>
+                <br />
+                <div><h3>Rate</h3></div>
                 <div><StarsComponent /></div>
             </div>
     }
