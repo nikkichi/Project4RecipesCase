@@ -19989,164 +19989,6 @@ module.exports = function(it){
 
 "use strict";
 
-Object.defineProperty(exports, "__esModule", { value: true });
-const React = __webpack_require__(6);
-const LazyImage = __webpack_require__(412);
-const RichTextEditor = __webpack_require__(413);
-const Moment = __webpack_require__(0);
-function format_int(num, length) {
-    return (num / Math.pow(10, length)).toFixed(length).substr(2);
-}
-function Input(can_edit, mode, get_item, set_item, type, validation) {
-    return mode == "view" ?
-        React.createElement("div", null, get_item())
-        :
-            React.createElement("input", { disabled: !can_edit, type: type, value: get_item(), onChange: (e) => {
-                    let new_value = e.target.value;
-                    if (!validation || validation(new_value))
-                        set_item(new_value);
-                } });
-}
-exports.Input = Input;
-function String(can_edit, mode, get_item, set_item, validation) {
-    return Input(can_edit, mode, get_item, set_item, "text", validation);
-}
-exports.String = String;
-function Tel(can_edit, mode, get_item, set_item, validation) {
-    let item = get_item();
-    return mode == "view" ?
-        React.createElement("a", { href: `tel:${item}` }, item)
-        :
-            Input(can_edit, mode, get_item, set_item, "tel", validation);
-}
-exports.Tel = Tel;
-function Email(can_edit, mode, get_item, set_item, validation) {
-    let item = get_item();
-    return mode == "view" ?
-        React.createElement("a", { href: `mailto:${item}` }, item)
-        :
-            Input(can_edit, mode, get_item, set_item, "email", validation);
-}
-exports.Email = Email;
-function Url(can_edit, mode, get_item, set_item, validation) {
-    let item = get_item();
-    return mode == "view" ?
-        React.createElement("a", { href: `${item}` }, item)
-        :
-            Input(can_edit, mode, get_item, set_item, "url", validation);
-}
-exports.Url = Url;
-function Title(can_edit, mode, get_item, set_item, validation) {
-    return mode == "view" ?
-        React.createElement("div", { className: "model-preview" }, get_item())
-        :
-            React.createElement("input", { disabled: !can_edit, type: "text", value: get_item(), onChange: (e) => {
-                    let new_value = e.target.value;
-                    if (!validation || validation(new_value))
-                        set_item(new_value);
-                } });
-}
-exports.Title = Title;
-function Text(can_edit, mode, get_item, set_item, validation) {
-    return React.createElement("textarea", { disabled: !can_edit || mode == "view", type: "text", value: get_item(), onChange: (e) => {
-            let new_value = e.target.value;
-            if (!validation || validation(new_value))
-                set_item(new_value);
-        } });
-}
-exports.Text = Text;
-function Number(can_edit, mode, get_item, set_item, validation) {
-    return mode == "view" ?
-        React.createElement("div", null, (get_item() == NaN || get_item() == undefined) ? '' : get_item())
-        :
-            React.createElement("input", { disabled: !can_edit, type: "number", value: `${get_item()}`, onChange: (e) => {
-                    let new_value = e.target.valueAsNumber;
-                    if (isNaN(new_value))
-                        new_value = 0;
-                    if (!validation || validation(new_value))
-                        set_item(new_value);
-                } });
-}
-exports.Number = Number;
-function Boolean(can_edit, mode, get_item, set_item) {
-    return React.createElement("input", { disabled: !can_edit || mode == "view", type: "checkbox", checked: get_item(), onChange: (e) => {
-            set_item(e.target.checked);
-        } });
-}
-exports.Boolean = Boolean;
-function DateTime(can_edit, mode, get_item, set_item) {
-    let item = get_item();
-    let default_value = `${format_int(item.year(), 4)}-${format_int(item.month() + 1, 2)}-${format_int(item.date(), 2)}T${format_int(item.hours(), 2)}:${format_int(item.minutes(), 2)}`;
-    return mode == "view" ?
-        React.createElement("div", null, `${format_int(item.date(), 2)}/${format_int(item.month() + 1, 2)}/${format_int(item.year(), 4)}  ${format_int(item.hours(), 2)}:${format_int(item.minutes(), 2)}`)
-        : React.createElement("input", { disabled: !can_edit, type: "datetime-local", value: default_value, onChange: (e) => {
-                set_item(Moment.utc(e.currentTarget.value));
-            } });
-}
-exports.DateTime = DateTime;
-function DateOnly(can_edit, mode, get_item, set_item) {
-    let item = get_item();
-    let default_value = `${format_int(item.year(), 4)}-${format_int(item.month() + 1, 2)}-${format_int(item.date(), 2)}`;
-    return mode == "view" ?
-        React.createElement("div", null, `${format_int(item.date(), 2)}/${format_int(item.month() + 1, 2)}/${format_int(item.year(), 4)}`)
-        : React.createElement("input", { disabled: !can_edit, type: "date", value: default_value, onChange: (e) => {
-                set_item(Moment.utc(new Date(e.currentTarget.value)).startOf('d').add(12, 'h'));
-                // set_item(e.currentTarget.valueAsDate)
-            } });
-}
-exports.DateOnly = DateOnly;
-function Time(can_edit, mode, get_item, set_item) {
-    let item = get_item();
-    let default_value = `${format_int(item.hours(), 2)}:${format_int(item.minutes(), 2)}`;
-    return mode == "view" ?
-        React.createElement("div", null, default_value)
-        : React.createElement("input", { disabled: !can_edit, type: "time", value: default_value, onChange: (e) => {
-                set_item(Moment.utc(new Date(e.currentTarget.valueAsDate)));
-                // set_item(e.currentTarget.valueAsDate)
-            } });
-}
-exports.Time = Time;
-function Union(can_edit, mode, options, get_item, set_item) {
-    let item = get_item();
-    let current = options.find(o => o.value == item);
-    return mode == "view" ? React.createElement("div", null, current ? current.label : "") :
-        React.createElement("select", { value: item, onChange: (s) => set_item(s.currentTarget.value) }, options.map(o => React.createElement("option", { key: o.value, value: o.value }, o.label)));
-}
-exports.Union = Union;
-function Image(can_edit, mode, get_item, set_item) {
-    return React.createElement(LazyImage.LazyImage, { can_edit: can_edit && mode == "edit", download: () => get_item(), upload: (new_src) => set_item(new_src) });
-}
-exports.Image = Image;
-function RichText(can_edit, mode, get_item, set_item) {
-    let item = get_item();
-    return React.createElement(RichTextEditor.RichTextEditor, { initial_state: item ?
-            RichTextEditor.RichTextEditor.deserialize_state(item) :
-            RichTextEditor.RichTextEditor.empty_state(), set_state: (s, on_success) => {
-            let new_value = RichTextEditor.RichTextEditor.serialize_state(s);
-            set_item(new_value);
-        }, editable: can_edit && mode == "edit" });
-}
-exports.RichText = RichText;
-function File(can_edit, mode, url, label, upload) {
-    return React.createElement("div", null,
-        React.createElement("span", null,
-            "Filename:",
-            React.createElement("a", { href: url }, label)),
-        mode == "view" ? null :
-            React.createElement("input", { disabled: !can_edit, type: "file", onChange: (e) => {
-                    let files = e.target.files;
-                    upload(files[0]);
-                } }));
-}
-exports.File = File;
-
-
-/***/ }),
-/* 32 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -20398,6 +20240,164 @@ class AddToRelationDropdown extends React.Component {
     }
 }
 exports.AddToRelationDropdown = AddToRelationDropdown;
+
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const React = __webpack_require__(6);
+const LazyImage = __webpack_require__(412);
+const RichTextEditor = __webpack_require__(413);
+const Moment = __webpack_require__(0);
+function format_int(num, length) {
+    return (num / Math.pow(10, length)).toFixed(length).substr(2);
+}
+function Input(can_edit, mode, get_item, set_item, type, validation) {
+    return mode == "view" ?
+        React.createElement("div", null, get_item())
+        :
+            React.createElement("input", { disabled: !can_edit, type: type, value: get_item(), onChange: (e) => {
+                    let new_value = e.target.value;
+                    if (!validation || validation(new_value))
+                        set_item(new_value);
+                } });
+}
+exports.Input = Input;
+function String(can_edit, mode, get_item, set_item, validation) {
+    return Input(can_edit, mode, get_item, set_item, "text", validation);
+}
+exports.String = String;
+function Tel(can_edit, mode, get_item, set_item, validation) {
+    let item = get_item();
+    return mode == "view" ?
+        React.createElement("a", { href: `tel:${item}` }, item)
+        :
+            Input(can_edit, mode, get_item, set_item, "tel", validation);
+}
+exports.Tel = Tel;
+function Email(can_edit, mode, get_item, set_item, validation) {
+    let item = get_item();
+    return mode == "view" ?
+        React.createElement("a", { href: `mailto:${item}` }, item)
+        :
+            Input(can_edit, mode, get_item, set_item, "email", validation);
+}
+exports.Email = Email;
+function Url(can_edit, mode, get_item, set_item, validation) {
+    let item = get_item();
+    return mode == "view" ?
+        React.createElement("a", { href: `${item}` }, item)
+        :
+            Input(can_edit, mode, get_item, set_item, "url", validation);
+}
+exports.Url = Url;
+function Title(can_edit, mode, get_item, set_item, validation) {
+    return mode == "view" ?
+        React.createElement("div", { className: "model-preview" }, get_item())
+        :
+            React.createElement("input", { disabled: !can_edit, type: "text", value: get_item(), onChange: (e) => {
+                    let new_value = e.target.value;
+                    if (!validation || validation(new_value))
+                        set_item(new_value);
+                } });
+}
+exports.Title = Title;
+function Text(can_edit, mode, get_item, set_item, validation) {
+    return React.createElement("textarea", { disabled: !can_edit || mode == "view", type: "text", value: get_item(), onChange: (e) => {
+            let new_value = e.target.value;
+            if (!validation || validation(new_value))
+                set_item(new_value);
+        } });
+}
+exports.Text = Text;
+function Number(can_edit, mode, get_item, set_item, validation) {
+    return mode == "view" ?
+        React.createElement("div", null, (get_item() == NaN || get_item() == undefined) ? '' : get_item())
+        :
+            React.createElement("input", { disabled: !can_edit, type: "number", value: `${get_item()}`, onChange: (e) => {
+                    let new_value = e.target.valueAsNumber;
+                    if (isNaN(new_value))
+                        new_value = 0;
+                    if (!validation || validation(new_value))
+                        set_item(new_value);
+                } });
+}
+exports.Number = Number;
+function Boolean(can_edit, mode, get_item, set_item) {
+    return React.createElement("input", { disabled: !can_edit || mode == "view", type: "checkbox", checked: get_item(), onChange: (e) => {
+            set_item(e.target.checked);
+        } });
+}
+exports.Boolean = Boolean;
+function DateTime(can_edit, mode, get_item, set_item) {
+    let item = get_item();
+    let default_value = `${format_int(item.year(), 4)}-${format_int(item.month() + 1, 2)}-${format_int(item.date(), 2)}T${format_int(item.hours(), 2)}:${format_int(item.minutes(), 2)}`;
+    return mode == "view" ?
+        React.createElement("div", null, `${format_int(item.date(), 2)}/${format_int(item.month() + 1, 2)}/${format_int(item.year(), 4)}  ${format_int(item.hours(), 2)}:${format_int(item.minutes(), 2)}`)
+        : React.createElement("input", { disabled: !can_edit, type: "datetime-local", value: default_value, onChange: (e) => {
+                set_item(Moment.utc(e.currentTarget.value));
+            } });
+}
+exports.DateTime = DateTime;
+function DateOnly(can_edit, mode, get_item, set_item) {
+    let item = get_item();
+    let default_value = `${format_int(item.year(), 4)}-${format_int(item.month() + 1, 2)}-${format_int(item.date(), 2)}`;
+    return mode == "view" ?
+        React.createElement("div", null, `${format_int(item.date(), 2)}/${format_int(item.month() + 1, 2)}/${format_int(item.year(), 4)}`)
+        : React.createElement("input", { disabled: !can_edit, type: "date", value: default_value, onChange: (e) => {
+                set_item(Moment.utc(new Date(e.currentTarget.value)).startOf('d').add(12, 'h'));
+                // set_item(e.currentTarget.valueAsDate)
+            } });
+}
+exports.DateOnly = DateOnly;
+function Time(can_edit, mode, get_item, set_item) {
+    let item = get_item();
+    let default_value = `${format_int(item.hours(), 2)}:${format_int(item.minutes(), 2)}`;
+    return mode == "view" ?
+        React.createElement("div", null, default_value)
+        : React.createElement("input", { disabled: !can_edit, type: "time", value: default_value, onChange: (e) => {
+                set_item(Moment.utc(new Date(e.currentTarget.valueAsDate)));
+                // set_item(e.currentTarget.valueAsDate)
+            } });
+}
+exports.Time = Time;
+function Union(can_edit, mode, options, get_item, set_item) {
+    let item = get_item();
+    let current = options.find(o => o.value == item);
+    return mode == "view" ? React.createElement("div", null, current ? current.label : "") :
+        React.createElement("select", { value: item, onChange: (s) => set_item(s.currentTarget.value) }, options.map(o => React.createElement("option", { key: o.value, value: o.value }, o.label)));
+}
+exports.Union = Union;
+function Image(can_edit, mode, get_item, set_item) {
+    return React.createElement(LazyImage.LazyImage, { can_edit: can_edit && mode == "edit", download: () => get_item(), upload: (new_src) => set_item(new_src) });
+}
+exports.Image = Image;
+function RichText(can_edit, mode, get_item, set_item) {
+    let item = get_item();
+    return React.createElement(RichTextEditor.RichTextEditor, { initial_state: item ?
+            RichTextEditor.RichTextEditor.deserialize_state(item) :
+            RichTextEditor.RichTextEditor.empty_state(), set_state: (s, on_success) => {
+            let new_value = RichTextEditor.RichTextEditor.serialize_state(s);
+            set_item(new_value);
+        }, editable: can_edit && mode == "edit" });
+}
+exports.RichText = RichText;
+function File(can_edit, mode, url, label, upload) {
+    return React.createElement("div", null,
+        React.createElement("span", null,
+            "Filename:",
+            React.createElement("a", { href: url }, label)),
+        mode == "view" ? null :
+            React.createElement("input", { disabled: !can_edit, type: "file", onChange: (e) => {
+                    let files = e.target.files;
+                    upload(files[0]);
+                } }));
+}
+exports.File = File;
 
 
 /***/ }),
@@ -21117,8 +21117,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(6);
 const Immutable = __webpack_require__(26);
 const Api = __webpack_require__(14);
-const List = __webpack_require__(32);
-const Components = __webpack_require__(31);
+const List = __webpack_require__(31);
+const Components = __webpack_require__(32);
 const Buttons = __webpack_require__(29);
 const Permissions = __webpack_require__(18);
 const Utils = __webpack_require__(16);
@@ -27313,19 +27313,44 @@ class ItemComponent extends React.Component {
                 React.createElement("button", { onClick: () => this.update_me(false) }, "-"));
     }
 }
-exports.AppTest = (props) => {
-    return React.createElement(IComponent, { props: props });
-};
+class RecComponent extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.state = { i: 0, j: 1, recipes: Immutable.List() };
+    }
+    componentWillMount() {
+        this.get_recipes().then(online_recipes => this.setState(Object.assign({}, this.state, { recipes: online_recipes })));
+    }
+    get_recipes() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let recipes_page = yield Api.get_Recipes(0, 100);
+            let loaded_recipes = Immutable.List(recipes_page.Items.map(r => r.Item));
+            for (let i = 1; i < recipes_page.NumPages; i++) {
+                let recipes = yield Api.get_Recipes(i, 100);
+                loaded_recipes = loaded_recipes.concat(Immutable.List(recipes.Items.map(r => r.Item))).toList();
+            }
+            return Immutable.List(loaded_recipes);
+        });
+    }
+    render() {
+        console.log(this.props.props);
+        if (this.props.props.current_User == undefined)
+            return React.createElement("div", null, "Log in first ...");
+        return React.createElement("div", null,
+            React.createElement(Cuisines, null));
+    }
+}
+exports.RecComponent = RecComponent;
+exports.AppTest = (props) => { return React.createElement(IComponent, { props: props }); };
 exports.FavouriteView = (props) => React.createElement("div", null,
     React.createElement("div", null, "hello favourite"),
     " ",
     React.createElement("button", null, " Greg "),
     "  ");
-exports.BrowseView = (props) => {
-    return React.createElement(BrowseComponent, null);
-};
-exports.RecView = (props) => React.createElement("div", null,
-    React.createElement("div", null, " Hello recommendations "));
+exports.BrowseView = (props) => { return React.createElement(BrowseComponent, null); };
+exports.RecView = (props) => { return React.createElement(RecComponent, { props: props }); };
+// console.log(this.props.props)
+// if(this.props.props.current_User == undefined) return <div>Log in first ...</div> 
 
 
 /***/ }),
@@ -29266,7 +29291,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(6);
 const Immutable = __webpack_require__(26);
 const Api = __webpack_require__(14);
-const List = __webpack_require__(32);
+const List = __webpack_require__(31);
 const Buttons = __webpack_require__(29);
 const Permissions = __webpack_require__(18);
 const Utils = __webpack_require__(16);
@@ -29797,8 +29822,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(6);
 const Immutable = __webpack_require__(26);
 const Api = __webpack_require__(14);
-const List = __webpack_require__(32);
-const Components = __webpack_require__(31);
+const List = __webpack_require__(31);
+const Components = __webpack_require__(32);
 const Buttons = __webpack_require__(29);
 const Permissions = __webpack_require__(18);
 const Utils = __webpack_require__(16);
@@ -34445,8 +34470,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(6);
 const Immutable = __webpack_require__(26);
 const Api = __webpack_require__(14);
-const List = __webpack_require__(32);
-const Components = __webpack_require__(31);
+const List = __webpack_require__(31);
+const Components = __webpack_require__(32);
 const Buttons = __webpack_require__(29);
 const Permissions = __webpack_require__(18);
 const Utils = __webpack_require__(16);
@@ -34868,8 +34893,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(6);
 const Immutable = __webpack_require__(26);
 const Api = __webpack_require__(14);
-const List = __webpack_require__(32);
-const Components = __webpack_require__(31);
+const List = __webpack_require__(31);
+const Components = __webpack_require__(32);
 const Buttons = __webpack_require__(29);
 const Permissions = __webpack_require__(18);
 const Utils = __webpack_require__(16);
@@ -35424,8 +35449,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(6);
 const Immutable = __webpack_require__(26);
 const Api = __webpack_require__(14);
-const List = __webpack_require__(32);
-const Components = __webpack_require__(31);
+const List = __webpack_require__(31);
+const Components = __webpack_require__(32);
 const Buttons = __webpack_require__(29);
 const Permissions = __webpack_require__(18);
 const Utils = __webpack_require__(16);
@@ -35980,8 +36005,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(6);
 const Immutable = __webpack_require__(26);
 const Api = __webpack_require__(14);
-const List = __webpack_require__(32);
-const Components = __webpack_require__(31);
+const List = __webpack_require__(31);
+const Components = __webpack_require__(32);
 const Buttons = __webpack_require__(29);
 const Permissions = __webpack_require__(18);
 const Utils = __webpack_require__(16);
@@ -36536,8 +36561,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(6);
 const Immutable = __webpack_require__(26);
 const Api = __webpack_require__(14);
-const List = __webpack_require__(32);
-const Components = __webpack_require__(31);
+const List = __webpack_require__(31);
+const Components = __webpack_require__(32);
 const Buttons = __webpack_require__(29);
 const Permissions = __webpack_require__(18);
 const Utils = __webpack_require__(16);
@@ -36935,8 +36960,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(6);
 const Immutable = __webpack_require__(26);
 const Api = __webpack_require__(14);
-const List = __webpack_require__(32);
-const Components = __webpack_require__(31);
+const List = __webpack_require__(31);
+const Components = __webpack_require__(32);
 const Buttons = __webpack_require__(29);
 const Permissions = __webpack_require__(18);
 const Utils = __webpack_require__(16);
@@ -37358,8 +37383,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(6);
 const Immutable = __webpack_require__(26);
 const Api = __webpack_require__(14);
-const List = __webpack_require__(32);
-const Components = __webpack_require__(31);
+const List = __webpack_require__(31);
+const Components = __webpack_require__(32);
 const Buttons = __webpack_require__(29);
 const Permissions = __webpack_require__(18);
 const Utils = __webpack_require__(16);
@@ -37914,8 +37939,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(6);
 const Immutable = __webpack_require__(26);
 const Api = __webpack_require__(14);
-const List = __webpack_require__(32);
-const Components = __webpack_require__(31);
+const List = __webpack_require__(31);
+const Components = __webpack_require__(32);
 const Buttons = __webpack_require__(29);
 const Permissions = __webpack_require__(18);
 const Utils = __webpack_require__(16);
@@ -38337,8 +38362,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(6);
 const Immutable = __webpack_require__(26);
 const Api = __webpack_require__(14);
-const List = __webpack_require__(32);
-const Components = __webpack_require__(31);
+const List = __webpack_require__(31);
+const Components = __webpack_require__(32);
 const Buttons = __webpack_require__(29);
 const Permissions = __webpack_require__(18);
 const Utils = __webpack_require__(16);
@@ -38768,8 +38793,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(6);
 const Immutable = __webpack_require__(26);
 const Api = __webpack_require__(14);
-const List = __webpack_require__(32);
-const Components = __webpack_require__(31);
+const List = __webpack_require__(31);
+const Components = __webpack_require__(32);
 const Buttons = __webpack_require__(29);
 const Permissions = __webpack_require__(18);
 const Utils = __webpack_require__(16);
@@ -39164,8 +39189,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(6);
 const Immutable = __webpack_require__(26);
 const Api = __webpack_require__(14);
-const List = __webpack_require__(32);
-const Components = __webpack_require__(31);
+const List = __webpack_require__(31);
+const Components = __webpack_require__(32);
 const Buttons = __webpack_require__(29);
 const Permissions = __webpack_require__(18);
 const Utils = __webpack_require__(16);
@@ -39563,8 +39588,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(6);
 const Immutable = __webpack_require__(26);
 const Api = __webpack_require__(14);
-const List = __webpack_require__(32);
-const Components = __webpack_require__(31);
+const List = __webpack_require__(31);
+const Components = __webpack_require__(32);
 const Buttons = __webpack_require__(29);
 const Permissions = __webpack_require__(18);
 const Utils = __webpack_require__(16);

@@ -241,6 +241,9 @@ namespace SimpleModelsAndRelations.Data
             
             _RecommendationPage.Add(new RecommendationPage { CreatedDate = DateTime.Now,   });
 
+            
+            _RecommendationPage.Add(new RecommendationPage { CreatedDate = DateTime.Now,   });
+
           foreach (var x in _RecommendationPage)
           {
             context.RecommendationPage.Add(x);
@@ -524,28 +527,22 @@ namespace SimpleModelsAndRelations.Data
           
           
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -63,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 27,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -63,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -89,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -40,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -79,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -71,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -99,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -20,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 88,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -87,   });
-
-            
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 33,   });
-
-            
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 10,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 57,   });
 
           foreach (var x in _Rating)
           {
@@ -724,6 +721,8 @@ namespace SimpleModelsAndRelations.Data
 
             new User_Recipe { UserId = Users[r.Next(Users.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
 
+            new User_Recipe { UserId = Users[r.Next(Users.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
         };
         foreach (var x in _User_Recipe)
         {
@@ -737,10 +736,6 @@ namespace SimpleModelsAndRelations.Data
         var _Recipe_Rating = new Recipe_Rating[]
         {
             
-            new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
-
-            new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
-
             new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
 
             new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
@@ -804,14 +799,6 @@ namespace SimpleModelsAndRelations.Data
 
             new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
 
-            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
-
-            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
-
-            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
-
-            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
-
         };
         foreach (var x in _User_RecommendationPage)
         {
@@ -825,12 +812,6 @@ namespace SimpleModelsAndRelations.Data
         var _RecommendationPage_Recipe = new RecommendationPage_Recipe[]
         {
             
-            new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
-
-            new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
-
-            new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
-
             new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
 
             new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },

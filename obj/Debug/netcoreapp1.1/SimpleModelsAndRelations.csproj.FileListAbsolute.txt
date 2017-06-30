@@ -25,3 +25,12 @@ C:\Users\Grego\Documents\GitHub\Project4RecipesCase\obj\Debug\netcoreapp1.1\User
 C:\Users\Grego\Documents\GitHub\Project4RecipesCase\obj\Debug\netcoreapp1.1\SimpleModelsAndRelations.AssemblyInfo.cs
 C:\Users\Grego\Documents\GitHub\Project4RecipesCase\obj\Debug\netcoreapp1.1\SimpleModelsAndRelations.dll
 C:\Users\Grego\Documents\GitHub\Project4RecipesCase\obj\Debug\netcoreapp1.1\SimpleModelsAndRelations.pdb
+C:\Users\Minh\Documents\GitHub\Project4RecipesCase\bin\Debug\netcoreapp1.1\SimpleModelsAndRelations.deps.json
+C:\Users\Minh\Documents\GitHub\Project4RecipesCase\bin\Debug\netcoreapp1.1\SimpleModelsAndRelations.runtimeconfig.json
+C:\Users\Minh\Documents\GitHub\Project4RecipesCase\bin\Debug\netcoreapp1.1\SimpleModelsAndRelations.runtimeconfig.dev.json
+C:\Users\Minh\Documents\GitHub\Project4RecipesCase\bin\Debug\netcoreapp1.1\SimpleModelsAndRelations.dll
+C:\Users\Minh\Documents\GitHub\Project4RecipesCase\bin\Debug\netcoreapp1.1\SimpleModelsAndRelations.pdb
+C:\Users\Minh\Documents\GitHub\Project4RecipesCase\obj\Debug\netcoreapp1.1\UserSecretsAssemblyInfo.cs
+C:\Users\Minh\Documents\GitHub\Project4RecipesCase\obj\Debug\netcoreapp1.1\SimpleModelsAndRelations.AssemblyInfo.cs
+C:\Users\Minh\Documents\GitHub\Project4RecipesCase\obj\Debug\netcoreapp1.1\SimpleModelsAndRelations.dll
+C:\Users\Minh\Documents\GitHub\Project4RecipesCase\obj\Debug\netcoreapp1.1\SimpleModelsAndRelations.pdb
