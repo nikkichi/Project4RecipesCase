@@ -325,7 +325,7 @@
         "seeds": [
             {"MealId": 3, "RecipeId": 4},
             {"MealId": 3, "RecipeId": 3},
-            {"MealId": 1, "RecipeId": 5},
+            {"MealId": 4, "RecipeId": 5},
             {"MealId": 2, "RecipeId": 6},
             {"MealId": 4, "RecipeId": 1},
             {"MealId": 4, "RecipeId": 2},
