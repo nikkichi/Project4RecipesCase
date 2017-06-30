@@ -27044,6 +27044,42 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(6);
 const Immutable = __webpack_require__(26);
 const Api = __webpack_require__(14);
+class BookmarkComponent extends React.Component {
+    constuctor(props, context) {
+        this.state = {};
+    }
+}
+exports.BookmarkComponent = BookmarkComponent;
+class FavComponent extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.state = { bookmark: false };
+    }
+    change_bookmark() {
+        if (this.state.bookmark == true) {
+            return false;
+        }
+        return true;
+    }
+    render() {
+        console.log(this.state.bookmark);
+        return React.createElement("div", null,
+            React.createElement("button", { onClick: () => this.setState(Object.assign({}, this.state, { bookmark: this.change_bookmark() })), style: this.state.bookmark ? {
+                    borderColor: 'yellow',
+                    backgroundColor: 'yellow',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    color: 'white',
+                } :
+                    {
+                        borderColor: 'black',
+                        borderWidth: 1,
+                        borderRadius: 10,
+                        color: 'black',
+                    }, marginHeight: 10, marginWidth: 10, width: 10, height: 10 }, "Bookmark"));
+    }
+}
+exports.FavComponent = FavComponent;
 class StarsComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -27085,7 +27121,7 @@ class CuisineComponent extends React.Component {
                 React.createElement("button", { onClick: () => this.update_me(false) },
                     "Close ",
                     this.props.cuisine.Kind),
-            this.state.is_expanded ? React.createElement(Meals, { cuisine: this.props.cuisine }) : React.createElement("span", null)));
+            this.state.is_expanded ? React.createElement(Meals, { props: this.props.props, cuisine: this.props.cuisine }) : React.createElement("span", null)));
     }
 }
 exports.CuisineComponent = CuisineComponent;
@@ -27112,9 +27148,8 @@ class Cuisines extends React.Component {
     }
     render() {
         return React.createElement("span", null,
-            React.createElement("div", null,
-                React.createElement("h1", null, "Choose cuisine")),
-            React.createElement("view", { style: { flex: 1, flexDirection: 'row' } }, this.state.cuisines.map(r => React.createElement(CuisineComponent, { cuisine: r }))));
+            React.createElement("h1", null, "Choose cuisine"),
+            React.createElement("view", { style: { flex: 1, flexDirection: 'row' } }, this.state.cuisines.map(r => React.createElement(CuisineComponent, { props: this.props.props, cuisine: r }))));
     }
 }
 exports.Cuisines = Cuisines;
@@ -27132,7 +27167,7 @@ class MealsComponent extends React.Component {
                 React.createElement("button", { onClick: () => this.update_me(false) },
                     "Close ",
                     this.props.meal.Kind),
-            this.state.is_expanded ? React.createElement(Recipes, { meal: this.props.meal }) : React.createElement("span", null));
+            this.state.is_expanded ? React.createElement(Recipes, { props: this.props.props, meal: this.props.meal }) : React.createElement("span", null));
     }
 }
 exports.MealsComponent = MealsComponent;
@@ -27159,7 +27194,7 @@ class Meals extends React.Component {
     }
     render() {
         return React.createElement("div", null,
-            React.createElement("div", { style: { marginTop: 10 } }, this.state.meals.map(r => React.createElement(MealsComponent, { meal: r }))));
+            React.createElement("div", { style: { marginTop: 10 } }, this.state.meals.map(r => React.createElement(MealsComponent, { props: this.props.props, meal: r }))));
     }
 }
 exports.Meals = Meals;
@@ -27178,7 +27213,7 @@ class RecipesComponent extends React.Component {
             React.createElement("h2", null, this.props.recipe.Name),
             !this.state.is_expanded ? React.createElement("button", { onClick: () => this.update_me(true) }, "+") :
                 React.createElement("button", { onClick: () => this.update_me(false) }, "Close "),
-            this.state.is_expanded ? React.createElement(Info, { ingredients: this.props.recipe.Ingredients, info: this.props.recipe.Description }) : React.createElement("span", null));
+            this.state.is_expanded ? React.createElement(Info, { props: this.props.props, ingredients: this.props.recipe.Ingredients, info: this.props.recipe.Description }) : React.createElement("span", null));
     }
 }
 exports.RecipesComponent = RecipesComponent;
@@ -27205,7 +27240,7 @@ class Recipes extends React.Component {
     }
     render() {
         return React.createElement("div", null,
-            React.createElement("div", null, this.state.recipes.map(r => React.createElement(RecipesComponent, { recipe: r }))));
+            React.createElement("div", null, this.state.recipes.map(r => React.createElement(RecipesComponent, { props: this.props.props, recipe: r }))));
     }
 }
 exports.Recipes = Recipes;
@@ -27215,6 +27250,15 @@ class Info extends React.Component {
         this.state = {};
     }
     render() {
+        if (this.props.props.current_User == undefined)
+            return React.createElement("div", null,
+                React.createElement("div", null,
+                    React.createElement("h3", null, "Ingredients")),
+                React.createElement("div", null, this.props.ingredients),
+                React.createElement("br", null),
+                React.createElement("div", null,
+                    React.createElement("h3", null, "Description")),
+                React.createElement("div", null, this.props.info));
         return React.createElement("div", null,
             React.createElement("div", null,
                 React.createElement("h3", null, "Ingredients")),
@@ -27226,8 +27270,9 @@ class Info extends React.Component {
             React.createElement("br", null),
             React.createElement("div", null,
                 React.createElement("h3", null, "Rate")),
-            React.createElement("div", null,
-                React.createElement(StarsComponent, null)));
+            React.createElement(StarsComponent, null),
+            React.createElement("br", null),
+            React.createElement(FavComponent, { props: this.props.props }));
     }
 }
 exports.Info = Info;
@@ -27252,7 +27297,7 @@ class IComponent extends React.Component {
     }
     render() {
         return React.createElement("div", null,
-            React.createElement(Cuisines, null));
+            React.createElement(Cuisines, { props: this.props.props }));
     }
 }
 exports.default = IComponent;
@@ -27313,44 +27358,19 @@ class ItemComponent extends React.Component {
                 React.createElement("button", { onClick: () => this.update_me(false) }, "-"));
     }
 }
-class RecComponent extends React.Component {
-    constructor(props, context) {
-        super(props, context);
-        this.state = { i: 0, j: 1, recipes: Immutable.List() };
-    }
-    componentWillMount() {
-        this.get_recipes().then(online_recipes => this.setState(Object.assign({}, this.state, { recipes: online_recipes })));
-    }
-    get_recipes() {
-        return __awaiter(this, void 0, void 0, function* () {
-            let recipes_page = yield Api.get_Recipes(0, 100);
-            let loaded_recipes = Immutable.List(recipes_page.Items.map(r => r.Item));
-            for (let i = 1; i < recipes_page.NumPages; i++) {
-                let recipes = yield Api.get_Recipes(i, 100);
-                loaded_recipes = loaded_recipes.concat(Immutable.List(recipes.Items.map(r => r.Item))).toList();
-            }
-            return Immutable.List(loaded_recipes);
-        });
-    }
-    render() {
-        console.log(this.props.props);
-        if (this.props.props.current_User == undefined)
-            return React.createElement("div", null, "Log in first ...");
-        return React.createElement("div", null,
-            React.createElement(Cuisines, null));
-    }
-}
-exports.RecComponent = RecComponent;
-exports.AppTest = (props) => { return React.createElement(IComponent, { props: props }); };
+exports.AppTest = (props) => {
+    return React.createElement(IComponent, { props: props });
+};
 exports.FavouriteView = (props) => React.createElement("div", null,
     React.createElement("div", null, "hello favourite"),
     " ",
     React.createElement("button", null, " Greg "),
     "  ");
-exports.BrowseView = (props) => { return React.createElement(BrowseComponent, null); };
-exports.RecView = (props) => { return React.createElement(RecComponent, { props: props }); };
-// console.log(this.props.props)
-// if(this.props.props.current_User == undefined) return <div>Log in first ...</div> 
+exports.BrowseView = (props) => {
+    return React.createElement(BrowseComponent, null);
+};
+exports.RecView = (props) => React.createElement("div", null,
+    React.createElement("div", null, " Hello recommendations "));
 
 
 /***/ }),

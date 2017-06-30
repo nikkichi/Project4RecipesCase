@@ -11,8 +11,6 @@ type IComponentProps = {props:ViewUtils.EntityComponentProps<Models.Homepage>}
 type IComponentState = { i : number, j : number, recipes : Immutable.List<Models.Recipe> }
 type BrowseComponentProps = {props:ViewUtils.EntityComponentProps<Models.Browse>}
 type BrowseComponentState = { i : number, j : number, recipes : Immutable.List<Models.Recipe>}
-type RecComponentProps = {props:ViewUtils.EntityComponentProps<Models.Recommendation>}
-type RecComponentState = { i : number, j : number, recipes : Immutable.List<Models.Recipe> }
 
 /**async function getRating (user_id: number): Promise<Immutable.List<number>> {
     let res = await fetch ('customcontroller/getrating/${user_id}', {method:'get', credentials: 'include', headers: {'content-type': 'application/json'}})
@@ -29,6 +27,48 @@ type Rate = {value : number, state:boolean}
 
 type StarsComponentProps = {}
 type StarsComponentState = {stars:Immutable.List<Rate>}
+export class BookmarkComponent extends React.Component<{},{}> {
+    constuctor( props, context) {
+        this.state = {}
+    }
+
+}
+
+export class FavComponent extends React.Component<{props:ViewUtils.EntityComponentProps<Models.Homepage>},{bookmark: boolean}> {
+    constructor( props, context) {
+        super(props,context)
+        this.state = {bookmark: false}
+    }
+
+    change_bookmark() {
+        if (this.state.bookmark == true) {
+            return false
+        }
+        return true
+    }
+
+
+    render() {
+        console.log(this.state.bookmark)
+        return <div>
+            <button onClick={() => this.setState({... this.state, bookmark: this.change_bookmark() })} style={this.state.bookmark?{
+                                                                                borderColor: 'yellow',
+                                                                                backgroundColor: 'yellow',
+                                                                                borderWidth: 1,
+                                                                                borderRadius: 10,
+                                                                                color: 'white',
+                                                                              }:
+                                                                              {
+                                                                                borderColor: 'black',
+                                                                                borderWidth: 1,
+                                                                                borderRadius: 10,
+                                                                                color: 'black',
+                                                                                }}
+                                                marginHeight={10} marginWidth={10} width={10} height={10}>Bookmark</button>
+        </div>
+    }
+}
+
 export class StarsComponent extends React.Component<StarsComponentProps, StarsComponentState> {
   constructor(props:StarsComponentProps, context:any) {
     super(props, context)
@@ -55,7 +95,7 @@ export class StarsComponent extends React.Component<StarsComponentProps, StarsCo
 
 }
 
-export class CuisineComponent extends React.Component<{cuisine: Models.Cuisine},{is_expanded:boolean}> {
+export class CuisineComponent extends React.Component<{props:ViewUtils.EntityComponentProps<Models.Homepage>,cuisine: Models.Cuisine},{is_expanded:boolean}> {
     constructor( props, context) {
         super(props,context)
         this.state = {is_expanded: false}
@@ -69,12 +109,12 @@ export class CuisineComponent extends React.Component<{cuisine: Models.Cuisine},
         return (<span style={{marginLeft: 10, marginTop: 10}}>
                 {!this.state.is_expanded?<button onClick={()=>this.update_me(true)}>{this.props.cuisine.Kind}</button>:
                                          <button onClick={()=>this.update_me(false)}>Close {this.props.cuisine.Kind}</button>}
-                {this.state.is_expanded?<Meals cuisine={this.props.cuisine}/>:<span/>}
+                {this.state.is_expanded?<Meals props={this.props.props}cuisine={this.props.cuisine}/>:<span/>}
             </span>)
     }
 }
 
-export class Cuisines extends React.Component<{}, { cuisines: Immutable.List<Models.Cuisine> }> {
+export class Cuisines extends React.Component<{props:ViewUtils.EntityComponentProps<Models.Homepage>}, { cuisines: Immutable.List<Models.Cuisine> }> {
     constructor( props, context) {
         super(props, context)
         this.state = {
@@ -99,15 +139,15 @@ export class Cuisines extends React.Component<{}, { cuisines: Immutable.List<Mod
     
     render() {
         return <span>
-            <div><h1>Choose cuisine</h1></div>
+            <h1>Choose cuisine</h1>
             <view style={{flex: 1, flexDirection: 'row'}}>
-                {this.state.cuisines.map(r => <CuisineComponent cuisine={r} /> )} 
+                {this.state.cuisines.map(r => <CuisineComponent props={this.props.props} cuisine={r} /> )} 
             </view>        
         </span>
     }
 }
 
-export class MealsComponent extends React.Component<{meal: Models.Meal},{is_expanded:boolean}> {
+export class MealsComponent extends React.Component<{props:ViewUtils.EntityComponentProps<Models.Homepage>,meal: Models.Meal},{is_expanded:boolean}> {
     constructor( props, context) {
         super(props,context)
         this.state = {is_expanded: false}
@@ -121,12 +161,12 @@ export class MealsComponent extends React.Component<{meal: Models.Meal},{is_expa
         return <span style={{marginLeft: 10, marginTop: 10}}>
                 {!this.state.is_expanded?<button onClick={()=>this.update_me(true)}>{this.props.meal.Kind}</button>:
                                          <button onClick={()=>this.update_me(false)}>Close {this.props.meal.Kind}</button>}
-                {this.state.is_expanded?<Recipes meal={this.props.meal}/>:<span/>}
+                {this.state.is_expanded?<Recipes props={this.props.props}meal={this.props.meal}/>:<span/>}
             </span>
     }
 }
 
-export class Meals extends React.Component<{cuisine: Models.Cuisine}, {meals: Immutable.List<Models.Meal> }> {
+export class Meals extends React.Component<{props:ViewUtils.EntityComponentProps<Models.Homepage>,cuisine: Models.Cuisine}, {meals: Immutable.List<Models.Meal> }> {
     constructor( props, context) {
         super(props, context)
         this.state = {
@@ -151,12 +191,12 @@ export class Meals extends React.Component<{cuisine: Models.Cuisine}, {meals: Im
 
     render() {
         return <div>
-            <div style={{marginTop: 10}}>{this.state.meals.map(r => <MealsComponent meal={r}/>)}</div>
+            <div style={{marginTop: 10}}>{this.state.meals.map(r => <MealsComponent props={this.props.props} meal={r}/>)}</div>
         </div>
     }
 }
 
-export class RecipesComponent extends React.Component<{recipe: Models.Recipe},{is_expanded:boolean}> {
+export class RecipesComponent extends React.Component<{props:ViewUtils.EntityComponentProps<Models.Homepage>,recipe: Models.Recipe},{is_expanded:boolean}> {
     constructor( props, context) {
         super(props,context)
         this.state = {is_expanded:false}
@@ -171,13 +211,13 @@ export class RecipesComponent extends React.Component<{recipe: Models.Recipe},{i
             <h2>{this.props.recipe.Name}</h2>
                 {!this.state.is_expanded?<button onClick={()=>this.update_me(true)}>+</button>:
                                          <button onClick={()=>this.update_me(false)}>Close </button>}
-                {this.state.is_expanded?<Info ingredients={this.props.recipe.Ingredients}
+                {this.state.is_expanded?<Info props={this.props.props} ingredients={this.props.recipe.Ingredients}
                                         info={this.props.recipe.Description} />:<span/>}
             </div>
     }
 }
 
-export class Recipes extends React.Component<{meal: Models.Meal}, {recipes: Immutable.List<Models.Recipe>}> {
+export class Recipes extends React.Component<{props:ViewUtils.EntityComponentProps<Models.Homepage>,meal: Models.Meal}, {recipes: Immutable.List<Models.Recipe>}> {
     constructor( props, context) {
         super(props, context)
         this.state = {
@@ -202,12 +242,12 @@ export class Recipes extends React.Component<{meal: Models.Meal}, {recipes: Immu
 
     render() {
         return <div>
-            <div>{this.state.recipes.map(r => <RecipesComponent recipe={r}/>)}</div>
+            <div>{this.state.recipes.map(r => <RecipesComponent props={this.props.props} recipe={r}/>)}</div>
         </div>
     }
 }
 
-export class Info extends React.Component<{ingredients: string, info: string},{}> {
+export class Info extends React.Component<{props:ViewUtils.EntityComponentProps<Models.Homepage>,ingredients: string, info: string},{}> {
     constructor( props, context) {
         super(props, context)
         this.state = {}
@@ -215,16 +255,26 @@ export class Info extends React.Component<{ingredients: string, info: string},{}
 
 
     render(){
+        if (this.props.props.current_User == undefined)
+            return <div>
+                    <div><h3>Ingredients</h3></div>
+                    <div>{this.props.ingredients}</div>
+                    <br />
+                    <div><h3>Description</h3></div>
+                    <div>{this.props.info}</div>
+                </div>
         return <div>
-                <div><h3>Ingredients</h3></div>
-                <div>{this.props.ingredients}</div>
-                <br />
-                <div><h3>Description</h3></div>
-                <div>{this.props.info}</div>
-                <br />
-                <div><h3>Rate</h3></div>
-                <div><StarsComponent /></div>
-            </div>
+                    <div><h3>Ingredients</h3></div>
+                    <div>{this.props.ingredients}</div>
+                    <br />
+                    <div><h3>Description</h3></div>
+                    <div>{this.props.info}</div>
+                    <br />
+                    <div><h3>Rate</h3></div>
+                    <StarsComponent />
+                    <br />
+                    <FavComponent props={this.props.props} />
+                </div>
     }
 }
 
@@ -252,7 +302,7 @@ export default class IComponent extends React.Component<IComponentProps, ICompon
 
     render(){
         return <div> 
-                <Cuisines/>
+                <Cuisines props={this.props.props}/>
             </div>    
         }
 
@@ -322,42 +372,11 @@ class ItemComponent extends React.Component<{title:string, ingredients:string, i
 }
 
 
-export  class RecComponent extends React.Component<RecComponentProps, RecComponentState>{
-    constructor(props: RecComponentProps, context){
-        super(props, context)
-        this.state = { i : 0, j : 1, recipes : Immutable.List<Models.Recipe>() }
+export let AppTest = (props:ViewUtils.EntityComponentProps<Models.Homepage>) => {
+    return <IComponent props={props}/>
     }
-
-    componentWillMount(){
-        this.get_recipes().then(online_recipes => this.setState({... this.state, recipes: online_recipes}))
-
-    }
-
-    async get_recipes(){
-        let recipes_page = await Api.get_Recipes(0, 100)
-        let loaded_recipes = Immutable.List<Models.Recipe>(recipes_page.Items.map(r => r.Item ))
-        
-        for (let i = 1; i < recipes_page.NumPages; i++) {
-            let recipes = await Api.get_Recipes(i, 100)
-            loaded_recipes = loaded_recipes.concat(Immutable.List<Models.Recipe>(recipes.Items.map( r => r.Item))).toList()
-        }
-        return Immutable.List<Models.Recipe>(loaded_recipes)
-    }
-
-    render(){
-        console.log(this.props.props)
-        if(this.props.props.current_User == undefined) return <div>Log in first ...</div>
-        return <div> 
-                <Cuisines/>
-            </div>    
-        }
-
-}
-
-
-export let AppTest = (props:ViewUtils.EntityComponentProps<Models.Homepage>) => {return <IComponent props={props}/>}
 export let FavouriteView = (props:ViewUtils.EntityComponentProps<Models.Favourite>) => <div><div>hello favourite</div> <button> Greg </button>  </div>
-export let BrowseView    = (props:ViewUtils.EntityComponentProps<Models.Browse>) => {return <BrowseComponent />}
-export let RecView       = (props:ViewUtils.EntityComponentProps<Models.Recommendation>) =>{return <RecComponent props={props}/>}
-        // console.log(this.props.props)
-        // if(this.props.props.current_User == undefined) return <div>Log in first ...</div>
+export let BrowseView    = (props:ViewUtils.EntityComponentProps<Models.Browse>) => {
+    return <BrowseComponent />
+}
+export let RecView       = (props:ViewUtils.EntityComponentProps<Models.Recommendation>) => <div><div> Hello recommendations </div></div>
