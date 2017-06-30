@@ -297,7 +297,7 @@ namespace SimpleModelsAndRelations.Models
     public int Id {get;set;}
     
     [Newtonsoft.Json.JsonProperty(ItemConverterType = typeof(Newtonsoft.Json.Converters.JavaScriptDateTimeConverter))] public DateTime CreatedDate{ get; set; }
-        public string Test {get;set;}
+        
     
     static public Expression<Func<Homepage,Homepage>> FilterViewableAttributes(User current_User) {
       return self => self;

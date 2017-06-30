@@ -167,10 +167,6 @@ export let can_view_Homepage_AppTest = (current_User:Models.User) => true
 
 export let can_edit_Homepage_AppTest = (current_User:Models.User) => true
 
-export let can_view_Homepage_Test = (current_User:Models.User) => true
-
-export let can_edit_Homepage_Test = (current_User:Models.User) => true
-
 
 
 export let can_view_Brunch = (current_User:Models.User) => true

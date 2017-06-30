@@ -97,6 +97,7 @@ export class Cuisines extends React.Component<{}, { cuisines: Immutable.List<Mod
     
     render() {
         return <span>
+            <div><h1>Choose cuisine</h1></div>
             <view style={{flex: 1, flexDirection: 'row'}}>
                 {this.state.cuisines.map(r => <CuisineComponent cuisine={r} /> )} 
             </view>        
@@ -248,8 +249,6 @@ export default class IComponent extends React.Component<IComponentProps, ICompon
     }
 
     render(){
-        console.log(this.props.props)
-        if(this.props.props.current_User == undefined) return <div>Log in first ...</div>
         return <div> 
                 <Cuisines/>
             </div>    

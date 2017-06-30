@@ -12,11 +12,10 @@
             "allow_maximisation" : true,
             "type": "homepage",
             "attributes": [
-                { "type": "null", "name": "AppTest", "custom_rendering": "CustomViews.AppTest", "hidden_label": true },
-                { "type": "string", "name": "Test" }
+                { "type": "null", "name": "AppTest", "custom_rendering": "CustomViews.AppTest", "hidden_label": true }
             ],
             "permissions": { "view": ["*"], "edit": ["*"], "delete": [], "create": [] },
-            "seeds": [ { "Id":1, "Test":"\"\"" } ]
+            "seeds": [ { "Id":1} ]
         },
         {
             "name": "Browse",    

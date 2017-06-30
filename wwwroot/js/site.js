@@ -13655,8 +13655,6 @@ exports.can_edit_Homepage = (current_User) => true;
 exports.can_delete_Homepage = (current_User) => false;
 exports.can_view_Homepage_AppTest = (current_User) => true;
 exports.can_edit_Homepage_AppTest = (current_User) => true;
-exports.can_view_Homepage_Test = (current_User) => true;
-exports.can_edit_Homepage_Test = (current_User) => true;
 exports.can_view_Brunch = (current_User) => true;
 exports.can_create_Brunch = (current_User) => false;
 exports.can_edit_Brunch = (current_User) => true;
@@ -14463,7 +14461,6 @@ exports.Favourite_to = (id, target_element_id, current_User) => {
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(6);
 const Api = __webpack_require__(14);
-const Components = __webpack_require__(31);
 const Permissions = __webpack_require__(18);
 const Utils = __webpack_require__(16);
 const i18next = __webpack_require__(17);
@@ -14491,16 +14488,6 @@ function render_Homepage_AppTest_editable_minimised(self) {
                 React.createElement("div", { className: "model__attribute-content" }, CustomViews.AppTest(Object.assign({}, self.props))));
 }
 exports.render_Homepage_AppTest_editable_minimised = render_Homepage_AppTest_editable_minimised;
-function render_Homepage_Test_editable_minimised(self) {
-    if (!Permissions.can_edit_Homepage(self.props.current_User))
-        return render_Homepage_Test_minimised(self);
-    else
-        return !Permissions.can_view_Homepage_Test(self.props.current_User) ? React.createElement("div", null) :
-            React.createElement("div", { className: "model__attribute test" },
-                React.createElement("label", { className: "attribute-label attribute-label-test" }, i18next.t(`Homepage:Test`, { context: self.props.inline ? "inline" : "" })),
-                React.createElement("div", { className: "model__attribute-content" }, Components.String(self.props.is_editable && Permissions.can_edit_Homepage(self.props.current_User) && Permissions.can_edit_Homepage_Test(self.props.current_User), self.props.mode, () => self.props.entity.Test, v => self.props.set_entity(Object.assign({}, self.props.entity, { Test: v })))));
-}
-exports.render_Homepage_Test_editable_minimised = render_Homepage_Test_editable_minimised;
 function render_Homepage_AppTest_editable_maximised(self) {
     if (!Permissions.can_edit_Homepage(self.props.current_User))
         return render_Homepage_AppTest_maximised(self);
@@ -14510,28 +14497,14 @@ function render_Homepage_AppTest_editable_maximised(self) {
                 React.createElement("div", { className: "model__attribute-content" }, CustomViews.AppTest(Object.assign({}, self.props))));
 }
 exports.render_Homepage_AppTest_editable_maximised = render_Homepage_AppTest_editable_maximised;
-function render_Homepage_Test_editable_maximised(self) {
-    if (!Permissions.can_edit_Homepage(self.props.current_User))
-        return render_Homepage_Test_maximised(self);
-    else
-        return !Permissions.can_view_Homepage_Test(self.props.current_User) ? React.createElement("div", null) :
-            React.createElement("div", { className: "model__attribute test" },
-                React.createElement("label", { className: "attribute-label attribute-label-test" }, i18next.t(`Homepage:Test`, { context: self.props.inline ? "inline" : "" })),
-                React.createElement("div", { className: "model__attribute-content" }, Components.String(self.props.is_editable && Permissions.can_edit_Homepage(self.props.current_User) && Permissions.can_edit_Homepage_Test(self.props.current_User), self.props.mode, () => self.props.entity.Test, v => self.props.set_entity(Object.assign({}, self.props.entity, { Test: v })))));
-}
-exports.render_Homepage_Test_editable_maximised = render_Homepage_Test_editable_maximised;
 function render_editable_attributes_minimised_Homepage(self) {
-    let attributes = (React.createElement("div", null,
-        render_Homepage_Test_editable_minimised(self),
-        CustomViews.AppTest(Object.assign({}, self.props))));
+    let attributes = (React.createElement("div", null, CustomViews.AppTest(Object.assign({}, self.props))));
     return attributes;
 }
 exports.render_editable_attributes_minimised_Homepage = render_editable_attributes_minimised_Homepage;
 function render_editable_attributes_maximised_Homepage(self) {
     let state = self.state();
-    let attributes = (React.createElement("div", null,
-        render_Homepage_Test_editable_maximised(self),
-        CustomViews.AppTest(Object.assign({}, self.props))));
+    let attributes = (React.createElement("div", null, CustomViews.AppTest(Object.assign({}, self.props))));
     return attributes;
 }
 exports.render_editable_attributes_maximised_Homepage = render_editable_attributes_maximised_Homepage;
@@ -14613,29 +14586,15 @@ function render_Homepage_AppTest_minimised(self) {
         React.createElement("div", { className: "model__attribute-content" }, CustomViews.AppTest(Object.assign({}, self.props))));
 }
 exports.render_Homepage_AppTest_minimised = render_Homepage_AppTest_minimised;
-function render_Homepage_Test_minimised(self) {
-    return !Permissions.can_view_Homepage_Test(self.props.current_User) ? null : React.createElement("div", { className: "model__attribute test" },
-        React.createElement("label", { className: "attribute-label attribute-label-test" }, i18next.t(`Homepage:Test`, { context: self.props.inline ? "inline" : "" })),
-        React.createElement("div", { className: "model__attribute-content" }, Components.String(self.props.is_editable && Permissions.can_edit_Homepage(self.props.current_User) && Permissions.can_edit_Homepage_Test(self.props.current_User), self.props.mode, () => self.props.entity.Test, v => self.props.set_entity(Object.assign({}, self.props.entity, { Test: v })))));
-}
-exports.render_Homepage_Test_minimised = render_Homepage_Test_minimised;
 function render_Homepage_AppTest_maximised(self) {
     return !Permissions.can_view_Homepage_AppTest(self.props.current_User) ? null : React.createElement("div", { className: "model__attribute apptest" },
         React.createElement("div", { className: "model__attribute-content" }, CustomViews.AppTest(Object.assign({}, self.props))));
 }
 exports.render_Homepage_AppTest_maximised = render_Homepage_AppTest_maximised;
-function render_Homepage_Test_maximised(self) {
-    return !Permissions.can_view_Homepage_Test(self.props.current_User) ? null : React.createElement("div", { className: "model__attribute test" },
-        React.createElement("label", { className: "attribute-label attribute-label-test" }, i18next.t(`Homepage:Test`, { context: self.props.inline ? "inline" : "" })),
-        React.createElement("div", { className: "model__attribute-content" }, Components.String(self.props.is_editable && Permissions.can_edit_Homepage(self.props.current_User) && Permissions.can_edit_Homepage_Test(self.props.current_User), self.props.mode, () => self.props.entity.Test, v => self.props.set_entity(Object.assign({}, self.props.entity, { Test: v })))));
-}
-exports.render_Homepage_Test_maximised = render_Homepage_Test_maximised;
 function render_preview_Homepage(self) {
     let attributes = null;
     if (self.props.mode == "view" || !Permissions.can_edit_Homepage(self.props.current_User))
-        attributes = (React.createElement("div", { className: "model__attributes" },
-            render_Homepage_AppTest_minimised(self),
-            render_Homepage_Test_minimised(self)));
+        attributes = (React.createElement("div", { className: "model__attributes" }, render_Homepage_AppTest_minimised(self)));
     else
         attributes = render_editable_attributes_minimised_Homepage(self);
     return (React.createElement("div", { className: "block" }, attributes));
@@ -14645,9 +14604,7 @@ function render_large_Homepage(self) {
     let state = self.state();
     let attributes = null;
     if (self.props.mode == "view" || !Permissions.can_edit_Homepage(self.props.current_User))
-        attributes = (React.createElement("div", { className: "model__attributes" },
-            render_Homepage_AppTest_maximised(self),
-            render_Homepage_Test_maximised(self)));
+        attributes = (React.createElement("div", { className: "model__attributes" }, render_Homepage_AppTest_maximised(self)));
     else
         attributes = render_editable_attributes_maximised_Homepage(self);
     return (React.createElement("div", { className: "block" },
@@ -27155,6 +27112,8 @@ class Cuisines extends React.Component {
     }
     render() {
         return React.createElement("span", null,
+            React.createElement("div", null,
+                React.createElement("h1", null, "Choose cuisine")),
             React.createElement("view", { style: { flex: 1, flexDirection: 'row' } }, this.state.cuisines.map(r => React.createElement(CuisineComponent, { cuisine: r }))));
     }
 }
@@ -27292,9 +27251,6 @@ class IComponent extends React.Component {
         });
     }
     render() {
-        console.log(this.props.props);
-        if (this.props.props.current_User == undefined)
-            return React.createElement("div", null, "Log in first ...");
         return React.createElement("div", null,
             React.createElement(Cuisines, null));
     }

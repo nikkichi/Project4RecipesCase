@@ -241,15 +241,6 @@ namespace SimpleModelsAndRelations.Data
             
             _RecommendationPage.Add(new RecommendationPage { CreatedDate = DateTime.Now,   });
 
-            
-            _RecommendationPage.Add(new RecommendationPage { CreatedDate = DateTime.Now,   });
-
-            
-            _RecommendationPage.Add(new RecommendationPage { CreatedDate = DateTime.Now,   });
-
-            
-            _RecommendationPage.Add(new RecommendationPage { CreatedDate = DateTime.Now,   });
-
           foreach (var x in _RecommendationPage)
           {
             context.RecommendationPage.Add(x);
@@ -344,7 +335,7 @@ namespace SimpleModelsAndRelations.Data
           
           
             
-            _Homepage.Add(new Homepage { Id = 1, CreatedDate = DateTime.Now, Test = "",   });
+            _Homepage.Add(new Homepage { Id = 1, CreatedDate = DateTime.Now,   });
 
           foreach (var x in _Homepage)
           {
@@ -533,28 +524,28 @@ namespace SimpleModelsAndRelations.Data
           
           
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -55,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -63,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -62,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -63,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 80,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -40,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 85,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -71,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 99,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -20,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 46,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -87,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 76,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 33,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 22,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 10,   });
 
           foreach (var x in _Rating)
           {
@@ -647,7 +638,7 @@ namespace SimpleModelsAndRelations.Data
 
             new Meal_Recipe { MealId = 3, RecipeId = 3 },
 
-            new Meal_Recipe { MealId = 1, RecipeId = 5 },
+            new Meal_Recipe { MealId = 4, RecipeId = 5 },
 
             new Meal_Recipe { MealId = 2, RecipeId = 6 },
 
@@ -733,16 +724,6 @@ namespace SimpleModelsAndRelations.Data
 
             new User_Recipe { UserId = Users[r.Next(Users.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
 
-            new User_Recipe { UserId = Users[r.Next(Users.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
-
-            new User_Recipe { UserId = Users[r.Next(Users.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
-
-            new User_Recipe { UserId = Users[r.Next(Users.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
-
-            new User_Recipe { UserId = Users[r.Next(Users.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
-
-            new User_Recipe { UserId = Users[r.Next(Users.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
-
         };
         foreach (var x in _User_Recipe)
         {
@@ -756,6 +737,14 @@ namespace SimpleModelsAndRelations.Data
         var _Recipe_Rating = new Recipe_Rating[]
         {
             
+            new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
             new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
 
             new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
@@ -836,8 +825,6 @@ namespace SimpleModelsAndRelations.Data
         var _RecommendationPage_Recipe = new RecommendationPage_Recipe[]
         {
             
-            new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
-
             new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
 
             new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
