@@ -18,7 +18,9 @@ const Permissions = require("./permissions");
 const Utils = require("./view_utils");
 const i18next = require("i18next");
 const FavouriteViews = require("./Favourite");
+const BrowseViews = require("./Browse");
 const HomepageViews = require("./Homepage");
+const RecommendationViews = require("./Recommendation");
 const RecipeViews = require("./Recipe");
 function Thirty_PreparationTime_Recipe_can_create(self) {
     let state = self.state();
@@ -129,20 +131,17 @@ function render_menu_Thirty(self) {
             !Permissions.can_view_Favourite(self.props.current_User) ? null :
                 React.createElement("div", { className: `menu_entry page_link` },
                     React.createElement("a", { onClick: () => Api.get_Favourites(0, 1).then(e => e.Items.length > 0 && self.props.set_page(FavouriteViews.Favourite_to_page(e.Items[0].Item.Id))) }, i18next.t('Favourite'))),
-            !Permissions.can_view_,
-            "(self.props.current_User) ? null :",
-            React.createElement("div", { className: `menu_entry page_link` },
-                React.createElement("a", { onClick: () => Api.get_, Browses: true }),
-                "0, 1).then(e => e.Items.length > 0 && self.props.set_page( BrowseViews. Browse_to_page(e.Items[0].Item.Id)) ) }>",
-                i18next.t(' Browse'))),
-        "}",
-        !Permissions.can_view_Homepage(self.props.current_User) ? null :
-            React.createElement("div", { className: `menu_entry page_link` },
-                React.createElement("a", { onClick: () => Api.get_Homepages(0, 1).then(e => e.Items.length > 0 && self.props.set_page(HomepageViews.Homepage_to_page(e.Items[0].Item.Id))) }, i18next.t('Homepage'))),
-        React.createElement("div", { className: "menu_entries" },
-            React.createElement("div", { className: "menu_entry menu_entry--with-sub" })));
-    div >
-    ;
+            !Permissions.can_view_Browse(self.props.current_User) ? null :
+                React.createElement("div", { className: `menu_entry page_link` },
+                    React.createElement("a", { onClick: () => Api.get_Browses(0, 1).then(e => e.Items.length > 0 && self.props.set_page(BrowseViews.Browse_to_page(e.Items[0].Item.Id))) }, i18next.t('Browse'))),
+            !Permissions.can_view_Homepage(self.props.current_User) ? null :
+                React.createElement("div", { className: `menu_entry page_link` },
+                    React.createElement("a", { onClick: () => Api.get_Homepages(0, 1).then(e => e.Items.length > 0 && self.props.set_page(HomepageViews.Homepage_to_page(e.Items[0].Item.Id))) }, i18next.t('Homepage'))),
+            !Permissions.can_view_Recommendation(self.props.current_User) ? null :
+                React.createElement("div", { className: `menu_entry page_link` },
+                    React.createElement("a", { onClick: () => Api.get_Recommendations(0, 1).then(e => e.Items.length > 0 && self.props.set_page(RecommendationViews.Recommendation_to_page(e.Items[0].Item.Id))) }, i18next.t('Recommendation'))),
+            React.createElement("div", { className: "menu_entries" },
+                React.createElement("div", { className: "menu_entry menu_entry--with-sub" }))));
 }
 exports.render_menu_Thirty = render_menu_Thirty;
 function render_local_menu_Thirty(self) {

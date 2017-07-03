@@ -4,9 +4,9 @@ const Api = require("../generated_api");
 const Permissions = require("./permissions");
 const Utils = require("./view_utils");
 const ThirtyViews = require("./Thirty");
+const FifteenViews = require("./Fifteen");
 const SixtyViews = require("./Sixty");
 const NinetyViews = require("./Ninety");
-const FifteenViews = require("./Fifteen");
 exports.PreparationTime = (props) => props.entity.Kind == "Thirty" ?
     ThirtyViews.Thirty(Object.assign({}, props, { set_entity: (e, c) => props.set_entity(e, c), entity: props.entity }))
     : props.entity.Kind == "Sixty" ?

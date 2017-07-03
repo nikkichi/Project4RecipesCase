@@ -27044,25 +27044,39 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(6);
 const Immutable = __webpack_require__(26);
 const Api = __webpack_require__(14);
-class BookmarkComponent extends React.Component {
-    constuctor(props, context) {
-        this.state = {};
-    }
-}
-exports.BookmarkComponent = BookmarkComponent;
 class FavComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.state = { bookmark: false };
+        this.state = { bookmark: false,
+            fav: Immutable.List() };
     }
     change_bookmark() {
         if (this.state.bookmark == true) {
+            Api.unlink_User_User_Recipes(this.props.props, this.props.recipe);
+            console.log('unlink');
             return false;
         }
-        return true;
+        else {
+            console.log('link');
+            Api.link_User_User_Recipes(this.props.props, this.props.recipe);
+            return true;
+        }
+    }
+    componentWillMount() {
+        this.get_fav().then(online_favs => console.log(online_favs));
+    }
+    get_fav() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let fav_pages = yield Api.get_User_User_Recipes(this.props.props, 0, 100);
+            let loaded_fav = Immutable.List(fav_pages.Items.map(r => r.Item));
+            for (let i = 1; i < fav_pages.NumPages; i++) {
+                let favrecipes = yield Api.get_User_User_Recipes(this.props.props, i, 100);
+                loaded_fav = loaded_fav.concat(Immutable.List(favrecipes.Items.map(r => r.Item))).toList();
+            }
+            return Immutable.List(loaded_fav).includes(this.props.recipe);
+        });
     }
     render() {
-        console.log(this.state.bookmark);
         return React.createElement("div", null,
             React.createElement("button", { onClick: () => this.setState(Object.assign({}, this.state, { bookmark: this.change_bookmark() })), style: this.state.bookmark ? {
                     borderColor: 'yellow',
@@ -27186,7 +27200,7 @@ class Meals extends React.Component {
             let meal_page = yield Api.get_Cuisine_Cuisine_Meals(this.props.cuisine, 0, 100);
             let loaded_meals = Immutable.List(meal_page.Items.map(r => r.Item));
             for (let i = 1; i < meal_page.NumPages; i++) {
-                let meals = yield Api.get_Cuisine_Cuisine_Meals(this.props.cuisine, 0, 100);
+                let meals = yield Api.get_Cuisine_Cuisine_Meals(this.props.cuisine, i, 100);
                 loaded_meals = loaded_meals.concat(Immutable.List(meals.Items.map(r => r.Item))).toList();
             }
             return Immutable.List(loaded_meals);
@@ -27213,7 +27227,7 @@ class RecipesComponent extends React.Component {
             React.createElement("h2", null, this.props.recipe.Name),
             !this.state.is_expanded ? React.createElement("button", { onClick: () => this.update_me(true) }, "+") :
                 React.createElement("button", { onClick: () => this.update_me(false) }, "Close "),
-            this.state.is_expanded ? React.createElement(Info, { props: this.props.props, ingredients: this.props.recipe.Ingredients, info: this.props.recipe.Description }) : React.createElement("span", null));
+            this.state.is_expanded ? React.createElement(Info, { props: this.props.props, recipe: this.props.recipe }) : React.createElement("span", null));
     }
 }
 exports.RecipesComponent = RecipesComponent;
@@ -27232,7 +27246,7 @@ class Recipes extends React.Component {
             let recipe_page = yield Api.get_Meal_Meal_Recipes(this.props.meal, 0, 100);
             let loaded_recipes = Immutable.List(recipe_page.Items.map(r => r.Item));
             for (let i = 1; i < recipe_page.NumPages; i++) {
-                let recipes = yield Api.get_Meal_Meal_Recipes(this.props.meal, 0, 100);
+                let recipes = yield Api.get_Meal_Meal_Recipes(this.props.meal, 1, 100);
                 loaded_recipes = loaded_recipes.concat(Immutable.List(recipes.Items.map(r => r.Item))).toList();
             }
             return Immutable.List(loaded_recipes);
@@ -27240,7 +27254,7 @@ class Recipes extends React.Component {
     }
     render() {
         return React.createElement("div", null,
-            React.createElement("div", null, this.state.recipes.map(r => React.createElement(RecipesComponent, { props: this.props.props, recipe: r }))));
+            React.createElement("div", null, this.state.recipes.map(r => React.createElement(RecipesComponent, { props: this.props.props.current_User, recipe: r }))));
     }
 }
 exports.Recipes = Recipes;
@@ -27250,29 +27264,29 @@ class Info extends React.Component {
         this.state = {};
     }
     render() {
-        if (this.props.props.current_User == undefined)
+        if (this.props == undefined)
             return React.createElement("div", null,
                 React.createElement("div", null,
                     React.createElement("h3", null, "Ingredients")),
-                React.createElement("div", null, this.props.ingredients),
+                React.createElement("div", null, this.props.recipe.Ingredients),
                 React.createElement("br", null),
                 React.createElement("div", null,
                     React.createElement("h3", null, "Description")),
-                React.createElement("div", null, this.props.info));
+                React.createElement("div", null, this.props.recipe.Description));
         return React.createElement("div", null,
             React.createElement("div", null,
                 React.createElement("h3", null, "Ingredients")),
-            React.createElement("div", null, this.props.ingredients),
+            React.createElement("div", null, this.props.recipe.Ingredients),
             React.createElement("br", null),
             React.createElement("div", null,
                 React.createElement("h3", null, "Description")),
-            React.createElement("div", null, this.props.info),
+            React.createElement("div", null, this.props.recipe.Description),
             React.createElement("br", null),
             React.createElement("div", null,
                 React.createElement("h3", null, "Rate")),
             React.createElement(StarsComponent, null),
             React.createElement("br", null),
-            React.createElement(FavComponent, { props: this.props.props }));
+            React.createElement(FavComponent, { props: this.props.props, recipe: this.props.recipe }));
     }
 }
 exports.Info = Info;
@@ -27305,12 +27319,12 @@ class BrowseComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            SearchedQuery: "", i: 0, j: 1,
+            SearchedQuery: "",
             Items: Immutable.List()
         };
     }
     componentWillMount() {
-        this.get_recipes().then(online_recipes => this.setState(Object.assign({}, this.state, { Items: online_recipes.map(recipe => { return { title: recipe.Name, ingredients: recipe.Ingredients, info: recipe.Description, is_expanded: false }; }).toList() })));
+        this.get_recipes().then(online_recipes => this.setState(Object.assign({}, this.state, { Items: online_recipes })));
     }
     get_recipes() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -27326,8 +27340,8 @@ class BrowseComponent extends React.Component {
     render() {
         return React.createElement("div", null,
             React.createElement("input", { value: this.state.SearchedQuery, onChange: event => this.setState(Object.assign({}, this.state, { SearchedQuery: event.target.value })) }),
-            this.state.Items.filter(item => item.title.toLowerCase().includes(this.state.SearchedQuery.toLowerCase()))
-                .map(item => React.createElement(ItemComponent, { title: item.title, ingredients: item.ingredients, info: item.info })));
+            this.state.Items.filter(item => item.Name.toLowerCase().includes(this.state.SearchedQuery.toLowerCase()))
+                .map(item => React.createElement(RecipesComponent, { props: this.props.props.current_User, recipe: item })));
     }
 }
 exports.BrowseComponent = BrowseComponent;
@@ -27340,6 +27354,10 @@ class ItemComponent extends React.Component {
         this.setState(Object.assign({}, this.state, { is_expanded: value }));
     }
     render() {
+        // if (this.props.props.current_User == undefined)
+        //     return <div>
+        //             <div><h2></h2></div>
+        //     </div>
         return React.createElement("div", null,
             React.createElement("span", null,
                 React.createElement("h1", null, this.props.title)),
@@ -27358,16 +27376,37 @@ class ItemComponent extends React.Component {
                 React.createElement("button", { onClick: () => this.update_me(false) }, "-"));
     }
 }
+class Fav extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.state = { favs: Immutable.List() };
+    }
+    componentWillMount() {
+        this.get_favs().then(online_favs => this.setState(Object.assign({}, this.state, { favs: online_favs })));
+    }
+    get_favs() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let fave_page = yield Api.get_User_User_Recipes(this.props.props.current_User, 0, 100);
+            let loaded_fave = Immutable.List(fave_page.Items.map(r => r.Item));
+            for (let i = 1; 1 < fave_page.NumPages; i++) {
+                let fav = yield Api.get_User_User_Recipes(this.props.props.current_User, i, 100);
+                loaded_fave = loaded_fave.concat(Immutable.List(fav.Items.map(r => r.Item))).toList();
+            }
+            return Immutable.List(loaded_fave);
+        });
+    }
+    render() {
+        return React.createElement("div", null,
+            React.createElement("div", null, this.state.favs.map(r => React.createElement(RecipesComponent, { props: this.props.props.current_User, recipe: r }))));
+    }
+}
+exports.Fav = Fav;
 exports.AppTest = (props) => {
     return React.createElement(IComponent, { props: props });
 };
-exports.FavouriteView = (props) => React.createElement("div", null,
-    React.createElement("div", null, "hello favourite"),
-    " ",
-    React.createElement("button", null, " Greg "),
-    "  ");
+exports.FavouriteView = (props) => { return React.createElement(Fav, { props: props }); };
 exports.BrowseView = (props) => {
-    return React.createElement(BrowseComponent, null);
+    return React.createElement(BrowseComponent, { props: props });
 };
 exports.RecView = (props) => React.createElement("div", null,
     React.createElement("div", null, " Hello recommendations "));

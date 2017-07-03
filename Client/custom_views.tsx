@@ -27,29 +27,45 @@ type Rate = {value : number, state:boolean}
 
 type StarsComponentProps = {}
 type StarsComponentState = {stars:Immutable.List<Rate>}
-export class BookmarkComponent extends React.Component<{},{}> {
-    constuctor( props, context) {
-        this.state = {}
-    }
 
-}
-
-export class FavComponent extends React.Component<{props:ViewUtils.EntityComponentProps<Models.Homepage>},{bookmark: boolean}> {
+export class FavComponent extends React.Component<{props: Models.User,recipe: Models.Recipe},{bookmark: boolean, fav: Immutable.List<Models.Recipe>}> {
     constructor( props, context) {
         super(props,context)
-        this.state = {bookmark: false}
+        this.state = {bookmark: false,
+                      fav: Immutable.List<Models.Recipe>()}
     }
 
     change_bookmark() {
-        if (this.state.bookmark == true) {
+        if (this.state.bookmark == true ) {
+            Api.unlink_User_User_Recipes(this.props.props, this.props.recipe)
+            console.log('unlink')
             return false
         }
-        return true
+        else {
+            console.log('link')
+            Api.link_User_User_Recipes(this.props.props, this.props.recipe)
+            return true
+        }
     }
 
 
+
+    componentWillMount() {
+        this.get_fav().then(online_favs => console.log(online_favs))
+    }
+
+    async get_fav() {
+        let fav_pages = await Api.get_User_User_Recipes(this.props.props, 0, 100)
+        let loaded_fav = Immutable.List<Models.Recipe>(fav_pages.Items.map(r => r.Item))
+
+        for (let i = 1; i < fav_pages.NumPages; i++) {
+            let favrecipes = await Api.get_User_User_Recipes(this.props.props, i, 100)
+            loaded_fav = loaded_fav.concat(Immutable.List<Models.Recipe>(favrecipes.Items.map( r => r.Item))).toList()
+        }
+        return Immutable.List<Models.Recipe>(loaded_fav).includes(this.props.recipe)
+    }
+
     render() {
-        console.log(this.state.bookmark)
         return <div>
             <button onClick={() => this.setState({... this.state, bookmark: this.change_bookmark() })} style={this.state.bookmark?{
                                                                                 borderColor: 'yellow',
@@ -183,7 +199,7 @@ export class Meals extends React.Component<{props:ViewUtils.EntityComponentProps
         let loaded_meals = Immutable.List<Models.Meal>(meal_page.Items.map(r => r.Item))
 
         for (let i = 1; i < meal_page.NumPages; i++) {
-            let meals = await Api.get_Cuisine_Cuisine_Meals(this.props.cuisine, 0, 100)
+            let meals = await Api.get_Cuisine_Cuisine_Meals(this.props.cuisine, i, 100)
             loaded_meals = loaded_meals.concat(Immutable.List<Models.Meal>(meals.Items.map( r => r.Item))).toList()
         }
         return Immutable.List<Models.Meal>(loaded_meals)
@@ -196,7 +212,7 @@ export class Meals extends React.Component<{props:ViewUtils.EntityComponentProps
     }
 }
 
-export class RecipesComponent extends React.Component<{props:ViewUtils.EntityComponentProps<Models.Homepage>,recipe: Models.Recipe},{is_expanded:boolean}> {
+export class RecipesComponent extends React.Component<{props: Models.User,recipe: Models.Recipe},{is_expanded:boolean}> {
     constructor( props, context) {
         super(props,context)
         this.state = {is_expanded:false}
@@ -211,11 +227,11 @@ export class RecipesComponent extends React.Component<{props:ViewUtils.EntityCom
             <h2>{this.props.recipe.Name}</h2>
                 {!this.state.is_expanded?<button onClick={()=>this.update_me(true)}>+</button>:
                                          <button onClick={()=>this.update_me(false)}>Close </button>}
-                {this.state.is_expanded?<Info props={this.props.props} ingredients={this.props.recipe.Ingredients}
-                                        info={this.props.recipe.Description} />:<span/>}
+                {this.state.is_expanded?<Info props={this.props.props} recipe={this.props.recipe} />:<span/>}
             </div>
     }
 }
+
 
 export class Recipes extends React.Component<{props:ViewUtils.EntityComponentProps<Models.Homepage>,meal: Models.Meal}, {recipes: Immutable.List<Models.Recipe>}> {
     constructor( props, context) {
@@ -234,7 +250,7 @@ export class Recipes extends React.Component<{props:ViewUtils.EntityComponentPro
         let loaded_recipes = Immutable.List<Models.Recipe>(recipe_page.Items.map(r => r.Item))
 
         for (let i = 1; i < recipe_page.NumPages; i++) {
-            let recipes = await Api.get_Meal_Meal_Recipes(this.props.meal, 0, 100)
+            let recipes = await Api.get_Meal_Meal_Recipes(this.props.meal, 1, 100)
             loaded_recipes = loaded_recipes.concat(Immutable.List<Models.Recipe>(recipes.Items.map( r=> r.Item))).toList()
         }
         return Immutable.List<Models.Recipe>(loaded_recipes)
@@ -242,12 +258,13 @@ export class Recipes extends React.Component<{props:ViewUtils.EntityComponentPro
 
     render() {
         return <div>
-            <div>{this.state.recipes.map(r => <RecipesComponent props={this.props.props} recipe={r}/>)}</div>
+            <div>{this.state.recipes.map(r => <RecipesComponent props={this.props.props.current_User} recipe={r}/>)}</div>
         </div>
     }
 }
 
-export class Info extends React.Component<{props:ViewUtils.EntityComponentProps<Models.Homepage>,ingredients: string, info: string},{}> {
+
+export class Info extends React.Component<{props: Models.User,recipe: Models.Recipe},{}> {
     constructor( props, context) {
         super(props, context)
         this.state = {}
@@ -255,28 +272,29 @@ export class Info extends React.Component<{props:ViewUtils.EntityComponentProps<
 
 
     render(){
-        if (this.props.props.current_User == undefined)
+        if (this.props == undefined)
             return <div>
                     <div><h3>Ingredients</h3></div>
-                    <div>{this.props.ingredients}</div>
+                    <div>{this.props.recipe.Ingredients}</div>
                     <br />
                     <div><h3>Description</h3></div>
-                    <div>{this.props.info}</div>
+                    <div>{this.props.recipe.Description}</div>
                 </div>
         return <div>
                     <div><h3>Ingredients</h3></div>
-                    <div>{this.props.ingredients}</div>
+                    <div>{this.props.recipe.Ingredients}</div>
                     <br />
                     <div><h3>Description</h3></div>
-                    <div>{this.props.info}</div>
+                    <div>{this.props.recipe.Description}</div>
                     <br />
                     <div><h3>Rate</h3></div>
                     <StarsComponent />
                     <br />
-                    <FavComponent props={this.props.props} />
+                    <FavComponent props={this.props.props} recipe={this.props.recipe}/>
                 </div>
     }
 }
+
 
 export default class IComponent extends React.Component<IComponentProps, IComponentState>{
     constructor(props: IComponentProps, context){
@@ -309,18 +327,18 @@ export default class IComponent extends React.Component<IComponentProps, ICompon
 }
 
 
-export class BrowseComponent extends React.Component<{}, { i : number, j : number, Items:Immutable.List<{title:string, ingredients: string, info:string, is_expanded:boolean}>,SearchedQuery:string}>{
+export class BrowseComponent extends React.Component<{props:ViewUtils.EntityComponentProps<Models.Browse>}, {Items: Immutable.List<Models.Recipe>,SearchedQuery:string}>{
     constructor(props: BrowseComponentProps, context)
     {
         super(props, context)
         this.state = {  
-            SearchedQuery:"", i : 0, j : 1,
-                        Items: Immutable.List<{title:string, ingredients: string, info:string, is_expanded:boolean}>()
+            SearchedQuery:"", 
+                        Items: Immutable.List<Models.Recipe>()
         } 
     }   
 
     componentWillMount(){
-        this.get_recipes().then(online_recipes => this.setState({... this.state, Items: online_recipes.map(recipe => { return {title:recipe.Name, ingredients:recipe.Ingredients, info:recipe.Description, is_expanded:false} }).toList()}))
+        this.get_recipes().then(online_recipes => this.setState({... this.state, Items: online_recipes}))
     }
 
 
@@ -341,11 +359,8 @@ export class BrowseComponent extends React.Component<{}, { i : number, j : numbe
 
         return <div>
                 <input value={this.state.SearchedQuery} onChange={event=>this.setState({...this.state, SearchedQuery: event.target.value})}/>
-                {this.state.Items.filter(item => item.title.toLowerCase().includes(this.state.SearchedQuery.toLowerCase()))
-                                 .map(item => <ItemComponent 
-                                                    title={item.title} 
-                                                    ingredients={item.ingredients}
-                                                    info={item.info} />)}
+                {this.state.Items.filter(item => item.Name.toLowerCase().includes(this.state.SearchedQuery.toLowerCase()))
+                                 .map(item => <RecipesComponent props={this.props.props.current_User} recipe={item}/>)}
             </div>
     }
 }
@@ -362,6 +377,10 @@ class ItemComponent extends React.Component<{title:string, ingredients:string, i
     }
 
     render(){
+        // if (this.props.props.current_User == undefined)
+        //     return <div>
+        //             <div><h2></h2></div>
+        //     </div>
         return <div >
                 <span><h1>{this.props.title}</h1></span>
                 {this.state.is_expanded?<div><h2>Ingredients</h2>{this.props.ingredients}<br/><h2>Description</h2>{this.props.info}<br/><h2>Rate</h2><div><StarsComponent/></div><br/></div>:<span/>}
@@ -371,12 +390,41 @@ class ItemComponent extends React.Component<{title:string, ingredients:string, i
     }
 }
 
+export class Fav extends React.Component<{props:ViewUtils.EntityComponentProps<Models.Favourite>},{ favs: Immutable.List<Models.Recipe>}> {
+    constructor( props, context) {
+        super(props,context)
+        this.state = { favs: Immutable.List<Models.Recipe>()}
+    }
+
+    componentWillMount() {
+        this.get_favs().then(online_favs => this.setState({... this.state, favs: online_favs}))
+    }
+
+    async get_favs() {
+        let fave_page = await Api.get_User_User_Recipes(this.props.props.current_User, 0, 100)
+        let loaded_fave = Immutable.List<Models.Recipe>(fave_page.Items.map(r => r.Item))
+
+        for (let i = 1; 1 < fave_page.NumPages; i++) {
+            let fav = await Api.get_User_User_Recipes(this.props.props.current_User, i, 100)
+            loaded_fave = loaded_fave.concat(Immutable.List<Models.Recipe>(fav.Items.map( r => r.Item))).toList()
+        }
+        return Immutable.List<Models.Recipe>(loaded_fave)
+    }
+
+    render() {
+        return <div>
+            <div>{this.state.favs.map(r => <RecipesComponent props={this.props.props.current_User} recipe={r}/>)}</div>
+        </div>
+    }
+}    
+
+
 
 export let AppTest = (props:ViewUtils.EntityComponentProps<Models.Homepage>) => {
     return <IComponent props={props}/>
     }
-export let FavouriteView = (props:ViewUtils.EntityComponentProps<Models.Favourite>) => <div><div>hello favourite</div> <button> Greg </button>  </div>
+export let FavouriteView = (props:ViewUtils.EntityComponentProps<Models.Favourite>) => { return <Fav props={props}/> }
 export let BrowseView    = (props:ViewUtils.EntityComponentProps<Models.Browse>) => {
-    return <BrowseComponent />
+    return <BrowseComponent props={props}/>
 }
 export let RecView       = (props:ViewUtils.EntityComponentProps<Models.Recommendation>) => <div><div> Hello recommendations </div></div>

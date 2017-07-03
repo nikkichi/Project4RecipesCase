@@ -8,7 +8,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Models = require("./generated_models");
 const Moment = require("moment");
 require("whatwg-fetch");
 exports.parse_date = (e) => { return Object.assign({}, e, { CreatedDate: Moment.utc(e.CreatedDate) }); };
@@ -951,72 +950,57 @@ function get_Favourites(page_index, page_size, search_query = null) {
     });
 }
 exports.get_Favourites = get_Favourites;
-function create_() {
-    return __awaiter(this, void 0, void 0, function* () { });
+function create_Browse() {
+    return __awaiter(this, void 0, void 0, function* () {
+        let res = yield fetch(`/api/v1/Browse/`, { method: 'post', credentials: 'include', headers: { 'content-type': 'application/json',
+                'X-XSRF-TOKEN': document.getElementsByName("__RequestVerificationToken")[0].value } });
+        if (!res.ok)
+            throw Error(res.statusText);
+        let json = yield res.json();
+        return Object.assign({}, json, { CreatedDate: Moment.utc(json.CreatedDate) });
+    });
 }
-exports.create_ = create_;
-Browse();
-Promise < Models.Browse > {
-    let: res = yield fetch(`/api/v1/ Browse/`, { method: 'post', credentials: 'include', headers: { 'content-type': 'application/json',
-            'X-XSRF-TOKEN': document.getElementsByName("__RequestVerificationToken")[0].value } }),
-    if() { }
-};
-res.ok;
-throw Error(res.statusText);
-let json = yield res.json();
-return Object.assign({}, json, { CreatedDate: Moment.utc(json.CreatedDate) });
-function update_() {
-    return __awaiter(this, void 0, void 0, function* () { });
+exports.create_Browse = create_Browse;
+function update_Browse(item) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let res = yield fetch(`/api/v1/Browse/`, { method: 'put',
+            body: JSON.stringify(Object.assign({}, item, { CreatedDate: undefined })), credentials: 'include', headers: { 'content-type': 'application/json', 'X-XSRF-TOKEN': document.getElementsByName("__RequestVerificationToken")[0].value } });
+        if (!res.ok)
+            throw Error(res.statusText);
+        return;
+    });
 }
-exports.update_ = update_;
-Browse(item, Models.Browse);
-Promise < void  > {
-    let: res = yield fetch(`/api/v1/ Browse/`, { method: 'put',
-        body: JSON.stringify(Object.assign({}, item, { CreatedDate: undefined })), credentials: 'include', headers: { 'content-type': 'application/json', 'X-XSRF-TOKEN': document.getElementsByName("__RequestVerificationToken")[0].value } }),
-    if() { }
-};
-res.ok;
-throw Error(res.statusText);
-return;
-function delete_() {
-    return __awaiter(this, void 0, void 0, function* () { });
+exports.update_Browse = update_Browse;
+function delete_Browse(source) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let res = yield fetch(`/api/v1/Browse/${source.Id}`, { method: 'delete', credentials: 'include', headers: { 'content-type': 'application/json', 'X-XSRF-TOKEN': document.getElementsByName("__RequestVerificationToken")[0].value } });
+        if (!res.ok)
+            throw Error(res.statusText);
+        return;
+    });
 }
-exports.delete_ = delete_;
-Browse(source, Models.Browse);
-Promise < void  > {
-    let: res = yield fetch(`/api/v1/ Browse/${source.Id}`, { method: 'delete', credentials: 'include', headers: { 'content-type': 'application/json', 'X-XSRF-TOKEN': document.getElementsByName("__RequestVerificationToken")[0].value } }),
-    if() { }
-};
-res.ok;
-throw Error(res.statusText);
-return;
-function get_() {
-    return __awaiter(this, void 0, void 0, function* () { });
+exports.delete_Browse = delete_Browse;
+function get_Browse(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let res = yield fetch(`/api/v1/Browse/${id}`, { method: 'get', credentials: 'include', headers: { 'content-type': 'application/json' } });
+        if (!res.ok)
+            throw Error(res.statusText);
+        let json = yield res.json();
+        return { Item: Object.assign({}, json.Item, { CreatedDate: Moment.utc(json.Item.CreatedDate) }),
+            Editable: !!json.Editable, JustCreated: false };
+    });
 }
-exports.get_ = get_;
-Browse(id, number);
-Promise < ItemWithEditable < Models.Browse >> {
-    let: res = yield fetch(`/api/v1/ Browse/${id}`, { method: 'get', credentials: 'include', headers: { 'content-type': 'application/json' } }),
-    if() { }
-};
-res.ok;
-throw Error(res.statusText);
-let json = yield res.json();
-return { Item: Object.assign({}, json.Item, { CreatedDate: Moment.utc(json.Item.CreatedDate) }),
-    Editable: !!json.Editable, JustCreated: false };
-function get_() {
-    return __awaiter(this, void 0, void 0, function* () { });
+exports.get_Browse = get_Browse;
+function get_Browses(page_index, page_size, search_query = null) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let res = yield fetch(`/api/v1/Browse?page_index=${page_index}&page_size=${page_size}${(search_query != null ? "&page_size=" + search_query : "")}`, { method: 'get', credentials: 'include', headers: { 'content-type': 'application/json' } });
+        if (!res.ok)
+            throw Error(res.statusText);
+        let json = yield res.json();
+        return exports.make_page(json, e => { return Object.assign({}, e); });
+    });
 }
-exports.get_ = get_;
-Browses(page_index, number, page_size, number, search_query, string = null);
-Promise < RawPage < Models.Browse >> {
-    let: res = yield fetch(`/api/v1/ Browse?page_index=${page_index}&page_size=${page_size}${(search_query != null ? "&page_size=" + search_query : "")}`, { method: 'get', credentials: 'include', headers: { 'content-type': 'application/json' } }),
-    if() { }
-};
-res.ok;
-throw Error(res.statusText);
-let json = yield res.json();
-return exports.make_page(json, e => { return Object.assign({}, e); });
+exports.get_Browses = get_Browses;
 function create_Lunch() {
     return __awaiter(this, void 0, void 0, function* () {
         let res = yield fetch(`/api/v1/Lunch/`, { method: 'post', credentials: 'include', headers: { 'content-type': 'application/json',
@@ -2155,6 +2139,57 @@ function get_Nineties(page_index, page_size, search_query = null) {
     });
 }
 exports.get_Nineties = get_Nineties;
+function create_Recommendation() {
+    return __awaiter(this, void 0, void 0, function* () {
+        let res = yield fetch(`/api/v1/Recommendation/`, { method: 'post', credentials: 'include', headers: { 'content-type': 'application/json',
+                'X-XSRF-TOKEN': document.getElementsByName("__RequestVerificationToken")[0].value } });
+        if (!res.ok)
+            throw Error(res.statusText);
+        let json = yield res.json();
+        return Object.assign({}, json, { CreatedDate: Moment.utc(json.CreatedDate) });
+    });
+}
+exports.create_Recommendation = create_Recommendation;
+function update_Recommendation(item) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let res = yield fetch(`/api/v1/Recommendation/`, { method: 'put',
+            body: JSON.stringify(Object.assign({}, item, { CreatedDate: undefined })), credentials: 'include', headers: { 'content-type': 'application/json', 'X-XSRF-TOKEN': document.getElementsByName("__RequestVerificationToken")[0].value } });
+        if (!res.ok)
+            throw Error(res.statusText);
+        return;
+    });
+}
+exports.update_Recommendation = update_Recommendation;
+function delete_Recommendation(source) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let res = yield fetch(`/api/v1/Recommendation/${source.Id}`, { method: 'delete', credentials: 'include', headers: { 'content-type': 'application/json', 'X-XSRF-TOKEN': document.getElementsByName("__RequestVerificationToken")[0].value } });
+        if (!res.ok)
+            throw Error(res.statusText);
+        return;
+    });
+}
+exports.delete_Recommendation = delete_Recommendation;
+function get_Recommendation(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let res = yield fetch(`/api/v1/Recommendation/${id}`, { method: 'get', credentials: 'include', headers: { 'content-type': 'application/json' } });
+        if (!res.ok)
+            throw Error(res.statusText);
+        let json = yield res.json();
+        return { Item: Object.assign({}, json.Item, { CreatedDate: Moment.utc(json.Item.CreatedDate) }),
+            Editable: !!json.Editable, JustCreated: false };
+    });
+}
+exports.get_Recommendation = get_Recommendation;
+function get_Recommendations(page_index, page_size, search_query = null) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let res = yield fetch(`/api/v1/Recommendation?page_index=${page_index}&page_size=${page_size}${(search_query != null ? "&page_size=" + search_query : "")}`, { method: 'get', credentials: 'include', headers: { 'content-type': 'application/json' } });
+        if (!res.ok)
+            throw Error(res.statusText);
+        let json = yield res.json();
+        return exports.make_page(json, e => { return Object.assign({}, e); });
+    });
+}
+exports.get_Recommendations = get_Recommendations;
 function create_Breakfast() {
     return __awaiter(this, void 0, void 0, function* () {
         let res = yield fetch(`/api/v1/Breakfast/`, { method: 'post', credentials: 'include', headers: { 'content-type': 'application/json',

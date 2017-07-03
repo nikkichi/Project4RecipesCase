@@ -377,7 +377,7 @@ function render_page_manager(target_element_id, initial_page, current_User) {
         i18next.init({
             lng: current_User ? current_User.Language : "nl",
             fallbackLng: "en",
-            ns: ["common", "Thirty", "Meal", "Asian", "Cuisine", "PreparationTime", "Sixty", "RecommendationPage", "Favourite", " Browse", "Lunch", "User", "Homepage", "Brunch", "Recipe", "Dinner", "Mediterranean", "Ninety", "Breakfast", "Fifteen", "Rating", "Grill"],
+            ns: ["common", "Thirty", "Meal", "Asian", "Cuisine", "PreparationTime", "Sixty", "RecommendationPage", "Favourite", "Browse", "Lunch", "User", "Homepage", "Brunch", "Recipe", "Dinner", "Mediterranean", "Ninety", "Recommendation", "Breakfast", "Fifteen", "Rating", "Grill"],
             resources: resources
         }, (err, t) => {
             ReactDOM.render(React.createElement(PageManager, { initial_page: initial_page, current_User: current_User }), document.getElementById(target_element_id));
