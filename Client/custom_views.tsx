@@ -222,7 +222,7 @@ export class RecipesComponent extends React.Component<{props: Models.User,recipe
     render() {
         return <div> <br />
             <h2>{this.props.recipe.Name}</h2>
-                {!this.state.is_expanded?<button onClick={()=>this.update_me(true)}>+</button>:
+                {!this.state.is_expanded?<button onClick={()=>this.update_me(true)}>Show more...</button>:
                                          <button onClick={()=>this.update_me(false)}>Close </button>}
                 {this.state.is_expanded?<Info props={this.props.props} recipe={this.props.recipe} />:<span/>}
             </div>

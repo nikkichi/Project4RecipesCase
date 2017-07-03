@@ -27225,7 +27225,7 @@ class RecipesComponent extends React.Component {
             " ",
             React.createElement("br", null),
             React.createElement("h2", null, this.props.recipe.Name),
-            !this.state.is_expanded ? React.createElement("button", { onClick: () => this.update_me(true) }, "+") :
+            !this.state.is_expanded ? React.createElement("button", { onClick: () => this.update_me(true) }, "Show more...") :
                 React.createElement("button", { onClick: () => this.update_me(false) }, "Close "),
             this.state.is_expanded ? React.createElement(Info, { props: this.props.props, recipe: this.props.recipe }) : React.createElement("span", null));
     }
