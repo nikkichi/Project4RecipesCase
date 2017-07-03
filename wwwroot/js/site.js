@@ -27063,7 +27063,7 @@ class FavComponent extends React.Component {
         }
     }
     componentWillMount() {
-        this.get_fav().then(online_favs => console.log(online_favs));
+        this.get_fav().then(online_favs => this.setState(Object.assign({}, this.state, { bookmark: online_favs })));
     }
     get_fav() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -27073,14 +27073,14 @@ class FavComponent extends React.Component {
                 let favrecipes = yield Api.get_User_User_Recipes(this.props.props, i, 100);
                 loaded_fav = loaded_fav.concat(Immutable.List(favrecipes.Items.map(r => r.Item))).toList();
             }
-            return Immutable.List(loaded_fav).includes(this.props.recipe);
+            return loaded_fav.find(recipe => recipe.Id == this.props.recipe.Id) != undefined;
         });
     }
     render() {
         return React.createElement("div", null,
             React.createElement("button", { onClick: () => this.setState(Object.assign({}, this.state, { bookmark: this.change_bookmark() })), style: this.state.bookmark ? {
-                    borderColor: 'yellow',
-                    backgroundColor: 'yellow',
+                    borderColor: '#08ABCE',
+                    backgroundColor: '#08ABCE',
                     borderWidth: 1,
                     borderRadius: 10,
                     color: 'white',

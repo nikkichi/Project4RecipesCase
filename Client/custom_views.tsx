@@ -21,7 +21,6 @@ type BrowseComponentState = { i : number, j : number, recipes : Immutable.List<M
     return Immutable.List<number>(json)
 }**/
 
-
 type Rate = {value : number, state:boolean}
 
 
@@ -48,10 +47,8 @@ export class FavComponent extends React.Component<{props: Models.User,recipe: Mo
         }
     }
 
-
-
     componentWillMount() {
-        this.get_fav().then(online_favs => console.log(online_favs))
+        this.get_fav().then(online_favs => this.setState({... this.state, bookmark: online_favs}))
     }
 
     async get_fav() {
@@ -62,14 +59,14 @@ export class FavComponent extends React.Component<{props: Models.User,recipe: Mo
             let favrecipes = await Api.get_User_User_Recipes(this.props.props, i, 100)
             loaded_fav = loaded_fav.concat(Immutable.List<Models.Recipe>(favrecipes.Items.map( r => r.Item))).toList()
         }
-        return Immutable.List<Models.Recipe>(loaded_fav).includes(this.props.recipe)
+        return loaded_fav.find(recipe => recipe.Id == this.props.recipe.Id) != undefined
     }
 
     render() {
         return <div>
             <button onClick={() => this.setState({... this.state, bookmark: this.change_bookmark() })} style={this.state.bookmark?{
-                                                                                borderColor: 'yellow',
-                                                                                backgroundColor: 'yellow',
+                                                                                borderColor: '#08ABCE',
+                                                                                backgroundColor: '#08ABCE',
                                                                                 borderWidth: 1,
                                                                                 borderRadius: 10,
                                                                                 color: 'white',
