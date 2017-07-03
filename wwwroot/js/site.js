@@ -27091,17 +27091,17 @@ class StarsComponent extends React.Component {
                         return Object.assign({}, star1, { state: true });
                     else
                         return Object.assign({}, star1, { state: false }); }).toList() })), style: star.state ? {
-                    borderColor: '#000066',
+                    borderColor: '#08ABCE',
                     backgroundColor: '#08ABCE',
                     borderWidth: 1,
-                    borderRadius: 10,
+                    borderRadius: 15,
                     color: 'white',
                 } :
                     {
-                        borderColor: '#000066',
+                        borderColor: '#08ABCE',
                         borderWidth: 1,
-                        borderRadius: 10,
-                        color: 'black',
+                        borderRadius: 15,
+                        color: '#08ABCE',
                     }, marginHeight: 10, marginWidth: 10, width: 10, height: 10 }, star.value)),
             " ");
     }
@@ -27351,9 +27351,9 @@ class ItemComponent extends React.Component {
                 this.props.info,
                 React.createElement("br", null),
                 React.createElement("h2", null, "Rate"),
-                React.createElement("br", null),
                 React.createElement("div", null,
-                    React.createElement(StarsComponent, null))) : React.createElement("span", null),
+                    React.createElement(StarsComponent, null)),
+                React.createElement("br", null)) : React.createElement("span", null),
             !this.state.is_expanded ? React.createElement("button", { onClick: () => this.update_me(true) }, "+") :
                 React.createElement("button", { onClick: () => this.update_me(false) }, "-"));
     }

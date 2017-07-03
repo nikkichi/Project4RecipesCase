@@ -78,17 +78,17 @@ export class StarsComponent extends React.Component<StarsComponentProps, StarsCo
   render(){
     return <div>{this.state.stars.map(star => <button onClick={() => this.setState({...this.state, stars: this.state.stars.map(star1 => {if(star1.value <= star.value) return {...star1, state: true}; else return {...star1, state: false}}).toList()})}  
                                                       style={star.state?{
-                                                                          borderColor: '#000066',
+                                                                          borderColor: '#08ABCE',
                                                                           backgroundColor: '#08ABCE',
                                                                           borderWidth: 1,
-                                                                          borderRadius: 10,
+                                                                          borderRadius: 15,
                                                                           color: 'white',
                                                                         }:
                                                                         {
-                                                                          borderColor: '#000066',
+                                                                          borderColor: '#08ABCE',
                                                                           borderWidth: 1,
-                                                                          borderRadius: 10,
-                                                                          color: 'black',
+                                                                          borderRadius: 15,
+                                                                          color: '#08ABCE',
                                                                         }}
                                                       marginHeight={10} marginWidth={10} width={10} height={10}>{star.value}</button>)} </div>
   }
@@ -364,7 +364,7 @@ class ItemComponent extends React.Component<{title:string, ingredients:string, i
     render(){
         return <div >
                 <span><h1>{this.props.title}</h1></span>
-                {this.state.is_expanded?<div><h2>Ingredients</h2>{this.props.ingredients}<br/><h2>Description</h2>{this.props.info}<br/><h2>Rate</h2><br/><div><StarsComponent/></div></div>:<span/>}
+                {this.state.is_expanded?<div><h2>Ingredients</h2>{this.props.ingredients}<br/><h2>Description</h2>{this.props.info}<br/><h2>Rate</h2><div><StarsComponent/></div><br/></div>:<span/>}
                 {!this.state.is_expanded?<button onClick={()=>this.update_me(true)}>+</button>:
                                          <button onClick={()=>this.update_me(false)}>-</button>}
             </div>
