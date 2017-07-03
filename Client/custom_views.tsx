@@ -269,7 +269,7 @@ export class Info extends React.Component<{props: Models.User,recipe: Models.Rec
 
 
     render(){
-        if (this.props == undefined)
+        if (this.props.props == undefined)
             return <div>
                     <div><h3>Ingredients</h3></div>
                     <div>{this.props.recipe.Ingredients}</div>
@@ -409,7 +409,13 @@ export class Fav extends React.Component<{props:ViewUtils.EntityComponentProps<M
     }
 
     render() {
+        if (this.props.props.current_User == undefined)
+            return <div>
+                    <div><h1>Log in first!</h1></div>
+            </div>
+
         return <div>
+            <h1>Your favourite recipes:</h1>
             <div>{this.state.favs.map(r => <RecipesComponent props={this.props.props.current_User} recipe={r}/>)}</div>
         </div>
     }

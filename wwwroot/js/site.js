@@ -27264,7 +27264,7 @@ class Info extends React.Component {
         this.state = {};
     }
     render() {
-        if (this.props == undefined)
+        if (this.props.props == undefined)
             return React.createElement("div", null,
                 React.createElement("div", null,
                     React.createElement("h3", null, "Ingredients")),
@@ -27396,7 +27396,12 @@ class Fav extends React.Component {
         });
     }
     render() {
+        if (this.props.props.current_User == undefined)
+            return React.createElement("div", null,
+                React.createElement("div", null,
+                    React.createElement("h1", null, "Log in first!")));
         return React.createElement("div", null,
+            React.createElement("h1", null, "Your favourite recipes:"),
             React.createElement("div", null, this.state.favs.map(r => React.createElement(RecipesComponent, { props: this.props.props.current_User, recipe: r }))));
     }
 }
