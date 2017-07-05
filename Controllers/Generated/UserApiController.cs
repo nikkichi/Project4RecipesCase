@@ -553,6 +553,180 @@ using System.IO;
       return Ok();
     }
     [RestrictToUserType(new string[] {"*"})]
+    [HttpGet("{User_id}/User_Ratings")]
+    [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+    public Page<Rating> GetUser_Ratings(int User_id, [FromQuery] int page_index, [FromQuery] int page_size = 25 )
+    {
+      var session = HttpContext.Get<LoggableEntities>(_context);
+      var current_User = session == null ? null : session.User;
+      var allowed_sources = ApiTokenValid ? _context.User : _context.User;
+      var source = allowed_sources.FirstOrDefault(s => s.Id == User_id);
+      var can_create_by_token = ApiTokenValid || true;
+      var can_delete_by_token = ApiTokenValid || true || true;
+      var can_link_by_token = ApiTokenValid || true;
+      var can_view_by_token = ApiTokenValid || true;
+      if (source == null || !can_view_by_token) // test
+        return Enumerable.Empty<SimpleModelsAndRelations.Models.Rating>() // B
+              .AsQueryable()
+              .Select(SimpleModelsAndRelations.Models.Rating.FilterViewableAttributes(current_User))
+              .Select(t => Tuple.Create(t, false))
+              .Paginate(can_create_by_token, can_delete_by_token, can_link_by_token, page_index, page_size, SimpleModelsAndRelations.Models.Rating.WithoutImages, item => item , null);
+      var allowed_targets = ApiTokenValid ? _context.Rating : _context.Rating;
+      var editable_targets = ApiTokenValid ? _context.Rating : (_context.Rating);
+      var can_edit_by_token = ApiTokenValid || true;
+      var items = (from link in _context.User_Rating
+              where link.UserId == source.Id
+              from target in allowed_targets
+              where link.RatingId == target.Id
+              select target).OrderBy(i => i.CreatedDate).AsQueryable();
+      
+      return items
+              .Select(SimpleModelsAndRelations.Models.Rating.FilterViewableAttributes(current_User))
+              .Select(t => Tuple.Create(t, can_edit_by_token && editable_targets.Any(et => et.Id == t.Id)))
+              .Paginate(can_create_by_token, can_delete_by_token, can_link_by_token, page_index, page_size, SimpleModelsAndRelations.Models.Rating.WithoutImages, item => item , null);
+    }
+
+    [HttpGet("{User_id}/User_Ratings/{Rating_id}")]
+    [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult /*Rating*/ GetUser_RatingById(int User_id, int Rating_id)
+    {
+      var session = HttpContext.Get<LoggableEntities>(_context);
+      var current_User = session == null ? null : session.User;
+      var allowed_sources = ApiTokenValid ? _context.User : _context.User;
+      var source = allowed_sources.FirstOrDefault(s => s.Id == User_id);
+      var can_view_by_token = ApiTokenValid || true;
+      if (source == null || !can_view_by_token)
+        return NotFound();
+      var allowed_targets = ApiTokenValid ? _context.Rating : _context.Rating;
+      var item = (from link in _context.User_Rating
+              where link.UserId == source.Id
+              from target in allowed_targets
+              where link.RatingId == target.Id
+              select target).OrderBy(i => i.CreatedDate)
+              .Select(SimpleModelsAndRelations.Models.Rating.FilterViewableAttributes(current_User))
+              .FirstOrDefault(t => t.Id == Rating_id);
+      if (item == null) return NotFound();
+      item = SimpleModelsAndRelations.Models.Rating.WithoutImages(item);
+      return Ok(item);
+    }
+
+    [RestrictToUserType(new string[] {"*"})]
+    [HttpGet("{User_id}/unlinked/User_Ratings")]
+    [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+    public Page<Rating> GetUnlinkedUser_Ratings(int User_id, [FromQuery] int page_index, [FromQuery] int page_size = 25)
+    {
+      var session = HttpContext.Get<LoggableEntities>(_context);
+      var current_User = session == null ? null : session.User;
+      var allowed_sources = ApiTokenValid ? _context.User : _context.User;
+      var source = allowed_sources.FirstOrDefault(s => s.Id == User_id);
+      var can_create_by_token = ApiTokenValid || true;
+      var can_delete_by_token = ApiTokenValid || true || true;
+      var can_link_by_token = ApiTokenValid || true;
+      var can_view_by_token = ApiTokenValid || true;
+      if (source == null || !can_view_by_token)
+        return Enumerable.Empty<SimpleModelsAndRelations.Models.Rating>()
+              .AsQueryable()
+              .Select(SimpleModelsAndRelations.Models.Rating.FilterViewableAttributes(current_User))
+              .Select(t => Tuple.Create(t, false))
+              .Paginate(can_create_by_token, can_delete_by_token, can_link_by_token, page_index, page_size, SimpleModelsAndRelations.Models.Rating.WithoutImages, item => item);
+      var allowed_targets = ApiTokenValid ? _context.Rating : _context.Rating;
+      var editable_targets = ApiTokenValid ? _context.Rating : (_context.Rating);
+      var can_edit_by_token = ApiTokenValid || true;
+      return (from target in allowed_targets
+              where !_context.User_Rating.Any(link => link.UserId == source.Id && link.RatingId == target.Id) &&
+              (from link in _context.User_Rating
+                where link.RatingId == target.Id
+                from s in _context.User
+                where link.UserId == s.Id
+                select s).Count() < 1
+              select target).OrderBy(i => i.CreatedDate)
+              .Select(SimpleModelsAndRelations.Models.Rating.FilterViewableAttributes(current_User))
+              .Select(t => Tuple.Create(t, can_edit_by_token && editable_targets.Any(et => et.Id == t.Id)))
+              .Paginate(can_create_by_token, can_delete_by_token, can_link_by_token, page_index, page_size, SimpleModelsAndRelations.Models.Rating.WithoutImages, item => item);
+    }
+
+    bool CanAdd_User_User_Ratings(User source) {
+      return true;
+    }
+
+    bool CanAdd_Rating_User_Ratings(Rating target) {
+      return (from link in _context.User_Rating
+           where link.RatingId == target.Id
+           from source in _context.User
+           where link.UserId == source.Id
+           select source).Count() < 1;
+    }
+
+    [RestrictToUserType(new string[] {})]
+    [HttpPost("{User_id}/User_Ratings_Rating")]
+    public IActionResult /*IEnumerable<Rating>*/ CreateNewUser_Rating_Rating(int User_id)
+    {
+      var session = HttpContext.Get<LoggableEntities>(_context);
+      var current_User = session == null ? null : session.User;
+      var allowed_sources = ApiTokenValid ? _context.User : _context.User;
+      var source = allowed_sources.FirstOrDefault(s => s.Id == User_id);
+      var can_create_by_token = ApiTokenValid || true;
+      if (source == null || !can_create_by_token)
+        return Unauthorized();
+        // throw new Exception("Cannot create item in relation User_Ratings");
+      var can_link_by_token = ApiTokenValid || true;
+      if (!CanAdd_User_User_Ratings(source) || !can_link_by_token)
+        return Unauthorized();
+        //throw new Exception("Cannot add item to relation User_Ratings");
+      var new_target = new Rating() { CreatedDate = DateTime.Now, Id = _context.Rating.Max(i => i.Id) + 1 };
+      _context.Rating.Add(new_target);
+      _context.SaveChanges();
+      var link = new User_Rating() { Id = _context.User_Rating.Max(l => l.Id) + 1, UserId = source.Id, RatingId = new_target.Id };
+      _context.User_Rating.Add(link);
+      _context.SaveChanges();
+      return Ok(new Rating[] { new_target });
+    }
+
+    [RestrictToUserType(new string[] {"*"})]
+    [HttpPost("{User_id}/User_Ratings/{Rating_id}")]
+    public IActionResult LinkWithUser_Rating(int User_id, int Rating_id)
+    {
+      var session = HttpContext.Get<LoggableEntities>(_context);
+      var current_User = session == null ? null : session.User;
+      var allowed_sources = _context.User;
+      var source = allowed_sources.FirstOrDefault(s => s.Id == User_id);
+      var allowed_targets = _context.Rating;
+      var target = allowed_targets.FirstOrDefault(s => s.Id == Rating_id);
+      var can_edit_source_by_token = ApiTokenValid || true;
+      var can_edit_target_by_token = ApiTokenValid || true;
+      var can_link_by_token = ApiTokenValid || true;
+      if (!CanAdd_User_User_Ratings(source) || !can_link_by_token || !can_edit_source_by_token || !can_edit_target_by_token)
+        return BadRequest();
+        // throw new Exception("Cannot add item to relation User_Ratings");
+      if (!CanAdd_Rating_User_Ratings(target))
+        return BadRequest();
+        // throw new Exception("Cannot add item to relation User_Ratings");
+      var link = new User_Rating() { Id = _context.User_Rating.Max(i => i.Id) + 1, UserId = source.Id, RatingId = target.Id };
+      _context.User_Rating.Add(link);
+      _context.SaveChanges();
+      return Ok();
+    }
+    [RestrictToUserType(new string[] {"*"})]
+    [HttpDelete("{User_id}/User_Ratings/{Rating_id}")]
+    public IActionResult UnlinkFromUser_Rating(int User_id, int Rating_id)
+    {
+      var session = HttpContext.Get<LoggableEntities>(_context);
+      var current_User = session == null ? null : session.User;
+      var allowed_sources = _context.User;
+      var source = allowed_sources.FirstOrDefault(s => s.Id == User_id);
+      var allowed_targets = _context.Rating;
+      var target = allowed_targets.FirstOrDefault(s => s.Id == Rating_id);
+      var link = _context.User_Rating.FirstOrDefault(l => l.UserId == source.Id && l.RatingId == target.Id);
+
+      var can_edit_source_by_token = ApiTokenValid || true;
+      var can_edit_target_by_token = ApiTokenValid || true;
+      var can_unlink_by_token = ApiTokenValid || true;
+      if (!can_unlink_by_token || !can_edit_source_by_token || !can_edit_target_by_token) return Unauthorized(); // throw new Exception("Cannot remove item from relation User_Ratings");
+      _context.User_Rating.Remove(link);
+      _context.SaveChanges();
+      return Ok();
+    }
+    [RestrictToUserType(new string[] {"*"})]
     [HttpGet("{id}")]
     [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult /*ItemWithEditable<UserViewData>*/ GetById(int id)

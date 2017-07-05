@@ -55,6 +55,7 @@ namespace SimpleModelsAndRelations.Models{
     public DbSet<Recipe_Rating> Recipe_Rating { get; set; }
     public DbSet<User_RecommendationPage> User_RecommendationPage { get; set; }
     public DbSet<RecommendationPage_Recipe> RecommendationPage_Recipe { get; set; }
+    public DbSet<User_Rating> User_Rating { get; set; }
     public DbSet<Session> Session { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {

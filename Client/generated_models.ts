@@ -224,3 +224,12 @@ export type RecommendationPage_Recipe = {
   }
   
 
+export type User_Rating = {
+    Id : number
+    CreatedDate:Moment.Moment
+    UserId : number
+  RatingId : number
+    
+  }
+  
+

@@ -253,6 +253,22 @@ using System.IO;
         !_context.RecommendationPage.Any(s => s.Id == l.RecommendationPageId)));
       _context.SaveChanges();
     
+
+      _context.User_Rating.RemoveRange(_context.User_Rating.Where(l =>
+        l.UserId == null ||
+        l.RatingId == null ||
+        !_context.User.Any(s => s.Id == l.UserId) ||
+        !_context.Rating.Any(s => s.Id == l.RatingId)));
+      _context.SaveChanges();
+    
+
+      _context.User_Rating.RemoveRange(_context.User_Rating.Where(l =>
+        l.RatingId == null ||
+        l.UserId == null ||
+        !_context.Rating.Any(s => s.Id == l.RatingId) ||
+        !_context.User.Any(s => s.Id == l.UserId)));
+      _context.SaveChanges();
+    
     }
     */
     

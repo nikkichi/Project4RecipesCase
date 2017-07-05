@@ -244,10 +244,12 @@ namespace SimpleModelsAndRelations.Models
     public User() {
       User_Recipes = new HashSet<User_Recipe>();
       User_RecommendationPages = new HashSet<User_RecommendationPage>();
+      User_Ratings = new HashSet<User_Rating>();
     }
     public int Id {get;set;}
     [Newtonsoft.Json.JsonIgnore] public virtual ICollection<User_Recipe> User_Recipes {get;set;}
     [Newtonsoft.Json.JsonIgnore] public virtual ICollection<User_RecommendationPage> User_RecommendationPages {get;set;}
+    [Newtonsoft.Json.JsonIgnore] public virtual ICollection<User_Rating> User_Ratings {get;set;}
     [Newtonsoft.Json.JsonProperty(ItemConverterType = typeof(Newtonsoft.Json.Converters.JavaScriptDateTimeConverter))] public DateTime CreatedDate{ get; set; }
         public string Username {get;set;}
     public string Language {get;set;}
@@ -505,9 +507,11 @@ namespace SimpleModelsAndRelations.Models
   public partial class Rating: IEntity {
     public Rating() {
       Recipe_Ratings = new HashSet<Recipe_Rating>();
+      User_Ratings = new HashSet<User_Rating>();
     }
     public int Id {get;set;}
     [Newtonsoft.Json.JsonIgnore] public virtual ICollection<Recipe_Rating> Recipe_Ratings {get;set;}
+    [Newtonsoft.Json.JsonIgnore] public virtual ICollection<User_Rating> User_Ratings {get;set;}
     [Newtonsoft.Json.JsonProperty(ItemConverterType = typeof(Newtonsoft.Json.Converters.JavaScriptDateTimeConverter))] public DateTime CreatedDate{ get; set; }
         public int Number {get;set;}
     
@@ -707,6 +711,30 @@ namespace SimpleModelsAndRelations.Models
       return self => self;
     }
     static public Func<RecommendationPage_Recipe,RecommendationPage_Recipe> FilterViewableAttributesLocal(User current_User) {
+      return self => self;
+    }
+    
+  }
+
+  
+  
+
+  public partial class User_Rating {
+    public User_Rating() {
+      
+    }
+    public int Id {get;set;}
+    
+    
+        [Newtonsoft.Json.JsonIgnore] public virtual User User {get;set;}
+    public int UserId {get;set;}
+    [Newtonsoft.Json.JsonIgnore] public virtual Rating Rating {get;set;}
+    public int RatingId {get;set;}
+    
+    static public Expression<Func<User_Rating,User_Rating>> FilterViewableAttributes(User current_User) {
+      return self => self;
+    }
+    static public Func<User_Rating,User_Rating> FilterViewableAttributesLocal(User current_User) {
       return self => self;
     }
     

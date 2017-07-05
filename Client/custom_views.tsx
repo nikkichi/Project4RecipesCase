@@ -12,14 +12,29 @@ type IComponentState = { i : number, j : number, recipes : Immutable.List<Models
 type BrowseComponentProps = {props:ViewUtils.EntityComponentProps<Models.Browse>}
 type BrowseComponentState = { i : number, j : number, recipes : Immutable.List<Models.Recipe>}
 
-/**async function getRating (user_id: number): Promise<Immutable.List<number>> {
-    let res = await fetch ('customcontroller/getrating/${user_id}', {method:'get', credentials: 'include', headers: {'content-type': 'application/json'}})
-    let json = await res.json()
-    Api.link_User_User_Recipes() //how to add linked recipes
-    Api.get_User_User_Recipes() //return all linked recipes
+// async function getRating (user_id: number): Promise<Immutable.List<number>> {
+//     let res = await fetch ('customcontroller/getrating/${user_id}', {method:'get', credentials: 'include', headers: {'content-type': 'application/json'}})
+//     let json = await res.json()
+//     Api.link_User_User_Recipes() //how to add linked recipes
+//     Api.get_User_User_Recipes() //return all linked recipes
     
-    return Immutable.List<number>(json)
-}**/
+//     return Immutable.List<number>(json)
+// }
+
+export async function get_userrating(rating: number, recipe_id:number, user_id:number)  {
+    await fetch(`/api/v1/CustomController/UserRating/${rating}/${recipe_id}/${user_id}`, { method: 'post', credentials: 'include', headers: { 'content-type': 'application/json' } })
+}
+export async function set_rating(rating: number, recipe: number, user: number) {
+    let res = await fetch(`/api/v1/CustomController/UserRating/${rating}/${recipe}/${user}`, { method: 'post', credentials: 'include', headers: { 'content-type': 'application/json' } })
+    console.log("set correct rating", rating)
+}
+export async function get_findrating(id: number,idRating: number, idRecipe: number): Promise<{ ratings: Immutable.List<Models.Rating> }> {
+    let res = await fetch(`/api/v1/CustomController/FindRating/${id}/${idRating}/${idRecipe}`, { method: 'get', credentials: 'include', headers: { 'content-type': 'application/json' } })
+    let json = await res.json()
+    console.log(idRating);
+    console.log("received correct rating" , json)
+    return { ratings: Immutable.List<Models.Rating>(json) }
+}
 
 type Rate = {value : number, state:boolean}
 

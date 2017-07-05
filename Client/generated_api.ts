@@ -968,6 +968,56 @@ export async function unlink_User_User_RecommendationPages(source:Models.User, t
 }
 
 
+export async function get_User_User_Ratings(source:Models.User, page_index:number, page_size:number, query_string:string = null) : Promise<RawPage<Models.Rating>> {
+  let res = await fetch(`/api/v1/User/${source.Id}/User_Ratings?page_index=${page_index}&page_size=${page_size}${(query_string != null ? "&search_query=" + query_string : "")}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return make_page<Models.Rating>(json, e => { return {...e, }})
+}
+
+export async function get_User_User_Ratings_Rating(source:Models.User, page_index:number, page_size:number, id:number) : Promise<Models.Rating> {
+  let res = await fetch(`/api/v1/User/${source.Id}/User_Ratings/${id}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return {...json, CreatedDate: Moment.utc(json.CreatedDate),  } as Models.Rating
+}
+
+export async function get_User_User_Ratings_Rating_by_id(source:Models.User, id:number) : Promise<Models.Rating> {
+  let res = await fetch(`/api/v1/User/${source.Id}/User_Ratings/${id}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return {...json, CreatedDate: Moment.utc(json.CreatedDate),  } as Models.Rating
+}
+
+
+export async function get_unlinked_User_User_Ratings(source:Models.User, page_index:number, page_size:number) : Promise<RawPage<Models.Rating>> {
+  let res = await fetch(`/api/v1/User/${source.Id}/unlinked/User_Ratings?page_index=${page_index}&page_size=${page_size}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return make_page<Models.Rating>(json, e => { return {...e, }})
+}
+
+    
+export async function create_linked_User_User_Ratings_Rating(source:Models.User) : Promise<Models.Rating[]> {
+  let res = await fetch(`/api/v1/User/${source.Id}/User_Ratings_Rating`, { method: 'post', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return json.map(e => { return {...e, CreatedDate: Moment.utc(e.CreatedDate),  }}) as Models.Rating[]
+}
+
+export async function link_User_User_Ratings(source:Models.User, target:Models.Rating) : Promise<void> {
+  let res = await fetch(`/api/v1/User/${source.Id}/User_Ratings/${target.Id}`, { method: 'post', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  return
+}
+
+export async function unlink_User_User_Ratings(source:Models.User, target:Models.Rating) : Promise<void> {
+  let res = await fetch(`/api/v1/User/${source.Id}/User_Ratings/${target.Id}`, { method: 'delete', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  return
+}
+
+
 export async function create_User() : Promise<Models.User> {
   let res = await fetch(`/api/v1/User/`,
     { method: 'post', credentials: 'include', headers:{'content-type': 'application/json',
@@ -1914,6 +1964,56 @@ export async function link_Rating_Recipe_Ratings(source:Models.Rating, target:Mo
 
 export async function unlink_Rating_Recipe_Ratings(source:Models.Rating, target:Models.Recipe) : Promise<void> {
   let res = await fetch(`/api/v1/Rating/${source.Id}/Recipe_Ratings/${target.Id}`, { method: 'delete', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  return
+}
+
+
+export async function get_Rating_User_Ratings(source:Models.Rating, page_index:number, page_size:number, query_string:string = null) : Promise<RawPage<Models.User>> {
+  let res = await fetch(`/api/v1/Rating/${source.Id}/User_Ratings?page_index=${page_index}&page_size=${page_size}${(query_string != null ? "&search_query=" + query_string : "")}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return make_page<Models.User>(json, e => { return {...e, }})
+}
+
+export async function get_Rating_User_Ratings_User(source:Models.Rating, page_index:number, page_size:number, id:number) : Promise<Models.User> {
+  let res = await fetch(`/api/v1/Rating/${source.Id}/User_Ratings/${id}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return {...json, CreatedDate: Moment.utc(json.CreatedDate),  } as Models.User
+}
+
+export async function get_Rating_User_Ratings_User_by_id(source:Models.Rating, id:number) : Promise<Models.User> {
+  let res = await fetch(`/api/v1/Rating/${source.Id}/User_Ratings/${id}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return {...json, CreatedDate: Moment.utc(json.CreatedDate),  } as Models.User
+}
+
+
+export async function get_unlinked_Rating_User_Ratings(source:Models.Rating, page_index:number, page_size:number) : Promise<RawPage<Models.User>> {
+  let res = await fetch(`/api/v1/Rating/${source.Id}/unlinked/User_Ratings?page_index=${page_index}&page_size=${page_size}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return make_page<Models.User>(json, e => { return {...e, }})
+}
+
+    
+export async function create_linked_Rating_User_Ratings_User(source:Models.Rating) : Promise<Models.User[]> {
+  let res = await fetch(`/api/v1/Rating/${source.Id}/User_Ratings_User`, { method: 'post', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return json.map(e => { return {...e, CreatedDate: Moment.utc(e.CreatedDate),  }}) as Models.User[]
+}
+
+export async function link_Rating_User_Ratings(source:Models.Rating, target:Models.User) : Promise<void> {
+  let res = await fetch(`/api/v1/Rating/${source.Id}/User_Ratings/${target.Id}`, { method: 'post', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  return
+}
+
+export async function unlink_Rating_User_Ratings(source:Models.Rating, target:Models.User) : Promise<void> {
+  let res = await fetch(`/api/v1/Rating/${source.Id}/User_Ratings/${target.Id}`, { method: 'delete', credentials: 'include', headers:{'content-type': 'application/json'} })
   if (!res.ok) throw Error(res.statusText)
   return
 }

@@ -527,22 +527,25 @@ namespace SimpleModelsAndRelations.Data
           
           
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 27,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -50,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -89,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 25,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -79,   });
-
-            
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -99,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -59,   });
 
             
             _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 88,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 57,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 59,   });
+
+            
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -47,   });
+
+            
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 33,   });
 
           foreach (var x in _Rating)
           {
@@ -723,6 +726,8 @@ namespace SimpleModelsAndRelations.Data
 
             new User_Recipe { UserId = Users[r.Next(Users.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
 
+            new User_Recipe { UserId = Users[r.Next(Users.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
         };
         foreach (var x in _User_Recipe)
         {
@@ -736,6 +741,14 @@ namespace SimpleModelsAndRelations.Data
         var _Recipe_Rating = new Recipe_Rating[]
         {
             
+            new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
             new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
 
             new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
@@ -799,6 +812,10 @@ namespace SimpleModelsAndRelations.Data
 
             new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
 
+            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
+
+            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
+
         };
         foreach (var x in _User_RecommendationPage)
         {
@@ -834,6 +851,12 @@ namespace SimpleModelsAndRelations.Data
 
             new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
 
+            new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
+            new RecommendationPage_Recipe { RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
+
         };
         foreach (var x in _RecommendationPage_Recipe)
         {
@@ -842,6 +865,43 @@ namespace SimpleModelsAndRelations.Data
         context.SaveChanges();
       }
       var RecommendationPage_Recipe = context.RecommendationPage_Recipe.ToArray();
+      if (!context.User_Rating.Any())
+      {
+        var _User_Rating = new User_Rating[]
+        {
+            
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+        };
+        foreach (var x in _User_Rating)
+        {
+          context.User_Rating.Add(x);
+        }
+        context.SaveChanges();
+      }
+      var User_Rating = context.User_Rating.ToArray();
 
       InitializePagesAndSingletons(context);
     }

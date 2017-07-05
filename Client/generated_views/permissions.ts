@@ -385,4 +385,13 @@ export let can_edit_RecommendationPage_Recipe = (current_User:Models.User) => tr
 export let can_delete_RecommendationPage_Recipe = (current_User:Models.User) => true
   
 
+export let can_view_User_Rating = (current_User:Models.User) => true
+
+export let can_create_User_Rating = (current_User:Models.User) => true
+
+export let can_edit_User_Rating = (current_User:Models.User) => true
+
+export let can_delete_User_Rating = (current_User:Models.User) => true
+  
+
 

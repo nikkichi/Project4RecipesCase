@@ -372,6 +372,11 @@
         "source": "RecommendationPage",
         "target": "Recipe",
         "sort": "N-N"
+        },
+        {
+        "source": "User",
+        "target": "Rating",
+        "sort": "1-N"
         }
     ]
     }
