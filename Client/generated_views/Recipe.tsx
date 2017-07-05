@@ -365,11 +365,11 @@ export function render_Recipe_Picture_editable_minimised(self:RecipeContext) : J
           <div className="model__attribute picture">
   <label className="attribute-label attribute-label-picture">{i18next.t(`Recipe:Picture`, {context: self.props.inline ? "inline" : ""})}</label>
   <div className="model__attribute-content">
-    { Components.Image(
+    { Components.String(
         self.props.is_editable && Permissions.can_edit_Recipe(self.props.current_User) && Permissions.can_edit_Recipe_Picture(self.props.current_User),
         self.props.mode,
-        () => Api.get_Recipe_Picture(self.props.entity),
-        (new_src:string) => Api.update_Recipe_Picture(self.props.entity, new_src)) }
+        () => self.props.entity.Picture,
+        v => self.props.set_entity({...self.props.entity, Picture:v})) } 
   </div>
 </div>
 }
@@ -430,11 +430,11 @@ export function render_Recipe_Picture_editable_maximised(self:RecipeContext) : J
           <div className="model__attribute picture">
   <label className="attribute-label attribute-label-picture">{i18next.t(`Recipe:Picture`, {context: self.props.inline ? "inline" : ""})}</label>
   <div className="model__attribute-content">
-    { Components.Image(
+    { Components.String(
         self.props.is_editable && Permissions.can_edit_Recipe(self.props.current_User) && Permissions.can_edit_Recipe_Picture(self.props.current_User),
         self.props.mode,
-        () => Api.get_Recipe_Picture(self.props.entity),
-        (new_src:string) => Api.update_Recipe_Picture(self.props.entity, new_src)) }
+        () => self.props.entity.Picture,
+        v => self.props.set_entity({...self.props.entity, Picture:v})) } 
   </div>
 </div>
 }
@@ -679,11 +679,11 @@ export function render_Recipe_Name_minimised(self:RecipeContext) : JSX.Element {
       return !Permissions.can_view_Recipe_Picture(self.props.current_User) ? null : <div className="model__attribute picture">
   <label className="attribute-label attribute-label-picture">{i18next.t(`Recipe:Picture`, {context: self.props.inline ? "inline" : ""})}</label>
   <div className="model__attribute-content">
-    { Components.Image(
+    { Components.String(
         self.props.is_editable && Permissions.can_edit_Recipe(self.props.current_User) && Permissions.can_edit_Recipe_Picture(self.props.current_User),
         self.props.mode,
-        () => Api.get_Recipe_Picture(self.props.entity),
-        (new_src:string) => Api.update_Recipe_Picture(self.props.entity, new_src)) }
+        () => self.props.entity.Picture,
+        v => self.props.set_entity({...self.props.entity, Picture:v})) } 
   </div>
 </div>
       
@@ -729,11 +729,11 @@ export function render_Recipe_Name_maximised(self:RecipeContext) : JSX.Element {
         return !Permissions.can_view_Recipe_Picture(self.props.current_User) ? null : <div className="model__attribute picture">
   <label className="attribute-label attribute-label-picture">{i18next.t(`Recipe:Picture`, {context: self.props.inline ? "inline" : ""})}</label>
   <div className="model__attribute-content">
-    { Components.Image(
+    { Components.String(
         self.props.is_editable && Permissions.can_edit_Recipe(self.props.current_User) && Permissions.can_edit_Recipe_Picture(self.props.current_User),
         self.props.mode,
-        () => Api.get_Recipe_Picture(self.props.entity),
-        (new_src:string) => Api.update_Recipe_Picture(self.props.entity, new_src)) }
+        () => self.props.entity.Picture,
+        v => self.props.set_entity({...self.props.entity, Picture:v})) } 
   </div>
 </div>
 }

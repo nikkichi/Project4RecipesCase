@@ -81,8 +81,6 @@ namespace SimpleModelsAndRelations.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<string>("Test");
-
                     b.HasKey("Id");
 
                     b.ToTable("Homepage");
@@ -312,6 +310,24 @@ namespace SimpleModelsAndRelations.Migrations
                     b.ToTable("User");
                 });
 
+            modelBuilder.Entity("SimpleModelsAndRelations.Models.User_Rating", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("RatingId");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RatingId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("User_Rating");
+                });
+
             modelBuilder.Entity("SimpleModelsAndRelations.Models.User_Recipe", b =>
                 {
                     b.Property<int>("Id")
@@ -531,6 +547,19 @@ namespace SimpleModelsAndRelations.Migrations
                     b.HasOne("SimpleModelsAndRelations.Models.RecommendationPage", "RecommendationPage")
                         .WithMany("RecommendationPage_Recipes")
                         .HasForeignKey("RecommendationPageId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SimpleModelsAndRelations.Models.User_Rating", b =>
+                {
+                    b.HasOne("SimpleModelsAndRelations.Models.Rating", "Rating")
+                        .WithMany("User_Ratings")
+                        .HasForeignKey("RatingId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("SimpleModelsAndRelations.Models.User", "User")
+                        .WithMany("User_Ratings")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

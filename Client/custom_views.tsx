@@ -12,34 +12,20 @@ type IComponentState = { i : number, j : number, recipes : Immutable.List<Models
 type BrowseComponentProps = {props:ViewUtils.EntityComponentProps<Models.Browse>}
 type BrowseComponentState = { i : number, j : number, recipes : Immutable.List<Models.Recipe>}
 
-// async function getRating (user_id: number): Promise<Immutable.List<number>> {
-//     let res = await fetch ('customcontroller/getrating/${user_id}', {method:'get', credentials: 'include', headers: {'content-type': 'application/json'}})
-//     let json = await res.json()
-//     Api.link_User_User_Recipes() //how to add linked recipes
-//     Api.get_User_User_Recipes() //return all linked recipes
-    
-//     return Immutable.List<number>(json)
-// }
-
-export async function get_userrating(rating: number, recipe_id:number, user_id:number)  {
-    await fetch(`/api/v1/CustomController/UserRating/${rating}/${recipe_id}/${user_id}`, { method: 'post', credentials: 'include', headers: { 'content-type': 'application/json' } })
-}
 export async function set_rating(rating: number, recipe: number, user: number) {
-    let res = await fetch(`/api/v1/CustomController/UserRating/${rating}/${recipe}/${user}`, { method: 'post', credentials: 'include', headers: { 'content-type': 'application/json' } })
-    console.log("set correct rating", rating)
+ let res = await fetch(`/api/v1/CustomController/UserRating/${rating}/${recipe}/${user}`, { method: 'post', credentials: 'include', headers: { 'content-type': 'application/json' } })    
+ console.log("set correct rating", rating)
 }
-export async function get_findrating(id: number,idRating: number, idRecipe: number): Promise<{ ratings: Immutable.List<Models.Rating> }> {
-    let res = await fetch(`/api/v1/CustomController/FindRating/${id}/${idRating}/${idRecipe}`, { method: 'get', credentials: 'include', headers: { 'content-type': 'application/json' } })
+
+export async function get_rating( recipe: number, user: number): Promise<Models.Rating> {
+    let res = await fetch(`/api/v1/CustomController/FindRating/${recipe}/${user}`, { method: 'get', credentials: 'include', headers: { 'content-type': 'application/json' } })
     let json = await res.json()
-    console.log(idRating);
-    console.log("received correct rating" , json)
-    return { ratings: Immutable.List<Models.Rating>(json) }
+    console.log("received correct rating", json)
+    return json
 }
 
 type Rate = {value : number, state:boolean}
-
-
-type StarsComponentProps = {}
+type StarsComponentProps = { recipe: Models.Recipe, user: Models.User}
 type StarsComponentState = {stars:Immutable.List<Rate>}
 
 export class FavComponent extends React.Component<{props: Models.User,recipe: Models.Recipe},{bookmark: boolean, fav: Immutable.List<Models.Recipe>}> {
@@ -92,6 +78,7 @@ export class FavComponent extends React.Component<{props: Models.User,recipe: Mo
                                                                                 borderRadius: 10,
                                                                                 color: 'black',
                                                                                 }}
+                                                                                
                                                 marginHeight={10} marginWidth={10} width={10} height={10}>Bookmark</button>
         </div>
     }
@@ -102,9 +89,19 @@ export class StarsComponent extends React.Component<StarsComponentProps, StarsCo
     super(props, context)
     this.state = { stars:Immutable.List<Rate>([{value : 1, state:false}, {value : 2, state:false}, {value : 3, state:false}, {value : 4, state:false}, {value : 5, state:false}]) }
   }
+
+  componentWillMount(){
+        console.log("rating is mounting")
+        get_rating(this.props.recipe.Id, this.props.user.Id).then(rating => this.setState(
+            {
+                ...this.state, stars: this.state.stars.map(s =>{{console.log("The rating is downloading", rating)} return{value: s.value,  state : (s.value <= rating.Number) } }).toList()
+                
+           }))
+
+   }
   
   render(){
-    return <div>{this.state.stars.map(star => <button onClick={() => this.setState({...this.state, stars: this.state.stars.map(star1 => {if(star1.value <= star.value) return {...star1, state: true}; else return {...star1, state: false}}).toList()})}  
+    return <div>{this.state.stars.map(star => <button onClickCapture={() => this.setState({...this.state, stars: this.state.stars.map(star1 => {if(star1.value <= star.value) return {...star1, state: true}; else return {...star1, state: false}}).toList()})}  
                                                       style={star.state?{
                                                                           borderColor: '#08ABCE',
                                                                           backgroundColor: '#08ABCE',
@@ -118,6 +115,7 @@ export class StarsComponent extends React.Component<StarsComponentProps, StarsCo
                                                                           borderRadius: 15,
                                                                           color: '#08ABCE',
                                                                         }}
+                                                                        onClick = {()=> set_rating(star.value, this.props.recipe.Id, this.props.user.Id)}
                                                       marginHeight={10} marginWidth={10} width={10} height={10}>{star.value}</button>)} </div>
   }
 
@@ -237,6 +235,8 @@ export class RecipesComponent extends React.Component<{props: Models.User,recipe
     render() {
         return <div> <br />
             <h2>{this.props.recipe.Name}</h2>
+            <img src= {this.props.recipe.Picture} style={{width: "50%"}}/>
+            <br/>
                 {!this.state.is_expanded?<button onClick={()=>this.update_me(true)}>Show more...</button>:
                                          <button onClick={()=>this.update_me(false)}>Close </button>}
                 {this.state.is_expanded?<Info props={this.props.props} recipe={this.props.recipe} />:<span/>}
@@ -284,8 +284,10 @@ export class Info extends React.Component<{props: Models.User,recipe: Models.Rec
 
 
     render(){
+        console.log(this.props.recipe.Picture)
         if (this.props.props == undefined)
             return <div>
+                    {/*<img src= {this.props.recipe.Picture} style={{width: "40%"}}/>*/}
                     <div><h3>Ingredients</h3></div>
                     <div>{this.props.recipe.Ingredients}</div>
                     <br />
@@ -293,6 +295,7 @@ export class Info extends React.Component<{props: Models.User,recipe: Models.Rec
                     <div>{this.props.recipe.Description}</div>
                 </div>
         return <div>
+                    {/*<img src= {this.props.recipe.Picture} style={{width: "40%"}}/>            */}
                     <div><h3>Ingredients</h3></div>
                     <div>{this.props.recipe.Ingredients}</div>
                     <br />
@@ -300,7 +303,7 @@ export class Info extends React.Component<{props: Models.User,recipe: Models.Rec
                     <div>{this.props.recipe.Description}</div>
                     <br />
                     <div><h3>Rate</h3></div>
-                    <StarsComponent />
+                    <StarsComponent recipe= {this.props.recipe} user = {this.props.props}/> 
                     <br />
                     <FavComponent props={this.props.props} recipe={this.props.recipe}/>
                 </div>
@@ -370,34 +373,10 @@ export class BrowseComponent extends React.Component<{props:ViewUtils.EntityComp
     render(){
 
         return <div>
+            <div><h2>Search for recipes</h2></div>
                 <input value={this.state.SearchedQuery} onChange={event=>this.setState({...this.state, SearchedQuery: event.target.value})}/>
                 {this.state.Items.filter(item => item.Name.toLowerCase().includes(this.state.SearchedQuery.toLowerCase()))
                                  .map(item => <RecipesComponent props={this.props.props.current_User} recipe={item}/>)}
-            </div>
-    }
-}
-
-class ItemComponent extends React.Component<{title:string, ingredients:string, info:string}, {is_expanded:boolean}>{
-    constructor(props: {title:string, ingredients: string, info:string, is_expanded:boolean }, context)
-    {
-        super(props, context)
-        this.state = { is_expanded: false}
-    }     
-
-    update_me(value) {
-        this.setState({... this.state, is_expanded: value})
-    }
-
-    render(){
-        // if (this.props.props.current_User == undefined)
-        //     return <div>
-        //             <div><h2></h2></div>
-        //     </div>
-        return <div >
-                <span><h1>{this.props.title}</h1></span>
-                {this.state.is_expanded?<div><h2>Ingredients</h2>{this.props.ingredients}<br/><h2>Description</h2>{this.props.info}<br/><h2>Rate</h2><div><StarsComponent/></div><br/></div>:<span/>}
-                {!this.state.is_expanded?<button onClick={()=>this.update_me(true)}>+</button>:
-                                         <button onClick={()=>this.update_me(false)}>-</button>}
             </div>
     }
 }
@@ -428,7 +407,11 @@ export class Fav extends React.Component<{props:ViewUtils.EntityComponentProps<M
             return <div>
                     <div><h1>Log in first!</h1></div>
             </div>
-
+        if (this.state.favs.size == 0)
+            return <div>
+                <h1>Your favourite recipes:</h1> 
+                <div>You don't have any favourite recipes :^)</div>
+                </div>
         return <div>
             <h1>Your favourite recipes:</h1>
             <div>{this.state.favs.map(r => <RecipesComponent props={this.props.props.current_User} recipe={r}/>)}</div>

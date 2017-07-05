@@ -1296,39 +1296,6 @@ using System.IO;
         Editable = editable_items.Any(e => e.Id == item.Id) });
     }
     
-    [RestrictToUserType(new string[] {"*"})]
-    [HttpGet("{id}/Picture")]
-    [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult /*Container<string>*/ GetPictureById(int id)
-    {
-var session = HttpContext.Get<LoggableEntities>(_context);
-      var current_User = session == null ? null : session.User;
-      var allowed_items = ApiTokenValid ? _context.Recipe : _context.Recipe;
-      var full_item = allowed_items.FirstOrDefault(e => e.Id == id);
-      if (full_item == null) return NotFound();
-      var item = SimpleModelsAndRelations.Models.Recipe.FilterViewableAttributesLocal(current_User)(full_item);
-      return Ok(new Container<string> { Content = item.Picture });
-    }
-
-    [RestrictToUserType(new string[] {"*"})]
-    [HttpPut("{id}/Picture")]
-    [ValidateAntiForgeryToken]
-    public void ChangePicture(int id, [FromBody] Container<string> Picture)
-    {
-      var session = HttpContext.Get<LoggableEntities>(_context);
-      var current_User = session == null ? null : session.User;
-      var allowed_items = ApiTokenValid ? _context.Recipe : _context.Recipe;
-      if (!allowed_items.Any(i => i.Id == id)) return;
-      var item = new Recipe() { Id = id, Picture = Picture.Content };
-      _context.Recipe.Update(item);
-      
-      _context.Entry(item).Property(x => x.Name).IsModified = false;
-      _context.Entry(item).Property(x => x.Ingredients).IsModified = false;
-      _context.Entry(item).Property(x => x.Description).IsModified = false;
-      _context.Entry(item).Property(x => x.CreatedDate).IsModified = false;
-      _context.Entry(item).Property(x => x.Picture).IsModified = true;
-      _context.SaveChanges();
-    }
 
     [RestrictToUserType(new string[] {})]
     [HttpPost]
@@ -1364,7 +1331,6 @@ var session = HttpContext.Get<LoggableEntities>(_context);
         return Unauthorized();
         // throw new Exception("Unauthorized edit attempt");
       _context.Update(new_item);
-      _context.Entry(new_item).Property(x => x.Picture).IsModified = false;
       _context.Entry(new_item).Property(x => x.CreatedDate).IsModified = false;
       _context.SaveChanges();
       return Ok();

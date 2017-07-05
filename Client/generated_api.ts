@@ -1596,7 +1596,7 @@ export async function create_Recipe() : Promise<Models.Recipe> {
 
 export async function update_Recipe(item:Models.Recipe) : Promise<void> {
   let res = await fetch(`/api/v1/Recipe/`, { method: 'put',
-      body: JSON.stringify({...item, CreatedDate:undefined, Picture:""}), credentials: 'include', headers:{'content-type': 'application/json', 'X-XSRF-TOKEN': (document.getElementsByName("__RequestVerificationToken")[0] as any).value } })
+      body: JSON.stringify({...item, CreatedDate:undefined, }), credentials: 'include', headers:{'content-type': 'application/json', 'X-XSRF-TOKEN': (document.getElementsByName("__RequestVerificationToken")[0] as any).value } })
   if (!res.ok) throw Error(res.statusText)
   return
 }
@@ -1624,18 +1624,6 @@ export async function get_Recipes(page_index:number, page_size:number, search_qu
 }
 
 
-export async function get_Recipe_Picture(item:Models.Recipe) : Promise<string> {
-  let res = await fetch(`/api/v1/Recipe/${item.Id}/Picture`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
-  if (!res.ok) throw Error(res.statusText)
-  let json = await res.json()
-  return json.Content
-}
-
-export async function update_Recipe_Picture(item:Models.Recipe, new_src:string) : Promise<void> {
-  let res = await fetch(`/api/v1/Recipe/${item.Id}/Picture`, { method: 'put', body: JSON.stringify({ Content: new_src }), credentials: 'include', headers:{'content-type': 'application/json', 'X-XSRF-TOKEN': (document.getElementsByName("__RequestVerificationToken")[0] as any).value } })
-  if (!res.ok) throw Error(res.statusText)
-  return
-}
 
 
 

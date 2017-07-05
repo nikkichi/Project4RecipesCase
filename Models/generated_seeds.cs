@@ -244,6 +244,12 @@ namespace SimpleModelsAndRelations.Data
             
             _RecommendationPage.Add(new RecommendationPage { CreatedDate = DateTime.Now,   });
 
+            
+            _RecommendationPage.Add(new RecommendationPage { CreatedDate = DateTime.Now,   });
+
+            
+            _RecommendationPage.Add(new RecommendationPage { CreatedDate = DateTime.Now,   });
+
           foreach (var x in _RecommendationPage)
           {
             context.RecommendationPage.Add(x);
@@ -374,34 +380,34 @@ namespace SimpleModelsAndRelations.Data
           
           
             
-            _Recipe.Add(new Recipe { Id = 1, CreatedDate = DateTime.Now, Name = "Flat Iron Steak Simplicity!", Ingredients = "2 (8 ounce) flat iron steaks, 1/2 teaspoon lemon pepper seasoning, or to taste ,1/2 teaspoon onion powder, or to taste, 1/2 teaspoon garlic powder, or to taste", Description = "Season the steaks with lemon pepper, onion powder and garlic powder on both sides. Wrap in plastic wrap and marinate for at least 2 hours in the refrigerator. Preheat the grill for medium-high heat and allow the steaks to come to room temperature. Unwrap steaks and place on the preheated grill. Cook to your desired degree of doneness, about 3 minutes per side for medium rare. Allow steaks to rest for a few minutes before serving.", Picture = "",   });
+            _Recipe.Add(new Recipe { Id = 1, CreatedDate = DateTime.Now, Name = "Flat Iron Steak Simplicity!", Ingredients = "2 (8 ounce) flat iron steaks, 1/2 teaspoon lemon pepper seasoning, or to taste ,1/2 teaspoon onion powder, or to taste, 1/2 teaspoon garlic powder, or to taste", Description = "Season the steaks with lemon pepper, onion powder and garlic powder on both sides. Wrap in plastic wrap and marinate for at least 2 hours in the refrigerator. Preheat the grill for medium-high heat and allow the steaks to come to room temperature. Unwrap steaks and place on the preheated grill. Cook to your desired degree of doneness, about 3 minutes per side for medium rare. Allow steaks to rest for a few minutes before serving.", Picture = "http://www.lifesambrosia.com/wp-content/uploads/grilled-balsamic-and-rosemary-flat-iron-steak-FB2.jpg",   });
 
             
-            _Recipe.Add(new Recipe { Id = 2, CreatedDate = DateTime.Now, Name = "Quick Chicken Nuggets!", Ingredients = " 1 cup bread crumbs, 1/2 teaspoon garlic powder, 1/2 teaspoon dried thyme, 1/4 cup Dijon mustard, 1/3 cup light mayonnaise, 1 1/2 pounds chicken tenders, cut into 1-inch pieces, 3/4 pound green beans, washed, trimmed and steamed.", Description = "Heat oven to broil. Coat baking rack with nonstick cooking spray. Place rack over baking sheet; set aside. Stir together bread crumbs, garlic powder and thyme in a pie plate; set aside. Stir together mustard and mayonnaise. Reserve about 1/2 cup of mustard mixture for dipping sauce. Brush chicken pieces with remaining mustard mix; place chicken in pie plate with bread crumb mixture, spooning crumbs on top of pieces and pressing to adhere. Transfer to prepared baking rack. Broil for 10 minutes or until cooked through. Serve with reserved dipping sauce and green beans on the side.", Picture = "",   });
+            _Recipe.Add(new Recipe { Id = 2, CreatedDate = DateTime.Now, Name = "Quick Chicken Nuggets!", Ingredients = " 1 cup bread crumbs, 1/2 teaspoon garlic powder, 1/2 teaspoon dried thyme, 1/4 cup Dijon mustard, 1/3 cup light mayonnaise, 1 1/2 pounds chicken tenders, cut into 1-inch pieces, 3/4 pound green beans, washed, trimmed and steamed.", Description = "Heat oven to broil. Coat baking rack with nonstick cooking spray. Place rack over baking sheet; set aside. Stir together bread crumbs, garlic powder and thyme in a pie plate; set aside. Stir together mustard and mayonnaise. Reserve about 1/2 cup of mustard mixture for dipping sauce. Brush chicken pieces with remaining mustard mix; place chicken in pie plate with bread crumb mixture, spooning crumbs on top of pieces and pressing to adhere. Transfer to prepared baking rack. Broil for 10 minutes or until cooked through. Serve with reserved dipping sauce and green beans on the side.", Picture = "http://food.fnr.sndimg.com/content/dam/images/food/fullset/2015/4/8/4/WU1004H_Chicken-Nuggets_s4x3.jpg.rend.hgtvcom.616.462.jpeg",   });
 
             
-            _Recipe.Add(new Recipe { Id = 3, CreatedDate = DateTime.Now, Name = "Griddled chicken with quinoa Greek salad", Ingredients = "225g quinoa, 25g butter, 1 red chilli, deseeded and finely chopped, 1 garlic clove-- crushed, 400g chicken, mini fillets, 1½ tbsp extra-virgin olive oil, 300g vine tomato roughly chopped, handful pitted black kalamata olives, 1 red onion finely sliced, 100g feta cheese crumbled, small bunch mint leaves chopped, juice and zest ½ lemon.", Description = "Cook the quinoa following the pack instructions, then rinse in cold water and drain thoroughly. Meanwhile, mix the butter, chilli and garlic into a paste. Toss the chicken fillets in 2 tsp of the olive oil with some seasoning. Lay in a hot griddle pan and cook for 3-4 mins each side or until cooked through. Transfer to a plate, dot with the spicy butter and set aside to melt. Next, tip the tomatoes, olives, onion, feta and mint into a bowl. Toss in the cooked quinoa. Stir through the remaining olive oil, lemon juice and zest, and season well. Serve with the chicken fillets on top, drizzled with any buttery chicken juices.", Picture = "",   });
+            _Recipe.Add(new Recipe { Id = 3, CreatedDate = DateTime.Now, Name = "Griddled chicken with quinoa Greek salad", Ingredients = "225g quinoa, 25g butter, 1 red chilli, deseeded and finely chopped, 1 garlic clove-- crushed, 400g chicken, mini fillets, 1½ tbsp extra-virgin olive oil, 300g vine tomato roughly chopped, handful pitted black kalamata olives, 1 red onion finely sliced, 100g feta cheese crumbled, small bunch mint leaves chopped, juice and zest ½ lemon.", Description = "Cook the quinoa following the pack instructions, then rinse in cold water and drain thoroughly. Meanwhile, mix the butter, chilli and garlic into a paste. Toss the chicken fillets in 2 tsp of the olive oil with some seasoning. Lay in a hot griddle pan and cook for 3-4 mins each side or until cooked through. Transfer to a plate, dot with the spicy butter and set aside to melt. Next, tip the tomatoes, olives, onion, feta and mint into a bowl. Toss in the cooked quinoa. Stir through the remaining olive oil, lemon juice and zest, and season well. Serve with the chicken fillets on top, drizzled with any buttery chicken juices.", Picture = "https://www.bbcgoodfood.com/sites/default/files/styles/recipe/public/recipe_images/recipe-image-legacy-id--1201615_11.jpg?itok=H9csMtKb",   });
 
             
-            _Recipe.Add(new Recipe { Id = 4, CreatedDate = DateTime.Now, Name = "Vietnamese Sandwich", Ingredients = "4 boneless pork loin chops, cut 1/4 inch thick, 4 (7 inch) French bread baguettes split lengthwise, 4 teaspoons mayonnaise, or to taste, 1 ounce chile sauce with garlic, 1/4 cup fresh lime juice, 1 small red onion sliced into rings, 1 medium cucumber peeled and sliced lengthwise, 2 tablespoons chopped fresh cilantro, salt and pepper to taste.", Description = "Heat oven to broil. Coat baking rack with nonstick cooking spray. Place rack over baking sheet; set aside. Stir together bread crumbs, garlic powder and thyme in a pie plate; set aside. Stir together mustard and mayonnaise. Reserve about 1/2 cup of mustard mixture for dipping sauce. Brush chicken pieces with remaining mustard mix; place chicken in pie plate with bread crumb mixture, spooning crumbs on top of pieces and pressing to adhere. Transfer to prepared baking rack. Broil for 10 minutes or until cooked through. Serve with reserved dipping sauce and green beans on the side.", Picture = "",   });
+            _Recipe.Add(new Recipe { Id = 4, CreatedDate = DateTime.Now, Name = "Vietnamese Sandwich", Ingredients = "4 boneless pork loin chops, cut 1/4 inch thick, 4 (7 inch) French bread baguettes split lengthwise, 4 teaspoons mayonnaise, or to taste, 1 ounce chile sauce with garlic, 1/4 cup fresh lime juice, 1 small red onion sliced into rings, 1 medium cucumber peeled and sliced lengthwise, 2 tablespoons chopped fresh cilantro, salt and pepper to taste.", Description = "Heat oven to broil. Coat baking rack with nonstick cooking spray. Place rack over baking sheet; set aside. Stir together bread crumbs, garlic powder and thyme in a pie plate; set aside. Stir together mustard and mayonnaise. Reserve about 1/2 cup of mustard mixture for dipping sauce. Brush chicken pieces with remaining mustard mix; place chicken in pie plate with bread crumb mixture, spooning crumbs on top of pieces and pressing to adhere. Transfer to prepared baking rack. Broil for 10 minutes or until cooked through. Serve with reserved dipping sauce and green beans on the side.", Picture = "https://static1.squarespace.com/static/555dd861e4b0d1e49db74a4d/555dd8ffe4b018e272bf4dbf/555e25e1e4b0a2312a6daa44/1432233501137/Banhmi-mit+Glas-ohne+logo-4.jpg",   });
 
             
-            _Recipe.Add(new Recipe { Id = 5, CreatedDate = DateTime.Now, Name = "Korean BBQ Short Ribs", Ingredients = "3/4 cup soy sauce, 3/4 cup water, 3 tablespoons white vinegar, 1/4 cup dark brown sugar, 2 tablespoons white sugar, 1 tablespoon black pepper, 2 tablespoons sesame oil, 1/4 cup minced garlic, 1/2 large onion, minced 3 pounds Korean-style short ribs (beef chuck flanken, cut 1/3 to 1/2 inch thick across bones)", Description = "Pour soy sauce, water, and vinegar into a large, non-metallic bowl. Whisk in brown sugar, white sugar, pepper, sesame oil, garlic, and onion until the sugars have dissolved. Submerge the ribs in this marinade, and cover with plastic wrap. Refrigerate 7 to 12 hours; the longer, the better. Preheat an outdoor grill for medium-high heat. Remove ribs from the marinade, shake off excess, and discard the marinade. Cook on preheated grill until the meat is no longer pink, 5 to 7 minutes per side.", Picture = "",   });
+            _Recipe.Add(new Recipe { Id = 5, CreatedDate = DateTime.Now, Name = "Korean BBQ Short Ribs", Ingredients = "3/4 cup soy sauce, 3/4 cup water, 3 tablespoons white vinegar, 1/4 cup dark brown sugar, 2 tablespoons white sugar, 1 tablespoon black pepper, 2 tablespoons sesame oil, 1/4 cup minced garlic, 1/2 large onion, minced 3 pounds Korean-style short ribs (beef chuck flanken, cut 1/3 to 1/2 inch thick across bones)", Description = "Pour soy sauce, water, and vinegar into a large, non-metallic bowl. Whisk in brown sugar, white sugar, pepper, sesame oil, garlic, and onion until the sugars have dissolved. Submerge the ribs in this marinade, and cover with plastic wrap. Refrigerate 7 to 12 hours; the longer, the better. Preheat an outdoor grill for medium-high heat. Remove ribs from the marinade, shake off excess, and discard the marinade. Cook on preheated grill until the meat is no longer pink, 5 to 7 minutes per side.", Picture = "http://food.fnr.sndimg.com/content/dam/images/food/fullset/2015/10/5/0/RX-CANADADRY_Canada-Dry-Braised-Short-Ribs_s3x4.jpg.rend.hgtvcom.616.462.jpeg",   });
 
             
-            _Recipe.Add(new Recipe { Id = 6, CreatedDate = DateTime.Now, Name = "Pumpkin Pancakes", Ingredients = "1 1/2 cups milk, 1 cup pumpkin puree, 1 egg, 2 tablespoons vegetable oil, 2 tablespoons vinegar, 2 cups all-purpose flour, 3 tablespoons brown sugar, 2 teaspoons baking powder, 1 teaspoon baking soda, 1 teaspoon ground allspice, 1 teaspoon ground cinnamon, 1/2 teaspoon ground ginger, 1/2 teaspoon salt.", Description = " In a bowl, mix together the milk, pumpkin, egg, oil and vinegar. Combine the flour, brown sugar, baking powder, baking soda, allspice, cinnamon, ginger and salt in a separate bowl. Stir into the pumpkin mixture just enough to combine. Heat a lightly oiled griddle or frying pan over medium high heat. Pour or scoop the batter onto the griddle, using approximately 1/4 cup for each pancake. Brown on both sides and serve hot.", Picture = "",   });
+            _Recipe.Add(new Recipe { Id = 6, CreatedDate = DateTime.Now, Name = "Pumpkin Pancakes", Ingredients = "1 1/2 cups milk, 1 cup pumpkin puree, 1 egg, 2 tablespoons vegetable oil, 2 tablespoons vinegar, 2 cups all-purpose flour, 3 tablespoons brown sugar, 2 teaspoons baking powder, 1 teaspoon baking soda, 1 teaspoon ground allspice, 1 teaspoon ground cinnamon, 1/2 teaspoon ground ginger, 1/2 teaspoon salt.", Description = " In a bowl, mix together the milk, pumpkin, egg, oil and vinegar. Combine the flour, brown sugar, baking powder, baking soda, allspice, cinnamon, ginger and salt in a separate bowl. Stir into the pumpkin mixture just enough to combine. Heat a lightly oiled griddle or frying pan over medium high heat. Pour or scoop the batter onto the griddle, using approximately 1/4 cup for each pancake. Brown on both sides and serve hot.", Picture = "http://lettucebehealthy.net/wp-content/uploads/2013/10/pumpkin6.jpg",   });
 
             
-            _Recipe.Add(new Recipe { Id = 7, CreatedDate = DateTime.Now, Name = "Greek Avocado Toast", Ingredients = "2 avocados, pits removed, 1/2 lemon, kosher salt, freshly ground black pepper, pinch of crushed red pepper flakes, 4 slices sourdough bread, toasted, 1/2 c. crumbled feta, 1/2 c. halved cherry tomatoes, 1/2 cucumber, chopped, 1/2 c. chopped kalamata olives, 1/4 c. chopped dill, extra-virgin olive oil, for drizzling (optional)", Description = "Remove avocado halves from skin and place in a medium bowl. Immediately squeeze some lemon juice over the avocado. Season avocado with salt and pepper and mash with a fork. Taste for seasoning, adding more lemon juice if desired. Spread mashed avocado onto toast then top with feta, cherry tomatoes, cucumber, kalamata olives, and dill. Drizzle with olive oil.", Picture = "",   });
+            _Recipe.Add(new Recipe { Id = 7, CreatedDate = DateTime.Now, Name = "Greek Avocado Toast", Ingredients = "2 avocados, pits removed, 1/2 lemon, kosher salt, freshly ground black pepper, pinch of crushed red pepper flakes, 4 slices sourdough bread, toasted, 1/2 c. crumbled feta, 1/2 c. halved cherry tomatoes, 1/2 cucumber, chopped, 1/2 c. chopped kalamata olives, 1/4 c. chopped dill, extra-virgin olive oil, for drizzling (optional)", Description = "Remove avocado halves from skin and place in a medium bowl. Immediately squeeze some lemon juice over the avocado. Season avocado with salt and pepper and mash with a fork. Taste for seasoning, adding more lemon juice if desired. Spread mashed avocado onto toast then top with feta, cherry tomatoes, cucumber, kalamata olives, and dill. Drizzle with olive oil.", Picture = "http://cf.wholeandheavenlyoven.com/wp-content/uploads/2015/05/Avocado-Toast6.jpg",   });
 
             
-            _Recipe.Add(new Recipe { Id = 8, CreatedDate = DateTime.Now, Name = "Breakfast Foil Packs", Ingredients = "6 large eggs, 1/2 c. milk, kosher salt, freshly ground black pepper, 1 lb. refrigerated hash browns (thawed if frozen), 1 c. chopped ham, 2 c. shredded Cheddar, Butter for foil, chopped fresh chives, for garnish", Description = "In a large resealable plastic bag, crack eggs, add milk, and season with salt and pepper. Stir in hash browns, ham, and cheese. Butter four squares of aluminum foil and divide mixture among foil. Fold tightly and seal. Place packets over campfire or grill and cook until eggs are cooked and hash browns tender and crispy, about 10 minutes. Garnish with chives and serve.", Picture = "",   });
+            _Recipe.Add(new Recipe { Id = 8, CreatedDate = DateTime.Now, Name = "Omurice", Ingredients = "½ onion, 1 boneless skinless chicken thighs, 1 Tbsp extra virgin olive oil, ½ cup frozen mixed vegetables (defrosted), Kosher salt, Freshly ground black pepper, 1½ cups cooked Japanese short grain rice, 1 Tbsp ketchup (and more for decoration), 1 tsp soy sauce. For omelette:, 2 large egg (separated), 2 Tbsp milk (separated), 2 Tbsp extra virgin olive oil (separated), 6 Tbsp sharp cheddar cheese (or any kind) and LOVE", Description = "Add the eggs, cream and salt to a bowl and beat until the whites and yolks are well combined. Add the oil to a 10inch nonstick frying pan, then add the onions, carrots and garlic. Sauté over medium heat until the carrots are tender. Turn the heat up to high, add the chicken and continue sautéing until the chicken has warmed up. Add the rice to the pan, and use a spatula to break up the clumps and combine evenly. Add the ketchup and stir-fry until everything is well combined. Taste the rice and season with salt and pepper to taste. Mound the rice on a plate, then put the pan back on the heat. Pour the egg mixture into the pan. Use a spatula to gently stir up the curds a few times, but stop stirring just before there isn't enough liquid left to spread out across the pan. Cover the pan with a lid and turn down the heat to medium low. The eggs are done when they aren't runny anymore, but the top surface still appears wet. If you use a glass lid, the egg should be done when the glass is hot to the touch. Slide the egg out of the pan and onto the rice. Garnish with ketchup and parsley to serve.", Picture = "https://itadakimasuanime.files.wordpress.com/2013/02/hanasaku-iroha-omurice-02.jpg",   });
 
             
-            _Recipe.Add(new Recipe { Id = 9, CreatedDate = DateTime.Now, Name = "Tuna, asparagus & white bean salad", Ingredients = "1 large bunch asparagus, 2 x 200g cans yellowfin tuna steaks in water drained, 2 x 400g cans cannellini beans in water drained, 1 red onion very finely chopped, 2 tbsp capers, 1 tbsp olive oil, 1 tbsp red wine vinegar, 2 tbsp tarragonfinely chopped", Description = "Cook the asparagus in a large pan of boiling water for 4-5 mins until tender. Drain well, cool under running water, then cut into finger-length pieces. Toss together the tuna, beans, onion, capers and asparagus in a large serving bowl. Mix the oil, vinegar and tarragon together, then pour over the salad. Chill until ready to serve.", Picture = "",   });
+            _Recipe.Add(new Recipe { Id = 9, CreatedDate = DateTime.Now, Name = "Tuna, asparagus & white bean salad", Ingredients = "1 large bunch asparagus, 2 x 200g cans yellowfin tuna steaks in water drained, 2 x 400g cans cannellini beans in water drained, 1 red onion very finely chopped, 2 tbsp capers, 1 tbsp olive oil, 1 tbsp red wine vinegar, 2 tbsp tarragonfinely chopped", Description = "Cook the asparagus in a large pan of boiling water for 4-5 mins until tender. Drain well, cool under running water, then cut into finger-length pieces. Toss together the tuna, beans, onion, capers and asparagus in a large serving bowl. Mix the oil, vinegar and tarragon together, then pour over the salad. Chill until ready to serve.", Picture = "http://articles.snowballsunderwear.com/wp-content/uploads/Tuna-White-Bean-and-Asparagus-Salad-21.jpg",   });
 
             
-            _Recipe.Add(new Recipe { Id = 10, CreatedDate = DateTime.Now, Name = "Flattened Chicken and Grilled Romaine with Parsley-Lemon Sauce", Ingredients = "1 (2 1/2- to 30-pound) chicken, backbone removed and chicken flattened, 4 cloves garlic chopped, Kosher salt, freshly ground black pepper, 1 oz. Parmesan grated (about 1/4 cup), 1/4 c. chopped fresh flat-leaf parsley, 1/4 c. toasted hazelnuts or almonds chopped, 1 tsp. lemon zest, plus 2 tablespoons lemon juice, 4 tbsp. extra-virgin olive oil divided, 2 romaine hearts halved lengthwise", Description = "Preheat grill to medium-high set up for direct and indirect grilling. Loosen skin of chicken and spread garlic underneath. Season with salt and pepper. Grill over direct heat, breast-side down, covered, until golden-brown and charred, 5 to 7 minutes. Flip and grill over indirect heat, covered, until an instant-read thermometer inserted into the thickest part registers 165 degrees F, 35 to 40 minutes. Meanwhile, combine Parmesan, parsley, hazelnuts, lemon zest and juice, and 3 tablespoons oil in a bowl. Season with salt and pepper. Brush romaine with remaining tablespoon oil. Season with salt and pepper. Grill, over direct heat, turning once, until charred and wilted, 1 to 3 minutes. Serve the chicken and romaine topped with the parsley-lemon sauce.", Picture = "",   });
+            _Recipe.Add(new Recipe { Id = 10, CreatedDate = DateTime.Now, Name = "Flattened Chicken and Grilled Romaine with Parsley-Lemon Sauce", Ingredients = "1 (2 1/2- to 30-pound) chicken, backbone removed and chicken flattened, 4 cloves garlic chopped, Kosher salt, freshly ground black pepper, 1 oz. Parmesan grated (about 1/4 cup), 1/4 c. chopped fresh flat-leaf parsley, 1/4 c. toasted hazelnuts or almonds chopped, 1 tsp. lemon zest, plus 2 tablespoons lemon juice, 4 tbsp. extra-virgin olive oil divided, 2 romaine hearts halved lengthwise", Description = "Preheat grill to medium-high set up for direct and indirect grilling. Loosen skin of chicken and spread garlic underneath. Season with salt and pepper. Grill over direct heat, breast-side down, covered, until golden-brown and charred, 5 to 7 minutes. Flip and grill over indirect heat, covered, until an instant-read thermometer inserted into the thickest part registers 165 degrees F, 35 to 40 minutes. Meanwhile, combine Parmesan, parsley, hazelnuts, lemon zest and juice, and 3 tablespoons oil in a bowl. Season with salt and pepper. Brush romaine with remaining tablespoon oil. Season with salt and pepper. Grill, over direct heat, turning once, until charred and wilted, 1 to 3 minutes. Serve the chicken and romaine topped with the parsley-lemon sauce.", Picture = "http://clv.h-cdn.co/assets/16/13/1600x800/landscape-1459270202-clx050116brkwinnerdinner-04.jpg",   });
 
           foreach (var x in _Recipe)
           {
@@ -527,25 +533,31 @@ namespace SimpleModelsAndRelations.Data
           
           
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -50,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -88,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 25,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 76,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -59,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 21,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 88,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 23,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 59,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 74,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -47,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = -99,   });
 
             
-            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 33,   });
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 39,   });
+
+            
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 34,   });
+
+            
+            _Rating.Add(new Rating { CreatedDate = DateTime.Now, Number = 74,   });
 
           foreach (var x in _Rating)
           {
@@ -605,7 +617,7 @@ namespace SimpleModelsAndRelations.Data
 
             new Cuisine_Meal { CuisineId = 3, MealId = 2 },
 
-            new Cuisine_Meal { CuisineId = 2, MealId = 3 },
+            new Cuisine_Meal { CuisineId = 1, MealId = 3 },
 
             new Cuisine_Meal { CuisineId = 1, MealId = 4 },
 
@@ -648,7 +660,7 @@ namespace SimpleModelsAndRelations.Data
 
             new Meal_Recipe { MealId = 2, RecipeId = 7 },
 
-            new Meal_Recipe { MealId = 2, RecipeId = 8 },
+            new Meal_Recipe { MealId = 3, RecipeId = 8 },
 
             new Meal_Recipe { MealId = 2, RecipeId = 9 },
 
@@ -724,10 +736,6 @@ namespace SimpleModelsAndRelations.Data
 
             new User_Recipe { UserId = Users[r.Next(Users.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
 
-            new User_Recipe { UserId = Users[r.Next(Users.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
-
-            new User_Recipe { UserId = Users[r.Next(Users.Length)].Id, RecipeId = Recipes[r.Next(Recipes.Length)].Id, },
-
         };
         foreach (var x in _User_Recipe)
         {
@@ -765,16 +773,6 @@ namespace SimpleModelsAndRelations.Data
 
             new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
 
-            new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
-
-            new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
-
-            new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
-
-            new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
-
-            new Recipe_Rating { RecipeId = Recipes[r.Next(Recipes.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
-
         };
         foreach (var x in _Recipe_Rating)
         {
@@ -788,6 +786,12 @@ namespace SimpleModelsAndRelations.Data
         var _User_RecommendationPage = new User_RecommendationPage[]
         {
             
+            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
+
+            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
+
+            new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
+
             new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
 
             new User_RecommendationPage { UserId = Users[r.Next(Users.Length)].Id, RecommendationPageId = RecommendationPages[r.Next(RecommendationPages.Length)].Id, },
@@ -870,6 +874,10 @@ namespace SimpleModelsAndRelations.Data
         var _User_Rating = new User_Rating[]
         {
             
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
+            new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
+
             new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },
 
             new User_Rating { UserId = Users[r.Next(Users.Length)].Id, RatingId = Ratings[r.Next(Ratings.Length)].Id, },

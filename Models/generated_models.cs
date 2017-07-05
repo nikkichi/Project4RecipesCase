@@ -364,7 +364,7 @@ namespace SimpleModelsAndRelations.Models
       return self => self;
     }
     static public Recipe WithoutImages(Recipe self) {
-      self.Picture = null;
+      
       return self;
     }
   }

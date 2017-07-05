@@ -12662,7 +12662,7 @@ exports.create_Recipe = create_Recipe;
 function update_Recipe(item) {
     return __awaiter(this, void 0, void 0, function* () {
         let res = yield fetch(`/api/v1/Recipe/`, { method: 'put',
-            body: JSON.stringify(Object.assign({}, item, { CreatedDate: undefined, Picture: "" })), credentials: 'include', headers: { 'content-type': 'application/json', 'X-XSRF-TOKEN': document.getElementsByName("__RequestVerificationToken")[0].value } });
+            body: JSON.stringify(Object.assign({}, item, { CreatedDate: undefined })), credentials: 'include', headers: { 'content-type': 'application/json', 'X-XSRF-TOKEN': document.getElementsByName("__RequestVerificationToken")[0].value } });
         if (!res.ok)
             throw Error(res.statusText);
         return;
@@ -12699,25 +12699,6 @@ function get_Recipes(page_index, page_size, search_query = null) {
     });
 }
 exports.get_Recipes = get_Recipes;
-function get_Recipe_Picture(item) {
-    return __awaiter(this, void 0, void 0, function* () {
-        let res = yield fetch(`/api/v1/Recipe/${item.Id}/Picture`, { method: 'get', credentials: 'include', headers: { 'content-type': 'application/json' } });
-        if (!res.ok)
-            throw Error(res.statusText);
-        let json = yield res.json();
-        return json.Content;
-    });
-}
-exports.get_Recipe_Picture = get_Recipe_Picture;
-function update_Recipe_Picture(item, new_src) {
-    return __awaiter(this, void 0, void 0, function* () {
-        let res = yield fetch(`/api/v1/Recipe/${item.Id}/Picture`, { method: 'put', body: JSON.stringify({ Content: new_src }), credentials: 'include', headers: { 'content-type': 'application/json', 'X-XSRF-TOKEN': document.getElementsByName("__RequestVerificationToken")[0].value } });
-        if (!res.ok)
-            throw Error(res.statusText);
-        return;
-    });
-}
-exports.update_Recipe_Picture = update_Recipe_Picture;
 function create_Dinner() {
     return __awaiter(this, void 0, void 0, function* () {
         let res = yield fetch(`/api/v1/Dinner/`, { method: 'post', credentials: 'include', headers: { 'content-type': 'application/json',
@@ -21595,7 +21576,7 @@ function render_Recipe_Picture_editable_minimised(self) {
         return !Permissions.can_view_Recipe_Picture(self.props.current_User) ? React.createElement("div", null) :
             React.createElement("div", { className: "model__attribute picture" },
                 React.createElement("label", { className: "attribute-label attribute-label-picture" }, i18next.t(`Recipe:Picture`, { context: self.props.inline ? "inline" : "" })),
-                React.createElement("div", { className: "model__attribute-content" }, Components.Image(self.props.is_editable && Permissions.can_edit_Recipe(self.props.current_User) && Permissions.can_edit_Recipe_Picture(self.props.current_User), self.props.mode, () => Api.get_Recipe_Picture(self.props.entity), (new_src) => Api.update_Recipe_Picture(self.props.entity, new_src))));
+                React.createElement("div", { className: "model__attribute-content" }, Components.String(self.props.is_editable && Permissions.can_edit_Recipe(self.props.current_User) && Permissions.can_edit_Recipe_Picture(self.props.current_User), self.props.mode, () => self.props.entity.Picture, v => self.props.set_entity(Object.assign({}, self.props.entity, { Picture: v })))));
 }
 exports.render_Recipe_Picture_editable_minimised = render_Recipe_Picture_editable_minimised;
 function render_Recipe_Name_editable_maximised(self) {
@@ -21635,7 +21616,7 @@ function render_Recipe_Picture_editable_maximised(self) {
         return !Permissions.can_view_Recipe_Picture(self.props.current_User) ? React.createElement("div", null) :
             React.createElement("div", { className: "model__attribute picture" },
                 React.createElement("label", { className: "attribute-label attribute-label-picture" }, i18next.t(`Recipe:Picture`, { context: self.props.inline ? "inline" : "" })),
-                React.createElement("div", { className: "model__attribute-content" }, Components.Image(self.props.is_editable && Permissions.can_edit_Recipe(self.props.current_User) && Permissions.can_edit_Recipe_Picture(self.props.current_User), self.props.mode, () => Api.get_Recipe_Picture(self.props.entity), (new_src) => Api.update_Recipe_Picture(self.props.entity, new_src))));
+                React.createElement("div", { className: "model__attribute-content" }, Components.String(self.props.is_editable && Permissions.can_edit_Recipe(self.props.current_User) && Permissions.can_edit_Recipe_Picture(self.props.current_User), self.props.mode, () => self.props.entity.Picture, v => self.props.set_entity(Object.assign({}, self.props.entity, { Picture: v })))));
 }
 exports.render_Recipe_Picture_editable_maximised = render_Recipe_Picture_editable_maximised;
 function render_editable_attributes_minimised_Recipe(self) {
@@ -21762,7 +21743,7 @@ exports.render_Recipe_Description_minimised = render_Recipe_Description_minimise
 function render_Recipe_Picture_minimised(self) {
     return !Permissions.can_view_Recipe_Picture(self.props.current_User) ? null : React.createElement("div", { className: "model__attribute picture" },
         React.createElement("label", { className: "attribute-label attribute-label-picture" }, i18next.t(`Recipe:Picture`, { context: self.props.inline ? "inline" : "" })),
-        React.createElement("div", { className: "model__attribute-content" }, Components.Image(self.props.is_editable && Permissions.can_edit_Recipe(self.props.current_User) && Permissions.can_edit_Recipe_Picture(self.props.current_User), self.props.mode, () => Api.get_Recipe_Picture(self.props.entity), (new_src) => Api.update_Recipe_Picture(self.props.entity, new_src))));
+        React.createElement("div", { className: "model__attribute-content" }, Components.String(self.props.is_editable && Permissions.can_edit_Recipe(self.props.current_User) && Permissions.can_edit_Recipe_Picture(self.props.current_User), self.props.mode, () => self.props.entity.Picture, v => self.props.set_entity(Object.assign({}, self.props.entity, { Picture: v })))));
 }
 exports.render_Recipe_Picture_minimised = render_Recipe_Picture_minimised;
 function render_Recipe_Name_maximised(self) {
@@ -21786,7 +21767,7 @@ exports.render_Recipe_Description_maximised = render_Recipe_Description_maximise
 function render_Recipe_Picture_maximised(self) {
     return !Permissions.can_view_Recipe_Picture(self.props.current_User) ? null : React.createElement("div", { className: "model__attribute picture" },
         React.createElement("label", { className: "attribute-label attribute-label-picture" }, i18next.t(`Recipe:Picture`, { context: self.props.inline ? "inline" : "" })),
-        React.createElement("div", { className: "model__attribute-content" }, Components.Image(self.props.is_editable && Permissions.can_edit_Recipe(self.props.current_User) && Permissions.can_edit_Recipe_Picture(self.props.current_User), self.props.mode, () => Api.get_Recipe_Picture(self.props.entity), (new_src) => Api.update_Recipe_Picture(self.props.entity, new_src))));
+        React.createElement("div", { className: "model__attribute-content" }, Components.String(self.props.is_editable && Permissions.can_edit_Recipe(self.props.current_User) && Permissions.can_edit_Recipe_Picture(self.props.current_User), self.props.mode, () => self.props.entity.Picture, v => self.props.set_entity(Object.assign({}, self.props.entity, { Picture: v })))));
 }
 exports.render_Recipe_Picture_maximised = render_Recipe_Picture_maximised;
 function render_preview_Recipe(self) {
@@ -27184,19 +27165,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(6);
 const Immutable = __webpack_require__(26);
 const Api = __webpack_require__(14);
-// async function getRating (user_id: number): Promise<Immutable.List<number>> {
-//     let res = await fetch ('customcontroller/getrating/${user_id}', {method:'get', credentials: 'include', headers: {'content-type': 'application/json'}})
-//     let json = await res.json()
-//     Api.link_User_User_Recipes() //how to add linked recipes
-//     Api.get_User_User_Recipes() //return all linked recipes
-//     return Immutable.List<number>(json)
-// }
-function get_userrating(rating, recipe_id, user_id) {
-    return __awaiter(this, void 0, void 0, function* () {
-        yield fetch(`/api/v1/CustomController/UserRating/${rating}/${recipe_id}/${user_id}`, { method: 'post', credentials: 'include', headers: { 'content-type': 'application/json' } });
-    });
-}
-exports.get_userrating = get_userrating;
 function set_rating(rating, recipe, user) {
     return __awaiter(this, void 0, void 0, function* () {
         let res = yield fetch(`/api/v1/CustomController/UserRating/${rating}/${recipe}/${user}`, { method: 'post', credentials: 'include', headers: { 'content-type': 'application/json' } });
@@ -27204,16 +27172,15 @@ function set_rating(rating, recipe, user) {
     });
 }
 exports.set_rating = set_rating;
-function get_findrating(id, idRating, idRecipe) {
+function get_rating(recipe, user) {
     return __awaiter(this, void 0, void 0, function* () {
-        let res = yield fetch(`/api/v1/CustomController/FindRating/${id}/${idRating}/${idRecipe}`, { method: 'get', credentials: 'include', headers: { 'content-type': 'application/json' } });
+        let res = yield fetch(`/api/v1/CustomController/FindRating/${recipe}/${user}`, { method: 'get', credentials: 'include', headers: { 'content-type': 'application/json' } });
         let json = yield res.json();
-        console.log(idRating);
         console.log("received correct rating", json);
-        return { ratings: Immutable.List(json) };
+        return json;
     });
 }
-exports.get_findrating = get_findrating;
+exports.get_rating = get_rating;
 class FavComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -27269,9 +27236,15 @@ class StarsComponent extends React.Component {
         super(props, context);
         this.state = { stars: Immutable.List([{ value: 1, state: false }, { value: 2, state: false }, { value: 3, state: false }, { value: 4, state: false }, { value: 5, state: false }]) };
     }
+    componentWillMount() {
+        console.log("rating is mounting");
+        get_rating(this.props.recipe.Id, this.props.user.Id).then(rating => this.setState(Object.assign({}, this.state, { stars: this.state.stars.map(s => { {
+                console.log("The rating is downloading", rating);
+            } return { value: s.value, state: (s.value <= rating.Number) }; }).toList() })));
+    }
     render() {
         return React.createElement("div", null,
-            this.state.stars.map(star => React.createElement("button", { onClick: () => this.setState(Object.assign({}, this.state, { stars: this.state.stars.map(star1 => { if (star1.value <= star.value)
+            this.state.stars.map(star => React.createElement("button", { onClickCapture: () => this.setState(Object.assign({}, this.state, { stars: this.state.stars.map(star1 => { if (star1.value <= star.value)
                         return Object.assign({}, star1, { state: true });
                     else
                         return Object.assign({}, star1, { state: false }); }).toList() })), style: star.state ? {
@@ -27286,7 +27259,7 @@ class StarsComponent extends React.Component {
                         borderWidth: 1,
                         borderRadius: 15,
                         color: '#08ABCE',
-                    }, marginHeight: 10, marginWidth: 10, width: 10, height: 10 }, star.value)),
+                    }, onClick: () => set_rating(star.value, this.props.recipe.Id, this.props.user.Id), marginHeight: 10, marginWidth: 10, width: 10, height: 10 }, star.value)),
             " ");
     }
 }
@@ -27395,6 +27368,8 @@ class RecipesComponent extends React.Component {
             " ",
             React.createElement("br", null),
             React.createElement("h2", null, this.props.recipe.Name),
+            React.createElement("img", { src: this.props.recipe.Picture, style: { width: "50%" } }),
+            React.createElement("br", null),
             !this.state.is_expanded ? React.createElement("button", { onClick: () => this.update_me(true) }, "Show more...") :
                 React.createElement("button", { onClick: () => this.update_me(false) }, "Close "),
             this.state.is_expanded ? React.createElement(Info, { props: this.props.props, recipe: this.props.recipe }) : React.createElement("span", null));
@@ -27434,6 +27409,7 @@ class Info extends React.Component {
         this.state = {};
     }
     render() {
+        console.log(this.props.recipe.Picture);
         if (this.props.props == undefined)
             return React.createElement("div", null,
                 React.createElement("div", null,
@@ -27454,7 +27430,7 @@ class Info extends React.Component {
             React.createElement("br", null),
             React.createElement("div", null,
                 React.createElement("h3", null, "Rate")),
-            React.createElement(StarsComponent, null),
+            React.createElement(StarsComponent, { recipe: this.props.recipe, user: this.props.props }),
             React.createElement("br", null),
             React.createElement(FavComponent, { props: this.props.props, recipe: this.props.recipe }));
     }
@@ -27509,43 +27485,14 @@ class BrowseComponent extends React.Component {
     }
     render() {
         return React.createElement("div", null,
+            React.createElement("div", null,
+                React.createElement("h2", null, "Search for recipes")),
             React.createElement("input", { value: this.state.SearchedQuery, onChange: event => this.setState(Object.assign({}, this.state, { SearchedQuery: event.target.value })) }),
             this.state.Items.filter(item => item.Name.toLowerCase().includes(this.state.SearchedQuery.toLowerCase()))
                 .map(item => React.createElement(RecipesComponent, { props: this.props.props.current_User, recipe: item })));
     }
 }
 exports.BrowseComponent = BrowseComponent;
-class ItemComponent extends React.Component {
-    constructor(props, context) {
-        super(props, context);
-        this.state = { is_expanded: false };
-    }
-    update_me(value) {
-        this.setState(Object.assign({}, this.state, { is_expanded: value }));
-    }
-    render() {
-        // if (this.props.props.current_User == undefined)
-        //     return <div>
-        //             <div><h2></h2></div>
-        //     </div>
-        return React.createElement("div", null,
-            React.createElement("span", null,
-                React.createElement("h1", null, this.props.title)),
-            this.state.is_expanded ? React.createElement("div", null,
-                React.createElement("h2", null, "Ingredients"),
-                this.props.ingredients,
-                React.createElement("br", null),
-                React.createElement("h2", null, "Description"),
-                this.props.info,
-                React.createElement("br", null),
-                React.createElement("h2", null, "Rate"),
-                React.createElement("div", null,
-                    React.createElement(StarsComponent, null)),
-                React.createElement("br", null)) : React.createElement("span", null),
-            !this.state.is_expanded ? React.createElement("button", { onClick: () => this.update_me(true) }, "+") :
-                React.createElement("button", { onClick: () => this.update_me(false) }, "-"));
-    }
-}
 class Fav extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -27570,6 +27517,10 @@ class Fav extends React.Component {
             return React.createElement("div", null,
                 React.createElement("div", null,
                     React.createElement("h1", null, "Log in first!")));
+        if (this.state.favs.size == 0)
+            return React.createElement("div", null,
+                React.createElement("h1", null, "Your favourite recipes:"),
+                React.createElement("div", null, "You don't have any favourite recipes :^)"));
         return React.createElement("div", null,
             React.createElement("h1", null, "Your favourite recipes:"),
             React.createElement("div", null, this.state.favs.map(r => React.createElement(RecipesComponent, { props: this.props.props.current_User, recipe: r }))));
