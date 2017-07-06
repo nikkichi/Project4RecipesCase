@@ -27516,14 +27516,14 @@ function get_RecommendedRecipes(user_id) {
     return __awaiter(this, void 0, void 0, function* () {
         let res = yield fetch(`/api/v1/CustomController/GetRecommendedRecipes/${user_id}`, { method: 'get', credentials: 'include', headers: { 'content-type': 'application/json' } });
         let json = yield res.json();
-        return Immutable.List(json);
+        return Immutable.List(json); //gets 3 recommended recipes from the database
     });
 }
 exports.get_RecommendedRecipes = get_RecommendedRecipes;
 function set_rating(rating, recipe, user) {
     return __awaiter(this, void 0, void 0, function* () {
         let res = yield fetch(`/api/v1/CustomController/UserRating/${rating}/${recipe}/${user}`, { method: 'post', credentials: 'include', headers: { 'content-type': 'application/json' } });
-        console.log("set correct rating", rating);
+        console.log("set correct rating", rating); //sets the rating 
     });
 }
 exports.set_rating = set_rating;
@@ -27531,7 +27531,7 @@ function get_rating(recipe, user) {
     return __awaiter(this, void 0, void 0, function* () {
         let res = yield fetch(`/api/v1/CustomController/FindRating/${recipe}/${user}`, { method: 'get', credentials: 'include', headers: { 'content-type': 'application/json' } });
         let json = yield res.json();
-        console.log("received correct rating", json);
+        console.log("received correct rating", json); //gets the rating of the user out of the database
         return json;
     });
 }
@@ -27540,7 +27540,7 @@ function get_cuisine(meal, cuisine) {
     return __awaiter(this, void 0, void 0, function* () {
         let res = yield fetch(`/api/v1/CustomController/FindRecipesFromMealAndCousine/${meal}/${cuisine}`, { method: 'get', credentials: 'include', headers: { 'content-type': 'application/json' } });
         let json = yield res.json();
-        console.log("received correct cuisine", json);
+        console.log("received correct cuisine", json); //gets the recipes of the corresponding cuisine and meal
         return Immutable.List(json);
     });
 }
@@ -27674,6 +27674,7 @@ class Cuisines extends React.Component {
     }
 }
 exports.Cuisines = Cuisines;
+// this class regulates the meal buttons
 class MealsComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -27692,6 +27693,7 @@ class MealsComponent extends React.Component {
     }
 }
 exports.MealsComponent = MealsComponent;
+// this class regulates the meals
 class Meals extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -27719,6 +27721,7 @@ class Meals extends React.Component {
     }
 }
 exports.Meals = Meals;
+// this class regulates the recipe buttons
 class RecipesComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -27740,6 +27743,7 @@ class RecipesComponent extends React.Component {
     }
 }
 exports.RecipesComponent = RecipesComponent;
+// this class regulates the recipes
 class Recipes extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -27749,25 +27753,20 @@ class Recipes extends React.Component {
     }
     componentWillMount() {
         get_cuisine(this.props.meal.Id, this.props.cousine.Id).then(online_recipes => this.setState(Object.assign({}, this.state, { recipes: online_recipes })));
-        //  this.get_cuisine(this.props.meal.Id, this.props.cousine.Id)
     }
-    // async get_recipes() {
-    //     // call custom controller -> return FindRecipesFromMealAndCousine
-    //      custom controller -> return FindRecipesFromMealAndCousine
-    // }
     render() {
         return React.createElement("div", null,
             React.createElement("div", null, this.state.recipes.map(r => React.createElement(RecipesComponent, { props: this.props.props.current_User, recipe: r }))));
     }
 }
 exports.Recipes = Recipes;
+// this class regulates the information of the recipes
 class Info extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {};
     }
     render() {
-        console.log(this.props.recipe.Picture);
         if (this.props.props == undefined)
             return React.createElement("div", null,
                 React.createElement("div", null,
@@ -27794,6 +27793,7 @@ class Info extends React.Component {
     }
 }
 exports.Info = Info;
+// this class regulates the each recommended recipe
 class RecommendedRecipe extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -27808,6 +27808,7 @@ class RecommendedRecipe extends React.Component {
             React.createElement(RecipesComponent, { props: this.props.logged_in_user, recipe: this.props.recipe }));
     }
 }
+// this class regulates the recommended recipes
 class Recommended extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -27821,24 +27822,11 @@ class Recommended extends React.Component {
         return React.createElement("div", null, this.state.recommendedrecipes.map(item => React.createElement(RecommendedRecipe, { recipe: item, is_expanded: true, logged_in_user: this.props.user, reload: () => { }, update_me: value => { } })));
     }
 }
+// this makes regulates the homepage of the application 
 class IComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = { i: 0, j: 1, recipes: Immutable.List() };
-    }
-    componentWillMount() {
-        this.get_recipes().then(online_recipes => this.setState(Object.assign({}, this.state, { recipes: online_recipes })));
-    }
-    get_recipes() {
-        return __awaiter(this, void 0, void 0, function* () {
-            let recipes_page = yield Api.get_Recipes(0, 100);
-            let loaded_recipes = Immutable.List(recipes_page.Items.map(r => r.Item));
-            for (let i = 1; i < recipes_page.NumPages; i++) {
-                let recipes = yield Api.get_Recipes(i, 100);
-                loaded_recipes = loaded_recipes.concat(Immutable.List(recipes.Items.map(r => r.Item))).toList();
-            }
-            return Immutable.List(loaded_recipes);
-        });
     }
     render() {
         return React.createElement("div", null,
@@ -27846,6 +27834,7 @@ class IComponent extends React.Component {
     }
 }
 exports.default = IComponent;
+// this class regulates the browse page of the application
 class BrowseComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -27878,6 +27867,7 @@ class BrowseComponent extends React.Component {
     }
 }
 exports.BrowseComponent = BrowseComponent;
+// this regulates the favourite page of the application
 class Fav extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -27915,11 +27905,11 @@ exports.Fav = Fav;
 exports.AppTest = (props) => {
     return React.createElement(IComponent, { props: props });
 };
-exports.FavouriteView = (props) => { return React.createElement(Fav, { props: props }); };
+exports.FavouriteView = (props) => { return React.createElement(Fav, { props: props }); }; // makes the favourite page
 exports.BrowseView = (props) => {
     return React.createElement(BrowseComponent, { props: props });
 };
-exports.RecView = (props) => { return React.createElement(Recommended, { user: props.current_User }); };
+exports.RecView = (props) => { return React.createElement(Recommended, { user: props.current_User }); }; // makes the recommended page
 
 
 /***/ }),
