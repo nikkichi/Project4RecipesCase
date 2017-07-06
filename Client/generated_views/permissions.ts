@@ -394,4 +394,13 @@ export let can_edit_User_Rating = (current_User:Models.User) => true
 export let can_delete_User_Rating = (current_User:Models.User) => true
   
 
+export let can_view_Cuisine_Recipe = (current_User:Models.User) => true
+
+export let can_create_Cuisine_Recipe = (current_User:Models.User) => true
+
+export let can_edit_Cuisine_Recipe = (current_User:Models.User) => true
+
+export let can_delete_Cuisine_Recipe = (current_User:Models.User) => true
+  
+
 

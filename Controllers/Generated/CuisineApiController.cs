@@ -424,6 +424,180 @@ using System.IO;
       return Ok();
     }
     [RestrictToUserType(new string[] {"*"})]
+    [HttpGet("{Cuisine_id}/Cuisine_Recipes")]
+    [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+    public Page<Recipe> GetCuisine_Recipes(int Cuisine_id, [FromQuery] int page_index, [FromQuery] int page_size = 25 )
+    {
+      var session = HttpContext.Get<LoggableEntities>(_context);
+      var current_User = session == null ? null : session.User;
+      var allowed_sources = ApiTokenValid ? _context.Cuisine : _context.Cuisine;
+      var source = allowed_sources.FirstOrDefault(s => s.Id == Cuisine_id);
+      var can_create_by_token = ApiTokenValid || true;
+      var can_delete_by_token = ApiTokenValid || true || true;
+      var can_link_by_token = ApiTokenValid || true;
+      var can_view_by_token = ApiTokenValid || true;
+      if (source == null || !can_view_by_token) // test
+        return Enumerable.Empty<SimpleModelsAndRelations.Models.Recipe>() // B
+              .AsQueryable()
+              .Select(SimpleModelsAndRelations.Models.Recipe.FilterViewableAttributes(current_User))
+              .Select(t => Tuple.Create(t, false))
+              .Paginate(can_create_by_token, can_delete_by_token, can_link_by_token, page_index, page_size, SimpleModelsAndRelations.Models.Recipe.WithoutImages, item => item , null);
+      var allowed_targets = ApiTokenValid ? _context.Recipe : _context.Recipe;
+      var editable_targets = ApiTokenValid ? _context.Recipe : (_context.Recipe);
+      var can_edit_by_token = ApiTokenValid || true;
+      var items = (from link in _context.Cuisine_Recipe
+              where link.CuisineId == source.Id
+              from target in allowed_targets
+              where link.RecipeId == target.Id
+              select target).OrderBy(i => i.CreatedDate).AsQueryable();
+      
+      return items
+              .Select(SimpleModelsAndRelations.Models.Recipe.FilterViewableAttributes(current_User))
+              .Select(t => Tuple.Create(t, can_edit_by_token && editable_targets.Any(et => et.Id == t.Id)))
+              .Paginate(can_create_by_token, can_delete_by_token, can_link_by_token, page_index, page_size, SimpleModelsAndRelations.Models.Recipe.WithoutImages, item => item , null);
+    }
+
+    [HttpGet("{Cuisine_id}/Cuisine_Recipes/{Recipe_id}")]
+    [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult /*Recipe*/ GetCuisine_RecipeById(int Cuisine_id, int Recipe_id)
+    {
+      var session = HttpContext.Get<LoggableEntities>(_context);
+      var current_User = session == null ? null : session.User;
+      var allowed_sources = ApiTokenValid ? _context.Cuisine : _context.Cuisine;
+      var source = allowed_sources.FirstOrDefault(s => s.Id == Cuisine_id);
+      var can_view_by_token = ApiTokenValid || true;
+      if (source == null || !can_view_by_token)
+        return NotFound();
+      var allowed_targets = ApiTokenValid ? _context.Recipe : _context.Recipe;
+      var item = (from link in _context.Cuisine_Recipe
+              where link.CuisineId == source.Id
+              from target in allowed_targets
+              where link.RecipeId == target.Id
+              select target).OrderBy(i => i.CreatedDate)
+              .Select(SimpleModelsAndRelations.Models.Recipe.FilterViewableAttributes(current_User))
+              .FirstOrDefault(t => t.Id == Recipe_id);
+      if (item == null) return NotFound();
+      item = SimpleModelsAndRelations.Models.Recipe.WithoutImages(item);
+      return Ok(item);
+    }
+
+    [RestrictToUserType(new string[] {"*"})]
+    [HttpGet("{Cuisine_id}/unlinked/Cuisine_Recipes")]
+    [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+    public Page<Recipe> GetUnlinkedCuisine_Recipes(int Cuisine_id, [FromQuery] int page_index, [FromQuery] int page_size = 25)
+    {
+      var session = HttpContext.Get<LoggableEntities>(_context);
+      var current_User = session == null ? null : session.User;
+      var allowed_sources = ApiTokenValid ? _context.Cuisine : _context.Cuisine;
+      var source = allowed_sources.FirstOrDefault(s => s.Id == Cuisine_id);
+      var can_create_by_token = ApiTokenValid || true;
+      var can_delete_by_token = ApiTokenValid || true || true;
+      var can_link_by_token = ApiTokenValid || true;
+      var can_view_by_token = ApiTokenValid || true;
+      if (source == null || !can_view_by_token)
+        return Enumerable.Empty<SimpleModelsAndRelations.Models.Recipe>()
+              .AsQueryable()
+              .Select(SimpleModelsAndRelations.Models.Recipe.FilterViewableAttributes(current_User))
+              .Select(t => Tuple.Create(t, false))
+              .Paginate(can_create_by_token, can_delete_by_token, can_link_by_token, page_index, page_size, SimpleModelsAndRelations.Models.Recipe.WithoutImages, item => item);
+      var allowed_targets = ApiTokenValid ? _context.Recipe : _context.Recipe;
+      var editable_targets = ApiTokenValid ? _context.Recipe : (_context.Recipe);
+      var can_edit_by_token = ApiTokenValid || true;
+      return (from target in allowed_targets
+              where !_context.Cuisine_Recipe.Any(link => link.CuisineId == source.Id && link.RecipeId == target.Id) &&
+              (from link in _context.Cuisine_Recipe
+                where link.RecipeId == target.Id
+                from s in _context.Cuisine
+                where link.CuisineId == s.Id
+                select s).Count() < 1
+              select target).OrderBy(i => i.CreatedDate)
+              .Select(SimpleModelsAndRelations.Models.Recipe.FilterViewableAttributes(current_User))
+              .Select(t => Tuple.Create(t, can_edit_by_token && editable_targets.Any(et => et.Id == t.Id)))
+              .Paginate(can_create_by_token, can_delete_by_token, can_link_by_token, page_index, page_size, SimpleModelsAndRelations.Models.Recipe.WithoutImages, item => item);
+    }
+
+    bool CanAdd_Cuisine_Cuisine_Recipes(Cuisine source) {
+      return true;
+    }
+
+    bool CanAdd_Recipe_Cuisine_Recipes(Recipe target) {
+      return (from link in _context.Cuisine_Recipe
+           where link.RecipeId == target.Id
+           from source in _context.Cuisine
+           where link.CuisineId == source.Id
+           select source).Count() < 1;
+    }
+
+    [RestrictToUserType(new string[] {})]
+    [HttpPost("{Cuisine_id}/Cuisine_Recipes_Recipe")]
+    public IActionResult /*IEnumerable<Recipe>*/ CreateNewCuisine_Recipe_Recipe(int Cuisine_id)
+    {
+      var session = HttpContext.Get<LoggableEntities>(_context);
+      var current_User = session == null ? null : session.User;
+      var allowed_sources = ApiTokenValid ? _context.Cuisine : _context.Cuisine;
+      var source = allowed_sources.FirstOrDefault(s => s.Id == Cuisine_id);
+      var can_create_by_token = ApiTokenValid || true;
+      if (source == null || !can_create_by_token)
+        return Unauthorized();
+        // throw new Exception("Cannot create item in relation Cuisine_Recipes");
+      var can_link_by_token = ApiTokenValid || true;
+      if (!CanAdd_Cuisine_Cuisine_Recipes(source) || !can_link_by_token)
+        return Unauthorized();
+        //throw new Exception("Cannot add item to relation Cuisine_Recipes");
+      var new_target = new Recipe() { CreatedDate = DateTime.Now, Id = _context.Recipe.Max(i => i.Id) + 1 };
+      _context.Recipe.Add(new_target);
+      _context.SaveChanges();
+      var link = new Cuisine_Recipe() { Id = _context.Cuisine_Recipe.Max(l => l.Id) + 1, CuisineId = source.Id, RecipeId = new_target.Id };
+      _context.Cuisine_Recipe.Add(link);
+      _context.SaveChanges();
+      return Ok(new Recipe[] { new_target });
+    }
+
+    [RestrictToUserType(new string[] {"*"})]
+    [HttpPost("{Cuisine_id}/Cuisine_Recipes/{Recipe_id}")]
+    public IActionResult LinkWithCuisine_Recipe(int Cuisine_id, int Recipe_id)
+    {
+      var session = HttpContext.Get<LoggableEntities>(_context);
+      var current_User = session == null ? null : session.User;
+      var allowed_sources = _context.Cuisine;
+      var source = allowed_sources.FirstOrDefault(s => s.Id == Cuisine_id);
+      var allowed_targets = _context.Recipe;
+      var target = allowed_targets.FirstOrDefault(s => s.Id == Recipe_id);
+      var can_edit_source_by_token = ApiTokenValid || true;
+      var can_edit_target_by_token = ApiTokenValid || true;
+      var can_link_by_token = ApiTokenValid || true;
+      if (!CanAdd_Cuisine_Cuisine_Recipes(source) || !can_link_by_token || !can_edit_source_by_token || !can_edit_target_by_token)
+        return BadRequest();
+        // throw new Exception("Cannot add item to relation Cuisine_Recipes");
+      if (!CanAdd_Recipe_Cuisine_Recipes(target))
+        return BadRequest();
+        // throw new Exception("Cannot add item to relation Cuisine_Recipes");
+      var link = new Cuisine_Recipe() { Id = _context.Cuisine_Recipe.Max(i => i.Id) + 1, CuisineId = source.Id, RecipeId = target.Id };
+      _context.Cuisine_Recipe.Add(link);
+      _context.SaveChanges();
+      return Ok();
+    }
+    [RestrictToUserType(new string[] {"*"})]
+    [HttpDelete("{Cuisine_id}/Cuisine_Recipes/{Recipe_id}")]
+    public IActionResult UnlinkFromCuisine_Recipe(int Cuisine_id, int Recipe_id)
+    {
+      var session = HttpContext.Get<LoggableEntities>(_context);
+      var current_User = session == null ? null : session.User;
+      var allowed_sources = _context.Cuisine;
+      var source = allowed_sources.FirstOrDefault(s => s.Id == Cuisine_id);
+      var allowed_targets = _context.Recipe;
+      var target = allowed_targets.FirstOrDefault(s => s.Id == Recipe_id);
+      var link = _context.Cuisine_Recipe.FirstOrDefault(l => l.CuisineId == source.Id && l.RecipeId == target.Id);
+
+      var can_edit_source_by_token = ApiTokenValid || true;
+      var can_edit_target_by_token = ApiTokenValid || true;
+      var can_unlink_by_token = ApiTokenValid || true;
+      if (!can_unlink_by_token || !can_edit_source_by_token || !can_edit_target_by_token) return Unauthorized(); // throw new Exception("Cannot remove item from relation Cuisine_Recipes");
+      _context.Cuisine_Recipe.Remove(link);
+      _context.SaveChanges();
+      return Ok();
+    }
+    [RestrictToUserType(new string[] {"*"})]
     [HttpGet("{id}")]
     [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult /*ItemWithEditable<Cuisine>*/ GetById(int id)

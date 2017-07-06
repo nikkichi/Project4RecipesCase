@@ -269,6 +269,22 @@ using System.IO;
         !_context.User.Any(s => s.Id == l.UserId)));
       _context.SaveChanges();
     
+
+      _context.Cuisine_Recipe.RemoveRange(_context.Cuisine_Recipe.Where(l =>
+        l.CuisineId == null ||
+        l.RecipeId == null ||
+        !_context.Cuisine.Any(s => s.Id == l.CuisineId) ||
+        !_context.Recipe.Any(s => s.Id == l.RecipeId)));
+      _context.SaveChanges();
+    
+
+      _context.Cuisine_Recipe.RemoveRange(_context.Cuisine_Recipe.Where(l =>
+        l.RecipeId == null ||
+        l.CuisineId == null ||
+        !_context.Recipe.Any(s => s.Id == l.RecipeId) ||
+        !_context.Cuisine.Any(s => s.Id == l.CuisineId)));
+      _context.SaveChanges();
+    
     }
     */
     

@@ -17,31 +17,56 @@ import * as BrowseViews from './Browse'
 import * as HomepageViews from './Homepage'
 import * as RecommendationViews from './Recommendation'
 import * as MealViews from './Meal'
+import * as RecipeViews from './Recipe'
 import * as CustomViews from '../custom_views'
 
 export function Grill_Cuisine_Meal_can_create(self:GrillContext) {
   let state = self.state()
   return state.Meal == "loading" ? false : state.Meal.CanCreate
 }
+export function Grill_Cuisine_Recipe_can_create(self:GrillContext) {
+  let state = self.state()
+  return state.Recipe == "loading" ? false : state.Recipe.CanCreate
+}
 export function Grill_Cuisine_Meal_can_delete(self:GrillContext) {
   let state = self.state()
   return state.Meal == "loading" ? false : state.Meal.CanDelete
+}
+export function Grill_Cuisine_Recipe_can_delete(self:GrillContext) {
+  let state = self.state()
+  return state.Recipe == "loading" ? false : state.Recipe.CanDelete
 }
 export function Grill_Cuisine_Meal_page_index(self:GrillContext) {
   let state = self.state()
   return state.Meal == "loading" ? 0 : state.Meal.PageIndex
 }
+export function Grill_Cuisine_Recipe_page_index(self:GrillContext) {
+  let state = self.state()
+  return state.Recipe == "loading" ? 0 : state.Recipe.PageIndex
+}
 export function Grill_Cuisine_Meal_page_size(self:GrillContext) {
   let state = self.state()
   return state.Meal == "loading" ? 25 : state.Meal.PageSize
+}
+export function Grill_Cuisine_Recipe_page_size(self:GrillContext) {
+  let state = self.state()
+  return state.Recipe == "loading" ? 25 : state.Recipe.PageSize
 }
 export function Grill_Cuisine_Meal_search_query(self:GrillContext) {
   let state = self.state()
   return state.Meal == "loading" ? null : state.Meal.SearchQuery
 }
+export function Grill_Cuisine_Recipe_search_query(self:GrillContext) {
+  let state = self.state()
+  return state.Recipe == "loading" ? null : state.Recipe.SearchQuery
+}
 export function Grill_Cuisine_Meal_num_pages(self:GrillContext) {
   let state = self.state()
   return state.Meal == "loading" ? 1 : state.Meal.NumPages
+}
+export function Grill_Cuisine_Recipe_num_pages(self:GrillContext) {
+  let state = self.state()
+  return state.Recipe == "loading" ? 1 : state.Recipe.NumPages
 }
 
 export function load_relation_Grill_Cuisine_Meal(self:GrillContext, force_first_page:boolean, current_User:Models.User, callback?:()=>void) {
@@ -74,9 +99,40 @@ export function load_relation_Grill_Cuisine_Meal(self:GrillContext, force_first_
       prelude(() => callback && callback())
 }
 
+export function load_relation_Grill_Cuisine_Recipe(self:GrillContext, force_first_page:boolean, current_User:Models.User, callback?:()=>void) {
+  let state = self.state()
+  let prelude = force_first_page && state.Recipe != "loading" ?
+    (c:() => void) => state.Recipe != "loading" && self.setState({
+      ...state,
+      Recipe: {...state.Recipe, PageIndex:0 }
+    }, c)
+    :
+    (c:() => void) => c()
+  Permissions.can_view_Recipe(current_User) ?
+    prelude(() =>
+      Api.get_Cuisine_Cuisine_Recipes(self.props.entity, Grill_Cuisine_Recipe_page_index(self), Grill_Cuisine_Recipe_page_size(self), Grill_Cuisine_Recipe_search_query(self)).then(Recipes =>
+        self.setState({...self.state(), update_count:self.state().update_count+1,
+            Recipe:Utils.raw_page_to_paginated_items<Models.Recipe, Utils.EntityAndSize<Models.Recipe> & { shown_relation:string }>((i, i_just_created) => {
+              let state = self.state()
+              return {
+                element:i,
+                size: state.Recipe != "loading" ?
+                  (state.Recipe.Items.has(i.Id) ?
+                    state.Recipe.Items.get(i.Id).size
+                  :
+                    "preview" /* i_just_created ? "large" : "preview" */)
+                  :
+                    "preview" /* i_just_created ? "large" : "preview" */,
+                shown_relation:"all"}}, Recipes)
+            }, callback)))
+    :
+      prelude(() => callback && callback())
+}
+
 export function load_relations_Grill(self, current_User:Models.User, callback?:()=>void) {
-  load_relation_Grill_Cuisine_Meal(self, false, self.props.current_User, 
-        () => callback && callback())
+  load_relation_Grill_Cuisine_Recipe(self, false, self.props.current_User, 
+        () => load_relation_Grill_Cuisine_Meal(self, false, self.props.current_User, 
+        () => callback && callback()))
 }
 
 export function set_size_Grill(self:GrillContext, new_size:Utils.EntitySize) {
@@ -223,6 +279,18 @@ export function render_local_menu_Grill(self:GrillContext) {
                         () => self.props.set_shown_relation("Cuisine_Meal"))
                     }>
                       {i18next.t('Cuisine_Meals')}
+                    </a>
+                  </div>
+                }
+        {!Permissions.can_view_Recipe(self.props.current_User) ? null :
+                  <div key={"Cuisine_Recipe"} className={`local_menu_entry${self.props.shown_relation == "Cuisine_Recipe" ? " local_menu_entry--active" : ""}`}>
+                    <a onClick={() =>
+                      load_relation_Grill_Cuisine_Recipe(self,
+                        false,
+                        self.props.current_User, 
+                        () => self.props.set_shown_relation("Cuisine_Recipe"))
+                    }>
+                      {i18next.t('Cuisine_Recipes')}
                     </a>
                   </div>
                 }  
@@ -475,10 +543,131 @@ export function render_Grill_Cuisine_Meal(self:GrillContext, context:"presentati
 }
 
 
+export function render_Grill_Cuisine_Recipe(self:GrillContext, context:"presentation_structure"|"default") {
+  if ((context == "default" && self.props.shown_relation != "all" && self.props.shown_relation != "Cuisine_Recipe") || !Permissions.can_view_Recipe(self.props.current_User))
+    return null
+  let state = self.state()
+  return <div>
+    
+    { List.render_relation("grill_cuisine_recipe",
+   "Cuisine",
+   "Recipe",
+   "Recipes",
+   self.props.nesting_depth > 0,
+   false,
+   false,
+   false)
+  (
+      state.Recipe != "loading" ?
+        state.Recipe.IdsInServerOrder.map(id => state.Recipe != "loading" && state.Recipe.Items.get(id)):
+        state.Recipe,
+      Grill_Cuisine_Recipe_page_index(self),
+      Grill_Cuisine_Recipe_num_pages(self),
+      new_page_index => {
+          let state = self.state()
+          state.Recipe != "loading" &&
+          self.setState({...self.state(),
+            update_count:self.state().update_count+1,
+            Recipe: {
+              ...state.Recipe,
+              PageIndex:new_page_index
+            }
+          }, () =>  load_relation_Grill_Cuisine_Recipe(self, false, self.props.current_User))
+        },
+      (i,_) => {
+          let i_id = i.element.Id
+          let state = self.state()
+          return <div key={i_id}
+            className={`model-nested__item ${i.size != "preview" ? "model-nested__item--open" : ""}
+                        ${state.Recipe != "loading" && state.Recipe.JustCreated.has(i_id) && state.Recipe.JustCreated.get(i_id) ? "newly-created" : ""}` }
+          
+            >
+            <div key={i_id}>
+              {
+                RecipeViews.Recipe({
+                  ...self.props,
+                  entity:i.element,
+                  inline:false,
+                  nesting_depth:self.props.nesting_depth+1,
+                  size: i.size,
+                  allow_maximisation:true,
+                  allow_fullscreen:true,
+                  mode:self.props.mode == "edit" && (Permissions.can_edit_Cuisine_Recipe(self.props.current_User)
+                        || Permissions.can_create_Cuisine_Recipe(self.props.current_User)
+                        || Permissions.can_delete_Cuisine_Recipe(self.props.current_User)) ?
+                    self.props.mode : "view",
+                  is_editable:state.Recipe != "loading" && state.Recipe.Editable.get(i_id),
+                  shown_relation:i.shown_relation,
+                  set_shown_relation:(new_shown_relation:string, callback) => {
+                    let state = self.state()
+                    state.Recipe != "loading" &&
+                    self.setState({...self.state(),
+                      Recipe:
+                        {
+                          ...state.Recipe,
+                          Items:state.Recipe.Items.set(i_id,{...state.Recipe.Items.get(i_id), shown_relation:new_shown_relation})
+                        }
+                    }, callback)
+                  },
+                  nested_entity_names: self.props.nested_entity_names.push("Recipe"),
+                  
+                  set_size:(new_size:Utils.EntitySize, callback) => {
+                    let new_shown_relation = new_size == "large" ? "all" : i.shown_relation
+                    let state = self.state()
+                    state.Recipe != "loading" &&
+                    self.setState({...self.state(),
+                      Recipe:
+                        {
+                          ...state.Recipe,
+                          Items:state.Recipe.Items.set(i_id,
+                            {...state.Recipe.Items.get(i_id),
+                              size:new_size, shown_relation:new_shown_relation})
+                        }
+                    }, callback)
+                  },
+                    
+                  toggle_button:undefined,
+                  set_mode:undefined,
+                  set_entity:(new_entity:Models.Recipe, callback?:()=>void, force_update_count_increment?:boolean) => {
+                    let state = self.state()
+                    state.Recipe != "loading" &&
+                    self.setState({...self.state(),
+                      dirty_Recipe:state.dirty_Recipe.set(i_id, new_entity),
+                      update_count:force_update_count_increment ? self.state().update_count+1 : state.update_count,
+                      Recipe:
+                        {
+                          ...state.Recipe,
+                          Items:state.Recipe.Items.set(i_id,{...state.Recipe.Items.get(i_id), element:new_entity})
+                        }
+                    }, callback)
+                  },
+                  delete: undefined,
+                  unlink: !Permissions.can_delete_Cuisine_Recipe(self.props.current_User) ?
+                    null
+                    :
+                    () => confirm(i18next.t('Are you sure?')) && Api.unlink_Cuisine_Cuisine_Recipes(self.props.entity, i.element).then(() =>
+                      load_relation_Grill_Cuisine_Recipe(self, false, self.props.current_User))
+                })
+              }
+            </div>
+          </div>
+        },
+      () =>
+        <div>
+          {Permissions.can_create_Recipe(self.props.current_User) && Permissions.can_create_Cuisine_Recipe(self.props.current_User) && Grill_Cuisine_Recipe_can_create(self) ? render_new_Grill_Cuisine_Recipe(self) : null}
+          {Permissions.can_create_Cuisine_Recipe(self.props.current_User) ? render_add_existing_Grill_Cuisine_Recipe(self) : null}
+        </div>)
+    }
+    
+    </div>
+}
+
+
 
 export function render_relations_Grill(self:GrillContext) {
   return <div className="relations">
       { render_Grill_Cuisine_Meal(self, "default") }
+      { render_Grill_Cuisine_Recipe(self, "default") }
       
     </div>
 }
@@ -539,6 +728,67 @@ export function render_add_existing_Grill_Cuisine_Meal(self:GrillContext) {
                 { name: "Brunch", get: async(i,s) => Api.get_unlinked_Cuisine_Cuisine_Meals_Brunch(self.props.entity, i, s) }, 
                 { name: "Dinner", get: async(i,s) => Api.get_unlinked_Cuisine_Cuisine_Meals_Dinner(self.props.entity, i, s) }, 
                 { name: "Breakfast", get: async(i,s) => Api.get_unlinked_Cuisine_Cuisine_Meals_Breakfast(self.props.entity, i, s) }
+              ]
+            })
+        }
+      </div>
+    :
+      null
+    }
+  
+export function render_add_existing_Grill_Cuisine_Recipe(self:GrillContext) {
+    
+    let state = self.state()
+    return self.props.mode == "edit" ?
+      <div className="button__actions">
+        {
+          state.add_step_Recipe != "open" ?
+            <Buttons.Add 
+              onClick={() =>
+                self.setState({...self.state(), add_step_Recipe:"open"}) }
+                  target_name={"Recipe"} />
+          :
+          React.createElement(List.AddToRelation,
+            {
+              relation_name:"grill_cuisine_recipe",
+              source_name:"Cuisine",
+              target_name:"Recipe",
+              target_plural:"Recipes",
+              page_size:25,
+              render_target:(i,i_id) =>
+                <div key={i_id} className="group__item">
+                  <a className="group__button button button--existing"
+                    onClick={() =>
+                        self.setState({...self.state(), add_step_Recipe:"saving"}, () =>
+                          Api.link_Cuisine_Cuisine_Recipes(self.props.entity, i).then(() =>
+                            self.setState({...self.state(), add_step_Recipe:"closed"}, () =>
+                              load_relation_Grill_Cuisine_Recipe(self, false, self.props.current_User))))
+                      }>
+                      Add existing
+                  </a>
+                  <div className="group__title" disabled={true}>
+                    {
+                      RecipeViews.Recipe({
+                        ...self.props,
+                        entity:i,
+                        nesting_depth:self.props.nesting_depth+1,
+                        size:"preview",
+                        mode:"view",
+                        is_editable:false,
+                        nested_entity_names: self.props.nested_entity_names.push("Recipe"),
+                        set_size:undefined,
+                        toggle_button:undefined,
+                        set_mode:undefined,
+                        set_entity:(new_entity:Models.Recipe, callback?:()=>void) => {},
+                        unlink: undefined,
+                        delete: undefined
+                      })
+                    }
+                  </div>
+                </div>,
+              cancel:() => self.setState({...self.state(), add_step_Recipe:"closed"}),
+              get_items:[
+                { name: "Recipe", get: async(i,s) => Api.get_unlinked_Cuisine_Cuisine_Recipes(self.props.entity, i, s) },
               ]
             })
         }
@@ -634,9 +884,37 @@ export function render_new_Grill_Cuisine_Meal(self:GrillContext) {
       null
     }
   
+export function render_new_Grill_Cuisine_Recipe(self:GrillContext) {
+    let state = self.state()
+    return  self.props.mode == "edit" ?
+      <div className="button__actions">
+        <div className="new-recipe">
+              <button 
+                      className="new-recipe button button--new"
+                      onClick={() =>
+                          Api.create_linked_Cuisine_Cuisine_Recipes_Recipe(self.props.entity).then(e => {
+                              e.length > 0 &&
+                              Api.update_Recipe(
+                                ({ ...e[0], Name:"", Ingredients:"", Description:"", Picture:"" } as Models.Recipe)).then(() =>
+                                load_relation_Grill_Cuisine_Recipe(self, true, self.props.current_User, () =>
+                                    self.setState({...self.state(), add_step_Recipe:"closed"})
+                                  )
+                                )
+                          })
+                      }>
+                  {i18next.t('Create new Recipe')}
+              </button>
+            </div>
+        </div>
+      :
+      null
+    }
+  
 
 export function render_saving_animations_Grill(self:GrillContext) {
   return self.state().dirty_Meal.count() > 0 ?
+    <div style={{position:"fixed", zIndex:10000, top:0, left:0, width:"20px", height:"20px", backgroundColor:"red"}} className="saving"/> : 
+    self.state().dirty_Recipe.count() > 0 ?
     <div style={{position:"fixed", zIndex:10000, top:0, left:0, width:"20px", height:"20px", backgroundColor:"red"}} className="saving"/>
     : <div style={{position:"fixed", zIndex:10000, top:0, left:0, width:"20px", height:"20px", backgroundColor:"cornflowerblue"}} className="saved"/>
 }
@@ -648,11 +926,14 @@ export type GrillState = {
     add_step_Meal:"closed"|"open"|"saving"|"adding"|"creating",
       dirty_Meal:Immutable.Map<number,Models.Meal>,
       Meal:Utils.PaginatedItems<{ shown_relation: string } & Utils.EntityAndSize<Models.Meal>>|"loading"
+  add_step_Recipe:"closed"|"open"|"saving",
+      dirty_Recipe:Immutable.Map<number,Models.Recipe>,
+      Recipe:Utils.PaginatedItems<{ shown_relation: string } & Utils.EntityAndSize<Models.Recipe>>|"loading"
   }
 export class GrillComponent extends React.Component<Utils.EntityComponentProps<Models.Grill>, GrillState> {
   constructor(props:Utils.EntityComponentProps<Models.Grill>, context:any) {
     super(props, context)
-    this.state = { update_count:0,add_step_Meal:"closed", dirty_Meal:Immutable.Map<number,Models.Meal>(), Meal:"loading" }
+    this.state = { update_count:0,add_step_Meal:"closed", dirty_Meal:Immutable.Map<number,Models.Meal>(), Meal:"loading", add_step_Recipe:"closed", dirty_Recipe:Immutable.Map<number,Models.Recipe>(), Recipe:"loading" }
   }
 
   get_self() {
@@ -685,6 +966,11 @@ export class GrillComponent extends React.Component<Utils.EntityComponentProps<M
          let first = this.state.dirty_Meal.first()
          this.setState({...this.state, dirty_Meal: this.state.dirty_Meal.remove(first.Id)}, () =>
            Api.update_Meal(first)
+         )
+       } else if (this.state.dirty_Recipe.count() > 0) {
+         let first = this.state.dirty_Recipe.first()
+         this.setState({...this.state, dirty_Recipe: this.state.dirty_Recipe.remove(first.Id)}, () =>
+           Api.update_Recipe(first)
          )
        }
 
@@ -731,7 +1017,7 @@ export let Grill = (props:Utils.EntityComponentProps<Models.Grill>) : JSX.Elemen
   <GrillComponent {...props} />
 
 export let Grill_to_page = (id:number) => {
-  let can_edit = Utils.any_of([Permissions.can_edit_Grill, Permissions.can_edit_Cuisine_Meal, Permissions.can_edit_Meal])
+  let can_edit = Utils.any_of([Permissions.can_edit_Grill, Permissions.can_edit_Cuisine_Meal, Permissions.can_edit_Cuisine_Recipe, Permissions.can_edit_Meal, Permissions.can_edit_Recipe])
   return Utils.scene_to_page<Models.Grill>(can_edit, Grill, Api.get_Grill(id), Api.update_Grill, "Grill", "Grill", `/Grills/${id}`)
 }
 

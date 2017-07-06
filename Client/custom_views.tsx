@@ -11,6 +11,16 @@ type IComponentProps = {props:ViewUtils.EntityComponentProps<Models.Homepage>}
 type IComponentState = { i : number, j : number, recipes : Immutable.List<Models.Recipe> }
 type BrowseComponentProps = {props:ViewUtils.EntityComponentProps<Models.Browse>}
 type BrowseComponentState = { i : number, j : number, recipes : Immutable.List<Models.Recipe>}
+type RecommendedProps = { user : Models.User }
+type RecommendedState = { recommendedrecipes: Immutable.List<Models.Recipe>}
+type RecipeComponentProps = { reload:() => void, logged_in_user: Models.User, recipe: Models.Recipe, update_me: (boolean) => void, is_expanded: boolean }
+type RecipeComponentState = {recipes: Immutable.List<{ recipe: Models.Recipe, is_expanded: boolean }>, rating: Immutable.List<{ recipe: Models.Rating }> }
+
+export async function get_RecommendedRecipes(user_id: number): Promise<Immutable.List<Models.Recipe>> {
+    let res = await fetch(`/api/v1/CustomController/GetRecommendedRecipes/${user_id}`, { method: 'get', credentials: 'include', headers: { 'content-type': 'application/json' } })
+    let json = await res.json()
+    return Immutable.List<Models.Recipe>(json)
+}
 
 export async function set_rating(rating: number, recipe: number, user: number) {
  let res = await fetch(`/api/v1/CustomController/UserRating/${rating}/${recipe}/${user}`, { method: 'post', credentials: 'include', headers: { 'content-type': 'application/json' } })    
@@ -72,17 +82,17 @@ export class FavComponent extends React.Component<{props: Models.User,recipe: Mo
     render() {
         return <div>
             <button onClick={() => this.setState({... this.state, bookmark: this.change_bookmark() })} style={this.state.bookmark?{
-                                                                                borderColor: '#08ABCE',
-                                                                                backgroundColor: '#08ABCE',
-                                                                                borderWidth: 1,
-                                                                                borderRadius: 10,
-                                                                                color: 'white',
-                                                                              }:
-                                                                              {
-                                                                                borderColor: 'black',
+                                                                                borderColor: 'white',
+                                                                                backgroundColor: 'white',
                                                                                 borderWidth: 1,
                                                                                 borderRadius: 10,
                                                                                 color: 'black',
+                                                                              }:
+                                                                              {
+                                                                                borderColor: 'white',
+                                                                                borderWidth: 1,
+                                                                                borderRadius: 10,
+                                                                                color: 'white',
                                                                                 }}
                                                                                 
                                                 marginHeight={10} marginWidth={10} width={10} height={10}>Bookmark</button>
@@ -109,17 +119,17 @@ export class StarsComponent extends React.Component<StarsComponentProps, StarsCo
   render(){
     return <div>{this.state.stars.map(star => <button onClickCapture={() => this.setState({...this.state, stars: this.state.stars.map(star1 => {if(star1.value <= star.value) return {...star1, state: true}; else return {...star1, state: false}}).toList()})}  
                                                       style={star.state?{
-                                                                          borderColor: '#08ABCE',
-                                                                          backgroundColor: '#08ABCE',
+                                                                          borderColor: 'white',
+                                                                          backgroundColor: 'white',
+                                                                          borderWidth: 1,
+                                                                          borderRadius: 15,
+                                                                          color: 'black',
+                                                                        }:
+                                                                        {
+                                                                          borderColor: 'white',
                                                                           borderWidth: 1,
                                                                           borderRadius: 15,
                                                                           color: 'white',
-                                                                        }:
-                                                                        {
-                                                                          borderColor: '#08ABCE',
-                                                                          borderWidth: 1,
-                                                                          borderRadius: 15,
-                                                                          color: '#08ABCE',
                                                                         }}
                                                                         onClick = {()=> set_rating(star.value, this.props.recipe.Id, this.props.user.Id)}
                                                       marginHeight={10} marginWidth={10} width={10} height={10}>{star.value}</button>)} </div>
@@ -318,6 +328,48 @@ export class Info extends React.Component<{props: Models.User,recipe: Models.Rec
                 </div>
     }
 }
+class RecommendedRecipe extends React.Component<RecipeComponentProps, RecipeComponentState>{
+    constructor(props: RecipeComponentProps, context) {
+        super(props, context)
+        this.state = {recipes: Immutable.List<{ recipe: Models.Recipe, is_expanded: boolean }>(), rating: Immutable.List<{ recipe: Models.Rating }>() }
+    }
+   componentWillMount() {
+        console.log('right recipe is loading')
+    }
+    render() {
+        return <div>
+            {console.log('Recipe')}
+           <RecipesComponent props={this.props.logged_in_user} recipe={this.props.recipe}/>
+        </div>
+    }
+}
+class Recommended extends React.Component<RecommendedProps,  RecommendedState> 
+{
+    constructor(props: RecommendedProps, context ) {
+        super(props, context)
+        this.state = { recommendedrecipes: Immutable.List<Models.Recipe>() }
+    }
+    componentWillMount() {
+       
+        get_RecommendedRecipes(1).then(recommendedrecipes => 
+        this.setState({...this.state,recommendedrecipes: recommendedrecipes
+                } 
+                ) 
+        )}
+    
+    
+    render() {
+        
+        console.log("rendering", this.state.recommendedrecipes)
+        return <div>{this.state.recommendedrecipes.map(item => <RecommendedRecipe
+                    recipe={item}
+                    is_expanded={true}
+                    logged_in_user = {this.props.user}
+                    reload={() => {}}
+                    update_me={value => {}}/>)
+                        }</div>
+    }
+}
 
 
 export default class IComponent extends React.Component<IComponentProps, IComponentState>{
@@ -437,4 +489,4 @@ export let FavouriteView = (props:ViewUtils.EntityComponentProps<Models.Favourit
 export let BrowseView    = (props:ViewUtils.EntityComponentProps<Models.Browse>) => {
     return <BrowseComponent props={props}/>
 }
-export let RecView       = (props:ViewUtils.EntityComponentProps<Models.Recommendation>) => <div><div> Hello recommendations </div></div>
+export let RecView       = (props:ViewUtils.EntityComponentProps<Models.Recommendation>) => {return <Recommended user={props.current_User}/>}

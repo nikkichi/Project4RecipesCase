@@ -390,5 +390,12 @@ static public bool can_view_User_Rating(User current_User) { return true; }
     static public bool can_edit_User_Rating(User current_User) { return true; }
 
     static public bool can_delete_User_Rating(User current_User) { return true; }
+static public bool can_view_Cuisine_Recipe(User current_User) { return true; }
+
+    static public bool can_create_Cuisine_Recipe(User current_User) { return true; }
+
+    static public bool can_edit_Cuisine_Recipe(User current_User) { return true; }
+
+    static public bool can_delete_Cuisine_Recipe(User current_User) { return true; }
   }
 }

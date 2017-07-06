@@ -62,6 +62,24 @@ namespace SimpleModelsAndRelations.Migrations
                     b.ToTable("Cuisine_Meal");
                 });
 
+            modelBuilder.Entity("SimpleModelsAndRelations.Models.Cuisine_Recipe", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("CuisineId");
+
+                    b.Property<int>("RecipeId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CuisineId");
+
+                    b.HasIndex("RecipeId");
+
+                    b.ToTable("Cuisine_Recipe");
+                });
+
             modelBuilder.Entity("SimpleModelsAndRelations.Models.Favourite", b =>
                 {
                     b.Property<int>("Id")
@@ -495,6 +513,19 @@ namespace SimpleModelsAndRelations.Migrations
                     b.HasOne("SimpleModelsAndRelations.Models.Meal", "Meal")
                         .WithMany("Cuisine_Meals")
                         .HasForeignKey("MealId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SimpleModelsAndRelations.Models.Cuisine_Recipe", b =>
+                {
+                    b.HasOne("SimpleModelsAndRelations.Models.Cuisine", "Cuisine")
+                        .WithMany("Cuisine_Recipes")
+                        .HasForeignKey("CuisineId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("SimpleModelsAndRelations.Models.Recipe", "Recipe")
+                        .WithMany("Cuisine_Recipes")
+                        .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

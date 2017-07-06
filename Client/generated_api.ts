@@ -398,6 +398,56 @@ export async function unlink_Cuisine_Cuisine_Meals(source:Models.Cuisine, target
 }
 
 
+export async function get_Cuisine_Cuisine_Recipes(source:Models.Cuisine, page_index:number, page_size:number, query_string:string = null) : Promise<RawPage<Models.Recipe>> {
+  let res = await fetch(`/api/v1/Cuisine/${source.Id}/Cuisine_Recipes?page_index=${page_index}&page_size=${page_size}${(query_string != null ? "&search_query=" + query_string : "")}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return make_page<Models.Recipe>(json, e => { return {...e, }})
+}
+
+export async function get_Cuisine_Cuisine_Recipes_Recipe(source:Models.Cuisine, page_index:number, page_size:number, id:number) : Promise<Models.Recipe> {
+  let res = await fetch(`/api/v1/Cuisine/${source.Id}/Cuisine_Recipes/${id}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return {...json, CreatedDate: Moment.utc(json.CreatedDate),  } as Models.Recipe
+}
+
+export async function get_Cuisine_Cuisine_Recipes_Recipe_by_id(source:Models.Cuisine, id:number) : Promise<Models.Recipe> {
+  let res = await fetch(`/api/v1/Cuisine/${source.Id}/Cuisine_Recipes/${id}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return {...json, CreatedDate: Moment.utc(json.CreatedDate),  } as Models.Recipe
+}
+
+
+export async function get_unlinked_Cuisine_Cuisine_Recipes(source:Models.Cuisine, page_index:number, page_size:number) : Promise<RawPage<Models.Recipe>> {
+  let res = await fetch(`/api/v1/Cuisine/${source.Id}/unlinked/Cuisine_Recipes?page_index=${page_index}&page_size=${page_size}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return make_page<Models.Recipe>(json, e => { return {...e, }})
+}
+
+    
+export async function create_linked_Cuisine_Cuisine_Recipes_Recipe(source:Models.Cuisine) : Promise<Models.Recipe[]> {
+  let res = await fetch(`/api/v1/Cuisine/${source.Id}/Cuisine_Recipes_Recipe`, { method: 'post', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return json.map(e => { return {...e, CreatedDate: Moment.utc(e.CreatedDate),  }}) as Models.Recipe[]
+}
+
+export async function link_Cuisine_Cuisine_Recipes(source:Models.Cuisine, target:Models.Recipe) : Promise<void> {
+  let res = await fetch(`/api/v1/Cuisine/${source.Id}/Cuisine_Recipes/${target.Id}`, { method: 'post', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  return
+}
+
+export async function unlink_Cuisine_Cuisine_Recipes(source:Models.Cuisine, target:Models.Recipe) : Promise<void> {
+  let res = await fetch(`/api/v1/Cuisine/${source.Id}/Cuisine_Recipes/${target.Id}`, { method: 'delete', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  return
+}
+
+
 export async function create_Cuisine() : Promise<Models.Cuisine> {
   let res = await fetch(`/api/v1/Cuisine/`,
     { method: 'post', credentials: 'include', headers:{'content-type': 'application/json',
@@ -1580,6 +1630,90 @@ export async function link_Recipe_RecommendationPage_Recipes(source:Models.Recip
 
 export async function unlink_Recipe_RecommendationPage_Recipes(source:Models.Recipe, target:Models.RecommendationPage) : Promise<void> {
   let res = await fetch(`/api/v1/Recipe/${source.Id}/RecommendationPage_Recipes/${target.Id}`, { method: 'delete', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  return
+}
+
+
+export async function get_Recipe_Cuisine_Recipes(source:Models.Recipe, page_index:number, page_size:number, query_string:string = null) : Promise<RawPage<Models.Cuisine>> {
+  let res = await fetch(`/api/v1/Recipe/${source.Id}/Cuisine_Recipes?page_index=${page_index}&page_size=${page_size}${(query_string != null ? "&search_query=" + query_string : "")}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return make_page<Models.Cuisine>(json, e => { return {...e, }})
+}
+
+export async function get_Recipe_Cuisine_Recipes_Cuisine(source:Models.Recipe, page_index:number, page_size:number, id:number) : Promise<Models.Cuisine> {
+  let res = await fetch(`/api/v1/Recipe/${source.Id}/Cuisine_Recipes/${id}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return {...json, CreatedDate: Moment.utc(json.CreatedDate),  } as Models.Cuisine
+}
+
+export async function get_Recipe_Cuisine_Recipes_Cuisine_by_id(source:Models.Recipe, id:number) : Promise<Models.Cuisine> {
+  let res = await fetch(`/api/v1/Recipe/${source.Id}/Cuisine_Recipes/${id}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return {...json, CreatedDate: Moment.utc(json.CreatedDate),  } as Models.Cuisine
+}
+
+
+export async function get_unlinked_Recipe_Cuisine_Recipes(source:Models.Recipe, page_index:number, page_size:number) : Promise<RawPage<Models.Cuisine>> {
+  let res = await fetch(`/api/v1/Recipe/${source.Id}/unlinked/Cuisine_Recipes?page_index=${page_index}&page_size=${page_size}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return make_page<Models.Cuisine>(json, e => { return {...e, }})
+}
+export async function get_unlinked_Recipe_Cuisine_Recipes_Asian(source:Models.Recipe, page_index:number, page_size:number) : Promise<RawPage<Models.Asian>> {
+  let res = await fetch(`/api/v1/Recipe/${source.Id}/unlinked/Cuisine_Recipes/Asian?page_index=${page_index}&page_size=${page_size}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return make_page<Models.Asian>(json, e => { return {...e, }})
+}
+
+export async function get_unlinked_Recipe_Cuisine_Recipes_Mediterranean(source:Models.Recipe, page_index:number, page_size:number) : Promise<RawPage<Models.Mediterranean>> {
+  let res = await fetch(`/api/v1/Recipe/${source.Id}/unlinked/Cuisine_Recipes/Mediterranean?page_index=${page_index}&page_size=${page_size}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return make_page<Models.Mediterranean>(json, e => { return {...e, }})
+}
+
+export async function get_unlinked_Recipe_Cuisine_Recipes_Grill(source:Models.Recipe, page_index:number, page_size:number) : Promise<RawPage<Models.Grill>> {
+  let res = await fetch(`/api/v1/Recipe/${source.Id}/unlinked/Cuisine_Recipes/Grill?page_index=${page_index}&page_size=${page_size}`, { method: 'get', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return make_page<Models.Grill>(json, e => { return {...e, }})
+}
+
+    
+export async function create_linked_Recipe_Cuisine_Recipes_Asian(source:Models.Recipe) : Promise<Models.Asian[]> {
+  let res = await fetch(`/api/v1/Recipe/${source.Id}/Cuisine_Recipes_Asian`, { method: 'post', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return json.map(e => { return {...e, CreatedDate: Moment.utc(e.CreatedDate),  }}) as Models.Asian[]
+}
+
+export async function create_linked_Recipe_Cuisine_Recipes_Mediterranean(source:Models.Recipe) : Promise<Models.Mediterranean[]> {
+  let res = await fetch(`/api/v1/Recipe/${source.Id}/Cuisine_Recipes_Mediterranean`, { method: 'post', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return json.map(e => { return {...e, CreatedDate: Moment.utc(e.CreatedDate),  }}) as Models.Mediterranean[]
+}
+
+export async function create_linked_Recipe_Cuisine_Recipes_Grill(source:Models.Recipe) : Promise<Models.Grill[]> {
+  let res = await fetch(`/api/v1/Recipe/${source.Id}/Cuisine_Recipes_Grill`, { method: 'post', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  let json = await res.json()
+  return json.map(e => { return {...e, CreatedDate: Moment.utc(e.CreatedDate),  }}) as Models.Grill[]
+}
+
+export async function link_Recipe_Cuisine_Recipes(source:Models.Recipe, target:Models.Cuisine) : Promise<void> {
+  let res = await fetch(`/api/v1/Recipe/${source.Id}/Cuisine_Recipes/${target.Id}`, { method: 'post', credentials: 'include', headers:{'content-type': 'application/json'} })
+  if (!res.ok) throw Error(res.statusText)
+  return
+}
+
+export async function unlink_Recipe_Cuisine_Recipes(source:Models.Recipe, target:Models.Cuisine) : Promise<void> {
+  let res = await fetch(`/api/v1/Recipe/${source.Id}/Cuisine_Recipes/${target.Id}`, { method: 'delete', credentials: 'include', headers:{'content-type': 'application/json'} })
   if (!res.ok) throw Error(res.statusText)
   return
 }

@@ -26,6 +26,20 @@ namespace SimpleModelsAndRelations.Controllers
     this.Item2 = Item2;
   }
 }
+public static class RNG {
+    private static Random rng = new Random();  
+    public static void Shuffle<T>(this IList<T> list)  
+    {  
+      int n = list.Count;  
+      while (n > 1) {  
+        n--;  
+        int k = rng.Next(n + 1);  
+        T value = list[k];  
+        list[k] = list[n];  
+        list[n] = value;  
+        }  
+    }
+} 
     [Route("api/v1/CustomController")]
   public class CustomController : Controller
   {
@@ -36,6 +50,27 @@ namespace SimpleModelsAndRelations.Controllers
     {
       _context = context;
       _mailOptions = mailOptionsAccessor.Value;
+    }
+
+ [HttpGet("GetRecommendedRecipes/{user_id}")]
+  public Recipe[] RecommendedRecipes(int user_id)
+  {
+    List<MyTuple<Recipe, int>> recipesrating = new List<MyTuple<Recipe, int>>(); // We instantiate a list with type MyTuple<T, U> and name the types Recipe and int.
+                    
+    foreach(var recipe in _context.Recipe){ // We create a for-loop that goes through the recipes and looks if the recipe has a rating.
+      var maybemaybenotrating = _context.Recipe_Rating.FirstOrDefault(elem => elem.RecipeId == recipe.Id);
+      if (maybemaybenotrating == null) { // If it's null, it adds (or instantiates) a rating to the MyTuple (and to the specific recipe IN the for-loop (I THINK... MAYBE... HOPEFULLY)).
+        recipesrating.Add(new MyTuple<Recipe, int>(recipe, 0));
+      }
+      else { // If it's NOT null, it will just assign the the rating it already has to the MyTuple that we are using (and to the specific recipe IN the for-loop (I THINK... MAYBE... HOPEFULLY)).
+        var yesrating = _context.Rating.FirstOrDefault(elem => elem.Id == maybemaybenotrating.RatingId);
+        recipesrating.Add(new MyTuple<Recipe, int>(recipe, yesrating.Number));
+      }      
+    }
+    recipesrating.OrderByDescending(elem => elem.Item2); //This orders the recipes that have low ratings to the top of the list.    
+    var topfifteen = recipesrating.Take(Math.Min(recipesrating.Count, 10)).ToList(); //Takes minimum of 2 recipes to showcase
+    topfifteen.Shuffle(); // Shuffle method is from a static class that shuffles the elements inside the given list (works like magic).
+    return topfifteen.Take(Math.Min(recipesrating.Count, 3)).Select(elem => elem.Item1).ToArray(); // returns the shuffled list.
     }
 
     [RestrictToUserType(new string[] {"*"})]

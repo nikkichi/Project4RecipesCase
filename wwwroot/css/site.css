@@ -449,10 +449,10 @@ textarea {
 	width: device-width;
 	height: device-height;
 }
+*:before {
 
 *,
 *:after,
-*:before {
 	-webkit-box-sizing: inherit;
 	box-sizing: inherit;
 }
@@ -469,9 +469,13 @@ html {
 }
 
 body {
-	background-color: #f1f1f1;
-	color: #444;
-	font-size: 16px;
+	background-image: url('http://orig11.deviantart.net/48a4/f/2015/044/2/5/misaki_from_kaichou_wa_maid_sama___minimalist_by_matsumayu-d8fs36q.png');
+	background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+	color: pink;
+	font-size: 18px;
 	font-family: "Palanquin", sans-serif;
 	line-height: 1.75;
 	-webkit-font-smoothing: antialiased;
@@ -496,7 +500,7 @@ h6 {
 h1,
 .model-nested__title {
 	font-family: "Palanquin Dark", sans-serif;
-	color: #000000;
+	color: white;
 }
 
 h2,
@@ -531,18 +535,20 @@ button,
 input[type="button"],
 input[type="reset"],
 input[type="submit"] {
+	border-radius: 10%;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
 	display: inline-block;
 	position: relative;
 	border: 1px solid currentColor;
-	color: #08ABCE;
+	color: white;
 	letter-spacing: 1px;
 	padding: 0 20px;
 	line-height: 40px;
 	font-weight: 700;
-	background: transparent;
+	background-color: transparent;
+	opacity: 0.8;
 	cursor: pointer;
 	text-decoration: none;
 	-webkit-user-select: none;
@@ -565,7 +571,7 @@ input[type="reset"]:hover,
 input[type="reset"]:focus,
 input[type="submit"]:hover,
 input[type="submit"]:focus {
-	color: #04596c;
+	color: white;
 	border-bottom-color: currentColor;
 }
 
@@ -655,6 +661,7 @@ picture {
 	display: block;
 	max-width: 100%;
 	height: auto;
+	opacity: 0.9;
 }
 
 form {
@@ -902,7 +909,8 @@ th {
 }
 
 .menu {
-	background: #464E54;
+	background: black;
+	opacity: 0.6;
 	font-weight: 700;
 	font-family: "Palanquin Dark", sans-serif;
 }
@@ -953,14 +961,14 @@ th {
 }
 
 .toggle-button:after {
-	content: "";
+	content: "?";
 	font-family: 'icomoon';
 	position: absolute;
 	right: 30px;
 }
 
 .toggle-container--toggled .toggle-button:after {
-	content: "";
+	content: "?";
 }
 
 .pages {
@@ -1004,7 +1012,8 @@ th {
 }
 
 .topbar {
-	background: #08ABCE;
+	background-color: black;
+	opacity: 0.6;
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
@@ -1014,6 +1023,7 @@ th {
 	-webkit-box-align: center;
 	-ms-flex-align: center;
 	align-items: center;
+	filter: alpha(opacity=60);
 }
 
 .topbar__buttons {
@@ -1048,13 +1058,13 @@ th {
 }
 
 .toggle-mode:before {
-	content: "";
+	content: "?";
 	left: -30px;
 	top: -3px;
 }
 
 .toggle-mode:after {
-	content: "";
+	content: "?";
 	top: -5px;
 	right: -32px;
 	font-size: 21px;
@@ -1235,27 +1245,27 @@ th {
 }
 
 .button--close:before {
-	content: "";
+	content: "?";
 }
 
 .button--existing:before {
-	content: "";
+	content: "?";
 }
 
 .button--unlink:before {
-	content: "";
+	content: "?";
 }
 
 .button--delete:before {
-	content: "";
+	content: "?";
 }
 
 .button--cancel:before {
-	content: "";
+	content: "?";
 }
 
 .button--fullscreen:before {
-	content: "";
+	content: "?";
 }
 
 .button--toggle {
@@ -1269,11 +1279,11 @@ th {
 }
 
 .button--toggle:before {
-	content: "";
+	content: "?";
 }
 
 .button--toggle--open:before {
-	content: "";
+	content: "?";
 }
 
 .button--search {
@@ -1551,7 +1561,7 @@ th {
 }
 
 .inline-relation .control .button--unlink:before {
-	content: "";
+	content: "?";
 }
 
 .inline-relation .model__attribute:first-child {
@@ -1830,51 +1840,51 @@ th {
 }
 
 .text-editor__menu-button--bold:before {
-	content: "";
+	content: "?";
 }
 
 .text-editor__menu-button--italic:before {
-	content: "";
+	content: "?";
 }
 
 .text-editor__menu-button--underline:before {
-	content: "";
+	content: "?";
 }
 
 .text-editor__menu-button--underline:before {
-	content: "";
+	content: "?";
 }
 
 .text-editor__menu-button--ul:before {
-	content: "";
+	content: "?";
 }
 
 .text-editor__menu-button--ol:before {
-	content: "";
+	content: "?";
 }
 
 .text-editor__menu-button--h1:before {
-	content: "";
+	content: "?";
 }
 
 .text-editor__menu-button--h2:before {
-	content: "";
+	content: "?";
 }
 
 .text-editor__menu-button--h3:before {
-	content: "";
+	content: "?";
 }
 
 .text-editor__menu-button--code:before {
-	content: "";
+	content: "?";
 }
 
 .text-editor__menu-button--blockquote:before {
-	content: "";
+	content: "?";
 }
 
 .text-editor__menu-button--image:before {
-	content: "";
+	content: "?";
 }
 
 .cards {
@@ -1977,8 +1987,8 @@ th {
 
 .topbar {
 	z-index: 90;
-	height: 70px;
-	position: fixed;
+	height: 100px;
+	position: fixed;	
 	top: 0;
 	right: 0;
 	padding-left: 50px;
