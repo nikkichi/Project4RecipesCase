@@ -37,6 +37,24 @@ namespace SimpleModelsAndRelations.Controllers
       _context = context;
       _mailOptions = mailOptionsAccessor.Value;
     }
+
+    [RestrictToUserType(new string[] {"*"})]
+  [HttpGet("FindRecipesFromMealAndCousine/{meal_id}/{cousine_id}")]
+  public Recipe[] FindRecipesFromMealAndCousine(int meal_id, int cousine_id)
+  {
+  
+   var found_recipes = (from Meal_Recipe in _context.Meal_Recipe
+                          where(Meal_Recipe.MealId == meal_id)
+                          from Cousine_Recipe in _context.Cuisine_Recipe
+                          where (Cousine_Recipe.CuisineId == cousine_id) && (Cousine_Recipe.RecipeId == Meal_Recipe.RecipeId) 
+                          from recipe in _context.Recipe
+                          where (recipe.Id == Meal_Recipe.RecipeId) && recipe.Id == Cousine_Recipe.RecipeId
+                          select recipe).ToArray();
+    
+
+    return found_recipes;
+  }
+
     [RestrictToUserType(new string[] {"*"})]
   [HttpGet("FindRating/{recipe_id}/{user_id}")]
   public Rating FindRating(int recipe_id, int user_id)

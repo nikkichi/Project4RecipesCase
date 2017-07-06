@@ -23,6 +23,12 @@ export async function get_rating( recipe: number, user: number): Promise<Models.
     console.log("received correct rating", json)
     return json
 }
+export async function get_cuisine( meal: number, cuisine: number): Promise<Immutable.List<Models.Recipe>> {
+    let res = await fetch(`/api/v1/CustomController/FindRecipesFromMealAndCousine/${meal}/${cuisine}`, { method: 'get', credentials: 'include', headers: { 'content-type': 'application/json' } })
+    let json = await res.json()
+    console.log("received correct cuisine", json)
+    return Immutable.List<Models.Recipe>(json)
+}
 
 type Rate = {value : number, state:boolean}
 type StarsComponentProps = { recipe: Models.Recipe, user: Models.User}
@@ -173,7 +179,7 @@ export class Cuisines extends React.Component<{props:ViewUtils.EntityComponentPr
     }
 }
 
-export class MealsComponent extends React.Component<{props:ViewUtils.EntityComponentProps<Models.Homepage>,meal: Models.Meal},{is_expanded:boolean}> {
+export class MealsComponent extends React.Component<{cousine:Models.Cuisine, props:ViewUtils.EntityComponentProps<Models.Homepage>,meal: Models.Meal},{is_expanded:boolean}> {
     constructor( props, context) {
         super(props,context)
         this.state = {is_expanded: false}
@@ -187,7 +193,7 @@ export class MealsComponent extends React.Component<{props:ViewUtils.EntityCompo
         return <span style={{marginLeft: 10, marginTop: 10}}>
                 {!this.state.is_expanded?<button onClick={()=>this.update_me(true)}>{this.props.meal.Kind}</button>:
                                          <button onClick={()=>this.update_me(false)}>Close {this.props.meal.Kind}</button>}
-                {this.state.is_expanded?<Recipes props={this.props.props}meal={this.props.meal}/>:<span/>}
+                {this.state.is_expanded?<Recipes cousine={this.props.cousine} props={this.props.props}meal={this.props.meal}/>:<span/>}
             </span>
     }
 }
@@ -217,7 +223,7 @@ export class Meals extends React.Component<{props:ViewUtils.EntityComponentProps
 
     render() {
         return <div>
-            <div style={{marginTop: 10}}>{this.state.meals.map(r => <MealsComponent props={this.props.props} meal={r}/>)}</div>
+            <div style={{marginTop: 10}}>{this.state.meals.map(r => <MealsComponent cousine={this.props.cuisine} props={this.props.props} meal={r}/>)}</div>
         </div>
     }
 }
@@ -245,7 +251,7 @@ export class RecipesComponent extends React.Component<{props: Models.User,recipe
 }
 
 
-export class Recipes extends React.Component<{props:ViewUtils.EntityComponentProps<Models.Homepage>,meal: Models.Meal}, {recipes: Immutable.List<Models.Recipe>}> {
+export class Recipes extends React.Component<{cousine:Models.Cuisine, props:ViewUtils.EntityComponentProps<Models.Homepage>,meal: Models.Meal}, {recipes: Immutable.List<Models.Recipe>}> {
     constructor( props, context) {
         super(props, context)
         this.state = {
@@ -254,19 +260,22 @@ export class Recipes extends React.Component<{props:ViewUtils.EntityComponentPro
     }
 
     componentWillMount() {
-        this.get_recipes().then(online_recipes => this.setState({... this.state, recipes: online_recipes}))
+     
+     get_cuisine(this.props.meal.Id, this.props.cousine.Id).then(online_recipes => this.setState({... this.state, recipes: online_recipes}))
+     
+     
+     
+      //  this.get_cuisine(this.props.meal.Id, this.props.cousine.Id)
     }
 
-    async get_recipes() {
-        let recipe_page = await Api.get_Meal_Meal_Recipes(this.props.meal, 0, 100)
-        let loaded_recipes = Immutable.List<Models.Recipe>(recipe_page.Items.map(r => r.Item))
+    // async get_recipes() {
+     
+    //     // call custom controller -> return FindRecipesFromMealAndCousine
+    //      custom controller -> return FindRecipesFromMealAndCousine
+    // }
+       
 
-        for (let i = 1; i < recipe_page.NumPages; i++) {
-            let recipes = await Api.get_Meal_Meal_Recipes(this.props.meal, 1, 100)
-            loaded_recipes = loaded_recipes.concat(Immutable.List<Models.Recipe>(recipes.Items.map( r=> r.Item))).toList()
-        }
-        return Immutable.List<Models.Recipe>(loaded_recipes)
-    }
+    
 
     render() {
         return <div>

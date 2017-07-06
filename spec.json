@@ -299,22 +299,24 @@
         }],
             
     "relations" : [ 
-                {
+        {
         "source": "Cuisine",
-        "target": "Meal",
-        "sort": "1-N",
-        "seeds": [
-        {"CuisineId": 3, "MealId": 1},
-        {"CuisineId": 3, "MealId": 2},
-        {"CuisineId": 1, "MealId": 3},
-        {"CuisineId": 1, "MealId": 4},
-        {"CuisineId": 1, "MealId": 5},
-        {"CuisineId": 2, "MealId": 6},
-        {"CuisineId": 2, "MealId": 7},
-        {"CuisineId": 2, "MealId": 8},
-        {"CuisineId": 3, "MealId": 9},
-        {"CuisineId": 3, "MealId": 10}  
-        ]
+       "target": "Meal",
+       "sort": "1-N",
+       "seeds": [
+       {"CuisineId": 1, "MealId": 1},
+       {"CuisineId": 2, "MealId": 1},
+       {"CuisineId": 3, "MealId": 1},
+       {"CuisineId": 1, "MealId": 2},
+       {"CuisineId": 2, "MealId": 2},
+       {"CuisineId": 3, "MealId": 2},
+       {"CuisineId": 1, "MealId": 3},
+       {"CuisineId": 2, "MealId": 3},
+       {"CuisineId": 3, "MealId": 3},
+       {"CuisineId": 1, "MealId": 4},
+       {"CuisineId": 2, "MealId": 4},
+       {"CuisineId": 3, "MealId": 4}
+       ]
         },
         {
         "source": "Meal",
@@ -324,11 +326,11 @@
             {"MealId": 3, "RecipeId": 4},
             {"MealId": 3, "RecipeId": 3},
             {"MealId": 4, "RecipeId": 5},
-            {"MealId": 2, "RecipeId": 6},
+            {"MealId": 1, "RecipeId": 6},
             {"MealId": 4, "RecipeId": 1},
             {"MealId": 4, "RecipeId": 2},
-            {"MealId": 2, "RecipeId": 7},
-            {"MealId": 3, "RecipeId": 8},
+            {"MealId": 1, "RecipeId": 7},
+            {"MealId": 4, "RecipeId": 8},
             {"MealId": 2, "RecipeId": 9},
             {"MealId": 2, "RecipeId": 10}
         ]
@@ -376,6 +378,23 @@
         "source": "User",
         "target": "Rating",
         "sort": "1-N"
+        },
+        {
+        "source": "Cuisine",
+        "target": "Recipe",
+        "sort": "1-N",
+        "seeds": [
+        {"CuisineId": 3, "RecipeId": 1},
+        {"CuisineId": 3, "RecipeId": 2}, 
+        {"CuisineId": 2, "RecipeId": 3},
+        {"CuisineId": 1, "RecipeId": 4},
+        {"CuisineId": 1, "RecipeId": 5},
+        {"CuisineId": 2, "RecipeId": 6},
+        {"CuisineId": 2, "RecipeId": 7},
+        {"CuisineId": 1, "RecipeId": 8},
+        {"CuisineId": 2, "RecipeId": 9},
+        {"CuisineId": 3, "RecipeId": 10}
+        ]
         }
     ]
     }
